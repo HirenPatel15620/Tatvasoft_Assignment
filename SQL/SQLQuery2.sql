@@ -62,9 +62,6 @@ insert into orders values(70001,150.5,'2012-10-05',3005,5002),
 
 
 
-
-
-
 --1
 select salesman.name as "salesname",customer.Cust_Name , salesman.City from salesman,customer
 where salesman.city=customer.city
