@@ -25,7 +25,7 @@ There is a some mini Project & assignment which is done in my training period
 - 💻 &nbsp; Python | C# | C++  
 - 🌐 &nbsp; Android | HTML | CSS | JavaScript | Bootstrap 
 - 🛢 &nbsp; MySQL | Firebase
-- 🔧 &nbsp; Visual Studio code | | Sublime | Android Studio | Git
+- 🔧 &nbsp; Visual Studio code | Sublime | Android Studio | Git
 - 🖥 &nbsp; Adobe Xd 
 
 <br>
