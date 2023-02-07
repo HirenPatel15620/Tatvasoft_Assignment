@@ -95,11 +95,10 @@ ON salesman.salesman_id=customer.salesman_id;
 
 --7
 --attention required
- select * from orders
-left outer join customer
-ON orders.Customer_ID=customer.Customer_ID
-left outer join salesman
-on orders.Salesman_ID=salesman.Salesman_ID;
+select c.customer_id,c.cust_name,c.city as customer_city,c.grade,s.salesman_id,s.Name AS "Salesman",s.city as salesman_city,s.commission,o.ord_no,o.purch_amt,o.ord_date 
+from salesman s
+inner join customer c on c.salesman_id=s.salesman_id
+inner join orders o on o.customer_id=c.customer_id and o.salesman_id=s.salesman_id
 
 --8
 select customer.Cust_Name,customer.City, customer.Grade,salesman.Name as "salesman",salesman.City from customer inner join salesman on salesman.Salesman_ID=customer.Salesman_ID order by customer.Customer_ID ASC 
