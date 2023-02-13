@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Hiren\\OneDrive\\Desktop\\visual project\\BullkyBook\\BullkyBookWeb\\BullkyBookWeb.csproj",
+      "projectUniqueName": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\BullkyBookWeb\\BullkyBookWeb.csproj",
       "projectName": "BullkyBookWeb",
-      "projectPath": "C:\\Users\\Hiren\\OneDrive\\Desktop\\visual project\\BullkyBook\\BullkyBookWeb\\BullkyBookWeb.csproj",
+      "projectPath": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\BullkyBookWeb\\BullkyBookWeb.csproj",
       "packagesPath": "C:\\Users\\Hiren\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Hiren\\OneDrive\\Desktop\\visual project\\BullkyBook\\BullkyBookWeb\\obj\\",
+      "outputPath": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\BullkyBookWeb\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Hiren\\AppData\\Roaming\\NuGet\\NuGet.Config",
