@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj": {}
+    "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj": {}
   },
   "projects": {
-    "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj": {
+    "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
+        "projectUniqueName": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
         "projectName": "CI-PlatformWeb",
-        "projectPath": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
+        "projectPath": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
         "packagesPath": "C:\\Users\\Hiren\\.nuget\\packages\\",
-        "outputPath": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\CI-PlatformWeb\\obj\\",
+        "outputPath": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-platform\\CI-PlatformWeb\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Hiren\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,18 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.2, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[7.0.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
