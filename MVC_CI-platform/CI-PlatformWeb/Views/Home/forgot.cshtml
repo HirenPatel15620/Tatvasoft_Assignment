@@ -3,7 +3,6 @@
 *@
 
 
-
 <div class="row mx-0">
     <div class="col-md-8 px-0">
             <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
@@ -130,14 +129,14 @@
                        placeholder="Enter Your Email Address" />
 
                 <!-- button  -->
-            <button type="button" class="btn mt-4" asp-controller="home" asp-action="changepassword">Reset My Password</button>
+            <button type="button" class="btn-outline-warning btn mt-4 rounded-pill" asp-controller="home" asp-action="Changepassword">Reset My Password</button>
             @*<input type="button" class="btn mt-4" value="Reset my Password" onclick="Changepassword" />*@
 
                 <!-- footer text -->
                 <div class="toregister mt-3 text-center">
-                    <span>Login</span>
-                    <!-- <a href="/index.html" style="text-decoration: none;">Login</a> -->
-
+                <a class="text-decoration-none text-black" asp-controller="home" asp-action="Index">Login </a>
+                <br />
+                <a class="text-decoration-none text-black" asp-controller="home" asp-action="Changepassword">change password </a>
                 </div>
                 <div class="privacy text-center">
                     <span>Privacy Policy</span>

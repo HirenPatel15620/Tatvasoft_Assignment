@@ -19,8 +19,8 @@
 
 
                 <!-- carousel-part -->
-                <div class="carousel-inner">
-                <div class="carousel-item active newimg">
+            <div class="carousel-inner newimg">
+                <div class="carousel-item active ">
                         <img src="/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" alt="not-load"
                              class=" d-block " />
                         <div class="carousel-caption text-start d-md-block bglightblack">
@@ -150,16 +150,17 @@
                        placeholder="********" />
 
                 <!-- register button -->
-                <button type="button" class=" blog btn mt-4">Register</button>
+            <button type="button" class=" btn-outline-warning btn mt-4 rounded-pill">Register</button>
 
                 <!-- footer parts -->
                 <div class="toregister mt-1 text-center">
-                    <span>Lost Your Password?</span>
-                    <!-- <a href="/forgot.html" style="text-decoration: none;">Lost Your Password?</a> -->
-
-                    <p class="">
-                        Already Registered?<a href="/index.html" style="text-decoration: none">Login now </a>
+                <a class="text-decoration-none text-black" asp-controller="home" asp-action="Forgot">lost your password?</a>
+                   
+               
+                    <p class="p-1">
+                    Already Registered?<a class="text-decoration-none" asp-controller="home" asp-action="Index" >Login now </a>
                     </p>
+        
                 </div>
                 <div class="  position-relative justify-content-center align-item-center text-center">
                     <span>Privacy Policy</span>
