@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Fj0krh2JbzO9ZONneLG+TJDLoqgT4JKvyiWgwtrQ+6JEuViA8NJKnDYPZiDtM09qeLi5RIBIs2mNy21qRQvw9g==",
+  "dgSpecHash": "ZGHlo3U1QlugbizCVqZjqK1byaoJG99XCYaLe4tQWku3fKKA7TKu6kfEGtceWK4Y5H3E24DpAibmVR1KdrdSSQ==",
   "success": true,
-  "projectFilePath": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
+  "projectFilePath": "D:\\tatvasoft\\Tatvasoft_Assignment\\MVC_CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Hiren\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\Hiren\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.2\\microsoft.entityframeworkcore.7.0.2.nupkg.sha512",
