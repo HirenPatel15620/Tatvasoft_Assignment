@@ -1,20 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Hiren\\OneDrive\\Desktop\\MVC\\MVC\\CI-platform\\CI-platform\\CI-platform.csproj": {}
+    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\CI-platform.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Hiren\\OneDrive\\Desktop\\MVC\\MVC\\CI-platform\\CI-platform\\CI-platform.csproj": {
+    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\CI-platform.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Hiren\\OneDrive\\Desktop\\MVC\\MVC\\CI-platform\\CI-platform\\CI-platform.csproj",
+        "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\CI-platform.csproj",
         "projectName": "CI-platform",
-        "projectPath": "C:\\Users\\Hiren\\OneDrive\\Desktop\\MVC\\MVC\\CI-platform\\CI-platform\\CI-platform.csproj",
-        "packagesPath": "C:\\Users\\Hiren\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Hiren\\OneDrive\\Desktop\\MVC\\MVC\\CI-platform\\CI-platform\\obj\\",
+        "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\CI-platform.csproj",
+        "packagesPath": "C:\\Users\\pca107\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "C:\\Users\\Hiren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\pca107\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -64,8 +69,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -77,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.103\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.100\\RuntimeIdentifierGraph.json"
         }
       }
     }
