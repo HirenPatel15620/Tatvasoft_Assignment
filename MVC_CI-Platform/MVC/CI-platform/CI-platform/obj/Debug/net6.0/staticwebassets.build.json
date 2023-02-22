@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "nWtiDll/Z8Pf1Rsf1QLU4V3OTX6tQpz+UDogrJH27yo=",
+  "Hash": "R7lEDli0BtieXFlZuSCvzl0PaNaLMifrMH1YhEgjQkI=",
   "Source": "CI-platform",
   "BasePath": "_content/CI-platform",
   "Mode": "Default",
@@ -100,6 +100,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\site.css"
+    },
+    {
+      "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\wwwroot\\css\\volunteering_mission.css",
+      "SourceId": "CI-platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\wwwroot\\",
+      "BasePath": "_content/CI-platform",
+      "RelativePath": "css/volunteering_mission.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\volunteering_mission.css"
     },
     {
       "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\wwwroot\\favicon.ico",
@@ -1987,6 +2004,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\site.js"
+    },
+    {
+      "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\wwwroot\\js\\VolunteeringMissionPage.js",
+      "SourceId": "CI-platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\wwwroot\\",
+      "BasePath": "_content/CI-platform",
+      "RelativePath": "js/VolunteeringMissionPage.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\VolunteeringMissionPage.js"
     },
     {
       "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\MVC\\CI-platform\\CI-platform\\wwwroot\\lib\\bootstrap\\dist\\css\\bootstrap.css",

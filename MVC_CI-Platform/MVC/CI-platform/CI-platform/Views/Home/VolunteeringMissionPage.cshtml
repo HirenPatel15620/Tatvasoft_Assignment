@@ -1,174 +1,307 @@
 ﻿@*
-    for more information on enabling mvc for empty projects, visit https://go.microsoft.com/fwlink/?linkid=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "vole Missions";
-    string[] allchoices = new string[50];
+    ViewData["title"] = "volunteering mission";
+    ViewData["css"] = "volunteering_mission.css";
 }
-
-@*filters sidebar*@
-<div class="offcanvas offcanvas-start text-muted" data-bs-scroll="true" tabindex="-1" id="filters-sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
-    <div class="offcanvas-header">
-        <img src="~/images/left.png" data-bs-dismiss="offcanvas" aria-label="Close" alt="notload" />
-        <span>Clear All</span>
-    </div>
-    <div class="offcanvas-body">
-        <div id="country" class=" d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#country" role="button" aria-expanded="false" aria-controls="country">
-            <span>Country</span>
-            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
-        </div>
-        <div class="collapse mt-3" id="country">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-        @*--2*@
-        <div id="city" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#city" role="button" aria-expanded="false" aria-controls="city">
-            <span>City</span>
-            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
-        </div>
-        <div class="collapse mt-3" id="city">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-        @*--3*@
-        <div id="theme" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#theme" role="button" aria-expanded="false" aria-controls="theme">
-            <span>Themes</span>
-            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
-        </div>
-        <div class="collapse mt-3" id="theme">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-        @*---4*@
-        <div id="skill" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#skill" role="button" aria-expanded="false" aria-controls="skill">
-            <span>Skills</span>
-            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
-        </div>
-        <div class="collapse mt-3" id="skill">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-    </div>
-</div>
-@*header*@
-<div class="home w-100 border-3 border-bottom text-muted">
-    <div class="container d-flex justify-content-between align-items-center">
-        <div class="d-flex search-div align-items-center">
-            <img class="search" src="~/images/search.png" alt="not load" />
-            <div class="form-floating w-75 d-flex">
-                <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Misssions...." />
-                <label for="floatingSearch" class="d-flex align-items-center">Search Missions....</label>
-            </div>
-        </div>
-        <img src="~/images/filter.png" class="filter-image" data-bs-toggle="offcanvas" data-bs-target="#filters-sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
-        <div class="filters  row">
-            <div class="col-lg-3 col-md-3 col-sm-3 border-start border-end dropdown">
-                <div id="country" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span>Country</span>
-                    <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
-                </div>
-                <span class="dropdown-menu" aria-labelledby="country">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                </span>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
-                <div id="city" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span>City</span>
-                    <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
-                </div>
-                <span class="dropdown-menu" aria-labelledby="city">
-                    <span class="dropdown-item">
-                        <input class="form-check-input" type="checkbox" onchange="setfilters('rajkot')" value="" id="rajkot">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            rajkot
-                        </label>
-                    </span>
-                    <span class="dropdown-item">
-                        <input class="form-check-input" type="checkbox" onchange="setfilters('delhi')" value="" id="delhi">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            delhi
-                        </label>
-                    </span>
-                </span>
-
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
-                <div id="theme" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span>Themes</span>
-                    <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
-                </div>
-                <span class="dropdown-menu" aria-labelledby="theme">
-                    <span class="dropdown-item">
-                        <input class="form-check-input" type="checkbox" onchange="setfilters('Environment')" value="" id="Environment">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Environment
-                        </label>
-                    </span>
-                    <span class="dropdown-item">
-                        <input class="form-check-input" type="checkbox" onchange="setfilters('Education')" value="" id="Education">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Education
-                        </label>
-                    </span>
-                </span>
-            </div>
-            <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
-                <div id="skill" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <span>Skills</span>
-                    <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
-                </div>
-                <span class="dropdown-menu" aria-labelledby="skill">
-                    <span class="dropdown-item">
-                        <input class="form-check-input" type="checkbox" onchange="setfilters('Communication')" value="" id="Communication">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Communication
-                        </label>
-                    </span>
-                    <span class="dropdown-item">
-                        <input class="form-check-input" type="checkbox" onchange="setfilters('JavaScript')" value="" id="JavaScript">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            JavaScript
-                        </label>
-                    </span>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-@*badges*@
-@{
-}
-
-
-@*main body*@
-<div class="text-center py-5">
-    <h1>Releated Mission
-    </h1>
-
-</div>
-    @*missions*@
-    <div class="test-center"> releated mission</div>
+@*mission details with images*@
+<div class="container mt-4">
     <div class="row">
+        <div class="images col-lg-6">
+            <div class="carousel slide" data-bs-interval="false" id="sub-images">
+                <div class="carousel-inner">
+                    <img class="w-100 carousel-item active" src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-2.png" alt="" />
+                    <img src="~/images/img1.png" class="w-100 carousel-item" alt="" />
+                    <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-2.png" class="w-100  carousel-item" alt="" />
+                    <img src="~/images/img11.png" class="w-100 carousel-item" alt="" />
+                </div>
+                <div class="other-images mt-1 w-100 position-relative">
+                    <div class="d-flex active" data-bs-target="#sub-images" data-bs-slide-to="0" aria-current="true">
+                        <img src="~/images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity-6.png" class="other-image" alt="" />
+                        <img src="~/images/img3.png" class="other-image" alt="" />
+                        <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-3.png" class="other-image" alt="" />
+                        <img src="~/images/img22.png" class="other-image" alt="" />
+                    </div>
+                    <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-prev" data-bs-target="#sub-images" data-bs-slide="prev">
+                        <img src="~/images/left1.png" class="w-50" alt="not load" />
+                    </div>
+
+                    <div class="bg-black d-flex align-items-center justify-content-center position-absolute left h-100 carousel-control-next" style="left:98%;" data-bs-target="#sub-images" data-bs-slide="next">
+                        <img src="~/images/right-arrow2.png" class="w-50" alt="not load" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="description  col-lg-6">
+            <div class="caption card-body">
+                <h4 class="group card-title inner list-group-item-heading">
+                    Grow Trees – On the path to environment sustainability
+                </h4>
+                <p class="group inner list-group-item-text">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                    labore...
+                </p>
+                <div class="duration-seats-info mt-4">
+                    <div class="duration">
+                        <p id="duration-txt" style="margin-bottom: 0;">Plant 10,000 trees</p>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between border-bottom mt-3">
+                    <div class="Seats d-flex align-items-center">
+                        <img src="images/Seats-left.png" alt="">
+                        <span>
+                            10 <p>seats left</p>
+                        </span>
+                    </div>
+                    <div class="deadline d-flex align-items-center">
+                        <img src="images/deadline.png" alt="">
+                        <span>
+                            09/01/2019
+                            <p>Deadline</p>
+                        </span>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row mt-4 justify-content-between">
+                        <div class=" col-lg-6  col-6 btn btn-outline-secondary rounded-pill ">
+                            <img src="~/images/heart1.png" style="margin-right:10px;" alt="" />
+                            <span>Add To Favourite</span>
+                        </div>
+                        <div class=" col-lg-6 col-6 btn btn-outline-secondary rounded-pill px-2">
+                            <img src="~/images/add1.png" class="p-1" alt="" />
+                            <span class="p-1" style="white-space:nowrap;"> Recommend To a Co-Worker</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="duration-seats-info mt-5">
+                    <div class="d-flex stars justify-content-center">
+                        <img src="~/images/star-empty.png" alt="" />
+                        <img src="~/images/star-empty.png" alt="" />
+                        <img src="~/images/star-empty.png" alt="" />
+                        <img src="~/images/star-empty.png" alt="" />
+                        <img src="~/images/star-empty.png" alt="" />
+                    </div>
+                </div>
+            </div>
+            <div class="container d-flex mt-2 " style="height:20%;">
+                <div class="col-md-3  border  mission-info mx-3">
+                    <div class="ms-2 mt-1">
+                        <img src="~/images/pin1.png" style="width:15%;" alt="" />
+                    </div>
+                    <div class="ms-2 mb-1">
+                        <p class="text-muted" style="margin-block:0;">City</p>
+                        <p style="margin-block:0;">London</p>
+                    </div>
+                </div>
+                <div class="col-md-3  border rounded mission-info mx-3">
+                    <div class="ms-2 mt-1">
+                        <img src="~/images/web.png" style="width:15%;" alt="" />
+                    </div>
+                    <div class="ms-2 mb-1">
+                        <p class="text-muted" style="margin-block:0;">Theme</p>
+                        <span style="margin-block:0;">Environment</span>
+                    </div>
+                </div>
+                <div class=" col-md-3  border rounded mission-info mx-3">
+                    <div class="ms-2 mt-1">
+                        <img src="~/images/calender.png" style="width:15%;" alt="" />
+                    </div>
+                    <div class="ms-2 mb-1">
+                        <p class="text-muted" style="margin-block:0;">Date</p>
+                        <p style="margin-block:0;">Ongoing Opertunity</p>
+                    </div>
+                </div>
+                <div class="col-md-3  border rounded mission-info mx-3">
+                    <div class="ms-2 mt-1">
+                        <img src="~/images/organization.png" style="width:20%;" alt="" />
+                    </div>
+                    <div class="ms-2 mb-1">
+                        <p class="text-muted" style="margin-block:0;">Organization</p>
+                        <p style="margin-block:0;">CSE-network</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="d-flex justify-content-center mt-4">
+                <button class="applyButton btn">
+                    Apply Now<img src="/images/right-arrow.png" alt="">
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*comments*@
+
+<div class="container mt-5  ">
+    <div class="row">
+        <div class="mission-detail col-lg-7 ">
+            <div class="d-flex text-muted border-bottom">
+                <u class="ms-2 mb-3 active-detail  introduction" onclick="tabs('introduction')">Mission</u>
+                <u class="ms-4 mb-3 detail organization" onclick="tabs('organization')">Organization</u>
+                <u class="ms-4 mb-3 detail comment" onclick="tabs('comment')">Comments</u>
+            </div>
+            <div class="text-muted tab mt-2" id="introduction">
+                <h4>Introduction</h4>
+                <p>Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters</p>
+                <p>Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters</p>
+                <p>
+                    Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters
+                    Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters
+                </p>
+                <h4>Challenge</h4>
+                <p>Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters</p>
+                <p>
+                    Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters
+                    Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters
+                </p>
+                <h4>Documents</h4>
+                <div class="d-flex justify-content-between">
+                    <div class="d-flex align-items-center border rounded-pill p-1">
+                        <img class="h-75 ms-2" src="~/images/doc.png" alt="" />
+                        <span class="ms-1 me-2">Document.pdf</span>
+                    </div>
+                    <div class="d-flex align-items-center border rounded-pill p-1">
+                        <img class="h-75 ms-2" src="~/images/doc.png" alt="" />
+                        <span class="ms-1 me-2">chapters-Paragraphs.Docs</span>
+                    </div>
+                    <div class="d-flex align-items-center border rounded-pill p-1">
+                        <img class="h-75 ms-2" src="~/images/doc.png" alt="" />
+                        <span class="ms-1 me-2">Document.pdf</span>
+                    </div>
+                </div>
+            </div>
+            <div class="inner-content tab text-muted" id="organization">
+                <p>
+                    Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters
+                    Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters
+                </p>
+            </div>
+            <div class="inner-content mt-4 tab text-muted" id="comment">
+                <div class="form-group">
+                    <textarea class="form-control" id="usercomment" placeholder="Enter your comments..." rows="3"></textarea>
+                    <button class="applyButton mt-3 btn">Post Comment</button>
+                </div>
+                <div class="bg-light user-comments mt-4 p-3" style="height:460px">
+                    <div class="d-flex bg-white align-items-center">
+                        <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
+                        <div class="d-flex flex-column ms-2">
+                            <span>Dhruvik kothiya</span>
+                            <span>monday 7 pm</span>
+                            <span class="mt-2">hey nice work....</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="information col-lg-5 ">
+            <div class="ratings border col-md-12">
+                <div class="container col-md-12">
+                    <div class="border-bottom p-3">
+                        <u>Information</u>
+                    </div>
+                    <div class="border-bottom text-muted p-3">
+                        <span>Skills</span>
+                        <span class="ms-5">math,computer</span>
+                    </div>
+                    <div class="border-bottom text-muted p-3">
+                        <span>Days</span>
+                        <span class="ms-5">Weekend Only</span>
+                    </div>
+                    <div class="d-flex align-items-center p-3 text-muted">
+                        <span>Rating</span>
+                        <div class="rating d-flex align-items-center ms-5">
+                            <img src="images/selected-star.png" alt="">
+                            <img src="images/selected-star.png" alt="">
+                            <img src="images/selected-star.png" alt="">
+                            <img src="images/star.png" alt="">
+                            <img src="images/star.png" alt="">
+                            <span class="ms-2">(By 125 volunteers)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="volunteers  mt-4 border">
+                <div class="container">
+                    <div class="border-bottom p-3">
+                        <u>Recent Volunteers</u>
+                    </div>
+                    @*first-9*@
+                    <div class="border-bottom text-muted row p-3">
+                        <div class=" col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer1.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                        <div class="  col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer2.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                        <div class="  col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer3.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                        <div class=" col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer4.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                        <div class="  col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer5.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                        <div class="  col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer6.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                        <div class="  col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer7.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                        <div class="  col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer8.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                        <div class=" col-4 ">
+                            <img class="w-50 h-50 rounded-circle" src="~/images/volunteer9.png" alt="" />
+                            <p>Andrew Jhonson</p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="border-end d-flex justify-content-center align-items-center" style="width:10%; cursor:pointer">
+                            <img class="h-50" src="~/images/left.png" alt="" />
+                        </div>
+                        <div class="d-flex justify-content-center align-items-center" style="width:80%;"><span class="text-muted">1-9 of recent 25 volunteers</span></div>
+                        <div class="border-start d-flex justify-content-center align-items-center" style="width:10%;cursor:pointer">
+                            <img class="h-50" src="~/images/right-arrow1.png" alt="" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="mt-5 w-100 border-bottom"></div>
+
+@*related missions*@
+<div class="text-center pt-4">
+        <h1 class="text-muted ">Related Missions</h1>
+    </div>
+<div class="container mt-5">
+    <div class="row mt-4">
         <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
             <div class="thumbnail card d-flex">
                 <div class="img-event">
                     <img class="group list-group-image w-100 h-100"
                          src="/images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="" />
                     <div class="location-img">
-                        <img class="text-light" src="images/pin.png" alt="">
+                        <img class="text-light" src="/images/pin.png" alt="">
                         <span class="text-light">Toronto</span>
                     </div>
                     <button class="like-img border-0">
-                        <img class="text-light" src="images/heart.png" alt="">
+                        <img class="text-light" src="/images/heart.png" alt="">
                     </button>
                     <button class="stop-img border-0">
-                        <img class="text-light" src="images/user.png" alt="">
+                        <img class="text-light" src="/images/user.png" alt="">
                     </button>
                     <button class="mission-theme border-0">
                         <span class="p-2">Environment</span>
@@ -228,7 +361,7 @@
                     <img class="group list-group-image w-100 h-100"
                          src="/images/Education-Supplies-for-Every--Pair-of-Shoes-Sold.png" alt="" />
                     <div class="location-img">
-                        <img class="text-light" src="/images/pin.png" alt="">
+                        <img class="text-light" src="images/pin.png" alt="">
                         <span class="text-light">Toronto</span>
                     </div>
                     <button class="like-img border-0">
@@ -353,24 +486,6 @@
                 </div>
             </div>
         </div>
-      
-        
     </div>
 </div>
-<div class="container mt-5 text-muted no-mission-found">
-    <span>
-        No Mission Found
-        <p> Try With Onther Filters</p>
-    </span>
-</div>
-@*pagination*@
-
-
-
-<script src="~/js/index.js">
-
-</script>
-
-
-
-
+<script src="~/js/Volunteer_mission.js"></script>
