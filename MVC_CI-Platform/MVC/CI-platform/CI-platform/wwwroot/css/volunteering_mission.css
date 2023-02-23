@@ -135,3 +135,17 @@ cursor:pointer;
 
 
 
+.width-fit-content {
+    width: fit-content;
+}
+
+
+
+@media screen and (max-width:1199px) and (min-width:993px) {
+    .width1{
+        width:100%;
+    }
+}
+
+
+

@@ -21,11 +21,14 @@ namespace CI_platform.Controllers
         {
             return View();
         }
+        public IActionResult VolunteeringStory()
+        {
+            return View();
+        }
         public IActionResult Privacy()
         {
             return View();
         }
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

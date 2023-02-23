@@ -16,3 +16,6 @@
     }
     element.classList.remove("inner-content")
 }
+
+
+
