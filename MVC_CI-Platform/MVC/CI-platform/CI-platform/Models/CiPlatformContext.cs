@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CI_platform.Models;
 
-public partial class CiPlateformContext : DbContext
+public partial class CiPlatformContext : DbContext
 {
-    public CiPlateformContext()
+    public CiPlatformContext()
     {
     }
 
-    public CiPlateformContext(DbContextOptions<CiPlateformContext> options)
+    public CiPlatformContext(DbContextOptions<CiPlatformContext> options)
         : base(options)
     {
     }

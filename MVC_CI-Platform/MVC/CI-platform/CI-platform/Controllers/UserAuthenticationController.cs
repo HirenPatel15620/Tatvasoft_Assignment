@@ -6,8 +6,8 @@ namespace CI_platform.Controllers
     
     public class UserAuthenticationController : Controller
     {
-        private readonly CiPlateformContext _db;
-        public UserAuthenticationController(CiPlateformContext db)
+        private readonly CiPlatformContext _db;
+        public UserAuthenticationController(CiPlatformContext db)
         {
             _db= db;
         }
