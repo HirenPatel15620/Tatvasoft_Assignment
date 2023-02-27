@@ -1,28 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+
 namespace CI_platform.Models;
 
 public partial class User
 {
-    [Key]
     public long UserId { get; set; }
 
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
-    [Required]
-    [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z",
-        ErrorMessage = "Please enter correct email address")]
+
     public string Email { get; set; } = null!;
-    [Required]
-    [DataType(DataType.Password)]
+
     public string Password { get; set; } = null!;
-    [Required(ErrorMessage = "PhoneNumber is Required")]
-    [MaxLength(12,ErrorMessage ="Enter Valid Number")]
-    [RegularExpression(@"^\(?([0-9]{5})\)?[-. ]?([0-9]{5})[-. ]?([0-9]{2})$",
-                   ErrorMessage = "Entered phone-number format is not valid.")]
-    public string PhoneNumber { get; set; } = null!;
+
+    public int PhoneNumber { get; set; }
 
     public string? Avatar { get; set; }
 
@@ -32,9 +25,9 @@ public partial class User
 
     public string? Department { get; set; }
 
-    public long? CityId { get; set; }
+    public long CityId { get; set; }
 
-    public long? CountryId { get; set; }
+    public long CountryId { get; set; }
 
     public string? ProfileText { get; set; }
 
@@ -46,11 +39,29 @@ public partial class User
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdatedAt { get; set; }
+    public DateTime? UpdateAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
-    public virtual City? City { get; set; }
+    public virtual City City { get; set; } = null!;
 
-    public virtual Country? Country { get; set; }
+    public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
+
+    public virtual Country Country { get; set; } = null!;
+
+    public virtual ICollection<FavoriteMission> FavoriteMissions { get; } = new List<FavoriteMission>();
+
+    public virtual ICollection<MissionApplication> MissionApplications { get; } = new List<MissionApplication>();
+
+    public virtual ICollection<MissionInvite> MissionInviteFromUsers { get; } = new List<MissionInvite>();
+
+    public virtual ICollection<MissionInvite> MissionInviteToUsers { get; } = new List<MissionInvite>();
+
+    public virtual ICollection<MissionRating> MissionRatings { get; } = new List<MissionRating>();
+
+    public virtual ICollection<Story> Stories { get; } = new List<Story>();
+
+    public virtual ICollection<Timesheet> Timesheets { get; } = new List<Timesheet>();
+
+    public virtual ICollection<UserSkill> UserSkills { get; } = new List<UserSkill>();
 }

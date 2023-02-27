@@ -3,13 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CI_platform.Controllers
 {
-    
+
     public class UserAuthenticationController : Controller
     {
         private readonly CiPlatformContext _db;
         public UserAuthenticationController(CiPlatformContext db)
         {
-            _db= db;
+            _db = db;
         }
         public IActionResult Login()
         {
@@ -31,15 +31,13 @@ namespace CI_platform.Controllers
         }
         [Route("Register")]
         [HttpPost]
-        [ValidateAntiForgeryToken]
+      
         public IActionResult Register(User user)
         {
             if (ModelState.IsValid)
             {
                 _db.Users.Add(user);
-                _db.SaveChanges();
-
-                
+            _db.SaveChanges();
             }
             return View();
 
