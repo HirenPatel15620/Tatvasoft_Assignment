@@ -1,0 +1,17 @@
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\bin\Debug\net6.0\CI-platform.Repository.deps.json
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\bin\Debug\net6.0\CI-platform.Repository.runtimeconfig.json
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\bin\Debug\net6.0\CI-platform.Repository.dll
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\bin\Debug\net6.0\ref\CI-platform.Repository.dll
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\bin\Debug\net6.0\CI-platform.Repository.pdb
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.csproj.AssemblyReference.cache
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.AssemblyInfoInputs.cache
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.AssemblyInfo.cs
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.csproj.CoreCompileInputs.cache
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.dll
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\ref\CI-platform.Repository.dll
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.pdb
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.genruntimeconfig.cache
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\bin\Debug\net6.0\CI-platform.Entities.dll
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\bin\Debug\net6.0\CI-platform.Entities.pdb
+C:\Users\pca107\Desktop\temp\CI-platformWeb\CI-platform.Repository\obj\Debug\net6.0\CI-platform.Repository.csproj.CopyComplete
