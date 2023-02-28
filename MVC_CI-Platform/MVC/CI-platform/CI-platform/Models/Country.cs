@@ -5,7 +5,6 @@ namespace CI_platform.Models;
 
 public partial class Country
 {
-    
     public long CountryId { get; set; }
 
     public string Name { get; set; } = null!;

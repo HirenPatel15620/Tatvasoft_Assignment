@@ -72,9 +72,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("admin");
 
-            entity.Property(e => e.AdminId)
-                .ValueGeneratedNever()
-                .HasColumnName("admin_id");
+            entity.Property(e => e.AdminId).HasColumnName("admin_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
@@ -105,9 +103,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("banner");
 
-            entity.Property(e => e.BannerId)
-                .ValueGeneratedNever()
-                .HasColumnName("banner_id");
+            entity.Property(e => e.BannerId).HasColumnName("banner_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
@@ -131,9 +127,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("city");
 
-            entity.Property(e => e.CityId)
-                .ValueGeneratedNever()
-                .HasColumnName("city_id");
+            entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
@@ -159,9 +153,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("cms_page");
 
-            entity.Property(e => e.CmsPageId)
-                .ValueGeneratedNever()
-                .HasColumnName("cms_page_id");
+            entity.Property(e => e.CmsPageId).HasColumnName("cms_page_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
@@ -188,9 +180,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("comment");
 
-            entity.Property(e => e.CommentId)
-                .ValueGeneratedNever()
-                .HasColumnName("comment_id");
+            entity.Property(e => e.CommentId).HasColumnName("comment_id");
             entity.Property(e => e.ApprovalStatus).HasColumnName("approval_status");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
@@ -219,9 +209,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("country");
 
-            entity.Property(e => e.CountryId)
-                .ValueGeneratedNever()
-                .HasColumnName("country_id");
+            entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
@@ -244,9 +232,7 @@ public partial class CiPlatformContext : DbContext
 
             entity.ToTable("favorite_mission");
 
-            entity.Property(e => e.FavouriteMissionId)
-                .ValueGeneratedNever()
-                .HasColumnName("favourite_mission_id");
+            entity.Property(e => e.FavouriteMissionId).HasColumnName("favourite_mission_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -274,9 +260,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("goal_mission");
 
-            entity.Property(e => e.GoalMissionId)
-                .ValueGeneratedNever()
-                .HasColumnName("goal_mission_id");
+            entity.Property(e => e.GoalMissionId).HasColumnName("goal_mission_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -302,9 +286,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("mission");
 
-            entity.Property(e => e.MissionId)
-                .ValueGeneratedNever()
-                .HasColumnName("mission_id");
+            entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.Availability).HasColumnName("availability");
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
@@ -362,9 +344,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("mission_application");
 
-            entity.Property(e => e.MissionApplicationId)
-                .ValueGeneratedNever()
-                .HasColumnName("mission_application_id");
+            entity.Property(e => e.MissionApplicationId).HasColumnName("mission_application_id");
             entity.Property(e => e.AppliedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("applied_at");
@@ -396,9 +376,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("mission_document");
 
-            entity.Property(e => e.MissionDocumentId)
-                .ValueGeneratedNever()
-                .HasColumnName("mission_document_id");
+            entity.Property(e => e.MissionDocumentId).HasColumnName("mission_document_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -429,9 +407,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("mission_invite");
 
-            entity.Property(e => e.MissionInviteId)
-                .ValueGeneratedNever()
-                .HasColumnName("mission_invite_id");
+            entity.Property(e => e.MissionInviteId).HasColumnName("mission_invite_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -467,9 +443,7 @@ public partial class CiPlatformContext : DbContext
 
             entity.ToTable("mission_media");
 
-            entity.Property(e => e.MissionMediaId)
-                .ValueGeneratedNever()
-                .HasColumnName("mission_media_id");
+            entity.Property(e => e.MissionMediaId).HasColumnName("mission_media_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -502,9 +476,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("mission_rating");
 
-            entity.Property(e => e.MissionRatingId)
-                .ValueGeneratedNever()
-                .HasColumnName("mission_rating_id");
+            entity.Property(e => e.MissionRatingId).HasColumnName("mission_rating_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -533,9 +505,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("mission_skill");
 
-            entity.Property(e => e.MissionSkillId)
-                .ValueGeneratedNever()
-                .HasColumnName("mission_skill_id");
+            entity.Property(e => e.MissionSkillId).HasColumnName("mission_skill_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -563,9 +533,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("mission_theme");
 
-            entity.Property(e => e.MissionThemeId)
-                .ValueGeneratedNever()
-                .HasColumnName("mission_theme_id");
+            entity.Property(e => e.MissionThemeId).HasColumnName("mission_theme_id");
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
@@ -604,9 +572,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("skill");
 
-            entity.Property(e => e.SkillId)
-                .ValueGeneratedNever()
-                .HasColumnName("skill_id");
+            entity.Property(e => e.SkillId).HasColumnName("skill_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -626,9 +592,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("story");
 
-            entity.Property(e => e.StoryId)
-                .ValueGeneratedNever()
-                .HasColumnName("story_id");
+            entity.Property(e => e.StoryId).HasColumnName("story_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -666,9 +630,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("story_invite");
 
-            entity.Property(e => e.StoryInviteId)
-                .ValueGeneratedNever()
-                .HasColumnName("story_invite_id");
+            entity.Property(e => e.StoryInviteId).HasColumnName("story_invite_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -689,9 +651,7 @@ public partial class CiPlatformContext : DbContext
 
             entity.ToTable("story_media");
 
-            entity.Property(e => e.StoryMediaId)
-                .ValueGeneratedNever()
-                .HasColumnName("story_media_id");
+            entity.Property(e => e.StoryMediaId).HasColumnName("story_media_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
@@ -719,9 +679,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("timesheet");
 
-            entity.Property(e => e.TimesheetId)
-                .ValueGeneratedNever()
-                .HasColumnName("timesheet_id");
+            entity.Property(e => e.TimesheetId).HasColumnName("timesheet_id");
             entity.Property(e => e.Action).HasColumnName("action");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
@@ -756,9 +714,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("user");
 
-            entity.Property(e => e.UserId)
-                .ValueGeneratedNever()
-                .HasColumnName("user_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.Avatar)
                 .IsUnicode(false)
                 .HasColumnName("avatar");
@@ -813,12 +769,10 @@ public partial class CiPlatformContext : DbContext
 
             entity.HasOne(d => d.City).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CityId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_user_city");
 
             entity.HasOne(d => d.Country).WithMany(p => p.Users)
                 .HasForeignKey(d => d.CountryId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_user_country");
         });
 
@@ -826,9 +780,7 @@ public partial class CiPlatformContext : DbContext
         {
             entity.ToTable("user_skill");
 
-            entity.Property(e => e.UserSkillId)
-                .ValueGeneratedNever()
-                .HasColumnName("user_skill_id");
+            entity.Property(e => e.UserSkillId).HasColumnName("user_skill_id");
             entity.Property(e => e.CreatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
