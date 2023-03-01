@@ -8,7 +8,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CI-Platform.Data\CI-Platform.Data.csproj" />
     <ProjectReference Include="..\CI-Platform.Models\CI-Platform.Models.csproj" />
     <ProjectReference Include="..\CI-Platform.Utility\CI-Platform.Utility.csproj" />
   </ItemGroup>

@@ -849,10 +849,8 @@ C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\CI-Platform.Data.dll
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\CI-Platform.Models.dll
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\CI-Platform.Utility.dll
-C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\CI-Platform.Data.pdb
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\CI-Platform.Models.pdb
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\bin\Debug\net6.0\CI-Platform.Utility.pdb
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI-PlatformWeb\obj\Debug\net6.0\CI-PlatformWeb.csproj.AssemblyReference.cache

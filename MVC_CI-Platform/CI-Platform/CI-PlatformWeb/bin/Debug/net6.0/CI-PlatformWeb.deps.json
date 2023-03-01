@@ -8,7 +8,6 @@
     ".NETCoreApp,Version=v6.0": {
       "CI-PlatformWeb/1.0.0": {
         "dependencies": {
-          "CI-Platform.Data": "1.0.0",
           "CI-Platform.Models": "1.0.0",
           "CI-Platform.Utility": "1.0.0",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3",
@@ -2421,16 +2420,6 @@
           "System.Xml.ReaderWriter": "4.3.0"
         }
       },
-      "CI-Platform.Data/1.0.0": {
-        "dependencies": {
-          "CI-Platform.Models": "1.0.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3",
-          "Microsoft.VisualStudio.Web.CodeGeneration.Design": "6.0.12"
-        },
-        "runtime": {
-          "CI-Platform.Data.dll": {}
-        }
-      },
       "CI-Platform.Models/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3",
@@ -3730,11 +3719,6 @@
       "sha512": "sha512-5zJ0XDxAIg8iy+t4aMnQAu0MqVbqyvfoUVl1yDV61xdo3Vth45oA2FoY4pPkxYAH5f8ixpmTqXeEIya95x0aCQ==",
       "path": "system.xml.xdocument/4.3.0",
       "hashPath": "system.xml.xdocument.4.3.0.nupkg.sha512"
-    },
-    "CI-Platform.Data/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "CI-Platform.Models/1.0.0": {
       "type": "project",

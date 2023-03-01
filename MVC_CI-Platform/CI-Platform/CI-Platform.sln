@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CI-PlatformWeb", "CI-PlatformWeb\CI-PlatformWeb.csproj", "{AC05073D-112A-4BCD-9519-E453E0FBC9D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI-PlatformWeb", "CI-PlatformWeb\CI-PlatformWeb.csproj", "{AC05073D-112A-4BCD-9519-E453E0FBC9D4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CI-Platform.Data", "CI-Platform.Data\CI-Platform.Data.csproj", "{2DCBF82C-54C0-4CCE-8A74-50B2865B42DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI-Platform.Models", "CI-Platform.Models\CI-Platform.Models.csproj", "{8A06695F-2DA4-4C18-AF3E-7688DA1BF013}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CI-Platform.Models", "CI-Platform.Models\CI-Platform.Models.csproj", "{8A06695F-2DA4-4C18-AF3E-7688DA1BF013}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CI-Platform.Utility", "CI-Platform.Utility\CI-Platform.Utility.csproj", "{48998564-79CF-40ED-A2CD-9CC29EC1A665}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI-Platform.Utility", "CI-Platform.Utility\CI-Platform.Utility.csproj", "{48998564-79CF-40ED-A2CD-9CC29EC1A665}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		{AC05073D-112A-4BCD-9519-E453E0FBC9D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC05073D-112A-4BCD-9519-E453E0FBC9D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC05073D-112A-4BCD-9519-E453E0FBC9D4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2DCBF82C-54C0-4CCE-8A74-50B2865B42DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2DCBF82C-54C0-4CCE-8A74-50B2865B42DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2DCBF82C-54C0-4CCE-8A74-50B2865B42DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2DCBF82C-54C0-4CCE-8A74-50B2865B42DE}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8A06695F-2DA4-4C18-AF3E-7688DA1BF013}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8A06695F-2DA4-4C18-AF3E-7688DA1BF013}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A06695F-2DA4-4C18-AF3E-7688DA1BF013}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -7,6 +7,7 @@ using System.Net;
 using System.Security.Claims;
 using CI_Platform.Models.Data;
 using CI_Platform.Models.Models;
+using System.Text;
 
 namespace CI_PlatformWeb.Areas.Volunteer.Controllers
 {
@@ -31,7 +32,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
             var userdata = _db.Users.Where(x => x.Email == user.Email).SingleOrDefault();
             if (userdata != null)
             {
-                if (userdata.Status == 1)
+                if (userdata.Status == 0)
                 {
                     bool isValid = (userdata.Email.Equals(user.Email) && userdata.Password.Equals(user.Password));
                     if (isValid)
@@ -86,6 +87,10 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
         {
             return View();
         }
+
+
+
+
         public IActionResult Registration()
         {
             return View();
@@ -118,9 +123,11 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
         {
             try
             {
+ 
+
                 MailMessage message = new MailMessage();
                 SmtpClient smtp = new SmtpClient();
-                message.From = new MailAddress("ciplatform123@gmail.com");
+                message.From = new MailAddress("hirenpatel.ict19@gmail.com");
                 message.To.Add(new MailAddress(mailid));
                 message.Subject = "Your Password For CI-Platform";
                 message.IsBodyHtml = true;
@@ -129,9 +136,10 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
                 smtp.Host = "smtp.gmail.com";
                 smtp.EnableSsl = true;
                 smtp.UseDefaultCredentials = false;
-                smtp.Credentials = new NetworkCredential("ciplatform123@gmail.com", "otoskohgreaywwof");
+                smtp.Credentials = new NetworkCredential("mailid", "password");
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.Send(message);
+
             }
             catch (Exception) { }
         }

@@ -10,19 +10,20 @@
         </div>
         <form action="#" method="post" class="w-100">
             <div class="mb-3 position-relative">
+
                 <label for="new-pass" class="form-label">New Password</label>
                 <input type="password" class="form-control" name="pass" id="new-pass"
                        placeholder="**********" required>
-                <span onmouseover="showPass('new-pass')" onmouseout="hidePass('new-pass')">
-                    <img src="./Assets/eye.png" alt="eye" class="eye">
+                <span onmouseover="showpass('new-pass')" onmouseout="hidepass('new-pass')">
+                    <img src="./images/eye_close.png" alt="." class="eye">
                 </span>
             </div>
             <div class="mb-3 position-relative">
                 <label for="cnf-pass" class="form-label">Confirm New Password</label>
                 <input type="password" class="form-control" name="pass" id="cnf-pass"
                        placeholder="**********" required>
-                <span onmouseover="showPass('cnf-pass')" onmouseout="hidePass('cnf-pass')">
-                    <img src="./Assets/eye.png" alt="eye" class="eye">
+                <span onmouseover="showpass('cnf-pass')" onmouseout="hidepass('cnf-pass')">
+                    <img src="./images/eye_close.png" alt="." class="eye">
                 </span>
             </div>
             <button type="submit" class="btn-ci-primary mt-2 w-100">Change Password</button>
@@ -32,3 +33,4 @@
         </form>
     </div>
 </div>
+
