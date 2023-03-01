@@ -1,0 +1,44 @@
+﻿@using CI_Platform.Models.Models
+@{
+    Layout = "~/Views/Shared/_Login_layout.cshtml";
+}
+
+@model User
+
+<div class="w-100 p-5 privacy d-flex align-items-center">
+    <form method="post" class="w-100">
+        @if (ViewBag.error != null)
+        {
+            <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                @ViewBag.error
+            </div>
+        }
+        <input name="ReturnUrl" type="text" value="@ViewBag.ReturnUrl" hidden />
+        <div class="mb-3">
+            <label asp-for="Email" class="form-label">Email Address</label>
+            <input type="email" asp-for="Email" id="email-id" class="form-control"
+                   placeholder="abc@xyz.com" required>
+        </div>
+        <div class="mb-3 position-relative">
+            <label asp-for="Password" class="form-label">Password</label>
+            <input type="password" class="form-control" asp-for="Password" id="login-pass"
+                   placeholder="**********" required>
+            <span onclick="showPass('login-pass')">
+                <img src="~/images/eye_open.png" alt="eye" class="eye" id="eye-open">
+                <hr class="eye_close visually-hidden" id="eye_close-login-pass" />
+            </span>
+        </div>
+        <button type="submit" class="btn-ci-primary mt-2 w-100">Login</button>
+        <div class="text-center">
+            <label class="mt-3"><a asp-area="Volunteer" asp-controller="Login" asp-action="ForgotPass">Lost your password?</a></label>
+            <br>
+            <label class="fs-6 mt-3">
+                Don't have an account?<a asp-area="Volunteer" asp-controller="Login" asp-action="Registration">
+                    Create
+                    Account
+                </a>
+            </label>
+        </div>
+    </form>
+</div>

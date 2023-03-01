@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "ForgotPass";
+    Layout = "~/Views/Shared/_Login_layout.cshtml";
+}
+<div class="w-100 p-5 privacy d-flex align-items-center">
+    <div>
+        <div class="w-100 text-center mb-3">
+            <span class="fs-5 fw-bold">Forgot Password</span><br>
+            <span class="fs-7">
+                Enter your email address you've using for your account below and we will
+                send
+                you a password reset link
+            </span>
+        </div>
+        <form method="post" class="w-100">
+            <div class="mb-3">
+                <label for="email-id" class="form-label">Email Address</label>
+                <input type="email" name="email" id="email-id" class="form-control"
+                       placeholder="abc@xyz.com" required>
+            </div>
+            <button type="submit" class="btn-ci-primary mt-2 w-100">Reset my Password</button>
+            <div class="text-center">
+                <label class="mt-3"><a asp-area="Volunteer" asp-controller="Login" asp-action="Index">Login</a></label>
+            </div>
+        </form>
+    </div>
+</div>

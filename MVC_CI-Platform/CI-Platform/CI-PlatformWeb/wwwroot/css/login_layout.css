@@ -1,0 +1,54 @@
+﻿.carousel-caption h1, .carousel-caption p {
+    color: #ffffff;
+    text-align: left;
+}
+
+.row-res {
+    height: 100vh;
+}
+
+.carousel-item {
+    box-shadow: 0px -300px 70px rgba(0,0,0,0.4) inset !important;
+}
+
+    .carousel-item img {
+        position: relative !important;
+        z-index: -2 !important;
+    }
+
+.carousel-indicators li {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50%;
+}
+
+.privacy {
+    height: 95% !important;
+}
+
+@media screen and (max-width:992px) {
+    .row-res {
+        height: auto;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .carousel-caption h1 {
+        font-size: 22px;
+    }
+
+
+    .carousel-caption p {
+        font-size: 12px !important;
+        margin-bottom: -25px !important;
+    }
+}
+
+@media screen and (max-height:710px) {
+    .reg-responsive {
+        overflow-y: scroll;
+    }
+    .reg-responsive form {
+        height:100%!important;
+    }
+}
