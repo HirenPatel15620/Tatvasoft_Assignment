@@ -1,4 +1,4 @@
-﻿@using CI_Platform.Models.Models
+﻿
 @{
     Layout = "~/Views/Shared/_Login_layout.cshtml";
 }
@@ -7,13 +7,6 @@
 
 <div class="w-100 p-5 privacy d-flex align-items-center">
     <form method="post" class="w-100">
-        @if (ViewBag.error != null)
-        {
-            <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                @ViewBag.error
-            </div>
-        }
         <input name="ReturnUrl" type="text" value="@ViewBag.ReturnUrl" hidden />
         <div class="mb-3">
             <label asp-for="Email" class="form-label">Email Address</label>

@@ -1,4 +1,4 @@
-namespace CI_Platform.Models
+namespace CI_Platform.Models.Models
 {
     public class ErrorViewModel
     {

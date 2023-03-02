@@ -12,7 +12,21 @@
 </head>
 
 <body>
-    <div class="container-fluid p-0 m-0">
+    <div class="container-fluid p-0 m-0 position-relative">
+        @if (ViewBag.error != null)
+        {
+            <div class="alert alert-danger alert-dismissible position-absolute top-0 w-100 mt-2">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                @ViewBag.error
+            </div>
+        }
+        @if (ViewBag.success != null)
+        {
+            <div class="alert alert-success alert-dismissible position-absolute top-0 w-100 mt-2">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                @ViewBag.success
+            </div>
+        }
         <div class="row-res row m-0 justify-content-between align-items-center">
             <div class="col-12 col-lg-9 p-0 h-100">
                 <div id="loginCarousel" class="carousel slide h-100" data-bs-ride="carousel">

@@ -1,4 +1,4 @@
-﻿using CI_Platform.Models;
+﻿using CI_Platform.Models.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -23,6 +23,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
         {
             return View();
         }
+
         [Authorize]
         public IActionResult Mission_volunteering()
         {
