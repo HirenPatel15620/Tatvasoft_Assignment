@@ -14,10 +14,23 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
             _logger = logger;
         }
 
+        //public IActionResult Index()
+        //{
+        //    return View();
+        //}
+
         public IActionResult Index()
         {
+            //TempData["users"] = HttpContext.Session.GetString("username");
+            //ViewData["country"] = _logger.Country.Tolist();
+            //ViewData["city"] = _logger.City.ToList();
+            //ViewData["theme"] = _logger.MissionThemes.ToList();
+            //ViewData["skill"] = _logger.Skills.ToList();
+            //ViewData["mission"] = _logger.Missions.ToList();
             return View();
         }
+
+
 
         public IActionResult Privacy()
         {
