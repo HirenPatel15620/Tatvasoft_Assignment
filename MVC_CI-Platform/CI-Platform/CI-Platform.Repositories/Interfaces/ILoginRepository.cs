@@ -11,6 +11,7 @@ namespace CI_Platform.Repositories.Interfaces
     public interface ILoginRepository
     {
         User getUserByEmail(string email);
+        User getUserByPhone(string Phonenumber);
         Token getTokenByEmail(string email);
         void InsertUser(User user);
         void InsertToken(Token token);

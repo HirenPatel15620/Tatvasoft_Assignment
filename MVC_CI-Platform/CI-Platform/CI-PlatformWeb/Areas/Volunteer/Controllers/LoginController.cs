@@ -84,9 +84,14 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Registration(User user)
         {
+
             if (_loginRepository.getUserByEmail(user.Email) != null)
             {
                 ViewBag.error = user.Email + " was already Registered!";
+            }
+            else if(_loginRepository.getUserByPhone(user.PhoneNumber) != null)
+            {
+                ViewBag.error = user.PhoneNumber + " was already Registered!";
             }
             else
             {
@@ -102,7 +107,8 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
         {
             var dataToken = _loginRepository.getTokenByEmail(email);
             if (dataToken != null)
-            {
+                //if (dataToken.Used == 1)
+                {
                 var date1 = DateTime.Now;
                 var date2 = date1.AddHours(-4);
                 if (dataToken.Token1 == token && dataToken.GeneratedAt > date2 && dataToken.GeneratedAt < date1)

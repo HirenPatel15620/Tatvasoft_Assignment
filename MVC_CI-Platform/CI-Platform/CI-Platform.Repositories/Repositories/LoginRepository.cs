@@ -25,6 +25,11 @@ namespace CI_Platform.Repositories.Repositories
             return _db.Users.Where(x => x.Email == email).FirstOrDefault();
         }
 
+        public User getUserByPhone(string Phonenumber)
+        {
+            return _db.Users.Where(x => x.PhoneNumber == Phonenumber).FirstOrDefault();
+        }
+
         public void InsertUser(User user)
         {
             _db.Users.Add(user);

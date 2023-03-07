@@ -10125,11 +10125,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
+      "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
       "projectName": "CI-PlatformWeb",
-      "projectPath": "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
+      "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\CI-PlatformWeb.csproj",
       "packagesPath": "C:\\Users\\pca107\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\obj\\",
+      "outputPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -10151,14 +10151,14 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Data\\CI-Platform.Data.csproj": {
-              "projectPath": "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Data\\CI-Platform.Data.csproj"
+            "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Data\\CI-Platform.Data.csproj": {
+              "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Data\\CI-Platform.Data.csproj"
             },
-            "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Models\\CI-Platform.Models.csproj": {
-              "projectPath": "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Models\\CI-Platform.Models.csproj"
+            "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Models\\CI-Platform.Models.csproj": {
+              "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Models\\CI-Platform.Models.csproj"
             },
-            "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Repositories\\CI-Platform.Repositories.csproj": {
-              "projectPath": "C:\\Users\\pca107\\Desktop\\Tatvasoft_Assignment-master (1)\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Repositories\\CI-Platform.Repositories.csproj"
+            "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Repositories\\CI-Platform.Repositories.csproj": {
+              "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Repositories\\CI-Platform.Repositories.csproj"
             }
           }
         }
