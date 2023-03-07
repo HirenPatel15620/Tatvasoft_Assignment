@@ -1,0 +1,233 @@
+﻿.card {
+    box-shadow: 0px 0px 25px #0000001F;
+    border: 0 !important;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 25px #F886346B;
+    border: 0 !important;
+    margin: -5px;
+}
+
+.card-title {
+    margin-bottom: 5px;
+    order: 1;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 5px;
+}
+
+.card-text {
+    color: #757575;
+    font-size: 14px;
+    margin-bottom: 5px;
+    order: 2;
+}
+
+.city-name {
+    height: 20px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding-inline: 10px;
+    border-radius: 30px;
+    color: white;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.city-name p {
+    padding: 0;
+    margin: 0;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.like-mission {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 50px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 4px;
+    border: none;
+    border-radius: 50%;
+    color: white;
+}
+
+.share-mission {
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 4px;
+    border: none;
+    border-radius: 50%;
+    color: white;
+}
+
+.theme-mission {
+    height: 30px;
+    position: absolute;
+    bottom: -15px;
+    display: flex;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 30px;
+    padding-inline: 15px;
+}
+
+.rating {
+    min-height: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+    order: 3;
+}
+
+.rating div {
+    color: #414141;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.rating-img {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+
+.time-goal {
+    position: relative;
+}
+
+.timeline {
+    position: absolute;
+    top: -15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.timeline div {
+    display: flex;
+    align-items: center;
+    height: 30px;
+    border: 1px solid #adadad;
+    border-radius: 30px;
+    padding-inline: 20px;
+    background-color: #ffffff;
+}
+
+.list-view .card-title {
+    order: 2;
+}
+
+.list-view .card-text {
+    order: 3;
+}
+
+.list-view .rating {
+    order: 1;
+}
+
+.list-view .rating img {
+    display: block !important;
+    height: 18px !important;
+    margin-right: 5px !important;
+}
+
+.list-view .rating span {
+    display: flex !important;
+    margin-right: 10px !important;
+}
+
+.list-view .timeline {
+    display: none !important;
+}
+
+.list-view hr {
+    display: none !important;
+}
+
+.list-view .rating img {
+    display: block !important;
+}
+
+.list-view .orga {
+    display: block;
+}
+
+.list-view .seat-left {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.list-view .seat {
+    margin-right: 15px;
+}
+
+.list-view .deadline {
+    margin-right: 15px;
+}
+
+.list-view .range {
+    margin-right: 15px;
+}
+
+.list-view .skill {
+    margin-right: 15px;
+}
+
+.list-view .seat-listview {
+    padding-bottom: 5px;
+}
+
+.list-view .deadline-listview {
+    padding-bottom: 5px;
+}
+
+.list-view .range-listview {
+    display: flex !important;
+    padding-bottom: 5px;
+}
+
+.list-view .skill-listview {
+    display: flex !important;
+    padding-bottom: 5px;
+}
+
+.list-view .button-listview {
+    display: flex !important;
+}
+
+.list-view .listview-button {
+    display: block;
+}
+
+.list-view .button {
+    display: none;
+}
+
+.list-view .time-goal {
+    margin-top: 15px;
+}
+
+.list-view .card-img-top {
+    min-height: 100% !important;
+}

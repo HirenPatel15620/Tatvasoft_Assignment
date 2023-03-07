@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "ResetPass";
+    Layout = "~/Views/Shared/_Login_layout.cshtml";
+}
+<div class="w-100 p-5 privacy d-flex align-items-center">
+    <div class="w-100">
+        <div class="w-100 text-center mb-3">
+            <span class="fs-5 fw-bold">New Password</span><br>
+            <span class="fs-7">Please enter a new password in the fields below.</span>
+        </div>
+        <form method="post" class="w-100">
+            <input type="email" name="email" value="@ViewBag.email" hidden/>
+            <input type="text" name="token" value="@ViewBag.token" hidden/>
+            <div class="mb-3 mb-lg-2 position-relative">
+                <label for="new-pass" class="form-label">New Password</label>
+                <input type="password" class="form-control" name="pass" id="new-pass"
+                       placeholder="**********" required>
+                <span onclick="showPass('new-pass')">
+                    <img src="~/images/eye_open.png" alt="eye" class="eye" id="eye-open">
+                    <hr class="eye_close visually-hidden" id="eye_close-new-pass" />
+                </span>
+            </div>
+            <div id="pass-limit-error"></div>
+            <div class="mb-3 mb-lg-2 position-relative">
+                <label for="cnf-pass" class="form-label">Confirm New Password</label>
+                <input type="password" class="form-control" name="cnfpass" id="cnf-pass"
+                       placeholder="**********" required>
+                <span onclick="showPass('cnf-pass')">
+                    <img src="~/images/eye_open.png" alt="eye" class="eye" id="eye-open">
+                    <hr class="eye_close visually-hidden" id="eye_close-cnf-pass" />
+                </span>
+            </div>
+            <div id="pass-error"></div>
+            <button type="submit" id="regi" class="btn-ci-primary mt-2 w-100">Change Password</button>
+            <div class="text-center">
+                <label class="mt-3"><a asp-area="Volunteer" asp-controller="Login" asp-action="Index">Login</a></label>
+            </div>
+        </form>
+    </div>
+</div>

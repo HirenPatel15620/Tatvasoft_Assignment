@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoginPage</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/login_layout.css" asp-append-version="true" />
+</head>
+
+<body>
+    <div class="container-fluid p-0 m-0 position-relative">
+        @if (ViewBag.error != null)
+        {
+            <div class="alert alert-danger alert-dismissible position-absolute top-0 w-100 mt-2">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                @ViewBag.error
+            </div>
+        }
+        @if (ViewBag.success != null)
+        {
+            <div class="alert alert-success alert-dismissible position-absolute top-0 w-100 mt-2">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                @ViewBag.success
+            </div>
+        }
+        <div class="row-res row m-0 justify-content-between align-items-center">
+            <div class="col-12 col-lg-9 p-0 h-100">
+                <div id="loginCarousel" class="carousel slide h-100" data-bs-ride="carousel">
+                    <ol class="carousel-indicators d-lg-flex d-none">
+                        <li data-bs-target="#loginCarousel" data-bs-slide-to="0" class="active" aria-current="true"
+                            aria-label="First slide"></li>
+                        <li data-bs-target="#loginCarousel" data-bs-slide-to="1" aria-label="Second slide"></li>
+                        <li data-bs-target="#loginCarousel" data-bs-slide-to="2" aria-label="Third slide"></li>
+                    </ol>
+                    <div class="carousel-inner h-100" role="listbox">
+                        <div class="carousel-item active h-100">
+                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
+                                 class="w-100 d-block h-100" alt="First slide">
+                            <div class="carousel-caption d-block">
+                                <h1>Sed ut perspiciatis unde omnis iste natus voluptatem.</h1>
+                                <p class="fs-6">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                                    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                                    officia deserunt mollit anim id est laborum.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item h-100">
+                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
+                                 class="w-100 d-block h-100" alt="Second slide">
+                            <div class="carousel-caption d-block">
+                                <h1>Sed ut perspiciatis unde omnis iste natus voluptatem.</h1>
+                                <p class="fs-6">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                                    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                                    officia deserunt mollit anim id est laborum.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="carousel-item h-100">
+                            <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png"
+                                 class="w-100 d-block h-100" alt="Third slide">
+                            <div class="carousel-caption d-block">
+                                <h1>Sed ut perspiciatis unde omnis iste natus voluptatem.</h1>
+                                <p class="fs-6">
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+                                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis
+                                    nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis
+                                    aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                                    nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+                                    officia deserunt mollit anim id est laborum.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 p-0 h-100">
+                @RenderBody()
+                <div class="text-center">
+                    <label>
+                        <a href="#">Privacy Policy</a>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/name._validate.js" asp-append-version="true"></script>
+    <script src="~/js/phone_validate.js" asp-append-version="true"></script>
+    <script src="~/js/password_hide_show.js" asp-append-version="true"></script>
+    <script src="~/js/match_pass.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+
+</html>

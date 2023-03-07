@@ -1,0 +1,62 @@
+﻿@model User
+@{
+    ViewData["Title"] = "Registration";
+    Layout = "~/Views/Shared/_Login_layout.cshtml";
+}
+<div class="w-100 px-5 py-2 privacy d-flex align-items-center reg-responsive">
+    <form method="post" class="w-100 mt-3 mt-lg-0 validform">
+        <div class="mb-3 mb-lg-2">
+            <label asp-for="FirstName" class="form-label fs-7">First Name</label>
+            <input type="text" asp-for="FirstName" id="fname" class="form-control fs-7" placeholder="Name"
+                   onkeyup="checkName('fname')" onblur="checkName('fname')" required>
+        </div>
+        <div class="mb-3 mb-lg-2">
+            <label asp-for="LastName" class="form-label fs-7">Last Name</label>
+            <input type="text" asp-for="LastName" id="lname" class="form-control fs-7" placeholder="Surname"
+                   onkeyup="checkName('lname')" onblur="checkName('lname')" required>
+        </div>
+        <div class="mb-3 mb-lg-2">
+            <label asp-for="PhoneNumber" class="form-label fs-7">Phone Number</label>
+            <input type="text" asp-for="PhoneNumber" id="phone" class="form-control fs-7 phone"
+                   placeholder="+91-9876543210" pattern="(\+[0-9]{3})?[-.]?[0-9]{10}|\+([0-9]{2})?[-.]?[0-9]{10}|(\+[0-9]{1})?[-.]?[0-9]{10}$"
+                   title="Plz enter valid Phone Number ex. '9876543210', '+9876543210','+91-9876543210'"
+                   required>
+        </div>
+        <div class="mb-3 mb-lg-2">
+            <label asp-for="Email" class="form-label fs-7">Email Address</label>
+            <input type="email" asp-for="Email" id="email-id" class="form-control fs-7"
+                   placeholder="abc@xyz.com" required>
+        </div>
+        <div class="mb-3 mb-lg-2 position-relative">
+            <label asp-for="Password" class="form-label">New Password</label>
+            <input type="password" class="form-control" asp-for="Password" id="new-pass"
+                   placeholder="**********" required>
+            <span onclick="showPass('new-pass')">
+                <img src="~/images/eye_open.png" alt="eye" class="eye" id="eye-open">
+                <hr class="eye_close visually-hidden" id="eye_close-new-pass" />
+            </span>
+        </div>
+        <div id="pass-limit-error"></div>
+        <div class="mb-3 mb-lg-2 position-relative">
+            <label for="cnf-pass" class="form-label">Confirm New Password</label>
+            <input type="password" class="form-control" name="cnfpass" id="cnf-pass"
+                   placeholder="**********" required>
+            <span onclick="showPass('cnf-pass')">
+                <img src="~/images/eye_open.png" alt="eye" class="eye" id="eye-open">
+                <hr class="eye_close visually-hidden" id="eye_close-cnf-pass" />
+            </span>
+        </div>
+        <div id="pass-error"></div>
+        <button type="submit" id="regi" class="btn-ci-primary mt-3 mt-lg-2 w-100">Register</button>
+        <div class="text-center">
+            <label class="mt-3 mt-lg-2"><a asp-area="Volunteer" asp-controller="Login" asp-action="ForgotPass">Lost your password?</a></label>
+            <br>
+            <label class="fs-6 mt-3 mt-lg-2">
+                Already registered?<a asp-area="Volunteer" asp-controller="Login" asp-action="Index">
+                    Login
+                    now
+                </a>
+            </label>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,102 @@
+.star {
+    position: absolute;
+    top: -15px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+    .star div {
+        display: flex;
+        align-items: center;
+        height: 30px;
+        padding-inline: 10px;
+        background-color: #ffffff;
+    }
+
+.vol-mission-detail {
+    height: 100px;
+}
+
+.recent-vol {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+}
+
+    .recent-vol img {
+        position: absolute;
+        object-fit: cover;
+        width: 100%;
+        left: 0;
+        top: 0;
+        text-align: center;
+    }
+
+.recent-vol-name {
+    line-height: 100%;
+}
+
+.recent-vol-page {
+    height: 40px;
+}
+
+    .recent-vol-page .btn {
+        border-radius: 0;
+    }
+
+        .recent-vol-page .btn:focus {
+            box-shadow: 0 0 0 1px #F88634;
+            border: none !important;
+        }
+
+.related-mission {
+    width: 100% !important;
+    overflow-x: auto;
+}
+
+.card-related-mission {
+    padding: 10px;
+    width: 350px !important;
+    min-width: 350px !important;
+}
+
+.comment-post .form-control {
+    height: auto !important;
+}
+
+.comment-list {
+    background-color: #00000007 !important;
+    padding: 15px;
+    overflow-y: auto;
+    max-height: 400px;
+}
+
+.comment-box {
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.comment-avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    margin: auto;
+}
+
+    .comment-avatar img {
+        position: absolute;
+        object-fit: cover;
+        width: 100%;
+        left: 0;
+        top: 0;
+        text-align: center;
+    }
