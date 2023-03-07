@@ -118,7 +118,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
                 }
                
             }
-            TempData["resetpass"] = "Something was changed in Url or Url was expired! Please try again!";
+            TempData["resetpass"] = " Url was expired or Something was changed in Url! Please try again!";
             return RedirectToAction("ForgotPass", "Login", new { Area = "Volunteer" });
         }
 
