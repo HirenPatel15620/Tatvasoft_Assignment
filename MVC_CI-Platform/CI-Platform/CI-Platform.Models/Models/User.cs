@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CI_Platform.Models.Models;
 
@@ -10,7 +11,7 @@ public partial class User
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
-
+    
     public string Email { get; set; } = null!;
 
     public string Password { get; set; } = null!;

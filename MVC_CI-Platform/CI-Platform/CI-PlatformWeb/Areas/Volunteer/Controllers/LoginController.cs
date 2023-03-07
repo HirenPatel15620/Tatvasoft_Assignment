@@ -107,16 +107,16 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
         {
             var dataToken = _loginRepository.getTokenByEmail(email);
             if (dataToken != null)
-                //if (dataToken.Used == 1)
-                {
+            {
                 var date1 = DateTime.Now;
                 var date2 = date1.AddHours(-4);
-                if (dataToken.Token1 == token && dataToken.GeneratedAt > date2 && dataToken.GeneratedAt < date1)
+                if (dataToken.Token1 == token && dataToken.GeneratedAt > date2 && dataToken.GeneratedAt < date1 && dataToken.Used==0)
                 {
                     ViewBag.email = email;
                     ViewBag.token = token;
                     return View();
                 }
+               
             }
             TempData["resetpass"] = "Something was changed in Url or Url was expired! Please try again!";
             return RedirectToAction("ForgotPass", "Login", new { Area = "Volunteer" });
