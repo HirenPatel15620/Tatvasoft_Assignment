@@ -1,4 +1,6 @@
-﻿using CI_Platform.Models.Models;
+﻿using CI_Platform.Models;
+using CI_Platform.Models.Models;
+using CI_Platform.Repositories.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,30 +9,26 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IHomeRepository _homeRepository;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IHomeRepository homeRepository)
         {
-            _logger = logger;
+            _homeRepository = homeRepository;
         }
-
-        //public IActionResult Index()
-        //{
-        //    return View();
-        //}
 
         public IActionResult Index()
         {
-            //TempData["users"] = HttpContext.Session.GetString("username");
-            //ViewData["country"] = _logger.Country.Tolist();
-            //ViewData["city"] = _logger.City.ToList();
-            //ViewData["theme"] = _logger.MissionThemes.ToList();
-            //ViewData["skill"] = _logger.Skills.ToList();
-            //ViewData["mission"] = _logger.Missions.ToList();
+            ViewData["country"] = _homeRepository.GetCountries();
+            ViewData["city"] = _homeRepository.GetCities();
+            ViewData["skill"] = _homeRepository.GetSkills();
+            ViewData["theme"] = _homeRepository.GetMissionThemes();
+            ViewData["mission"] = _homeRepository.GetMissions();
+            ViewData["goalmission"] = _homeRepository.GetGoalMissions();
+            ViewData["sumofaction"] = _homeRepository.GetSumOfAction();
+            if (TempData["Logout"] != null)
+                ViewBag.success = TempData["Logout"];
             return View();
         }
-
-
 
         public IActionResult Privacy()
         {
@@ -40,6 +38,11 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
         [Authorize]
         public IActionResult Mission_volunteering()
         {
+            ViewData["country"] = _homeRepository.GetCountries();
+            ViewData["city"] = _homeRepository.GetCities();
+            ViewData["skill"] = _homeRepository.GetSkills();
+            ViewData["theme"] = _homeRepository.GetMissionThemes();
+            ViewData["mission"] = _homeRepository.GetMissions();
             return View();
         }
 

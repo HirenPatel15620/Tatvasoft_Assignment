@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Qu06S50gPZpxqmpaQtvTx+c5Ge0MGNKGxgdOnwLYc3g=",
+  "Hash": "NX09BEZyxxXIXed+EPFlHOoMquWZoe908yH6quHxgLU=",
   "Source": "CI-PlatformWeb",
   "BasePath": "_content/CI-PlatformWeb",
   "Mode": "Default",
@@ -2106,23 +2106,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\grid_list_toggle.js"
-    },
-    {
-      "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\wwwroot\\js\\mailvalidation.js",
-      "SourceId": "CI-PlatformWeb",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\wwwroot\\",
-      "BasePath": "_content/CI-PlatformWeb",
-      "RelativePath": "js/mailvalidation.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\mailvalidation.js"
     },
     {
       "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-PlatformWeb\\wwwroot\\js\\match_pass.js",
