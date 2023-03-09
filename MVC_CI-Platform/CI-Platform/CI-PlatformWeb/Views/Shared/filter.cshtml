@@ -1,4 +1,12 @@
-﻿<div id="myfilter" class="overlay">
+﻿@{
+    var country = (List<Country>)ViewData["country"];
+    var city = (List<City>)ViewData["city"];
+    var theme = (List<MissionTheme>)ViewData["theme"];
+    var skill = (List<Skill>)ViewData["skill"];
+}
+
+
+<div id="myfilter" class="overlay">
     <a class="closefilter closebtn" onclick="closefilter()">&times;</a>
     <div class="overlay-content">
         <div class="dropdown">
@@ -8,14 +16,12 @@
                 <img src="~/images/drop-down.png" />
             </a>
             <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                       asp-action="Privacy">Action</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                       asp-action="Privacy">Another action</a>
-                </li>
+                @foreach (var i in country)
+                {
+                    <li>
+                        <a class="dropdown-item" id="@i.Name">@i.Name</a>
+                    </li>
+                }
             </ul>
         </div>
         <div class="dropdown">
@@ -24,15 +30,14 @@
                 <span class="pe-1">City</span>
                 <img src="~/images/drop-down.png" />
             </a>
-            <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                       asp-action="Privacy">Action</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                       asp-action="Privacy">Another action</a>
-                </li>
+            <ul class="dropdown-menu" id="citydrop">
+                @foreach (var i in city)
+                {
+                    <li>
+                        <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
+                       asp-action="Privacy">@i.Name</a>
+                    </li>
+                }
             </ul>
         </div>
         <div class="dropdown">
@@ -42,14 +47,13 @@
                 <img src="~/images/drop-down.png" />
             </a>
             <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                       asp-action="Privacy">Action</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                       asp-action="Privacy">Another action</a>
-                </li>
+                @foreach (var i in theme)
+                {
+                    <li>
+                        <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
+                       asp-action="Privacy">@i.Title</a>
+                    </li>
+                }
             </ul>
         </div>
         <div class="dropdown">
@@ -59,14 +63,13 @@
                 <img src="~/images/drop-down.png" />
             </a>
             <ul class="dropdown-menu">
-                <li>
-                    <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                       asp-action="Privacy">Action</a>
-                </li>
-                <li>
-                    <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                       asp-action="Privacy">Another action</a>
-                </li>
+                @foreach (var i in skill)
+                {
+                    <li>
+                        <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
+                       asp-action="Privacy">@i.SkillName</a>
+                    </li>
+                }
             </ul>
         </div>
         <div class="dropdown">

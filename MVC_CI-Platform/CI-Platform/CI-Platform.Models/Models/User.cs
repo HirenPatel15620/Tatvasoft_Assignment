@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace CI_Platform.Models.Models;
 
@@ -11,7 +10,7 @@ public partial class User
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
-    
+
     public string Email { get; set; } = null!;
 
     public string Password { get; set; } = null!;
@@ -44,11 +43,7 @@ public partial class User
 
     public DateTime? DeletedAt { get; set; }
 
-    public virtual City? City { get; set; }
-
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
-
-    public virtual Country? Country { get; set; }
 
     public virtual ICollection<FavoriteMission> FavoriteMissions { get; } = new List<FavoriteMission>();
 

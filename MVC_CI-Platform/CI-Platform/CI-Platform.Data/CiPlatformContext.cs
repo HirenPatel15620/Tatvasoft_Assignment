@@ -60,11 +60,11 @@ public partial class CiPlatformContext : DbContext
 
     public virtual DbSet<Timesheet> Timesheets { get; set; }
 
-    public virtual DbSet<Token> Tokens { get; set; }
-
     public virtual DbSet<User> Users { get; set; }
 
     public virtual DbSet<UserSkill> UserSkills { get; set; }
+
+    public virtual DbSet<UserToken> UserTokens { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
@@ -288,6 +288,8 @@ public partial class CiPlatformContext : DbContext
 
         modelBuilder.Entity<Mission>(entity =>
         {
+            entity.HasKey(e => e.MissionId).IsClustered(false);
+
             entity.ToTable("mission");
 
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
@@ -295,6 +297,7 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.CityId).HasColumnName("city_id");
             entity.Property(e => e.CountryId).HasColumnName("country_id");
             entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime")
                 .HasColumnName("created_at");
             entity.Property(e => e.DeletedAt)
@@ -306,7 +309,10 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.EndDate)
                 .HasColumnType("datetime")
                 .HasColumnName("end_date");
-            entity.Property(e => e.MissionType).HasColumnName("mission_type");
+            entity.Property(e => e.MissionType)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("mission_type");
             entity.Property(e => e.OrganizationDetail)
                 .HasColumnType("text")
                 .HasColumnName("organization_detail");
@@ -714,18 +720,6 @@ public partial class CiPlatformContext : DbContext
                 .HasConstraintName("FK_timesheet_user");
         });
 
-        modelBuilder.Entity<Token>(entity =>
-        {
-            entity.ToTable("Token");
-
-            entity.Property(e => e.Id).HasColumnName("id");
-            entity.Property(e => e.Email).IsUnicode(false);
-            entity.Property(e => e.GeneratedAt)
-                .HasDefaultValueSql("(getdate())")
-                .HasColumnType("datetime");
-            entity.Property(e => e.Token1).IsUnicode(false);
-        });
-
         modelBuilder.Entity<User>(entity =>
         {
             entity.ToTable("user");
@@ -787,14 +781,6 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.WhyIVolunteer)
                 .HasColumnType("text")
                 .HasColumnName("why_i_volunteer");
-
-            entity.HasOne(d => d.City).WithMany(p => p.Users)
-                .HasForeignKey(d => d.CityId)
-                .HasConstraintName("FK_user_city");
-
-            entity.HasOne(d => d.Country).WithMany(p => p.Users)
-                .HasForeignKey(d => d.CountryId)
-                .HasConstraintName("FK_user_country");
         });
 
         modelBuilder.Entity<UserSkill>(entity =>
@@ -823,6 +809,20 @@ public partial class CiPlatformContext : DbContext
                 .HasForeignKey(d => d.UserId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_user_skill_user");
+        });
+
+        modelBuilder.Entity<UserToken>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK_Token");
+
+            entity.ToTable("UserToken");
+
+            entity.Property(e => e.Id).HasColumnName("id");
+            entity.Property(e => e.Email).IsUnicode(false);
+            entity.Property(e => e.GeneratedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.UserToken1).IsUnicode(false);
         });
 
         OnModelCreatingPartial(modelBuilder);

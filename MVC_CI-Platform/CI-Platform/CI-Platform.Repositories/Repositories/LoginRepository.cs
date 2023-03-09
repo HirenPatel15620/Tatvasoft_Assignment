@@ -3,6 +3,7 @@ using System.Net;
 using CI_Platform.Models.Models;
 using CI_Platform.Repositories.Interfaces;
 using CI_Platform.Data;
+using CI_Platform.Models.ViewModels;
 
 namespace CI_Platform.Repositories.Repositories
 {
@@ -15,9 +16,9 @@ namespace CI_Platform.Repositories.Repositories
             _db = db;
         }
 
-        public Token getTokenByEmail(string email)
+        public UserToken getTokenByEmail(string email)
         {
-            return _db.Tokens.Where(x => x.Email == email).FirstOrDefault();
+            return _db.UserTokens.Where(x => x.Email == email).FirstOrDefault();
         }
 
         public User getUserByEmail(string email)
@@ -30,14 +31,20 @@ namespace CI_Platform.Repositories.Repositories
             return _db.Users.Where(x => x.PhoneNumber == Phonenumber).FirstOrDefault();
         }
 
-        public void InsertUser(User user)
+        public void InsertUser(Register user)
         {
-            _db.Users.Add(user);
+            User u = new User();
+            u.FirstName = user.FirstName;
+            u.LastName = user.LastName;
+            u.Email = user.Email;
+            u.Password = user.Password;
+            u.PhoneNumber = user.PhoneNumber;
+            _db.Users.Add(u);
         }
         
-        public void InsertToken(Token token)
+        public void InsertToken(UserToken token)
         {
-            _db.Tokens.Add(token);
+            _db.UserTokens.Add(token);
         }
 
         public void Save()
@@ -50,9 +57,9 @@ namespace CI_Platform.Repositories.Repositories
             _db.Users.Update(user);
         }
 
-        public void UpdateToken(Token token)
+        public void UpdateToken(UserToken token)
         {
-            _db.Tokens.Update(token);
+            _db.UserTokens.Update(token);
         }
 
         public string TokenGenerate()

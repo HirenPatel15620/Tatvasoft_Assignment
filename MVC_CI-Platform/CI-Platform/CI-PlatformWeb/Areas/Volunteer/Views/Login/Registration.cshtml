@@ -7,46 +7,56 @@
     <form method="post" class="w-100 mt-3 mt-lg-0 validform">
         <div class="mb-3 mb-lg-2">
             <label asp-for="FirstName" class="form-label fs-7">First Name</label>
-            <input type="text" asp-for="FirstName" id="fname" class="form-control fs-7" placeholder="Name"
-                   onkeyup="checkName('fname')" onblur="checkName('fname')" required>
+            <input  asp-for="FirstName"  class="form-control fs-7" placeholder="Name" 
+                   onkeyup="checkName('fname')" onblur="checkName('fname')" >
+                          <span asp-validation-for="FirstName"></span>
         </div>
         <div class="mb-3 mb-lg-2">
             <label asp-for="LastName" class="form-label fs-7">Last Name</label>
-            <input type="text" asp-for="LastName" id="lname" class="form-control fs-7" placeholder="Surname"
-                   onkeyup="checkName('lname')" onblur="checkName('lname')" required>
+            <input  asp-for="LastName" id="lname" class="form-control fs-7" placeholder="Surname"
+                   onkeyup="checkName('lname')" onblur="checkName('lname')" >
+                          <span asp-validation-for="LastName"></span>
+
         </div>
         <div class="mb-3 mb-lg-2">
             <label asp-for="PhoneNumber" class="form-label fs-7">Phone Number</label>
-            <input type="text" asp-for="PhoneNumber" id="phone" class="form-control fs-7 phone"
+            <input asp-for="PhoneNumber" id="phone" class="form-control fs-7 phone"
                    placeholder="+91-9876543210" pattern="(\+[0-9]{3})?[-.]?[0-9]{10}|\+([0-9]{2})?[-.]?[0-9]{10}|(\+[0-9]{1})?[-.]?[0-9]{10}$"
-                   title="Plz enter valid Phone Number ex. '9876543210', '+9876543210','+91-9876543210'"
-                   required>
+                   title="Plz enter valid Phone Number ex. '9876543210', '+9876543210','+91-9876543210'">
+                          <span asp-validation-for="PhoneNumber"></span>
+
         </div>
         <div class="mb-3 mb-lg-2">
             <label asp-for="Email" class="form-label fs-7">Email Address</label>
-            <input type="email" asp-for="Email" id="email-id " class="form-control fs-7"
+            <input asp-for="Email" id="email-id " class="form-control fs-7"
                    placeholder="abc@xyz.com"
-                   title="xyz@gmail.com" required>
+                   title="xyz@gmail.com">
+                          <span asp-validation-for="Email"></span>
                  
+
         </div>
         <div class="mb-3 mb-lg-2 position-relative">
             <label asp-for="Password" class="form-label">New Password</label>
             <input type="password" class="form-control" asp-for="Password" id="new-pass"
-                   placeholder="**********" required>
+                   placeholder="**********" >
             <span onclick="showPass('new-pass')">
                 <img src="~/images/eye_open.png" alt="eye" class="eye" id="eye-open">
                 <hr class="eye_close visually-hidden" id="eye_close-new-pass" />
             </span>
+                          <span asp-validation-for="Password"></span>
+
         </div>
         <div id="pass-limit-error"></div>
         <div class="mb-3 mb-lg-2 position-relative">
             <label for="cnf-pass" class="form-label">Confirm New Password</label>
             <input type="password" class="form-control" name="cnfpass" id="cnf-pass"
-                   placeholder="**********" required>
+                   placeholder="**********" >
             <span onclick="showPass('cnf-pass')">
                 <img src="~/images/eye_open.png" alt="eye" class="eye" id="eye-open">
                 <hr class="eye_close visually-hidden" id="eye_close-cnf-pass" />
             </span>
+                
+
         </div>
         <div id="pass-error"></div>
         <button type="submit" id="regi" class="btn-ci-primary mt-3 mt-lg-2 w-100">Register</button>

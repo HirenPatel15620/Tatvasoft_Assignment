@@ -23,7 +23,7 @@ public partial class Mission
 
     public DateTime? EndDate { get; set; }
 
-    public String MissionType { get; set; } = null!;
+    public string MissionType { get; set; } = null!;
 
     public int? Status { get; set; }
 

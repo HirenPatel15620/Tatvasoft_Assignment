@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using CI_Platform.Models.Models;
+using CI_Platform.Models.ViewModels;
 
 namespace CI_PlatformWeb.Areas.Volunteer.Controllers
 {
@@ -82,35 +83,40 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Registration(User user)
+        public IActionResult Registration(Register user)
         {
-
-            if (_loginRepository.getUserByEmail(user.Email) != null)
+            if (!ModelState.IsValid)
             {
-                ViewBag.error = user.Email + " was already Registered!";
-            }
-            else if(_loginRepository.getUserByPhone(user.PhoneNumber) != null)
-            {
-                ViewBag.error = user.PhoneNumber + " was already Registered!";
+                if (_loginRepository.getUserByEmail(user.Email) != null)
+                {
+                    ViewBag.error = user.Email + " was already Registered!";
+                }
+                else if (_loginRepository.getUserByPhone(user.PhoneNumber) != null)
+                {
+                    ViewBag.error = user.PhoneNumber + " was already Registered!";
+                }
+                else
+                {
+                    _loginRepository.InsertUser(user);
+                    _loginRepository.Save();
+                    TempData["Registration"] = "User Registred Successfully! Please Login!";
+                    return RedirectToAction("Index", "Login", new { Area = "Volunteer" });
+                }
+                return View();
             }
             else
             {
-                _loginRepository.InsertUser(user);
-                _loginRepository.Save();
-                TempData["Registration"] = "User Registred Successfully! Please Login!";
-                return RedirectToAction("Index", "Login", new { Area = "Volunteer" });
+                return View(user);
             }
-            return View();
         }
-
-        public IActionResult ResetPass(string email, string token)
+    public IActionResult ResetPass(string email, string token)
         {
             var dataToken = _loginRepository.getTokenByEmail(email);
             if (dataToken != null)
             {
                 var date1 = DateTime.Now;
                 var date2 = date1.AddHours(-4);
-                if (dataToken.Token1 == token && dataToken.GeneratedAt > date2 && dataToken.GeneratedAt < date1 && dataToken.Used==0)
+                if (dataToken.UserToken1 == token && dataToken.GeneratedAt > date2 && dataToken.GeneratedAt < date1 && dataToken.Used==0)
                 {
                     ViewBag.email = email;
                     ViewBag.token = token;
@@ -130,7 +136,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
             if (user != null)
             {
                 var dataToken = _loginRepository.getTokenByEmail(email);
-                if (dataToken.Token1 == token)
+                if (dataToken.UserToken1 == token)
                 {
                     user.Password = pass;
                     user.UpdateAt = DateTime.Now;
@@ -162,10 +168,10 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
             {
                 var dataToken = _loginRepository.getTokenByEmail(email);
                 string token = _loginRepository.TokenGenerate();
-               Token emailtoken = new Token();
+               UserToken emailtoken = new UserToken();
                 if (dataToken != null)
                 {
-                    dataToken.Token1 = token;
+                    dataToken.UserToken1 = token;
                     dataToken.Used = 0;
                     dataToken.GeneratedAt = DateTime.Now;
                     _loginRepository.UpdateToken(dataToken);
@@ -173,7 +179,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
                 else
                 {
                     emailtoken.Email = email;
-                    emailtoken.Token1 = token;
+                    emailtoken.UserToken1 = token;
                     emailtoken.Used = 0;
                     emailtoken.GeneratedAt = DateTime.Now;
                     _loginRepository.InsertToken(emailtoken);
