@@ -1,4 +1,11 @@
-﻿<div class="border-bottom shadow-sm mb-1 mb-sm-3">
+﻿@{
+    var country = (List<Country>)ViewData["country"];
+    var city = (List<City>)ViewData["city"];
+    var theme = (List<MissionTheme>)ViewData["theme"];
+    var skill = (List<Skill>)ViewData["skill"];
+}
+
+<div class="border-bottom shadow-sm mb-1 mb-sm-3">
     <div class="container-lg container-fluid">
         <div class="row align-items-center align-items-sm-stretch">
             <div class="col-10 col-md-6 col-sm-4">
@@ -23,15 +30,13 @@
                             <span class="pe-1 text-secondary">Country</span>
                             <img src="~/images/drop-down.png" />
                         </div>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                                   asp-action="Privacy">Action</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                                   asp-action="Privacy">Another action</a>
-                            </li>
+                        <ul class="dropdown-menu m-height">
+                            @foreach (var i in country)
+                            {
+                                <li>
+                                    <a class="dropdown-item" id="@i.Name" onclick="addccst(this.id)">@i.Name</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <div class="col-3 dropdown d-flex align-items-center border-start px-1 px-sm-2">
@@ -40,15 +45,13 @@
                             <span class="pe-1 text-secondary">City</span>
                             <img src="~/images/drop-down.png" />
                         </div>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                                   asp-action="Privacy">Action</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                                   asp-action="Privacy">Another action</a>
-                            </li>
+                        <ul class="dropdown-menu m-height">
+                            @foreach (var i in city)
+                            {
+                                <li>
+                                    <a class="dropdown-item" id="@i.Name" onclick="addccst(this.id)">@i.Name</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <div class="col-3 dropdown d-flex align-items-center border-start px-1 px-sm-2">
@@ -57,15 +60,13 @@
                             <span class="pe-1 text-secondary">Theme</span>
                             <img src="~/images/drop-down.png" />
                         </div>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                                   asp-action="Privacy">Action</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                                   asp-action="Privacy">Another action</a>
-                            </li>
+                        <ul class="dropdown-menu m-height">
+                            @foreach (var i in theme)
+                            {
+                                <li>
+                                    <a class="dropdown-item" id="@i.Title" onclick="addccst(this.id)">@i.Title</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                     <div class="col-3 dropdown d-flex align-items-center border-start border-end px-1 px-sm-2">
@@ -74,15 +75,13 @@
                             <span class="pe-1 text-secondary">Skills</span>
                             <img src="~/images/drop-down.png" />
                         </div>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                                   asp-action="Privacy">Action</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" asp-area="Volunteer" asp-controller="Home"
-                                   asp-action="Privacy">Another action</a>
-                            </li>
+                        <ul class="dropdown-menu m-height">
+                            @foreach (var i in skill)
+                            {
+                                <li>
+                                    <a class="dropdown-item" id="@i.SkillName" onclick="addccst(this.id)">@i.SkillName</a>
+                                </li>
+                            }
                         </ul>
                     </div>
                 </div>
