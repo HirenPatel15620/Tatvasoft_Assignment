@@ -16,7 +16,8 @@ public class Register
         public string LastName { get; set; }
 
         [Required(ErrorMessage = "Email is Required")]
-        [EmailAddress(ErrorMessage = "Invalid Email Address")]
+        [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z",
+        ErrorMessage = "Please enter correct email address")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Mobile Number is Required")]
@@ -26,9 +27,6 @@ public class Register
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Confirm Password is Required")]
-        [DataType(DataType.Password)]
-        [Compare("Password", ErrorMessage = "Password and Confirm Password Not Match")]
-        public string CnfPassword { get; set; }
+    
     }
 }

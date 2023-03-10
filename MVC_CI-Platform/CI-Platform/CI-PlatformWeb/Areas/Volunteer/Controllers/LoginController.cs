@@ -71,7 +71,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
             }
             else
             {
-                ViewBag.error = "Email Id not Found!";
+                ViewBag.error = "Email Id Is Unvalid!";
             }
             return View();
         }
@@ -85,7 +85,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Registration(Register user)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (_loginRepository.getUserByEmail(user.Email) != null)
                 {
@@ -106,6 +106,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
             }
             else
             {
+
                 return View(user);
             }
         }
@@ -192,7 +193,7 @@ namespace CI_PlatformWeb.Areas.Volunteer.Controllers
             }
             else
             {
-                ViewBag.error = "Email Not Found";
+                ViewBag.error = "Email Is Unvalid";
             }
             return View();
         }

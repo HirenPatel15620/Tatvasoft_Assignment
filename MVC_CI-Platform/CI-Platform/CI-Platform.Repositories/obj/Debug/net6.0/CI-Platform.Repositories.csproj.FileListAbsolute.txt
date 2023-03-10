@@ -93,3 +93,41 @@ C:\Users\pca107\Desktop\Tatvasoft_Assignment-master (1)\Tatvasoft_Assignment-mas
 C:\Users\pca107\Desktop\Tatvasoft_Assignment-master (1)\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\ref\CI-Platform.Repositories.dll
 C:\Users\pca107\Desktop\Tatvasoft_Assignment-master (1)\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.pdb
 C:\Users\pca107\Desktop\Tatvasoft_Assignment-master (1)\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.genruntimeconfig.cache
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Repositories.deps.json
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Repositories.runtimeconfig.json
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Repositories.dll
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\ref\CI-Platform.Repositories.dll
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Repositories.pdb
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Data.dll
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Models.dll
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Data.pdb
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Models.pdb
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.csproj.AssemblyReference.cache
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.AssemblyInfoInputs.cache
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.AssemblyInfo.cs
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.csproj.CoreCompileInputs.cache
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.csproj.CopyComplete
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.dll
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\ref\CI-Platform.Repositories.dll
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.pdb
+C:\Users\pca107\Desktop\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.genruntimeconfig.cache
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Repositories.deps.json
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Repositories.runtimeconfig.json
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Repositories.dll
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\ref\CI-Platform.Repositories.dll
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Repositories.pdb
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Data.dll
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Models.dll
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Data.pdb
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\bin\Debug\net6.0\CI-Platform.Models.pdb
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.csproj.AssemblyReference.cache
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.AssemblyInfoInputs.cache
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.AssemblyInfo.cs
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.csproj.CoreCompileInputs.cache
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.csproj.CopyComplete
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.dll
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\ref\CI-Platform.Repositories.dll
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.pdb
+C:\Users\pca107\Desktop\safe\Tatvasoft_Assignment-master\Tatvasoft_Assignment-master\MVC_CI-Platform\CI-Platform\CI-Platform.Repositories\obj\Debug\net6.0\CI-Platform.Repositories.genruntimeconfig.cache

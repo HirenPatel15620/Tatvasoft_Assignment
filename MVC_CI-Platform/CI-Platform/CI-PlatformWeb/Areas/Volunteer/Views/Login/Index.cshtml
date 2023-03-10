@@ -10,13 +10,13 @@
         <input name="ReturnUrl" type="text" value="@ViewBag.ReturnUrl" hidden />
         <div class="mb-3">
             <label asp-for="Email" class="form-label">Email Address</label>
-            <input type="email" asp-for="Email" id="email-id" class="form-control"
+            <input  asp-for="Email" id="email-id" class="form-control"
                 placeholder="abc@xyz.com" >
                    <span asp-validation-for="Email"></span>
         </div>
         <div class="mb-3 position-relative">
             <label asp-for="Password" class="form-label">Password</label>
-            <input type="password" class="form-control" asp-for="Password" id="login-pass"
+            <input class="form-control" asp-for="Password" id="login-pass"
                    placeholder="**********" >
             <span onclick="showPass('login-pass')">
                 <img src="~/images/eye_open.png" alt="eye" class="eye" id="eye-open">
