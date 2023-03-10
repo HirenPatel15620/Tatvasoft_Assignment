@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "QHvst3fp7WxAqajGKfz7thaUJGPk3dOtceLn1KrUdOA8DAbFnUH7YMOxcipKVF35GG+NtXOVfaNEaVVZBst0Ww==",
+  "dgSpecHash": "xUR4B8Hh/xFHi5Qj+NQ0xsVlSo+ZNq/gN27mo2l79aUvNzaN0rDubSSX36Eg3cN6CCG+YBwG5JaSxrACbYB9zw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pca107\\Desktop\\safe\\Tatvasoft_Assignment-master\\Tatvasoft_Assignment-master\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Repositories\\CI-Platform.Repositories.csproj",
+  "projectFilePath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI-Platform.Repositories\\CI-Platform.Repositories.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pca107\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pca107\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
