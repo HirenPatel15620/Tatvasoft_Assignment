@@ -27,8 +27,14 @@
     <div class="d-inline-flex align-items-center justify-content-between w-100">
         <div class="fs-3">Explore <strong>@missions.Count()</strong> missions</div>
         <div class="d-none d-sm-block">
-            <select class="sort-by my-1 me-3">
-                <option value="">Sort By</option>
+            <select class="sort-by my-1 me-3" onchange="sort_by()">
+                <option value="Newest">Newest</option>
+                <option value="Oldest">Oldest</option>
+                <option value="Lowest available seats">Lowest available seats</option>
+                <option value="Highest available seats">Highest available seats</option>
+                <option value="My favourites">My favourites</option>
+                <option value="Registration deadline">Registration deadline</option>
+
             </select>
             <button class="p-2 border-0 bg-white rounded-circle grid-active" id="grid">
                 <img src="~/images/grid.png"
@@ -122,7 +128,7 @@
                                                     <img src="~/images/Seats-left.png" alt="">
                                                 </div>
                                                 <div class="seat">
-                                                    <h6 class="p-0 m-0">10</h6>
+                                                    <h6 class="p-0 m-0">@i.Availability</h6>
                                                     <span class="fs-7">Seats left</span>
                                                 </div>
                                             </div>

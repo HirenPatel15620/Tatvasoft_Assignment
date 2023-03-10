@@ -12,14 +12,14 @@
             <label asp-for="Email" class="form-label">Email Address</label>
             <input  asp-for="Email" id="email-id" class="form-control"
                 placeholder="abc@xyz.com" >
-                   <span asp-validation-for="Email" class="text-danger"></span>
+                   <span asp-validation-for="Email"></span>
         </div>
         <div class="mb-3 position-relative">
             <label asp-for="Password" class="form-label">Password</label>
-            <input class="form-control" asp-for="Password" id="login-pass"
+            <input type="password"class="form-control" asp-for="Password" id="login-pass"
                    placeholder="**********" >
-          
-                   <span asp-validation-for="Password" class="text-danger"></span>
+        
+                   <span asp-validation-for="Password"></span>
 
         </div>
         <button type="submit" class="btn-ci-primary mt-2 w-100">Login</button>
