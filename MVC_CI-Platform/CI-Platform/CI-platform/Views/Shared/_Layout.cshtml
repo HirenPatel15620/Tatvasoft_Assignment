@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CI_platform</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CI_platform.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+            <a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">Stories</a>
+            <a class="nav-link text-muted mt-3" asp-area="" asp-controller="Home" asp-action="Index">Policy </a>
+  </div>
+</div>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom">
+           @* <img src="~/images/logo.png" class="logo" alt="not found" />*@
+            <div class="container w-100 d-flex justify-content-between header">
+                <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load"/>
+                <div class="d-flex pages">
+                @*<span class="nav-link text-muted explore" asp-area="">Explore <img src="~/images/drop-down.png" alt="not load" /></span>*@
+                <a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">Stories</a>
+                    @*<a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">News</a>*@
+                <a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">Policy </a>
+                </div>
+               <div class="d-flex">
+                   @* <div class="dropdown d-flex">
+                    <span class="position-relative notification-badge dropdown-toggle"  data-bs-toggle="dropdown" id="notification" role="button" aria-haspopup="true" aria-expanded="false">
+                        <span class="badge">7</span>
+                    <img src="~/images/bell.png" alt="not load" />
+                    </span>
+                        <div class="dropdown-menu" aria-labelledby="notification">
+                            <div class="dropdown-header d-flex justify-content-between border-bottom">
+                                <img src="~/images/settings.png" alt="not-load" />
+                                <strong>Notifications</strong>
+                                <span>Clear All</span>
+                            </div>
+                            <div class="dropdown-item d-flex border-bottom">
+                                <div class="d-flex">
+                            <img src="~/images/user1.png" alt="not-load" />
+                            <span class="dropdown-item-text text-muted">john doe: recomended this mission - <span class="text-black">Grow Trees</span> </span>
+                           </div>
+                                <div class="mission-badge"></div>
+                        </div>
+                        </div>
+                    </div>*@
+                    <div class="dropdown d-flex align-items-center">
+                    <img src="~/images/user-img.png" class="user dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                    <span class="nav-link username text-muted dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
+                    <img src="~/images/drop-down.png" class="down dropdown-toggle"  data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Log Out</a>
+                    </div>
+                    </div>
+                </div>
+                </div>
+        </nav>
+    </header>
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+
+    <footer class=" footer text-muted">
+        <div class="container">
+            &copy; 2023 - CI_platform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+        <script src="~/js/index.js"  asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
