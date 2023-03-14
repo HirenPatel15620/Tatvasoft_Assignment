@@ -336,7 +336,7 @@ const loadmissions = (missions) => {
                 + "<div class='d-flex justify-content-between border-bottom mt-3'>"
                 + " <div class='Seats d-flex align-items-center'>"
                 + "<img src='images/Seats-left.png' alt=''>"
-                + " <span>" + item.missions.avbSeat + "<p>" + "seats left" + "</p>"
+                + " <span>" + item.missions.Availability + "<p>" + "seats left" + "</p>"
                 + " </span>"
                 + " </div>"
                 + " <div class='deadline d-flex align-items-center'>"

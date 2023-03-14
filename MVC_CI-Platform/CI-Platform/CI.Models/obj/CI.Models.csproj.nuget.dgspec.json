@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pca107\\Desktop\\CI-platform refrence\\CI-platform\\CI.Models\\CI.Models.csproj": {}
+    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pca107\\Desktop\\CI-platform refrence\\CI-platform\\CI.Models\\CI.Models.csproj": {
+    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pca107\\Desktop\\CI-platform refrence\\CI-platform\\CI.Models\\CI.Models.csproj",
+        "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj",
         "projectName": "CI.Models",
-        "projectPath": "C:\\Users\\pca107\\Desktop\\CI-platform refrence\\CI-platform\\CI.Models\\CI.Models.csproj",
+        "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj",
         "packagesPath": "C:\\Users\\pca107\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pca107\\Desktop\\CI-platform refrence\\CI-platform\\CI.Models\\obj\\",
+        "outputPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "igbzInF/pbG2NTQ5nsQIvizar1qZ6G0sFEnKDeyHpKwA8WmdX8YXLS5H4S6LlsW6ZdaDAtUl7fRLP73xmoDKmg==",
+  "dgSpecHash": "NE+X6vhKXsnwSySpgj48jaoT8D3mGfVSHC7J3JMDaDwtHG0EmCm/uWrUueKHUJKj0b91aU3zM/D8aQYexKE3Sg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pca107\\Desktop\\CI-platform refrence\\CI-platform\\CI.Models\\CI.Models.csproj",
+  "projectFilePath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

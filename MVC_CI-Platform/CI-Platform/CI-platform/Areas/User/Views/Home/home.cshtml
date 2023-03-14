@@ -20,7 +20,7 @@
                 <span class="dropdown-item">Lowest available seats</span>
                 </span>
                 </div>*@
-            <select class="form-select me-3" onchange="sort_by()" aria-label="Sort By" id="sort">
+            <select class="form-select me-3" onchange="sort_by()" aria-label="Sort By" id="sort" asp-controller="Home" asp-action="filter" name="SortOption">
                 <option disabled selected>Sort By</option>
                 <option value="Newest">Newest</option>
                 <option value="Oldest">Oldest</option>
@@ -44,9 +44,9 @@
                     <div class="thumbnail card d-flex">
                         <div class="img-event">
                             <img class="group list-group-image w-100 h-100"
-                             src="~/images/Grow-Trees-On-the-path-to-environment-sustainability.png" alt="" />
+                             src="@item.image?.MediaPath" alt="" />
                             
-    @*missions img path       ====       @item.image?.MediaPath*@
+    @*missions img path       ====~/images/Grow-Trees-On-the-path-to-environment-sustainability.png       @item.image?.MediaPath*@
 
                             <div class="location-img">
                                 <img class="text-light" src="images/pin.png" alt="">
