@@ -178,7 +178,7 @@ namespace CI_platform.Controllers
                     var receiverEmail = new MailAddress(user.Email, "Receiver");
                     var password = "vlpzyhibrvpaewte";
                     var sub = "Reset Your Password";
-                    var body = "Your Reset Password Token" + token;
+                    var body = "Your Reset Password Token :-   " + token;
                     var smtp = new SmtpClient
                     {
                         Host = "smtp.gmail.com",
