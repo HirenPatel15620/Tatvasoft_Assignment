@@ -11,7 +11,23 @@ let country_count = 0
 let city_count = 0;
 let theme_count = 0;
 let skill_count = 0;
+let pageindex=0;
 var clearall = "<span class='ms-1 clear-all'>" + "Clear All" + "</span>";
+
+const view_detail_onmouseover = (id, img) => {
+    let image = document.getElementById(img)
+    image.classList.add("story-image")
+    let item = document.getElementById(id);
+    item.style.display = "block";
+}
+
+const view_detail_onmouseout = (id, img) => {
+    let image = document.getElementById(img)
+    image.classList.remove("story-image")
+    let item = document.getElementById(id);
+    item.style.display = "none";
+}
+
 function listview() { 
     for (var i = 0; i < items.length; i++) {
         items[i].classList.remove("col-lg-4")
@@ -29,6 +45,7 @@ function listview() {
     list.classList.add("view")
     list.style.marginLeft = 20 + "px";
 }
+
 function gridview() {
     for (var i = 0; i < items.length; i++) {
         items[i].classList.add("col-lg-4")
@@ -89,9 +106,9 @@ function addcities(name, type) {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
-            loadmissions(result.missions)
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -141,12 +158,10 @@ const addcountries = (name, type) => {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-        success: async function(result) {
-            if (result.missions.length>0) {
-                await loadcities(result.missions[0].cities);
-                await loadmissions(result.missions)
-            }
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+        success: function (result) {
+            loadmissions(result.mission.result, result.length)
+            loadcities(result.city.result);
         },
         error: function () {
             console.log("Error updating variable");
@@ -195,9 +210,9 @@ const addthemes = (name,type) => {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-        success: async function (result) {
-            await loadmissions(result.missions)
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+        success:  function (result) {
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -246,9 +261,9 @@ const addskills = (name,type) => {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-        success: async function (result) {
-            await loadmissions(result.missions)
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+        success:  function (result) {
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -259,131 +274,20 @@ const addskills = (name,type) => {
 
 //cities according to coutry
 const loadcities = (cities) => {
-    $('.city').empty()
-     $.each(cities, function (i, item) {
-         var data = "<span class='dropdown-item'>"
-             + "<input class='form-check-input' type='checkbox'>"
-             + "<label class='form-check-label ms-1' for='flexCheckDefault'>"
-             + item.name
-             + "</label>"
-             + "</span>";
-         $('.city').append(data)
-         $('.city span').each(function () {
-             $('.city span').eq(i).find('input').attr('id', item.name)
-             $('.city span').eq(i).find('input').attr('onchange', `addcities('${item.name}')`)
-         })
-     })
+    $('.city').empty().append(cities)
 }
 
 
 //load filtered missions
-const loadmissions = (missions) => {
-    if (missions.length == 0) {
-        $('.missions').empty()
-        var no_mission ="<p>"+
-                "No Mission Found"
-            + "</p>" +
-            "<button class='applyButton btn'>" + "Submit New Mission" + "<img src='images/right-arrow.png' alt=''>"
-                + "</button>"
-        $('.no-mission-found').append(no_mission);
+const loadmissions = (missions, length) => {
+    if (length === 0) {
+        $('.no-mission-found').removeClass("d-none").addClass("d-flex flex-column");
+        $('.missions').empty();
     }
     else {
-        $('.missions').empty()
-        $('.no-mission-found').empty();
-        $.each(missions, function (i, item) {
-            var data = "<div class='item col-md-6 col-lg-4 col-sm-6 mt-3'>"
-                + "<div class='thumbnail card d-flex'>"
-                + "<div class='img-event'>"
-                + " <img class='group list-group-image w-100 h-100' src='' alt='' />"
-                + "<div class='location-img'>"
-                + "<img class='text-light' src='images/pin.png' alt=''>"
-                + "<span class='text-light ms-1'>"
-                + item.mission_city
-                + "</span>"
-                + "</div>"
-                + "<button class='like-img border-0'>"
-                + "<img class='text-light' src='images/heart.png' alt=''>"
-                + "</button>"
-                + "<button class='stop-img border-0'>"
-                + "<img class='text-light' src='images/user.png' alt=''>"
-                + " </button>"
-                + "<button class='mission-theme border-0'>"
-                + "<span class='p-2'>"
-                + item.mission_theme
-                + "</span > "
-                + " </button>"
-                + " </div>"
-                + " <div class='caption card-body'>"
-                + "<h4 class='group card-title inner list-group-item-heading'>"
-                + item.missions.title.slice(0, 50) + "..." + "</h4>"
-                + " <p class='group inner list-group-item-text'>"
-                + item.missions.description.slice(0, 100) + "....." + "</p>"
-                + "<div class='d-flex list-view justify-content-between'>"
-                + " <span class='organization'>" + item.missions.organizationName + "</span>"
-                + "<div class='rating'>"
-
-                + "<img src='images/selected-star.png' alt=''>"
-                + " <img src='images/selected-star.png' alt=''>"
-                + " <img src='images/selected-star.png' alt=''>"
-                + " <img src='images/star.png' alt=''>"
-                + " <img src='images/star.png' alt=''>"
-                + " </div>"
-                + "</div>"
-                + "<div class='duration-seats-info mt-4'>"
-                + " <div class='duration'>"
-                + " </div>"
-                + " </div>"
-                + "<div class='d-flex justify-content-between border-bottom mt-3'>"
-                + " <div class='Seats d-flex align-items-center'>"
-                + "<img src='images/Seats-left.png' alt=''>"
-                + " <span>" + item.missions.Availability + "<p>" + "seats left" + "</p>"
-                + " </span>"
-                + " </div>"
-                + " <div class='deadline d-flex align-items-center'>"
-                + "</div>"
-                + " </div>"
-                + " <div class='d-flex justify-content-center mt-4'>"
-                + "<button class='applyButton btn'>" + "Apply" + "<img src='images/right-arrow.png' alt=''>"
-                + "</button>"
-                + "</div>"
-                + " </div>"
-                + "</div>"
-                + " </div>"
-
-            // some operations.
-            if ($('#list').hasClass('view')) {
-                var $mydata = $(data);
-                $mydata.removeClass('col-md-6 col-lg-4 col-sm-6').addClass('col-lg-12 col-md-12 col-sm-12 mb-5')
-                $mydata.find('div').eq(0).removeClass('card')
-                $mydata.find('div').eq(1).addClass('list_image')
-                data = $mydata
-            }
-            $('.missions').append(data)
-            $('.img-event').eq(i).find('img').eq(0).attr('src', item.image.mediaPath)
-            if (item.missions.missionType === "GOAL") {
-                var achieved = "<img src='images/achieved.png' alt=''>"
-                    + "<div class='w-100'>"
-                    + "<div class='progress' style='width:90%;margin-left:10px;'>"
-                    + "<div class='progress-bar' role='progressbar'' aria-valuenow='75' aria-valuemin='0' aria-valuemax='100'>" + "</div>"
-                    + "</div>"
-                    + "<p class='text-muted'>" + item.missions.achieved + " achieved" + "</p>"
-                    + " </div>"
-                var goalobject = parseInt(item.missions.goalObject.match(/\d/g).join(''), 10)
-                var percent = (item.missions.achieved / goalobject) * 100;
-                var goal = "<p id='duration-txt' style='margin-bottom: 0;'>" + item.missions.goalObject + "</p>"
-                $('.duration').eq(i).append(goal)
-                $('.deadline').eq(i).append(achieved)
-                $('.deadline').eq(i).find('.progress-bar').css("width", percent + "%")
-            }
-            else {
-                var deadline = "<img src='images/deadline.png' alt=''>"
-                    + "<span>" + item.missions.deadline.slice(0, 10) +
-                    "<p>" + "Deadline" + "</p>" + "</span>"
-                var time = "<p id='duration-txt' style='margin-bottom: 0;'>" + "From " + item.missions.startDate.slice(0, 10) + " To " + item.missions.endDate.slice(0, 10) + "</p>"
-                $('.duration').eq(i).append(time)
-                $('.deadline').eq(i).append(deadline)
-            }
-        })
+        $('.explore').find('b').empty().append(`${length} Missions`)
+        $('.no-mission-found').addClass("d-none").removeClass("d-flex flex-column");
+        $('.missions').empty().append(missions)
     }
 }
 
@@ -395,9 +299,9 @@ const search_missions = () => {
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { key },
+            data: { key: key, page_index: pageindex },
             success: function (result) {
-                loadmissions(result.missions)
+                loadmissions(result.mission.result, result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -408,9 +312,9 @@ const search_missions = () => {
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { countries: countries, cities: cities, themes: themes, skills: skills },
+            data: { countries: countries, cities: cities, themes: themes, skills: skills, page_index: pageindex },
             success: function (result) {
-                loadmissions(result.missions)
+                loadmissions(result.mission.result,result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -427,9 +331,9 @@ const sort_by = () => {
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
             success: function (result) {
-                loadmissions(result.missions)
+                loadmissions(result.mission.result,result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -449,9 +353,9 @@ const clear_all = () => {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
-            loadmissions(result.missions)
+            loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -464,6 +368,7 @@ const clear_all = () => {
 //remove badges
 const remove_badges = (id, badge_type) => {
     var selected = $('#sort').find(':selected').text();
+    $(`#${id.slice(6)}`).prop('checked', false);
     $('.all-choices').find(`#${id.replace(/\s/g, '')}`).remove()
     if (badge_type == "city") {
         if (cities.includes(id.slice(6))) {
@@ -492,9 +397,9 @@ const remove_badges = (id, badge_type) => {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
         success: function (result) {
-            loadmissions(result.missions)
+            loadmissions(result.mission.result,result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -502,5 +407,133 @@ const remove_badges = (id, badge_type) => {
     })
 }
 
+//need to work to complete
+const pagination = (page_index) => {
+    pageindex = page_index - 1;
+    $('.pagination li span').each(function (i, item) {
+            item.classList.remove('page-active')
+    })
+    $(`#page-${page_index}`).addClass('page-active')
+    $.ajax({
+        url: '/home',
+        type: 'POST',
+        data: { page_index: page_index-1 },
+        success: function (result) {
+            loadmissions(result.mission.result, result.length)
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    })
+}
 
+const prev = () => {
+    var current_page;
+    $('.pagination li span').each(function (i, item) {
+        if (item.classList.contains('page-active')) {
+            current_page = i - 1;
+            if (current_page !== 1) {
+                $('.pagination li span').eq(i - 1).addClass('page-active')
+                item.classList.remove('page-active')
+            }
+        }
+    })
+    if (current_page !== 1) {
+        pageindex = current_page - 2
+        $.ajax({
+        url: '/home',
+            type: 'POST',
+            data: { page_index: current_page - 2 },
+        success: function (result) {
+            loadmissions(result.mission.result, result.length)
+        },
+        error: function (e) {
+            console.log(e);
+        }
+    })
+    }
+}
+
+const next = (max_page) => {
+    var current_page;
+    $('.pagination li span').each(function (i, item) {
+        if (item.classList.contains('page-active')) {
+            current_page = i - 1;
+            if (current_page !== max_page) {
+                $('.pagination li span').eq(i + 1).addClass('page-active')
+                item.classList.remove('page-active')
+                return false
+            }
+        }
+    })
+    if (current_page !== max_page) {
+        pageindex = current_page
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: { page_index: current_page },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+}
+
+const first_page = () => {
+    var current_page;
+    $('.pagination li span').each(function (i, item) {
+        if (item.classList.contains('page-active')) {
+            current_page = i - 1;
+            if (current_page !== 1) {
+                $('.pagination li span').eq(2).addClass('page-active')
+                item.classList.remove('page-active')
+            }
+        }
+    })
+    if (current_page !== 1) {
+        pageindex = 0
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: { page_index: 0 },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+}
+
+const last_page = (max_page) => {
+    var current_page;
+    $('.pagination li span').each(function (i, item) {
+        if (item.classList.contains('page-active')) {
+            current_page = i - 1;
+            if (current_page !== max_page) {
+                $('.pagination li span').eq(max_page+1).addClass('page-active')
+                item.classList.remove('page-active')
+                return false
+            }
+        }
+    })
+    if (current_page !== max_page) {
+        pageindex = max_page-1
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: { page_index: max_page-1 },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
+    }
+}
    

@@ -16,14 +16,11 @@ namespace CI.DataAcess.Repository
             _db = db;
             UserAuthentication = new UserAuthentication(_db);
             Mission = new Mission(_db);
-            MissionMedia = new MissionMedia(_db);
             ResetPassword = new ResetPassword(_db);
         }
         public IUserAuthentication UserAuthentication { get;private set; }
 
         public IMission Mission { get; private set; }
-
-        public IMissionMedia MissionMedia { get; private set; }
 
         public IResetPassword ResetPassword { get; private set; }
 

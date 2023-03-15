@@ -15,7 +15,7 @@ public partial class User
 
     public string Password { get; set; } = null!;
 
-    public string? PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; } = null!;
 
     public string? Avatar { get; set; }
 
@@ -35,23 +35,25 @@ public partial class User
 
     public string? Title { get; set; }
 
-    public int Status { get; set; }
+    public string Status { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdateAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 
+    public virtual City? City { get; set; }
+
     public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
+
+    public virtual Country? Country { get; set; }
 
     public virtual ICollection<FavoriteMission> FavoriteMissions { get; } = new List<FavoriteMission>();
 
     public virtual ICollection<MissionApplication> MissionApplications { get; } = new List<MissionApplication>();
 
-    public virtual ICollection<MissionInvite> MissionInviteFromUsers { get; } = new List<MissionInvite>();
-
-    public virtual ICollection<MissionInvite> MissionInviteToUsers { get; } = new List<MissionInvite>();
+    public virtual ICollection<MissionInvite> MissionInvites { get; } = new List<MissionInvite>();
 
     public virtual ICollection<MissionRating> MissionRatings { get; } = new List<MissionRating>();
 

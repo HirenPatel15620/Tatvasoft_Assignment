@@ -5,7 +5,7 @@ namespace CI.Models.Models;
 
 public partial class FavoriteMission
 {
-    public long FavouriteMissionId { get; set; }
+    public long FavoriteMissionId { get; set; }
 
     public long UserId { get; set; }
 
@@ -13,7 +13,7 @@ public partial class FavoriteMission
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdateAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 

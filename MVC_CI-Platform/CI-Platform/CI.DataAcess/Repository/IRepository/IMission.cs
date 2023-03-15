@@ -8,10 +8,14 @@ namespace CI.DataAcess.Repository.IRepository
     public interface IMission:IRepository<CI.Models.Models.Mission>
     {
         void Save();
-        List<Models.ViewModels.Mission> GetAllMission();
-        List<Models.ViewModels.Mission> GetFilteredMissions(List<string> countries,List<string>cities, List<string> themes, List<string> skills,string sort_by);
-        List<Models.ViewModels.Mission> GetSearchMissions(string key);
-
-
+        Models.ViewModels.Mission GetAllMission();
+        Models.ViewModels.Mission GetFilteredMissions(List<string> countries,List<string>cities, List<string> themes, List<string> skills,string sort_by,int page_index);
+        Models.ViewModels.Mission GetSearchMissions(string key, int page_index);
+        CI.Models.ViewModels.Volunteer_Mission Mission(long id,long user_id);
+        IEnumerable<Models.ViewModels.Comment_Viewmodel> comment(long user_id,long mission_id,string comment,int length);
+        bool apply_for_mission(long user_id, long mission_id);
+        bool add_to_favourite(long user_id, long mission_id);
+        bool Rate_mission(long user_id, long mission_id,int rating);
+        CI.Models.ViewModels.Volunteer_Mission Next_Volunteers(int count,long mission_id);
     }
 }

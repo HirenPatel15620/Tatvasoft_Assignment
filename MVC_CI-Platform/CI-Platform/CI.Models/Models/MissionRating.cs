@@ -11,11 +11,11 @@ public partial class MissionRating
 
     public long MissionId { get; set; }
 
-    public int Rating { get; set; }
+    public string Rating { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdateAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 

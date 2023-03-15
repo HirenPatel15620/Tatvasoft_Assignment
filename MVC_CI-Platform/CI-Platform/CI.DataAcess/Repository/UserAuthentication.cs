@@ -28,7 +28,7 @@ namespace CI.DataAcess.Repository
             else
             {
                 user.Password = password;
-                user.UpdateAt = DateTime.Now;
+                user.UpdatedAt = DateTime.Now;
                 return user;
             }
         }

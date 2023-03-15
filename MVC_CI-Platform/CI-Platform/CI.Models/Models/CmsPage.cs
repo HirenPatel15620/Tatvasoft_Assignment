@@ -13,11 +13,11 @@ public partial class CmsPage
 
     public string Slug { get; set; } = null!;
 
-    public int? Status { get; set; }
+    public string? Status { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdateAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 }

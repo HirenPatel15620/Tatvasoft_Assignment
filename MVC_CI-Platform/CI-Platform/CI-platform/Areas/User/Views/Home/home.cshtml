@@ -2,178 +2,72 @@
     ViewData["Title"] = "Home-Find More Missions";
     ViewData["css"] = "index.css";
 }
-@model List<CI.Models.ViewModels.Mission>
-<partial name="SecondHeader_partial" />
+@model CI.Models.ViewModels.Mission
+<partial name="SecondHeader_partial"  />
 @*main body*@
-<div class="container body pt-5">
-    <div class="d-flex justify-content-between">
-        <span class="explore">Explore <b>@Model.Count Missions</b></span>
-        <div class="d-flex sort">
-            @* <div class="dropdown border shadow-sm d-flex align-items-center">
-                <div class="dropdown-toggle w-100 d-flex justify-content-between align-items-center p-2" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" id="sort">
-                <span class="text-muted">Sort by</span>
-                <img src="~/images/drop-down.png" class="h-50" alt="not load"/>
-                </div>
-                <span class="dropdown-menu" aria-labelledby="sort">
-                <span class="dropdown-item" >Newest</span>
-                <span class="dropdown-item">Oldest</span>
-                <span class="dropdown-item">Lowest available seats</span>
-                </span>
-                </div>*@
-            <select class="form-select me-3" onchange="sort_by()" aria-label="Sort By" id="sort" asp-controller="Home" asp-action="filter" name="SortOption">
-                <option disabled selected>Sort By</option>
-                <option value="Newest">Newest</option>
-                <option value="Oldest">Oldest</option>
-                <option value="Lowest available seats">Lowest available seats</option>
-                <option value="Highest available seats">Highest available seats</option>
-                <option value="My favourites">My favourites</option>
-                <option value="Registration deadline">Registration deadline</option>
+    <div class="container body pt-5">
+        <div class="d-flex justify-content-between">
+            <span class="explore">Explore <b>@Model.Missions?.Count Missions</b></span>
+            <div class="d-flex sort">
+        <select class="form-select me-3" onchange="sort_by()" aria-label="Sort By" id="sort">
+  <option disabled  selected>Sort By</option>
+  <option value="Newest">Newest</option>
+  <option value="Oldest">Oldest</option>
+  <option value="Lowest available seats">Lowest available seats</option>
+  <option value="Highest available seats">Highest available seats</option>
+  <option value="My favourites">My favourites</option>
+  <option value="Registration deadline">Registration deadline</option>
 
 
-            </select>
+</select>
             <img src="~/images/grid.png" class="view rounded-circle" id="grid" onclick="gridview()" alt="not load" style="object-fit:scale-down;" />
             <img src="~/images/list.png" alt="not load" class="rounded-circle" id="list" onclick="listview()" style="object-fit:scale-down;" />
         </div>
-    </div>
-    @*missions*@
-    <div class="row missions">
-        @{
-            foreach (var item in Model)
-            {
-                <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                    <div class="thumbnail card d-flex">
-                        <div class="img-event">
-                            <img class="group list-group-image w-100 h-100"
-                             src="@item.image?.MediaPath" alt="" />
-                            
-    @*missions img path       ====~/images/Grow-Trees-On-the-path-to-environment-sustainability.png       @item.image?.MediaPath*@
-
-                            <div class="location-img">
-                                <img class="text-light" src="images/pin.png" alt="">
-                                <span class="text-light">@item.Missions?.City.Name</span>
-                            </div>
-                            <button class="like-img border-0">
-                                <img class="text-light" src="images/heart.png" alt="">
+            </div> 
+            @*missions*@
+            <div class="row missions">
+        <partial name="mission_partial" />
+            </div>
+            <div class='container d-none justify-content-center align-items-center mt-5 mb-5 w-50 text-muted no-mission-found'>
+                <span>No Mission Found</span>
+                 <button class="applyButton w-75 mt-3 btn">Submit New Mission <img src="images/right-arrow.png" alt="">
                             </button>
-                            <button class="stop-img border-0">
-                                <img class="text-light" src="images/user.png" alt="">
-                            </button>
-                            <button class="mission-theme border-0">
-                                <span class="p-2">@item.Missions?.Theme.Title</span>
-                            </button>
-                        </div>
-                        <div class="caption card-body">
-                            <h4 class="group card-title inner list-group-item-heading">
-                                @item.Missions?.Title
-                            </h4>
-                            <p class="group inner list-group-item-text">
-                                @item.Missions?.Description
-                            </p>
-                            <div class="d-flex list-view justify-content-between">
-                                <span class="organization">@item.Missions?.OrganizationName</span>
-                                <div class="rating">
-                                    <img src="images/selected-star.png" alt="">
-                                    <img src="images/selected-star.png" alt="">
-                                    <img src="images/selected-star.png" alt="">
-                                    <img src="images/star.png" alt="">
-                                    <img src="images/star.png" alt="">
-                                </div>
-                            </div>
-                            <div class="duration-seats-info mt-4">
-                                <div class="duration">
-                                    @{
-                                        if (@item.Missions?.MissionType == "GOAL")
-                                        {
-                                            <p id="duration-txt" style="margin-bottom: 0;">@item.Missions.Description   </p>
-                                        }
-                                        else
-                                        {
-                                            <p id="duration-txt" style="margin-bottom: 0;">From @item.Missions?.StartDate?.ToString().Substring(0,10) To @item.Missions?.EndDate?.ToString().Substring(0,10)</p>
-                                        }
-                                    }
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between border-bottom mt-3">
-                                <div class="Seats d-flex align-items-center">
-                                    <img src="images/Seats-left.png" alt="">
-                                    <span>
-                                        @item.Missions?.Availability <p>seats left</p>
-                                    </span>
-                                </div>
-                                <div class="deadline d-flex align-items-center">
-                                    @{
-                                        if (@item.Missions?.MissionType == "GOAL")
-                                        {
-                                            string? str1 = @item.Missions?.MissionType;
-                                            string str2 = string.Empty;
-                                            int goal = 0;
-                                            for (int i = 0; i <= str1.Length - 1; i++)
-                                            {
-                                                if (Char.IsDigit(str1[i]))
-                                                    str2 += str1[i];
-                                            }
-                                            if (str2.Length > 0)
-                                            {
-                                                goal = int.Parse(str2);
-                                            }
-                                            double? percent = (@item.Missions?.Availability / (double)goal) * 100;
-                                            <img src="images/achieved.png" alt="">
-                                            <div class="w-100">
-                                                <div class="progress" style="width:90%;margin-left:10px;">
-                                                    <div class="progress-bar" role="progressbar" style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                                <p class="text-muted">@item.Missions?.Availability achieved</p>
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <img src="images/deadline.png" alt="">
-                                            <span>
-                                                @item.Missions?.EndDate?.ToString().Substring(0,10)
-                                                <p>Deadline</p>
-                                            </span>
-                                        }
-                                    }
-
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-center mt-4">
-                                <button class="applyButton btn">
-                                    Apply <img src="images/right-arrow.png" alt="">
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            }
-        }
-    </div>
-    <div class='container d-flex-column mt-5 mb-5 text-muted no-mission-found'>
-    </div>
-</div>
-@*pagination*@
+            </div>
+            </div>
+            @*pagination*@
 
 <nav aria-label="Page navigation example" class="mt-5">
     <ul class="pagination justify-content-center">
+                <li class="page-item">
+            <span class="page-link" onclick="first_page()"><img src="~/images/previous.png" alt="not load" /></span>
+        </li> 
+         <li class="page-item">
+            <span class="page-link" onclick="prev()"><img src="~/images/left.png" alt="not load" /></span>
+        </li>
+        @{
+            int pages=(int)Math.Ceiling((double)@Model?.total_missions/9);
+            for (var i = 1; i <= pages; i++)
+            {
+                if (i == 1)
+                {
+                    <li class="page-item" style="cursor:pointer;"><span class="page-link page-active" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                }
+                else
+                {
+                     <li class="page-item" style="cursor:pointer;"><span class="page-link" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                }
+            }
+        }
         <li class="page-item">
-            <a class="page-link" href="#" tabindex="-1"><img src="~/images/previous.png" alt="not load" /></a>
+            <span class="page-link" onclick="next(@pages)"><img src="~/images/right-arrow1.png" alt="not load" /></span>
         </li>
         <li class="page-item">
-            <a class="page-link" href="#" tabindex="-1"><img src="~/images/left.png" alt="not load" /></a>
-        </li>
-        <li class="page-item"><a class="page-link active" href="#">1</a></li>
-        <li class="page-item"><a class="page-link " href="#">2</a></li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-            <a class="page-link" href="#"><img src="~/images/right-arrow1.png" alt="not load" /></a>
-        </li>
-        <li class="page-item">
-            <a class="page-link" href="#"><img src="~/images/next.png" alt="not load" /></a>
+            <span class="page-link" onclick="last_page(@pages)"><img src="~/images/next.png" alt="not load" /></span>
         </li>
     </ul>
 </nav>
+<script src="~/js/index.js"  asp-append-version="true"></script>
+      
 
-
-
-
+        
+      

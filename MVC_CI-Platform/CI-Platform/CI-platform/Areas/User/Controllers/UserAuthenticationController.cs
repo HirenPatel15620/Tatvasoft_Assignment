@@ -6,7 +6,6 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using CI.Models.Models;
 
 namespace CI_platform.Controllers
@@ -42,6 +41,7 @@ namespace CI_platform.Controllers
                             {
                                   new Claim(ClaimTypes.Name, $"{check.FirstName} {check.LastName}"),
                                   new Claim(ClaimTypes.Email, check.Email),
+                                  new Claim(ClaimTypes.Sid, check.UserId.ToString()),
                                };
                         var identity = new ClaimsIdentity(claims, "AuthCookie");
                         var Principle = new ClaimsPrincipal(identity);
@@ -108,7 +108,6 @@ namespace CI_platform.Controllers
                 ViewData["ResetPassword"] = "EmailSent";
                 return View();
             }
-            
             return View();
         }
         [HttpPost]
@@ -175,11 +174,11 @@ namespace CI_platform.Controllers
                 {
                     string token = BCrypt.Net.BCrypt.HashString(user.Email.ToLower().ToString());
                     TempData["email"]=user.Email;
-                    var senderEmail = new MailAddress("tatvasoft51@gmail.com", "CI-Platform");
+                    var senderEmail = new MailAddress("tatvasoft51@gmail.com", "Tatvasoft");
                     var receiverEmail = new MailAddress(user.Email, "Receiver");
                     var password = "vlpzyhibrvpaewte";
                     var sub = "Reset Your Password";
-                    var body = "Your Reset Password Token is :   " + token;
+                    var body = "Your Reset Password Token" + token;
                     var smtp = new SmtpClient
                     {
                         Host = "smtp.gmail.com",
@@ -220,15 +219,5 @@ namespace CI_platform.Controllers
             }
             return View();
         }
-
-        //public IActionResult Logout()
-        //{
-        //    HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-        //    TempData["Logout"] = "Logout Successfully";
-        //    return RedirectToAction("Login", "UserAuthnetication", new { Area = "User" });
-        //}
-
-
-
     }
 }

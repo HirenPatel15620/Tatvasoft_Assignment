@@ -13,11 +13,11 @@ public partial class MissionApplication
 
     public DateTime AppliedAt { get; set; }
 
-    public int ApprovalStatus { get; set; }
+    public string ApprovalStatus { get; set; } = null!;
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdateAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 

@@ -11,7 +11,6 @@ namespace CI.DataAcess.Repository.IRepository
         void save();
         public IUserAuthentication UserAuthentication { get; }
         public IMission Mission { get; }
-        public IMissionMedia MissionMedia { get; }
         public IResetPassword ResetPassword { get; }
     }
 }

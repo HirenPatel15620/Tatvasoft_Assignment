@@ -25,19 +25,29 @@ public partial class Mission
 
     public string MissionType { get; set; } = null!;
 
-    public int? Status { get; set; }
+    public bool? Status { get; set; }
 
     public string? OrganizationName { get; set; }
 
     public string? OrganizationDetail { get; set; }
 
-    public int? Availability { get; set; }
+    public string? Availability { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdateAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+
+    public string GoalObject { get; set; } = null!;
+
+    public int TotalSeats { get; set; }
+
+    public DateTime Deadline { get; set; }
+
+    public int Achieved { get; set; }
+
+    public int AvbSeat { get; set; }
 
     public virtual City City { get; set; } = null!;
 
@@ -55,7 +65,7 @@ public partial class Mission
 
     public virtual ICollection<MissionInvite> MissionInvites { get; } = new List<MissionInvite>();
 
-    public virtual ICollection<MissionMedium> MissionMedia { get; } = new List<MissionMedium>();
+    public virtual ICollection<MissionMedia> MissionMedia { get; } = new List<MissionMedia>();
 
     public virtual ICollection<MissionRating> MissionRatings { get; } = new List<MissionRating>();
 

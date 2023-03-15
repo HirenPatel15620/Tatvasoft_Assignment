@@ -9,15 +9,15 @@ public partial class MissionDocument
 
     public long MissionId { get; set; }
 
-    public string? DocumetName { get; set; }
+    public string? DocumentName { get; set; }
 
     public string? DocumentType { get; set; }
 
-    public string? DocumetPath { get; set; }
+    public string? DocumentPath { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
-    public DateTime? UpdateAt { get; set; }
+    public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
 

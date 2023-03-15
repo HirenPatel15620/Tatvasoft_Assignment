@@ -1,22 +1,15 @@
-using CI.DataAcess;
 using Microsoft.EntityFrameworkCore;
 using CI.DataAcess.Repository.IRepository;
 using CI.DataAcess.Repository;
 using CI.Models;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Text;
-using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews()
-    .AddNewtonsoftJson(options =>
-    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-);
+builder.Services.AddControllersWithViews().AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", options =>
 {
+    options.ExpireTimeSpan = TimeSpan.FromDays(2);
     options.Cookie.Name = "AuthCookie";
     options.LoginPath = "/Auth/Login";
     options.LogoutPath = "/Auth/LogOut";
