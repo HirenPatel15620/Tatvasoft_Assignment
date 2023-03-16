@@ -143,7 +143,8 @@
                                 {
                                     goal = int.Parse(str2);
                                 }
-                                double? percent = (@Model?.mission?.Achieved / (double)goal) * 100;
+                                            double? percent = (@Model?.mission?.Achieved /(double)goal )* 100 ;
+                                
                                 <img src="~/images/achieved.png" alt="">
                                 <div class="w-100">
                                     <div class="progress" style="width:90%;margin-left:10px;">
@@ -282,7 +283,7 @@
             </div>
             <div class="d-flex mb-4 justify-content-center mt-1">
                 <button onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.mission?.MissionId)" class="applyButton btn">
-                    Apply Now<img src="images/right-arrow.png" alt="">
+                    Apply Now<img class="m-1"  src="/images/right-arrow.png" alt="">
                 </button>
             </div>
         </div>
@@ -361,7 +362,7 @@
                         <span class="ms-5">
                             @foreach (var item in @Model?.mission?.MissionSkills)
                             {
-                                <span>@item.Skill.SkillName,</span>
+                                <span>@item.Skill.SkillName</span>
                             }
                         </span>
                     </div>
@@ -377,7 +378,8 @@
                             <img src="~/images/selected-star.png" alt="">
                             <img src="~/images/star.png" alt="">
                             <img src="~/images/star.png" alt="">
-                            <span class="ms-2">(By 125 volunteers)</span>
+                            <span class="ms-2">(By
+                                <span>@Model.Rating volunteers)</span></span>
                         </div>
                     </div>
                 </div>
@@ -480,7 +482,8 @@
                                             {
                                                 goal = int.Parse(str2);
                                             }
-                                            double? percent = (@item.Achieved / (double)goal) * 100;
+                                            double? percent = (@item.Achieved /(double)goal )* 100 ;
+                                            //@**@
                                             <img src="~/images/achieved.png" alt="">
                                             <div class="w-100">
                                                 <div class="progress" style="width:90%;margin-left:10px;">

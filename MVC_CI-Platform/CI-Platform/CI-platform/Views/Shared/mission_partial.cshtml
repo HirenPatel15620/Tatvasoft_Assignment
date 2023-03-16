@@ -3,6 +3,7 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model CI.Models.ViewModels.Mission
+@*@model  CI.Models.ViewModels.Mission*@
 @{
     foreach (var item in Model.Missions)
     {
@@ -17,6 +18,16 @@
                     </div>
                     <button class="like-img border-0">
                         <img class="text-light" src="images/heart.png" alt="">
+                       @*    //@{
+                           //     @if (@Model.Favorite_mission == 0)
+                           //     {
+                           //         <img src="~/images/heart1.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt="" />
+                           //     }
+                           //     else
+                           //     {
+                           //         <img src="~/images/red-heart.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt="" />
+                           //     }
+                           // }    *@
                     </button>
                     <button class="stop-img border-0">
                         <img class="text-light" src="images/user.png" alt="">
@@ -89,8 +100,10 @@
                                     {
                                         goal = int.Parse(str2);
                                     }
-                                    double? percent = (@item.Achieved / @item.TotalSeats) * 100;
-                                   @* remove (double)goal insted of @item.TotalSeats*@
+                                    double? percent = (@item.Achieved / (double)goal) * 100;
+                                    //Console.WriteLine(percent);
+                                    //Console.ReadLine();
+                                    //@* remove  insted of @item.TotalSeats*@
                                     <img src="images/achieved.png" alt="">
                                     <div class="w-100">
                                         <div class="progress" style="width:90%;margin-left:10px;">

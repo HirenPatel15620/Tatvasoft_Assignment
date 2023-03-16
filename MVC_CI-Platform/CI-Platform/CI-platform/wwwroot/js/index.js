@@ -135,7 +135,11 @@ const addcountries = (name, type) => {
                 + "</div>";
             var $mybadge = $(badge)
             $mybadge.attr('id', `badge-${name.replace(/\s/g, '')}`)
-            $mybadge.find('img').attr('onclick', `remove_badges("badge-${name}","country")`)
+
+            
+            //$mybadge.find('img').attr('onclick', `remove_badges("badge-${name}","country")`)
+
+
             badge = $mybadge
             $('.all-choices').append(badge)
             if ($('.all-choices').find('div').length > 1 && $('.clear-all').length == 0) {

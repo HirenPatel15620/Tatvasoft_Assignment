@@ -15,6 +15,7 @@ namespace CI.Models.ViewModels
         public List<City>? Cities { get; set; }
         public List<MissionTheme>? themes { get; set; }
         public List<Skill>? skills { get; set; }
+
        
     }
 }
