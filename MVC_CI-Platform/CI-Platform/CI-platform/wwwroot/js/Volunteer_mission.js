@@ -1,4 +1,5 @@
-﻿var count=1
+﻿var count = 1
+var co_workers=[]
 const tabs = (id) => {
     let active_mission = document.getElementsByClassName("active-detail")
     active_mission[0].classList.add("detail")
@@ -15,18 +16,21 @@ const tabs = (id) => {
     }
     element.classList.remove("inner-content")
 }
+
 const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
     let item = document.getElementById(id);
     item.style.display = "block";
 }
+
 const view_detail_onmouseout = (id, img) => {
     let image = document.getElementById(img)
     image.classList.remove("story-image")
     let item = document.getElementById(id);
     item.style.display = "none";
 }
+
 const add_comments = (user_id, mission_id) => {
     var comment = document.getElementById('usercomment').value
     var length = $('.user-comments').find('.usercomment-image').length
@@ -36,7 +40,7 @@ const add_comments = (user_id, mission_id) => {
             type: 'POST',
             data: { user_id: user_id, mission_id: mission_id, comment: comment, length: length },
             success: function (result) {
-                load_comments(result.comments)
+                load_comments(result.comments.result)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -44,18 +48,10 @@ const add_comments = (user_id, mission_id) => {
         })
     }
 }
+
 const load_comments = (comments) => {
-    $.each(comments, function (i, item) {
-        var comment = "<div class='d-flex mt-3 bg-white align-items-center'>" +
-            "<img class='rounded-circle usercomment-image ms-2' src='/images/volunteer1.png' alt='' />" +
-            "<div class='d-flex flex-column ms-2'>" +
-            " <span>" + `${item.user.firstName} ${item.user.lastName}` + "</span>" +
-            "<span>" + item.user_Comment.createdAt.slice(0,10) + "</span>" +
-            "<span class='mt-2'>" + item.user_Comment.user_Comment + "</span>" +
-            "</div>" +
-            " </div>"
-        $('.user-comments').append(comment);
-    })
+    $('.user-comments').append(comments);
+    $('#usercomment').val("")
 }
 
 const apply_for_mission = (user_id, mission_id) => {
@@ -64,6 +60,9 @@ const apply_for_mission = (user_id, mission_id) => {
         type: 'POST',
         data: { user_id: user_id, mission_id: mission_id, request_for: "mission" },
         success: function (result) {
+            if (result.success) {
+                $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">'+'</button >')
+            }
         },
         error: function () {
             console.log("Error updating variable");
@@ -71,14 +70,14 @@ const apply_for_mission = (user_id, mission_id) => {
     })
 }
 
-const prev_volunteers = (mission_id) => {
+const prev_volunteers = (user_id,mission_id) => {
     var one_page_volunteers = 9
     if (count > 1) {
         count--;
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
             type: 'POST',
-            data: { count: count - 1, request_for: "next_volunteers", mission_id: mission_id },
+            data: { count: count - 1, request_for: "next_volunteers", user_id: user_id, mission_id: mission_id },
             success: function (result) {
                 $('.volunteers').empty().append(result.recent_volunteers.result)
                 $('.current_volunteers').html(`${one_page_volunteers * (count - 1) == 0 ? 1 : one_page_volunteers * (count - 1)}-${one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
@@ -89,14 +88,15 @@ const prev_volunteers = (mission_id) => {
         })
     }
 }
-const next_volunteers = (max_page, mission_id) => {
+
+const next_volunteers = (max_page, user_id, mission_id) => {
     var one_page_volunteers=9
     if (count < max_page) {
         count++;
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
             type: 'POST',
-            data: { count: count - 1, request_for: "next_volunteers", mission_id: mission_id },
+            data: { count: count - 1, request_for: "next_volunteers", mission_id: mission_id,user_id:user_id },
             success: function (result) {
                 $('.volunteers').empty().append(result.recent_volunteers.result)
                 $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.total_volunteers ? result.total_volunteers : one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
@@ -107,6 +107,7 @@ const next_volunteers = (max_page, mission_id) => {
         })
     }
 }
+
 const add_to_favourite = (user_id,mission_id) => {
     $.ajax({
         url: `/volunteering_mission/${mission_id}`,
@@ -125,6 +126,7 @@ const add_to_favourite = (user_id,mission_id) => {
         }
     })
 }
+
 const rating = (rating,user_id,mission_id) => {
     if (rating == 1) {
         $('.rating').find('img').each(function (i, item) {
@@ -193,4 +195,30 @@ const rating = (rating,user_id,mission_id) => {
         })
     }
 
+}
+
+const add_coworkers = (id) => {
+    id = parseInt(id.slice(9))
+    if (!co_workers.includes(id)) {
+        co_workers.push(id)
+    }
+    else {
+        co_workers.splice(co_workers.indexOf(id),1)
+    }
+}
+
+const recommend = (user_id, mission_id) => {
+    if (co_workers.length > 0) {
+        $.ajax({
+            url: `/volunteering_mission/${mission_id}`,
+            type: 'POST',
+            data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend" },
+            success: function (result) {
+                console.log(result)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
 }

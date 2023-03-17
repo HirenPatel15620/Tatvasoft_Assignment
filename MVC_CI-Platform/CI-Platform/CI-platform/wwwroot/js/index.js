@@ -11,9 +11,9 @@ let country_count = 0
 let city_count = 0;
 let theme_count = 0;
 let skill_count = 0;
-let pageindex=0;
+let pageindex = 0;
+var view="grid"
 var clearall = "<span class='ms-1 clear-all'>" + "Clear All" + "</span>";
-
 const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
@@ -44,6 +44,7 @@ function listview() {
     grid.classList.remove("view")
     list.classList.add("view")
     list.style.marginLeft = 20 + "px";
+    view="list"
 }
 
 function gridview() {
@@ -62,6 +63,7 @@ function gridview() {
     grid.classList.add("view")
     list.classList.remove("view")
     list.style.marginLeft = 0 + "px";
+    view="grid"
 }
 
 
@@ -135,11 +137,7 @@ const addcountries = (name, type) => {
                 + "</div>";
             var $mybadge = $(badge)
             $mybadge.attr('id', `badge-${name.replace(/\s/g, '')}`)
-
-            
-            //$mybadge.find('img').attr('onclick', `remove_badges("badge-${name}","country")`)
-
-
+            $mybadge.find('img').attr('onclick', `remove_badges("badge-${name}","country")`)
             badge = $mybadge
             $('.all-choices').append(badge)
             if ($('.all-choices').find('div').length > 1 && $('.clear-all').length == 0) {
@@ -292,6 +290,12 @@ const loadmissions = (missions, length) => {
         $('.explore').find('b').empty().append(`${length} Missions`)
         $('.no-mission-found').addClass("d-none").removeClass("d-flex flex-column");
         $('.missions').empty().append(missions)
+        if (view == "list") {
+            listview()
+        }
+        else {
+            gridview()
+        }
     }
 }
 
@@ -329,13 +333,13 @@ const search_missions = () => {
 
 
 //sort missions
-const sort_by = () => {
+const sort_by = (user_id) => {
     var selected = $('#sort').find(':selected').text();
     if (selected != "Sort By") {
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex, user_id: user_id },
             success: function (result) {
                 loadmissions(result.mission.result,result.length)
             },
@@ -353,7 +357,8 @@ const clear_all = () => {
     countries = []
     cities = []
     themes = []
-    skills=[]
+    skills = []
+
     $.ajax({
         url: '/home',
         type: 'POST',
@@ -411,7 +416,6 @@ const remove_badges = (id, badge_type) => {
     })
 }
 
-//need to work to complete
 const pagination = (page_index) => {
     pageindex = page_index - 1;
     $('.pagination li span').each(function (i, item) {

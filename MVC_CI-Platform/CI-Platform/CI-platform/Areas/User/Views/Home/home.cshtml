@@ -3,13 +3,14 @@
     ViewData["css"] = "index.css";
 }
 @model CI.Models.ViewModels.Mission
+@using System.Security.Claims
 <partial name="SecondHeader_partial"  />
 @*main body*@
     <div class="container body pt-5">
         <div class="d-flex justify-content-between">
             <span class="explore">Explore <b>@Model.Missions?.Count Missions</b></span>
             <div class="d-flex sort">
-        <select class="form-select me-3" onchange="sort_by()" aria-label="Sort By" id="sort">
+        <select class="form-select me-3" onchange="sort_by(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value)" aria-label="Sort By" id="sort">
   <option disabled  selected>Sort By</option>
   <option value="Newest">Newest</option>
   <option value="Oldest">Oldest</option>
@@ -34,10 +35,6 @@
                             </button>
             </div>
             </div>
-
-
-
-
             @*pagination*@
 
 <nav aria-label="Page navigation example" class="mt-5">

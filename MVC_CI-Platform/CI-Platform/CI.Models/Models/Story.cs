@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CI.Models.Models;
+namespace CI.Models;
 
 public partial class Story
 {
@@ -27,7 +27,7 @@ public partial class Story
 
     public virtual Mission Mission { get; set; } = null!;
 
-    public virtual ICollection<StoryMedium> StoryMedia { get; } = new List<StoryMedium>();
+    public virtual ICollection<StoryMedia> StoryMedia { get; } = new List<StoryMedia>();
 
     public virtual User User { get; set; } = null!;
 }

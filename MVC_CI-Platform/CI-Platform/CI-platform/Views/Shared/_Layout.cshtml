@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
     <link rel="stylesheet" href="~/CI_platform.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />
 </head>
 <body>
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
@@ -16,7 +17,7 @@
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-            <a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="">Stories</a>
+            <a class="nav-link text-muted" asp-area="" asp-controller="Story" asp-action="storylisting">Stories</a>
             <a class="nav-link text-muted mt-3" asp-area="" asp-controller="Home" asp-action="Index">Policy </a>
   </div>
 </div>
@@ -27,9 +28,9 @@
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load"/>
                 <div class="d-flex pages">
                 @*<span class="nav-link text-muted explore" asp-area="">Explore <img src="~/images/drop-down.png" alt="not load" /></span>*@
-                <a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="storylisting">Stories</a>
+                <a class="nav-link text-muted"  href="/stories">Stories</a>
                     @*<a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">News</a>*@
-                <a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">Policy </a>
+                <a class="nav-link text-muted"  >Policy </a>
                 </div>
                <div class="d-flex">
                    @* <div class="dropdown d-flex">
@@ -59,7 +60,7 @@
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="#">Action</a>
                         <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
+                        <a class="dropdown-item" href="/logout">LogOut</a>
                     </div>
                     </div>
                 </div>
@@ -78,6 +79,7 @@
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap-datepicker.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

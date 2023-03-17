@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CI.Models.Models;
+namespace CI.Models;
 
 public partial class MissionRating
 {
@@ -11,7 +11,7 @@ public partial class MissionRating
 
     public long MissionId { get; set; }
 
-    public string Rating { get; set; } = null!;
+    public int Rating { get; set; }
 
     public DateTime CreatedAt { get; set; }
 

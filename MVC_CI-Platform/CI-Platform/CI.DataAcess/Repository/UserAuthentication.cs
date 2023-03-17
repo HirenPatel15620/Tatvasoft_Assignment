@@ -1,6 +1,5 @@
 ﻿using CI.DataAcess.Repository.IRepository;
 using CI.Models;
-using CI.Models.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;

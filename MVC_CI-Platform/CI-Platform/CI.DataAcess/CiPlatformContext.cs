@@ -1,21 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using CI.Models.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace CI.Models;
 
 public partial class CiPlatformContext : DbContext
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public CiPlatformContext()
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     {
     }
 
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
     public CiPlatformContext(DbContextOptions<CiPlatformContext> options)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
         : base(options)
     {
     }
@@ -60,7 +55,7 @@ public partial class CiPlatformContext : DbContext
 
     public virtual DbSet<StoryInvite> StoryInvites { get; set; }
 
-    public virtual DbSet<StoryMedium> StoryMedia { get; set; }
+    public virtual DbSet<StoryMedia> StoryMedia { get; set; }
 
     public virtual DbSet<Timesheet> Timesheets { get; set; }
 
@@ -572,10 +567,7 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
-            entity.Property(e => e.Rating)
-                .HasMaxLength(2)
-                .IsUnicode(false)
-                .HasColumnName("rating");
+            entity.Property(e => e.Rating).HasColumnName("rating");
             entity.Property(e => e.UpdatedAt)
                 .HasColumnType("datetime")
                 .HasColumnName("updated_at");
@@ -764,7 +756,7 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnName("updated_at");
         });
 
-        modelBuilder.Entity<StoryMedium>(entity =>
+        modelBuilder.Entity<StoryMedia>(entity =>
         {
             entity.HasKey(e => e.StoryMediaId).HasName("PK__story_me__29BD053C646530A9");
 

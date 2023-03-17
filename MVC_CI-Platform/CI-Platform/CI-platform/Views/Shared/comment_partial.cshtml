@@ -1,0 +1,14 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model IEnumerable<CI.Models.ViewModels.Comment_Viewmodel>
+<div class='d-flex mt-3 bg-white align-items-center'>
+            <img class='rounded-circle usercomment-image ms-2' src='/images/volunteer1.png' alt='' />
+            <div class='d-flex flex-column ms-2'>
+             <span>@Model?.ElementAt(0)?.user?.FirstName @Model?.ElementAt(0)?.user?.LastName </span>
+            <span> @Model?.ElementAt(0)?.User_Comment?.CreatedAt.ToString().Substring(0,10) </span>
+            <span class='mt-2'>@Model?.ElementAt(0)?.User_Comment?.Comment1 </span>
+            </div>
+             </div>

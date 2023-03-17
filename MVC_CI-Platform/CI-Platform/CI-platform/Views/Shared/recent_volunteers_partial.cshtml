@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using System.Security.Claims
 @model CI.Models.ViewModels.Volunteer_Mission
 @{
     <div class="container">
@@ -23,11 +24,11 @@
                     @{
                         @if(@Model?.Total_volunteers>9){
                             <div class="d-flex">
-                        <div class="border-end d-flex justify-content-center align-items-center" onclick="prev_volunteers(@Model.mission.MissionId)" style="width:10%; cursor:pointer">
+                        <div class="border-end d-flex justify-content-center align-items-center" onclick="prev_volunteers(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model.mission.MissionId)" style="width:10%; cursor:pointer">
                             <img class="h-50" src="~/images/left.png" alt="" />
                         </div>
                         <div class="d-flex justify-content-center align-items-center" style="width:80%;"><span class="text-muted current_volunteers">1-9 of recent @Model.Total_volunteers volunteers</span></div>
-                        <div class="border-start d-flex justify-content-center align-items-center" onclick="next_volunteers(@page_count,@Model.mission.MissionId)" style="width:10%;cursor:pointer">
+                        <div class="border-start d-flex justify-content-center align-items-center" onclick="next_volunteers(@page_count,@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model.mission.MissionId)" style="width:10%;cursor:pointer">
                              <img class="h-50" src="~/images/right-arrow1.png" alt="" />
                         </div>
                     </div>

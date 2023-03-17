@@ -23,12 +23,16 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXFByaXZhY3kuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Home/storylisting.cshtml]
-build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXHN0b3J5bGlzdGluZy5jc2h0bWw=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Home/volunteering_mission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXHZvbHVudGVlcmluZ19taXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Story/ShareStory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xTdG9yeVxTaGFyZVN0b3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Story/storylisting.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xTdG9yeVxzdG9yeWxpc3RpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/ForgotPassword.cshtml]
@@ -59,6 +63,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENpdHlfcGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/comment_partial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGNvbW1lbnRfcGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
@@ -81,10 +89,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Story/storylisting.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3Rvcnlcc3RvcnlsaXN0aW5nLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/_ViewImports.cshtml]

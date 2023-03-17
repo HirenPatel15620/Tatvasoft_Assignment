@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace CI.Models.Models;
+namespace CI.Models;
 
-public partial class StoryMedium
+public partial class StoryMedia
 {
     public long StoryMediaId { get; set; }
 

@@ -1,13 +1,12 @@
 ﻿using CI.DataAcess.Repository.IRepository;
 using CI.Models;
-using CI.Models.Models;
 
 namespace CI.DataAcess.Repository
 {
-    public class Mission : Repository<CI.Models.Models.Mission>, IMission
+    public class Mission : Repository<CI.Models.Mission>, IMission
     {
         private readonly CiPlatformContext _db;
-        List<CI.Models.Models.Mission> missions = new List<Models.Models.Mission>();
+        List<CI.Models.Mission> missions = new List<Models.Mission>();
         List<CI.Models.MissionMedia> image =new List<Models.MissionMedia>();
         List<MissionTheme> theme = new List<MissionTheme>();
         List<Country> countries =new List<Country>();
@@ -20,6 +19,7 @@ namespace CI.DataAcess.Repository
         List<MissionApplication> missionApplications = new List<MissionApplication>();
         List<FavoriteMission> favoriteMissions = new List<FavoriteMission>();
         List<MissionRating> ratings = new List<MissionRating>();
+        List<MissionInvite> already_recommended_users = new List<MissionInvite>();
         public Mission(CiPlatformContext db) : base(db)
         {
             _db = db;
@@ -118,6 +118,7 @@ namespace CI.DataAcess.Repository
             missionApplications = _db.MissionApplications.ToList();
             favoriteMissions = _db.FavoriteMissions.ToList();
             ratings = _db.MissionRatings.ToList();
+            already_recommended_users = _db.MissionInvites.ToList();
         }
         public Models.ViewModels.Mission GetAllMission()
         {
@@ -127,11 +128,11 @@ namespace CI.DataAcess.Repository
             return Missions;
         }
 
-        public Models.ViewModels.Mission GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills,string sort_by,int page_index)
+        public Models.ViewModels.Mission GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills,string sort_by,int page_index,long user_id)
         {
             CI.Models.ViewModels.Mission Missions = new Models.ViewModels.Mission();
             List<City> city = new List<City>();
-            List<CI.Models.Models.Mission> mission = new List<CI.Models.Models.Mission>();
+            List<CI.Models.Mission> mission = new List<CI.Models.Mission>();
             if (page_index != 0)
             {
                 missions = missions.Skip(9 * page_index).Take(9).ToList();
@@ -231,6 +232,17 @@ namespace CI.DataAcess.Repository
                     Cities = city
                 };
             }
+            else if (sort_by == "my favourites")
+            {
+                Missions = new Models.ViewModels.Mission
+                {
+                    Missions = (from m in favoriteMissions
+                                where m.UserId==user_id && mission.Contains(m.Mission)
+                                select m.Mission).ToList(),
+                    Country = countries,
+                    Cities = city
+                };
+            }
             else
             {
 
@@ -263,25 +275,11 @@ namespace CI.DataAcess.Repository
             return Missions;
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        public Models.ViewModels.Volunteer_Mission Next_Volunteers(int count, long mission_id)
+        public Models.ViewModels.Volunteer_Mission Next_Volunteers(int count,long user_id,long mission_id)
         {
-            Models.Models.Mission? mission = _db.Missions.Find(mission_id);
+            Models.Mission? mission = _db.Missions.Find(mission_id);
             List<User> users = (from ma in missionApplications
-                                where ma.MissionId.Equals(mission?.MissionId)
+                                where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
                                 select ma.User).ToList();
             return new CI.Models.ViewModels.Volunteer_Mission {mission=mission, Recent_volunteers = users.Skip(9 * count).Take(9).ToList(),Total_volunteers=users.Count };
         }
@@ -296,18 +294,33 @@ namespace CI.DataAcess.Repository
                 {
                     UserId = user_id,
                     MissionId = mission_id,
-                    Rating = rating.ToString()
+                    Rating = rating
                 });
                 Save();
                 return true;
             }
             else
             {
-                Rating.ElementAt(0).Rating = rating.ToString();
+                Rating.ElementAt(0).Rating = rating;
                 Save();
                 return true;
             }
             
+        }
+
+        public bool Recommend(long user_id, long mission_id, List<long> co_workers)
+        {
+           foreach(var user in co_workers)
+            {
+                _db.MissionInvites.Add(new MissionInvite
+                {
+                    FromUserId = user_id,
+                    ToUserId = user,
+                    MissionId = mission_id
+                });
+            }
+            Save();
+            return true;
         }
 
         public void Save()
@@ -317,22 +330,45 @@ namespace CI.DataAcess.Repository
 
         CI.Models.ViewModels.Volunteer_Mission IMission.Mission(long id,long user_id)
         {
+            List<User> all_volunteers = new List<User>();
+            List<User> already_recommended= new List<User>();
+            double avg_ratings = 0;
+            bool applied_or_not=false;
+            int rating_count = 0;
             int rating=0;
             var Rating = (from r in ratings
                           where r.UserId.Equals(user_id) && r.MissionId.Equals(id)
                           select r).ToList();
             if (Rating.Count > 0)
             {
-                rating = int.Parse(Rating.ElementAt(0).Rating);
+                rating = Rating.ElementAt(0).Rating;
             }
             var favouritemission = (from fm in favoriteMissions
                                     where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
                                     select fm).ToList();
-            Models.Models.Mission? mission=_db.Missions.Find(id);
-            List<User> users=(from ma in missionApplications
+            Models.Mission? mission=_db.Missions.Find(id);
+
+            if (mission.MissionRatings.Count > 0)
+            {
+                avg_ratings = (from m in mission.MissionRatings
+                               select m.Rating).Average();
+                rating_count = (from m in mission.MissionRatings
+                                select m).ToList().Count;
+            }
+
+            List<MissionApplication> applied = (from ma in missionApplications
+                                          where ma.MissionId.Equals(mission?.MissionId) && ma.UserId.Equals(user_id)
+                                          select ma).ToList();
+            if (applied.Count > 0)
+            {
+                applied_or_not = true;
+            }
+
+            List <User> users=(from ma in missionApplications
                               where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
                               select ma.User).ToList();
-            List<Models.Models.Mission> related_mission = (from m in missions
+
+            List<Models.Mission> related_mission = (from m in missions
                                                     where m.City.Name.Equals(mission?.City.Name) && !m.MissionId.Equals(mission.MissionId)
                                                     select m).Take(3).ToList();
             if(related_mission.Count == 0)
@@ -347,7 +383,25 @@ namespace CI.DataAcess.Repository
                                        select m).Take(3).ToList();
                 }
             }
-            return new CI.Models.ViewModels.Volunteer_Mission { mission=mission,related_mission=related_mission, Recent_volunteers=users.Take(9).ToList(),Total_volunteers=users.Count,Favorite_mission=favouritemission.Count,Rating=rating,All_volunteers=users};
+
+            if (already_recommended_users.Count > 0)
+            {
+                foreach (var item in already_recommended_users)
+                {
+                    already_recommended.Add(item.ToUser);
+                }
+            }
+            if (users.Count > 0)
+            {
+                foreach(var item in users)
+                {
+                    if (!already_recommended.Contains(item))
+                    {
+                        all_volunteers.Add(item);
+                    }
+                }
+            }
+            return new CI.Models.ViewModels.Volunteer_Mission { mission=mission,related_mission=related_mission, Recent_volunteers=users.Take(9).ToList(),Total_volunteers=users.Count,Favorite_mission=favouritemission.Count,Rating=rating,All_volunteers=all_volunteers,Avg_ratings = avg_ratings,Rating_count=rating_count,Applied_or_not=applied_or_not };
         }
     }
 }

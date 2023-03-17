@@ -8,7 +8,7 @@ using CI.Models;
 
 namespace CI.DataAcess.Repository
 {
-    public class ResetPassword:Repository<CI.Models.Models.PasswordReset>,IResetPassword
+    public class ResetPassword:Repository<CI.Models.PasswordReset>,IResetPassword
     {
 
         private readonly CiPlatformContext _db;
@@ -17,7 +17,7 @@ namespace CI.DataAcess.Repository
             _db = db;
         }
 
-        public void DeleteData(CI.Models.Models.PasswordReset model)
+        public void DeleteData(CI.Models.PasswordReset model)
         {
             _db.PasswordResets.Remove(model);
         }

@@ -6,7 +6,6 @@ using System.Net.Mail;
 using System.Net;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
-using CI.Models.Models;
 
 namespace CI_platform.Controllers
 { [Area("User")]
@@ -17,9 +16,29 @@ namespace CI_platform.Controllers
         {
             db = _db;
         }
+        [Route("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                await HttpContext.SignOutAsync("AuthCookie");
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
         public IActionResult Login()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("home", "home");
+            }
+            else
+            {
+                return View();
+            }
         }
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
@@ -27,7 +46,7 @@ namespace CI_platform.Controllers
             if (ModelState.IsValid)
             {
                 User check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(login.Email));
-                if (check == null)
+                if (check == null )
                 {
                     ViewData["login"] = "register";
                     return View();
@@ -63,17 +82,26 @@ namespace CI_platform.Controllers
         [Route("Register")]
         public IActionResult Register()
         {
-            return View();
+            if (User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("home", "home");
+            }
+            else
+            {
+                return View();
+            }
         }
         [Route("Register")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Register(Register user)
+        public async Task<IActionResult> Register(Register user)
         {
             if (ModelState.IsValid)
             {
                 var check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
-                if (check == null)
+                var bcheck = db.UserAuthentication.GetFirstOrDefault(e => e.PhoneNumber.Equals(user.PhoneNumber));
+
+                if (check == null && bcheck==null)
                 {
                     string secpass = BCrypt.Net.BCrypt.HashPassword(user.Password);
                     User newuser = new User();
@@ -88,6 +116,16 @@ namespace CI_platform.Controllers
                     }
                     db.UserAuthentication.Add(newuser);
                     db.save();
+                    check= db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+                    var claims = new List<Claim>
+                            {
+                                  new Claim(ClaimTypes.Name, $"{check.FirstName} {check.LastName}"),
+                                  new Claim(ClaimTypes.Email, check.Email),
+                                  new Claim(ClaimTypes.Sid, check.UserId.ToString()),
+                               };
+                    var identity = new ClaimsIdentity(claims, "AuthCookie");
+                    var Principle = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync("AuthCookie", Principle);
                     return RedirectToAction("home", "Home");
                 }
                 else
@@ -174,11 +212,11 @@ namespace CI_platform.Controllers
                 {
                     string token = BCrypt.Net.BCrypt.HashString(user.Email.ToLower().ToString());
                     TempData["email"]=user.Email;
-                    var senderEmail = new MailAddress("tatvasoft51@gmail.com", "Tatvasoft");
+                    var senderEmail = new MailAddress("dhruvikkothiya732002@gmail.com", "dhruvik");
                     var receiverEmail = new MailAddress(user.Email, "Receiver");
-                    var password = "vlpzyhibrvpaewte";
+                    var password = "clpd gojh borl hemp";
                     var sub = "Reset Your Password";
-                    var body = "Your Reset Password Token :-   " + token;
+                    var body = "Your Reset Password Token" + token;
                     var smtp = new SmtpClient
                     {
                         Host = "smtp.gmail.com",

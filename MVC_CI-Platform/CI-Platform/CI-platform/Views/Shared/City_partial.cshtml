@@ -3,31 +3,30 @@
 *@
 @model CI.Models.ViewModels.Mission
 @{
-    if (Model.Cities is null)
-    {
-        foreach (var item in Model.Country)
-        {
-            foreach (var city in item.Cities)
-            {
-                <span class="dropdown-item">
-                    <input class="form-check-input" type="checkbox" onchange="addcities('@city.Name')" value="" id="@city.Name">
-                    <label class="form-check-label" for="flexCheckDefault">
-                        @city.Name
-                    </label>
+    if(Model.Cities is null){
+                            foreach (var item in Model.Country)
+                            {
+                                foreach (var city in item.Cities)
+                                {
+                                    <span class="dropdown-item">
+                                        <input class="form-check-input" type="checkbox" onchange="addcities('@city.Name')" value="" id="@city.Name">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @city.Name
+                                        </label>
                 </span>
             }
         }
     }
     else
     {
-        foreach (var city in Model.Cities)
-        {
-            <span class="dropdown-item">
-                <input class="form-check-input" type="checkbox" onchange="addcities('@city.Name')" value="" id="@city.Name">
-                <label class="form-check-label" for="flexCheckDefault">
-                    @city.Name
-                </label>
-            </span>
-        }
+       foreach (var city in Model.Cities)
+                                {
+                                    <span class="dropdown-item">
+                                        <input class="form-check-input" type="checkbox" onchange="addcities('@city.Name')" value="" id="@city.Name">
+                                        <label class="form-check-label" for="flexCheckDefault">
+                                            @city.Name
+                                        </label>
+                </span>
+            } 
     }
 }

@@ -1,9 +1,7 @@
-﻿
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model CI.Models.ViewModels.Mission
-@*@model  CI.Models.ViewModels.Mission*@
 @{
     foreach (var item in Model.Missions)
     {
@@ -18,16 +16,6 @@
                     </div>
                     <button class="like-img border-0">
                         <img class="text-light" src="images/heart.png" alt="">
-                       @*    //@{
-                           //     @if (@Model.Favorite_mission == 0)
-                           //     {
-                           //         <img src="~/images/heart1.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt="" />
-                           //     }
-                           //     else
-                           //     {
-                           //         <img src="~/images/red-heart.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt="" />
-                           //     }
-                           // }    *@
                     </button>
                     <button class="stop-img border-0">
                         <img class="text-light" src="images/user.png" alt="">
@@ -45,13 +33,10 @@
                 </div>
                 <div class="caption card-body">
                     <h4 class="group card-title inner list-group-item-heading">
-                        @item.Title 
-                     @*   remove ?.Substring(0,50)...*@
-
+                        @item.Title?.Substring(0,30)...
                     </h4>
                     <p class="group inner list-group-item-text">
-                        @item.Description
-                                  @*   remove ?.Substring(0,100)...*@
+                        @item.Description?.Substring(0,100).....
                     </p>
                     <div class="d-flex list-view justify-content-between">
                         <span class="organization">@item.OrganizationName</span>
@@ -101,14 +86,10 @@
                                         goal = int.Parse(str2);
                                     }
                                     double? percent = (@item.Achieved / (double)goal) * 100;
-                                    //Console.WriteLine(percent);
-                                    //Console.ReadLine();
-                                    //@* remove  insted of @item.TotalSeats*@
                                     <img src="images/achieved.png" alt="">
                                     <div class="w-100">
                                         <div class="progress" style="width:90%;margin-left:10px;">
-                                            <div class="progress-bar" role="progressbar" 
-                                            style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                            <div class="progress-bar" role="progressbar" style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
                                         </div>
                                         <p class="text-muted">@item.Achieved achieved</p>
                                     </div>
@@ -118,7 +99,8 @@
                                     <img src="images/deadline.png" alt="">
                                     <span>
                                         @item.Deadline.ToString().Substring(0,10)
-                                              @* remove ? near deadline*@
+                                             @* ? rempve*@
+
                                         <p>Deadline</p>
                                     </span>
                                 }
@@ -127,9 +109,12 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-4">
-                        <button class="applyButton btn">
+                     <a href='/volunteering_mission/@item.MissionId'>    
+                    <button class="applyButton btn">
                             Apply <img src="images/right-arrow.png" alt="">
                         </button>
+
+                        </a>
                     </div>
                 </div>
             </div>
