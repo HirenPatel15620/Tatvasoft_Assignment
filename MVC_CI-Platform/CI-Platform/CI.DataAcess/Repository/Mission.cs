@@ -133,14 +133,14 @@ namespace CI.DataAcess.Repository
             CI.Models.ViewModels.Mission Missions = new Models.ViewModels.Mission();
             List<City> city = new List<City>();
             List<CI.Models.Mission> mission = new List<CI.Models.Mission>();
-            if (page_index != 0)
-            {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
-            }
-            else
-            {
+           // if (page_index != 0)
+            //{
+             //   missions = missions.Skip(9 * page_index).Take(9).ToList();
+            //}
+            //else
+            //{
                 missions = missions.Take(9).ToList();
-            }
+            //}
             if (Countries.Count>0)
             {
                 city = (from c in cities
@@ -257,14 +257,14 @@ namespace CI.DataAcess.Repository
         }
         public Models.ViewModels.Mission GetSearchMissions(string key,int page_index)
         {
-            if (page_index != 0)
-            {
-                missions = missions.Skip(9 * page_index).Take(9).ToList();
-            }
-            else
-            {
-                missions = missions.Take(9).ToList();
-            }
+            //if (page_index != 0)
+            //{
+            //    missions = missions.Skip(9 * page_index).Take(9).ToList();
+            //}
+            //else
+            //{
+               missions = missions.Take(9).ToList();
+            //}
             var mission= (from m in missions
                           where m.Title.ToLower().Contains(key) || m.Description.ToLower().Contains(key)
                           select m).ToList();
