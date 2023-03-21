@@ -1,6 +1,7 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model List<Story>
 @{
     ViewData["title"] = "Stories";
     ViewData["css"] = "index.css";
@@ -22,164 +23,44 @@
 @*main body*@
  <div class="container body pt-3">
             <div class="row">
-                    <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
+                @{
+                    foreach (var item in Model)
+                    {
+                        <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
                 <div class="thumbnail card d-flex">
                     <div class="img-event">
                         <img class="group  list-group-image w-100 h-100"
-                            src="images/Grow-Trees-On-the-path-to-environment-sustainability.png" id="Grow-Trees-On-the-path-to-environment-sustainability.png" alt="" onmouseover="view_detail_onmouseover(1,'Grow-Trees-On-the-path-to-environment-sustainability.png')" onmouseout="view_detail_onmouseout(1,'Grow-Trees-On-the-path-to-environment-sustainability.png')" />
-                            <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(1,'Grow-Trees-On-the-path-to-environment-sustainability.png')" onmouseout="view_detail_onmouseout(1,'Grow-Trees-On-the-path-to-environment-sustainability.png')" id=1>
+                            src='~/images/@item.StoryMedia.ElementAt(0).Path' id="image-@item.StoryId" alt="" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" />
+                            <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
                             <button class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">View Details <img class="ms-2" src="images/right-arrow.png" alt="">
                   </button>
                   </div>
                         <button class="mission-theme border-0">
-                            <span class="p-2">Environment</span>
+                            <span class="p-2">@item.Mission.Theme.Title</span>
                         </button>
                     </div>
                     <div class="caption card-body">
                         <h4 class="group card-title inner list-group-item-heading">
-                            Grow Trees – On the path to environment sustainability</h4>
-                        <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...</p>
+                            @item.Title</h4>
+                        <span class="group inner list-group-item-text">
+                        @{
+                            string content = System.Text.RegularExpressions.Regex.Replace(@item.Description, "<.*?>", string.Empty);
+                            <span>
+                            @content.ToString().Substring(0,15)....
+                            </span>
+                        }
+                           </span>
                         <div class="d-flex list-view align-items-center">
                            <img class="rounded-circle" src="~/images/volunteer1.png" alt="" style="width:13%;" />
-                           <span class="ms-2">Andrew Jhonshon</span>
+                           <span class="ms-2">@item.User.FirstName @item.User.LastName</span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            @*--------2*@
-            <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card">
-                    <div class="img-event">
-                    <img class="group list-group-image w-100 h-100"
-                            src="images/Education-Supplies-for-Every--Pair-of-Shoes-Sold.png" id="Education-Supplies-for-Every--Pair-of-Shoes-Sold.png" alt="" onmouseover="view_detail_onmouseover(2,'Education-Supplies-for-Every--Pair-of-Shoes-Sold.png')" onmouseout="view_detail_onmouseout(2,'Education-Supplies-for-Every--Pair-of-Shoes-Sold.png')" />
-                        <div class="view-detail position-absolute" style="display:none;"  onmouseover="view_detail_onmouseover(2,'Education-Supplies-for-Every--Pair-of-Shoes-Sold.png')" onmouseout="view_detail_onmouseout(2,'Education-Supplies-for-Every--Pair-of-Shoes-Sold.png')" id=2>
-                            <button class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">View Details <img class="ms-2" src="images/right-arrow.png" alt="">
-                  </button>
-                  </div>
-                        <button class="mission-theme border-0">
-                            <span class="p-2">Environment</span>
-                        </button>
-                    </div>
-                    <div class="caption card-body">
-                        <h4 class="group card-title inner list-group-item-heading">
-                            Grow Trees – On the path to environment sustainability</h4>
-                        <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...</p>
-                        <div class="d-flex list-view align-items-center">
-                           <img class="rounded-circle" src="~/images/volunteer1.png" alt="" style="width:13%;" />
-                           <span class="ms-2">Andrew Jhonshon</span>
-                        </div>
-                    </div>  
-                </div>
-            </div>
-              @*-----------3*@
-             <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card">
-                    <div class="img-event">
-                    <img class="group list-group-image w-100 h-100"
-                            src="images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png" alt="" />
-                        <button class="mission-theme border-0">
-                            <span class="p-2">Environment</span>
-                        </button>
-                    </div>
-                    <div class="caption card-body">
-                        <h4 class="group card-title inner list-group-item-heading">
-                            Grow Trees – On the path to environment sustainability</h4>
-                        <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...</p>
-                        <div class="d-flex list-view align-items-center">
-                           <img class="rounded-circle" src="~/images/volunteer1.png" alt="" style="width:13%;" />
-                           <span class="ms-2">Andrew Jhonshon</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @*-----row-2*@
-                     <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card">
-                    <div class="img-event">
-                    <img class="group list-group-image w-100 h-100"
-                            src="images/CSR-initiative-stands-for-Coffee--and-Farmer-Equity.png" alt="" />
-                        
-                        <button class="mission-theme border-0">
-                            <span class="p-2">Environment</span>
-                        </button>
-                    </div>
-                    <div class="caption card-body">
-                        <h4 class="group card-title inner list-group-item-heading">
-                            Grow Trees – On the path to environment sustainability</h4>
-                        <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...</p>
-                        <div class="d-flex list-view align-items-center">
-                           <img class="rounded-circle" src="~/images/volunteer1.png" alt="" style="width:13%;" />
-                           <span class="ms-2">Andrew Jhonshon</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            @*--------2*@
-            <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card">
-                    <div class="img-event">
-                    <img class="group list-group-image w-100 h-100"
-                            src="images/Animal-welfare-&-save-birds-campaign.png" alt="" />
-                       
-                        <button class="mission-theme border-0">
-                            <span class="p-2">Environment</span>
-                        </button>
-                    </div>
-                     <div class="caption card-body">
-                        <h4 class="group card-title inner list-group-item-heading">
-                            Grow Trees – On the path to environment sustainability</h4>
-                        <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...</p>
-                        <div class="d-flex list-view align-items-center">
-                           <img class="rounded-circle" src="~/images/volunteer1.png" alt="" style="width:13%;" />
-                           <span class="ms-2">Andrew Jhonshon</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-              @*-----------3*@
-             <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
-                <div class="thumbnail card">
-                    <div class="img-event">
-                    <img class="group list-group-image w-100 h-100"
-                            src="images/Plantation-and-Afforestation-programme.png" alt="" />
-                       
-                        <button class="mission-theme border-0">
-                            <span class="p-2">Environment</span>
-                        </button>
-                    </div>
-                    <div class="caption card-body">
-                        <h4 class="group card-title inner list-group-item-heading">
-                            Grow Trees – On the path to environment sustainability</h4>
-                        <p class="group inner list-group-item-text">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                            labore...</p>
-                        <div class="d-flex list-view align-items-center">
-                           <img class="rounded-circle" src="~/images/volunteer1.png" alt="" style="width:13%;" />
-                           <span class="ms-2">Andrew Jhonshon</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-            </div>
-             <div class="container mt-5 text-muted no-mission-found">
-                <span>
-                    No Mission Found
-                    <p> Try With Onther Filters</p>
-                </span>
-            </div>
+                    }
+                }
+</div>
+</div>
             @*pagination*@
 
 <nav aria-label="Page navigation example" class="mt-5">

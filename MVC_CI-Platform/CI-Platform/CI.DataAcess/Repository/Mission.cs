@@ -1,5 +1,7 @@
 ﻿using CI.DataAcess.Repository.IRepository;
 using CI.Models;
+using System.Net;
+using System.Net.Mail;
 
 namespace CI.DataAcess.Repository
 {
@@ -86,6 +88,10 @@ namespace CI.DataAcess.Repository
             }
         }
 
+
+
+
+
         public IEnumerable<Models.ViewModels.Comment_Viewmodel> comment(long user_id, long mission_id, string comment,int length)
         {
             Comment mycomment = new Comment()
@@ -124,7 +130,8 @@ namespace CI.DataAcess.Repository
         {
             int total_missions = missions.Count;
             missions = missions.Take(9).ToList();
-            var Missions = new CI.Models.ViewModels.Mission { Missions = missions,Country=countries,themes=theme,skills=skills,total_missions=total_missions};
+            var Missions = new CI.Models.ViewModels.Mission {  Missions = missions,Country=countries,themes=theme,skills=skills,total_missions=total_missions};
+
             return Missions;
         }
 
@@ -273,6 +280,7 @@ namespace CI.DataAcess.Repository
                 Missions = mission,
             };
             return Missions;
+
         }
 
         public Models.ViewModels.Volunteer_Mission Next_Volunteers(int count,long user_id,long mission_id)
@@ -320,6 +328,35 @@ namespace CI.DataAcess.Repository
                 });
             }
             Save();
+            User from_user = _db.Users.FirstOrDefault(c => c.UserId.Equals(user_id));
+            List<string> Email_users = (from u in users
+                                        where co_workers.Contains(u.UserId)
+                                        select u.Email).ToList();
+            foreach (var email in Email_users)
+            {
+                var senderEmail = new MailAddress("tatvasoft51@gmail.com", "CI-Platform");
+                var receiverEmail = new MailAddress(email, "Receiver");
+                var password = "vlpzyhibrvpaewte";
+                var sub = "Recommendation";
+                var body = "Recommend By " + from_user?.FirstName +" "+ from_user?.LastName +"\n"+ $"https://localhost:44334/volunteering_mission/{mission_id}";
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(senderEmail.Address, password)
+                };
+                using (var mess = new MailMessage(senderEmail, receiverEmail)
+                {
+                    Subject = sub,
+                    Body = body
+                })
+                {
+                    smtp.Send(mess);
+                }
+            }
             return true;
         }
 
@@ -383,7 +420,9 @@ namespace CI.DataAcess.Repository
                                        select m).Take(3).ToList();
                 }
             }
-
+            already_recommended_users = (from a in already_recommended_users
+                                         where a.MissionId == id && a.FromUserId==user_id
+                                         select a).ToList();
             if (already_recommended_users.Count > 0)
             {
                 foreach (var item in already_recommended_users)
@@ -403,5 +442,54 @@ namespace CI.DataAcess.Repository
             }
             return new CI.Models.ViewModels.Volunteer_Mission { mission=mission,related_mission=related_mission, Recent_volunteers=users.Take(9).ToList(),Total_volunteers=users.Count,Favorite_mission=favouritemission.Count,Rating=rating,All_volunteers=all_volunteers,Avg_ratings = avg_ratings,Rating_count=rating_count,Applied_or_not=applied_or_not };
         }
+
+
+
+
+
+
+
+
+        CI.Models.ViewModels.Mission IMission.change(long id, long user_id)
+        {
+
+            List<User> already_recommended = new List<User>();
+            double avg_ratings = 0;
+            bool applied_or_not = false;
+
+
+            var favouritemission = (from fm in favoriteMissions
+                                    where fm.UserId.Equals(user_id) && fm.MissionId.Equals(id)
+                                    select fm).ToList();
+            Models.Mission? mission = _db.Missions.Find(id);
+
+            if (mission.MissionRatings.Count > 0)
+            {
+                avg_ratings = (from m in mission.MissionRatings
+                               select m.Rating).Average();
+
+            }
+
+            List<MissionApplication> applied = (from ma in missionApplications
+                                                where ma.MissionId.Equals(mission?.MissionId) && ma.UserId.Equals(user_id)
+                                                select ma).ToList();
+            if (applied.Count > 0)
+            {
+                applied_or_not = true;
+            }
+
+            List<User> users = (from ma in missionApplications
+                                where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
+                                select ma.User).ToList();
+
+
+
+            return new CI.Models.ViewModels.Mission { Favorite_mission = favouritemission, Avg_ratings = avg_ratings, Applied_or_not = applied_or_not };
+        }
+
+
+
+
+
     }
 }

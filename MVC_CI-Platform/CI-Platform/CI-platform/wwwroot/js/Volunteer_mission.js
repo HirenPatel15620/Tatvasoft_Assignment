@@ -16,7 +16,6 @@ const tabs = (id) => {
     }
     element.classList.remove("inner-content")
 }
-
 const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
@@ -48,7 +47,6 @@ const add_comments = (user_id, mission_id) => {
         })
     }
 }
-
 const load_comments = (comments) => {
     $('.user-comments').append(comments);
     $('#usercomment').val("")
@@ -61,7 +59,8 @@ const apply_for_mission = (user_id, mission_id) => {
         data: { user_id: user_id, mission_id: mission_id, request_for: "mission" },
         success: function (result) {
             if (result.success) {
-                $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">'+'</button >')
+                $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
+                $('.validate-recommend').removeClass('d-none').addClass('d-flex')
             }
         },
         error: function () {
@@ -88,7 +87,6 @@ const prev_volunteers = (user_id,mission_id) => {
         })
     }
 }
-
 const next_volunteers = (max_page, user_id, mission_id) => {
     var one_page_volunteers=9
     if (count < max_page) {
@@ -107,7 +105,6 @@ const next_volunteers = (max_page, user_id, mission_id) => {
         })
     }
 }
-
 const add_to_favourite = (user_id,mission_id) => {
     $.ajax({
         url: `/volunteering_mission/${mission_id}`,
@@ -126,7 +123,6 @@ const add_to_favourite = (user_id,mission_id) => {
         }
     })
 }
-
 const rating = (rating,user_id,mission_id) => {
     if (rating == 1) {
         $('.rating').find('img').each(function (i, item) {
@@ -196,7 +192,6 @@ const rating = (rating,user_id,mission_id) => {
     }
 
 }
-
 const add_coworkers = (id) => {
     id = parseInt(id.slice(9))
     if (!co_workers.includes(id)) {
@@ -206,7 +201,6 @@ const add_coworkers = (id) => {
         co_workers.splice(co_workers.indexOf(id),1)
     }
 }
-
 const recommend = (user_id, mission_id) => {
     if (co_workers.length > 0) {
         $.ajax({

@@ -12,17 +12,52 @@ namespace CI.DataAcess.Repository
     {
         private readonly CiPlatformContext _db;
         List<MissionApplication> missionApplications = new List<MissionApplication>();
-        List<CI.Models.Mission> missions = new List<CI.Models.Mission>();
+        List<CI.Models.StoryMedia> medias = new List<CI.Models.StoryMedia>();
         public Story(CiPlatformContext db) : base(db)
         {
             _db = db;
             getdetails();
         }
+
+        public bool AddStory(long user_id, long mission_id, string title, string published_date, string mystory, List<string> media)
+        {
+            CI.Models.Story story = new CI.Models.Story
+            {
+                UserId = user_id,
+                MissionId = mission_id,
+                Title = title,
+                Description = mystory,
+                PublishedAt = DateTime.Parse(published_date),
+            };
+            _db.Stories.Add(story);
+            _db.SaveChanges();
+            long story_id = story.StoryId;
+            foreach(var item in media)
+            {
+                _db.StoryMedia.Add(new StoryMedia
+                {
+                    StoryId = story_id,
+                    Type="images",
+                    Path = item
+                }) ;
+            }
+            _db.SaveChanges();
+            return true;
+            
+        }
+
         public void getdetails()
         {
             missionApplications = _db.MissionApplications.ToList();
-            missions = _db.Missions.ToList();
+            medias = _db.StoryMedia.ToList();
         }
+
+        public List<Models.Story> GetStories()
+        {
+            List<Models.Story> stories = _db.Stories.ToList();
+            return stories;
+        }
+
         public List<CI.Models.Mission> Get_User_Missions(long user_id)
         {
             List<CI.Models.Mission> User_Missions = (from m in missionApplications

@@ -1,4 +1,5 @@
-﻿@*
+﻿@using System.Security.Claims
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model CI.Models.ViewModels.Mission
@@ -16,6 +17,17 @@
                     </div>
                     <button class="like-img border-0">
                         <img class="text-light" src="images/heart.png" alt="">
+                       @* //{
+                        //        @if (@Model.Favorite_mission == 0)
+                        //        {
+                        //            <img src="~/images/heart1.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt=""/>
+                        //        }
+                        //        else
+                        //        {
+                        //            <img src="~/images/red-heart.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt=""/>
+                        //        }
+                        //    }
+                        *@
                     </button>
                     <button class="stop-img border-0">
                         <img class="text-light" src="images/user.png" alt="">
@@ -33,7 +45,7 @@
                 </div>
                 <div class="caption card-body">
                     <h4 class="group card-title inner list-group-item-heading">
-                        @item.Title?.Substring(0,30)...
+                        @item.Title?.Substring(0,50)...
                     </h4>
                     <p class="group inner list-group-item-text">
                         @item.Description?.Substring(0,100).....
@@ -41,12 +53,29 @@
                     <div class="d-flex list-view justify-content-between">
                         <span class="organization">@item.OrganizationName</span>
                         <div class="rating">
+
                             <img src="images/selected-star.png" alt="">
                             <img src="images/selected-star.png" alt="">
                             <img src="images/selected-star.png" alt="">
                             <img src="images/star.png" alt="">
                             <img src="images/star.png" alt="">
                         </div>
+                        @*
+                            @{
+                            for (var i = 1; i <= 5; i++)
+                            {
+                            if (i <= @Model.Avg_ratings)
+                            {
+                            <img style="height:30px"  src="~/images/selected-star.png"alt="" />
+                            }
+                            else
+                            {
+                            <img style="height:30px"  src="~/images/star-empty.png" alt="" />
+                            }
+                            }
+                            }
+                        *@
+
                     </div>
                     <div class="duration-seats-info mt-4">
                         <div class="duration">
@@ -99,8 +128,7 @@
                                     <img src="images/deadline.png" alt="">
                                     <span>
                                         @item.Deadline.ToString().Substring(0,10)
-                                             @* ? rempve*@
-
+                                        @* remove ? *@
                                         <p>Deadline</p>
                                     </span>
                                 }
@@ -109,10 +137,25 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-4">
-                     <a href='/volunteering_mission/@item.MissionId'>    
-                    <button class="applyButton btn">
-                            Apply <img src="images/right-arrow.png" alt="">
-                        </button>
+                        <a href='/volunteering_mission/@item.MissionId'>
+
+                            
+                                @*   Apply <img src="images/right-arrow.png" alt="">*@
+
+                                @{
+                                    @if (@Model.Applied_or_not)
+                                    {
+                                        <button class="applyButton btn" disabled>
+                                            Already Applied<img src="images/right-arrow.png" alt="">
+                                        </button>
+                                    }
+                                    else
+                                    {
+                                        <button onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item?.MissionId)" class="applyButton btn" value="Apply">
+                                            Apply Now<img src="images/right-arrow.png" alt="">
+                                        </button>
+                                    }
+                                }
 
                         </a>
                     </div>

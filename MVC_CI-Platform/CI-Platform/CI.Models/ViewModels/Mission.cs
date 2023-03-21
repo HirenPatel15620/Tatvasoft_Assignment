@@ -14,6 +14,11 @@ namespace CI.Models.ViewModels
         public List<City>? Cities { get; set; }
         public List<MissionTheme>? themes { get; set; }
         public List<Skill>? skills { get; set; }
+
+        public double? Avg_ratings { get; set; }
+        public List<FavoriteMission> Favorite_mission { get; set; }
+        public bool Applied_or_not { get; set; }
+
        
     }
 }

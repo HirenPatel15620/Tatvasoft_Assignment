@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 
 namespace CI.Models;
+
 public partial class Country
 {
     public long CountryId { get; set; }

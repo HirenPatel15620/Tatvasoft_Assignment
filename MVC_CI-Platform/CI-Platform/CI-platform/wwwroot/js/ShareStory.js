@@ -13,9 +13,10 @@ CKEDITOR.replace('editor', {
 
 function loadimages() {
     var image = document.getElementById('images').files
-    var images_count = image.length
-    if (images_count <= 20) {
+    var images_count = $('.gallary').find('.main-image').length
+    if (images_count + image.length <= 20 && image.length<=20) {
         if (images_count == 1) {
+            var fr = new FileReader()
             const div = document.createElement('div')
             const img = document.createElement('img')
             const close_div = document.createElement('div')
@@ -24,7 +25,10 @@ function loadimages() {
             close_img.src = "/images/cancel.png"
             div.id = `image-${count}`
             div.className = "main-image-div"
-            img.src = URL.createObjectURL(image[0])
+            fr.readAsDataURL(image[0])
+            fr.onload = () => {
+                img.src = fr.result
+            }
             img.className = "main-image"
             $('.gallary').append(div)
             $(`#image-${count}`).append(img)
@@ -34,24 +38,114 @@ function loadimages() {
             count++
         }
         else {
-            for (var i = 0; i < images_count; i++) {
-                const div = document.createElement('div')
-                const img = document.createElement('img')
-                const close_div = document.createElement('div')
-                close_div.className = "bg-black close d-flex justify-content-center align-items-center"
-                const close_img = document.createElement('img')
-                close_img.src = "/images/cancel.png"
-                div.id = `image-${i}`
-                div.className = "main-image-div"
-                img.src = URL.createObjectURL(image[i])
-                img.className = "main-image"
-                $('.gallary').append(div)
-                $(`#image-${i}`).append(img)
-                close_div.append(close_img)
-                close_div.onclick = function () { this.parentNode.remove() }
-                $(`#image-${i}`).append(close_div)
-                count = i + 1
+            for (var i = 0; i < image.length; i++) {
+                let fr = new FileReader()
+                fr.onload = () => {
+                    const div = document.createElement('div')
+                    const img = document.createElement('img')
+                    const close_div = document.createElement('div')
+                    close_div.className = "bg-black close d-flex justify-content-center align-items-center"
+                    const close_img = document.createElement('img')
+                    close_img.src = "/images/cancel.png"
+                    div.id = `image-${count}`
+                    div.className = "main-image-div"
+                    img.src = fr.result
+                    img.className = "main-image"
+                    $('.gallary').append(div)
+                    $(`#image-${count}`).append(img)
+                    close_div.append(close_img)
+                    close_div.onclick = function () { this.parentNode.remove() }
+                    $(`#image-${count}`).append(close_div)
+                    count++
+                }
+                 fr.readAsDataURL(image[i])
             }
         }
+    }
+}
+
+function getdetails() {
+    var mission = parseInt($('.form-select').find(':selected').val())
+    var title = $('.title').val()
+    var date = $('#datepicker').datepicker().val()
+    var current_date = new Date()
+    var mystory = CKEDITOR.instances.editor.getData();
+    var video_url = $('.video').val()
+    var media = []
+    if (video_url.trim().length > 3) {
+        media.push(video_url)
+    }
+    $('.gallary').find('.main-image').each(function (i, item) {
+        media.push(item.src)
+    }
+    )
+    if (mission == 0) {
+        $('#mission').removeClass('d-none').addClass('d-block')
+    }
+    else {
+        $('#mission').removeClass('d-block').addClass('d-none')
+    }
+    if (title.trim().length == 0) {
+        $('#title').removeClass('d-none').addClass('d-block')
+    }
+    else {
+        $('#title').removeClass('d-block').addClass('d-none') 
+    }
+    if (title.trim().length > 255) {
+        $('#title-big').removeClass('d-none').addClass('d-block')
+    }
+    else {
+        $('#title-big').removeClass('d-block').addClass('d-none')
+    }
+    if (date.length == 0) {
+        $('#date').removeClass('d-none').addClass('d-block')
+    }
+    else {
+        $('#date').removeClass('d-block').addClass('d-none')
+    }
+    if (Date.parse(current_date) <= Date.parse(date)) {
+        $('#date-valid').removeClass('d-none').addClass('d-block')
+    }
+    else {
+        $('#date-valid').removeClass('d-block').addClass('d-none')
+       
+    }
+    if (mystory.trim().length == 0) {
+        $('#mystory').removeClass('d-none').addClass('d-block')
+      
+    }
+    else {
+        $('#mystory').removeClass('d-block').addClass('d-none')
+        
+    }
+    if (mystory.trim().length > 40000) {
+        $('#mystory-big').removeClass('d-none').addClass('d-block')
+        
+    }
+    else {
+        $('#mystory-big').removeClass('d-block').addClass('d-none')
+       
+    }
+    if ($('.gallary').find('.main-image').length == 0) {
+        $('#image').removeClass('d-none').addClass('d-block')
+       
+    }
+    else {
+        $('#image').removeClass('d-block').addClass('d-none')
+        
+    }
+    if (mission != 0 && title.trim().length != 0 && title.trim().length < 255 && date.length != 0
+        && Date.parse(current_date) >= Date.parse(date) && mystory.trim().length != 0 && mystory.trim().length < 40000 && $('.gallary').find('.main-image').length != 0) {
+        $.ajax({
+            url: '/stories/share',
+            type: 'POST',
+            data: { mission_id: mission, title: title, published_date: date.toString(), mystory: mystory, media: media },
+            success: function (result) {
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+
     }
 }

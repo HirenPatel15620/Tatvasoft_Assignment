@@ -8,12 +8,15 @@
 @*main body*@
     <div class="container body pt-5">
         <div class="d-flex justify-content-between">
-            <span class="explore">Explore <b>@Model.Missions?.Count Missions</b></span>
+         <span class="explore">Explore <b>@Model.Missions?.Count Missions</b></span>
+@*       <h2>Explore: 10 Missions</h2>*@
+       @*@ViewBag.RecordCount*@
+
             <div class="d-flex sort">
         <select class="form-select me-3" onchange="sort_by(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value)" aria-label="Sort By" id="sort">
-  <option disabled  selected>Sort By</option>
+  <option disabled  >Sort By</option>
+  <option selected  value="Oldest">Oldest</option>
   <option value="Newest">Newest</option>
-  <option value="Oldest">Oldest</option>
   <option value="Lowest available seats">Lowest available seats</option>
   <option value="Highest available seats">Highest available seats</option>
   <option value="My favourites">My favourites</option>

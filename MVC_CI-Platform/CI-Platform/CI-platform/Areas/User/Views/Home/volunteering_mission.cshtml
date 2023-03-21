@@ -152,7 +152,7 @@
                                         {
                                             <img src="~/images/deadline.png" alt="">
                                              <span>@Model?.mission?.Deadline.ToString().Substring(0,10)
-                                             @* ? rempve*@
+                                            @* //remove ? *@
                                              <p>Deadline</p></span>
                                         }
                                     }
@@ -171,13 +171,20 @@
                                     <img src="~/images/red-heart.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt=""/>
                                 }
                             }
-                                <span>Add To Favourite</span>
-                            </div>
+                            <span>Add To Favourite</span>
+                        </div>
+                        @if (@Model.Applied_or_not)
+                        {
                             <div data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;" class="col-lg-6 col-md-12 col-sm-6 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
                                 <img src="~/images/add1.png" class="p-1" alt="" />
                                 <span class="p-1" style="white-space:nowrap;"> Recommend To a Co-Worker</span>
-                        </div>
-                        </div>
+                            </div>
+}
+                            <div data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;" class="col-lg-6 col-md-12 col-sm-6 validate-recommend justify-content-center align-items-center border border-dark rounded-pill mt-2 d-none">
+                                <img src="~/images/add1.png" class="p-1" alt="" />
+                                <span class="p-1" style="white-space:nowrap;"> Recommend To a Co-Worker</span>
+                            </div>
+                    </div>
                          <div class="duration-seats-info mt-5">
                            <div style="cursor:pointer;" class="d-flex stars justify-content-center rating">
                            @{
@@ -232,8 +239,7 @@
                                 <div class="ms-2 mb-1">
                                 <p class="text-muted" style="margin-block:0;">Date</p>
                                 <p style="margin-block:0;">@Model?.mission?.Deadline.ToString().Substring(0,10)</p>
-                                             @* ? rempve*@
-
+                                @* remove ? *@
                                 </div>
                             </div>
                              <div class=" d-flex w-25 flex-column justify-content-between border rounded mission-info">
@@ -247,7 +253,7 @@
                             </div>
                      
                         </div>
-                        <div class="d-flex apply-button mb-4 justify-content-center mt-1">
+                        <div class="d-flex apply-button mb-4 pt-4 justify-content-center mt-1">
                         @{
                         @if (@Model.Applied_or_not)
                         {
@@ -305,7 +311,7 @@
             </div>
              <div class="inner-content mt-4 tab text-muted" id="comment">
                 <div class="form-group">
-               <textarea class="form-control" id="usercomment" placeholder="Enter your comments..." rows="3"></textarea>
+               <textarea class="form-control" id="usercomment" placeholder="Enter your comments...(Please, write 2 word atleast)" rows="3"></textarea>
                 <button onclick="add_comments(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.mission?.MissionId)" class="applyButton mt-3 btn">Post Comment</button>
                 </div>
                 <div class="bg-light user-comments mt-4 p-3" style="height:460px">
@@ -474,8 +480,7 @@
                                     <img src="images/deadline.png" alt="">
                                     <span>
                                         @item.Deadline.ToString().Substring(0,10)
-                                             @* ? rempve*@
-
+                                           @* remove ? *@
                                         <p>Deadline</p>
                                     </span>
                                 }

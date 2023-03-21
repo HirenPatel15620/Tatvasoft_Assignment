@@ -20,8 +20,7 @@ public partial class MissionInvite
     public DateTime? DeletedAt { get; set; }
 
     public virtual User FromUser { get; set; } = null!;
-    public virtual User ToUser { get; set; } = null!;
-
+    public User ToUser { get; set; }
 
     public virtual Mission Mission { get; set; } = null!;
 }

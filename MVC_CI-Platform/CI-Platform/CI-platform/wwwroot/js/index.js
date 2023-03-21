@@ -12,8 +12,9 @@ let city_count = 0;
 let theme_count = 0;
 let skill_count = 0;
 let pageindex = 0;
-var view="grid"
-var clearall = "<span class='ms-1 clear-all'>" + "Clear All" + "</span>";
+var view = "grid"
+var clearall = "<span  id= 'clear-allid' class='ms-1 clear-all'>" + "Clear All" + "</span>";
+
 const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
@@ -28,7 +29,7 @@ const view_detail_onmouseout = (id, img) => {
     item.style.display = "none";
 }
 
-function listview() { 
+function listview() {
     for (var i = 0; i < items.length; i++) {
         items[i].classList.remove("col-lg-4")
         items[i].classList.add("col-lg-12")
@@ -44,7 +45,7 @@ function listview() {
     grid.classList.remove("view")
     list.classList.add("view")
     list.style.marginLeft = 20 + "px";
-    view="list"
+    view = "list"
 }
 
 function gridview() {
@@ -63,7 +64,7 @@ function gridview() {
     grid.classList.add("view")
     list.classList.remove("view")
     list.style.marginLeft = 0 + "px";
-    view="grid"
+    view = "grid"
 }
 
 
@@ -123,10 +124,10 @@ const addcountries = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var country;
     if (type == 'mobile') {
-         country = document.getElementsByClassName(name)[0]
+        country = document.getElementsByClassName(name)[0]
     }
     else {
-         country = document.getElementById(name)
+        country = document.getElementById(name)
     }
     if (country.checked) {
         if (!countries.includes(name)) {
@@ -154,7 +155,7 @@ const addcountries = (name, type) => {
             countries.splice(countries.indexOf(name), 1)
             $('.all-choices').find(`#badge-${name.replace(/\s/g, '')}`).remove()
             country_count--;
-            
+
         }
     }
     $.ajax({
@@ -172,7 +173,7 @@ const addcountries = (name, type) => {
 }
 
 //filters by themes
-const addthemes = (name,type) => {
+const addthemes = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var theme;
     if (type == 'mobile') {
@@ -213,17 +214,17 @@ const addthemes = (name,type) => {
         url: '/home',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
-        success:  function (result) {
+        success: function (result) {
             loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
         }
-        })
+    })
 }
 
 //filters by skills
-const addskills = (name,type) => {
+const addskills = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var skill;
     if (type == 'mobile') {
@@ -264,7 +265,7 @@ const addskills = (name,type) => {
         url: '/home',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
-        success:  function (result) {
+        success: function (result) {
             loadmissions(result.mission.result, result.length)
         },
         error: function () {
@@ -307,7 +308,7 @@ const search_missions = () => {
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { key: key, page_index: pageindex },
+            data: { key: key, page_index: pageindex, countries: countries, cities: cities, themes: themes, skills: skills },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
             },
@@ -322,7 +323,7 @@ const search_missions = () => {
             type: 'POST',
             data: { countries: countries, cities: cities, themes: themes, skills: skills, page_index: pageindex },
             success: function (result) {
-                loadmissions(result.mission.result,result.length)
+                loadmissions(result.mission.result, result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -341,7 +342,7 @@ const sort_by = (user_id) => {
             type: 'POST',
             data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex, user_id: user_id },
             success: function (result) {
-                loadmissions(result.mission.result,result.length)
+                loadmissions(result.mission.result, result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -353,12 +354,79 @@ const sort_by = (user_id) => {
 
 //clear all
 const clear_all = () => {
+    //if (countries, cities, themes, skills == null) {
+
+    //    var div = document.getElementById("clear-all");
+    //    if (div.innerHTML.trim() === '') {
+    //        div.parentNode.removeChild(div);
+    //    }
+    //}
+    var btn = document.getElementById('clear-allid');
+    btn.addEventListener('click', function () {
+        var div = document.getElementById('clear-all');
+        if (div.innerHTML.trim() === '') {
+            div.remove();
+        }
+    });
     var selected = $('#sort').find(':selected').text();
+
     countries = []
     cities = []
     themes = []
     skills = []
+    //$.ajax({
+    //    url: '/home',
+    //    type: 'POST',
+    //    data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+    //    success: function (result) {
+    //        loadmissions(result.mission.result, result.length)
+    //    },
+    //    error: function () {
+    //        console.log("Error updating variable");
+    //    }
+    //})
+    $('.all-choices').empty()
+    $('#clear-all').empty()
+}
 
+//remove badges
+const remove_badges = (id, badge_type) => {
+    var selected = $('#sort').find(':selected').text();
+    $(`#${id.slice(6)}`).prop('checked', false);
+    $('.all-choices').find(`#${id.replace(/\s/g, '')}`).remove()
+    if (badge_type == "city") {
+        $(`#${id.slice(6)}`).prop('checked', false);
+
+        if (cities.includes(id.slice(6))) {
+            cities.splice(cities.indexOf(id.slice(6)), 1)
+            prop('checked', false);
+            city_count--;
+        }
+    }
+    else if (badge_type == "country") {
+        $(`#${id.slice(6)}`).prop('checked', false);
+
+        if (countries.includes(id.slice(6))) {
+            countries.splice(countries.indexOf(id.slice(6)), 1)
+            country_count--;
+        }
+    }
+    else if (badge_type == "theme") {
+        $(`#${id.slice(6)}`).prop('checked', false);
+
+        if (themes.includes(id.slice(6))) {
+            themes.splice(themes.indexOf(id.slice(6)), 1)
+            theme_count--;
+        }
+    }
+    else if (badge_type == "skill") {
+        $(`#${id.slice(6)}`).prop('checked', false);
+
+        if (skills.includes(id.slice(6))) {
+            skills.splice(skills.indexOf(id.slice(6)), 1)
+            skill_count--;
+        }
+    }
     $.ajax({
         url: '/home',
         type: 'POST',
@@ -370,57 +438,13 @@ const clear_all = () => {
             console.log("Error updating variable");
         }
     })
-    $('.all-choices').empty()
-    $('#clear-all').empty()
-}
-
-//remove badges
-const remove_badges = (id, badge_type) => {
-    var selected = $('#sort').find(':selected').text();
-    $(`#${id.slice(6)}`).prop('checked', false);
-    $('.all-choices').find(`#${id.replace(/\s/g, '')}`).remove()
-    if (badge_type == "city") {
-        if (cities.includes(id.slice(6))) {
-            cities.splice(cities.indexOf(id.slice(6)), 1)
-            city_count--;
-        }
-    }
-    else if (badge_type == "country") {
-        if (countries.includes(id.slice(6))) {
-            countries.splice(countries.indexOf(id.slice(6)), 1)
-            country_count--;
-        }
-    }
-    else if (badge_type == "theme") {
-        if (themes.includes(id.slice(6))) {
-            themes.splice(themes.indexOf(id.slice(6)), 1)
-            theme_count--;
-        }
-    }
-    else if (badge_type == "skill") {
-        if (skills.includes(id.slice(6))) {
-            skills.splice(skills.indexOf(id.slice(6)), 1)
-            skill_count--;
-        }
-    }
-    $.ajax({
-        url: '/home',
-        type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
-        success: function (result) {
-            loadmissions(result.mission.result,result.length)
-        },
-        error: function () {
-            console.log("Error updating variable");
-        }
-    })
 }
 
 const pagination = (page_index) => {
     var selected = $('#sort').find(':selected').text();
     pageindex = page_index - 1;
     $('.pagination li span').each(function (i, item) {
-            item.classList.remove('page-active')
+        item.classList.remove('page-active')
     })
     $(`#page-${page_index}`).addClass('page-active')
     $.ajax({
@@ -435,10 +459,9 @@ const pagination = (page_index) => {
         }
     })
 }
-
 const prev = () => {
-    var current_page;
     var selected = $('#sort').find(':selected').text();
+    var current_page;
     $('.pagination li span').each(function (i, item) {
         if (item.classList.contains('page-active')) {
             current_page = i - 1;
@@ -451,22 +474,21 @@ const prev = () => {
     if (current_page !== 1) {
         pageindex = current_page - 2
         $.ajax({
-        url: '/home',
+            url: '/home',
             type: 'POST',
-            data: { page_index: current_page - 2, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase()},
-        success: function (result) {
-            loadmissions(result.mission.result, result.length)
-        },
-        error: function (e) {
-            console.log(e);
-        }
-    })
+            data: { page_index: current_page - 2, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+            },
+            error: function (e) {
+                console.log(e);
+            }
+        })
     }
 }
-
 const next = (max_page) => {
-    var current_page;
     var selected = $('#sort').find(':selected').text();
+    var current_page;
     $('.pagination li span').each(function (i, item) {
         if (item.classList.contains('page-active')) {
             current_page = i - 1;
@@ -494,8 +516,8 @@ const next = (max_page) => {
 }
 
 const first_page = () => {
-    var current_page;
     var selected = $('#sort').find(':selected').text();
+    var current_page;
     $('.pagination li span').each(function (i, item) {
         if (item.classList.contains('page-active')) {
             current_page = i - 1;
@@ -520,26 +542,25 @@ const first_page = () => {
         })
     }
 }
-
 const last_page = (max_page) => {
-    var current_page;
     var selected = $('#sort').find(':selected').text();
+    var current_page;
     $('.pagination li span').each(function (i, item) {
         if (item.classList.contains('page-active')) {
             current_page = i - 1;
             if (current_page !== max_page) {
-                $('.pagination li span').eq(max_page+1).addClass('page-active')
+                $('.pagination li span').eq(max_page + 1).addClass('page-active')
                 item.classList.remove('page-active')
                 return false
             }
         }
     })
     if (current_page !== max_page) {
-        pageindex = max_page-1
+        pageindex = max_page - 1
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { page_index: max_page - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase()},
+            data: { page_index: max_page - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
             },
@@ -549,4 +570,4 @@ const last_page = (max_page) => {
         })
     }
 }
-   
+

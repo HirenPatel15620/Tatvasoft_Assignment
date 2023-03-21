@@ -16,7 +16,8 @@ namespace CI_platform.Controllers
         [Route("stories")]
         public IActionResult StoryListing()
         {
-            return View();
+            List<Story> stories = allRepository.Story.GetStories();
+            return View(stories);
         }
         [Route("stories/share")]
         public IActionResult ShareStory()
@@ -24,6 +25,14 @@ namespace CI_platform.Controllers
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
             List<Mission> missions = allRepository.Story.Get_User_Missions(user_id);
             return View(missions);
+        }
+        [HttpPost]
+        [Route("stories/share")]
+        public JsonResult ShareStory(long mission_id, string title,string published_date, string mystory, List<string>media)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            bool success = allRepository.Story.AddStory(user_id, mission_id, title, published_date, mystory, media);
+            return Json(new { success });
         }
     }
 }
