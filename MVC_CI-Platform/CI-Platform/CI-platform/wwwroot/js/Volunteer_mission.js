@@ -22,14 +22,12 @@ const view_detail_onmouseover = (id, img) => {
     let item = document.getElementById(id);
     item.style.display = "block";
 }
-
 const view_detail_onmouseout = (id, img) => {
     let image = document.getElementById(img)
     image.classList.remove("story-image")
     let item = document.getElementById(id);
     item.style.display = "none";
 }
-
 const add_comments = (user_id, mission_id) => {
     var comment = document.getElementById('usercomment').value
     var length = $('.user-comments').find('.usercomment-image').length

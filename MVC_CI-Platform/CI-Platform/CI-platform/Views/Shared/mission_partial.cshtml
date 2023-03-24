@@ -1,12 +1,12 @@
-﻿@using System.Security.Claims
-@*
+﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using System.Security.Claims;
 @model CI.Models.ViewModels.Mission
 @{
     foreach (var item in Model.Missions)
     {
-        <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
+        <div class="item card1 col-md-6 col-lg-4 col-sm-6 mt-3">
             <div class="thumbnail card d-flex">
                 <div class="img-event">
                     <img class="group list-group-image w-100 h-100"
@@ -15,33 +15,44 @@
                         <img class="text-light" src="images/pin.png" alt="">
                         <span class="text-light">@item.City.Name</span>
                     </div>
-                    <button class="like-img border-0">
-                        <img class="text-light" src="images/heart.png" alt="">
-                       @* //{
-                        //        @if (@Model.Favorite_mission == 0)
-                        //        {
-                        //            <img src="~/images/heart1.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt=""/>
-                        //        }
-                        //        else
-                        //        {
-                        //            <img src="~/images/red-heart.png" class="p-1 heart" style="margin-right:10px;height:30px;" alt=""/>
-                        //        }
-                        //    }
-                        *@
+                    @{
+                        if(@item.FavoriteMissions.Where(c=>c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value))).ToList().Count>0 )
+                        {
+                            
+                    <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                        <img class="text-light heart-@item.MissionId" style="height:24px;" src="images/red-heart.png" alt="">
                     </button>
+                        }
+                        else{
+                         <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                        <img class="text-light heart-@item.MissionId" src="images/heart.png" alt="">
+                    </button>
+                        }
+                    }
                     <button class="stop-img border-0">
                         <img class="text-light" src="images/user.png" alt="">
                     </button>
                     <button class="mission-theme border-0">
                         <span class="p-2">@item.Theme.Title</span>
                     </button>
+
+
+                    @if(@item.Deadline< DateTime.Now  || @item.EndDate<DateTime.Now ||@item.AvbSeat==0){
                     <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
-                        <a href='/volunteering_mission/@item.MissionId'>
-                            <button class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
+                        <a href='/volunteering_mission/@item.MissionId' class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
                                 View Details <img class="ms-2" src="images/right-arrow.png" alt="">
-                            </button>
                         </a>
-                    </div>
+                        </div>
+                    }
+                    
+                    else
+                    {
+                        <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
+                        <a  class=" applyButton   btn d-flex  justify-content-center align-items-center" style="border: 2px solid white; color: white;" disable>
+                                For More Details Apply First
+                        </a>
+                        </div>
+                    }
                 </div>
                 <div class="caption card-body">
                     <h4 class="group card-title inner list-group-item-heading">
@@ -53,29 +64,27 @@
                     <div class="d-flex list-view justify-content-between">
                         <span class="organization">@item.OrganizationName</span>
                         <div class="rating">
-
-                            <img src="images/selected-star.png" alt="">
-                            <img src="images/selected-star.png" alt="">
-                            <img src="images/selected-star.png" alt="">
-                            <img src="images/star.png" alt="">
-                            <img src="images/star.png" alt="">
-                        </div>
-                        @*
                             @{
-                            for (var i = 1; i <= 5; i++)
-                            {
-                            if (i <= @Model.Avg_ratings)
-                            {
-                            <img style="height:30px"  src="~/images/selected-star.png"alt="" />
-                            }
-                            else
-                            {
-                            <img style="height:30px"  src="~/images/star-empty.png" alt="" />
-                            }
-                            }
-                            }
-                        *@
-
+                                double avg_rating = 0;
+                                int total = @item.MissionRatings.Count;
+                                foreach (var rating in @item.MissionRatings)
+                                {
+                                    avg_rating= avg_rating + rating.Rating;
+                                }
+                                avg_rating = avg_rating / total;
+                                for (var i = 1; i <= 5; i++)
+                                {
+                                    if (i <= @avg_rating)
+                                    {
+                                        <img style="height:30px"  src="~/images/selected-star.png"alt="" />
+                                    }
+                                    else
+                                    {
+                                       <img style="height:30px"  src="~/images/star-empty.png" alt="" /> 
+                                    }
+                                }
+                                }
+                        </div>
                     </div>
                     <div class="duration-seats-info mt-4">
                         <div class="duration">
@@ -128,7 +137,8 @@
                                     <img src="images/deadline.png" alt="">
                                     <span>
                                         @item.Deadline.ToString().Substring(0,10)
-                                        @* remove ? *@
+                                @*?*@
+
                                         <p>Deadline</p>
                                     </span>
                                 }
@@ -137,26 +147,24 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-4">
-                        <a href='/volunteering_mission/@item.MissionId'>
+                     <a  >    
+                        @if (DateTime.Now > @item.StartDate)
+                        {
+                            <button  class="applyButton btn" disabled>closed
+                            </button>
+                        }
+                        //@else if (@item.)
+                        //{
+                        //    <button  class="applyButton btn" disabled>Already Applied<img src="images/right-arrow.png" alt="">
+                        //    </button>
+                        //}
+                        else{
+                         <a href='/volunteering_mission/@item.MissionId'  class="applyButton btn">apply    <img src="images/right-arrow.png" alt=""></a>
 
-                            
-                                @*   Apply <img src="images/right-arrow.png" alt="">*@
+                          //<button onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item?.MissionId)" class="applyButton btn">Apply Now<img src="images/right-arrow.png" alt="">
+                          //  </button>
 
-                                @{
-                                    @if (@Model.Applied_or_not)
-                                    {
-                                        <button class="applyButton btn" disabled>
-                                            Already Applied<img src="images/right-arrow.png" alt="">
-                                        </button>
-                                    }
-                                    else
-                                    {
-                                        <button onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item?.MissionId)" class="applyButton btn" value="Apply">
-                                            Apply Now<img src="images/right-arrow.png" alt="">
-                                        </button>
-                                    }
-                                }
-
+                       }
                         </a>
                     </div>
                 </div>

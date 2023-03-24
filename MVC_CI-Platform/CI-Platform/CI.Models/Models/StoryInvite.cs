@@ -18,4 +18,5 @@ public partial class StoryInvite
     public DateTime? UpdatedAt { get; set; }
 
     public DateTime? DeletedAt { get; set; }
+    public User ToUser { get; set; }
 }

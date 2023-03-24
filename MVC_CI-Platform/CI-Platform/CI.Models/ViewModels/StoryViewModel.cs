@@ -6,11 +6,9 @@ using System.Threading.Tasks;
 
 namespace CI.Models.ViewModels
 {
-    public class Comment_Viewmodel
+    public class StoryViewModel
     {
-
-        public Comment? User_Comment { get; set; }
-        public User? user { get; set; }
-       
+        public CI.Models.Story? story { get; set; }
+        public List<User>? co_workers { get; set; }
     }
 }

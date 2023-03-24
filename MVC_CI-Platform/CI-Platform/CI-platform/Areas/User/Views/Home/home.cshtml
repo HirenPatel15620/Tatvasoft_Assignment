@@ -8,15 +8,12 @@
 @*main body*@
     <div class="container body pt-5">
         <div class="d-flex justify-content-between">
-         <span class="explore">Explore <b>@Model.Missions?.Count Missions</b></span>
-@*       <h2>Explore: 10 Missions</h2>*@
-       @*@ViewBag.RecordCount*@
-
+            <span class="explore">Explore <b>@Model.Missions?.Count Missions</b></span>
             <div class="d-flex sort">
         <select class="form-select me-3" onchange="sort_by(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value)" aria-label="Sort By" id="sort">
-  <option disabled  >Sort By</option>
-  <option selected  value="Oldest">Oldest</option>
+  <option disabled  selected>Sort By</option>
   <option value="Newest">Newest</option>
+  <option value="Oldest">Oldest</option>
   <option value="Lowest available seats">Lowest available seats</option>
   <option value="Highest available seats">Highest available seats</option>
   <option value="My favourites">My favourites</option>
@@ -40,7 +37,32 @@
             </div>
             @*pagination*@
 
-<nav aria-label="Page navigation example" class="mt-5">
+
+
+
+            
+                 <div class="container d-flex justify-content-center">
+            <div class="row">
+                <nav>
+                    <ul class="pagination">
+                        <li class="pagination_box" id="firstpage">&laquo;</li>
+                        <li class="pagination_box" id="prevpage-btn" onclick="prevpage()">&#60;</li>
+                    <ul class="pagination" id="pagination"> 
+                    </ul>
+                        <li class="pagination_box" id="nextpage-btn" onclick="nextpage()">&#62;</li>
+                        <li class="pagination_box" id="lastpage">&raquo;</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+
+
+
+
+
+
+@*<nav aria-label="Page navigation example" class="mt-5">
     <ul class="pagination justify-content-center">
                 <li class="page-item">
             <span class="page-link" onclick="first_page()"><img src="~/images/previous.png" alt="not load" /></span>
@@ -69,7 +91,9 @@
             <span class="page-link" onclick="last_page(@pages)"><img src="~/images/next.png" alt="not load" /></span>
         </li>
     </ul>
-</nav>
+</nav>*@
+        <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
 <script src="~/js/index.js"  asp-append-version="true"></script>
       
 

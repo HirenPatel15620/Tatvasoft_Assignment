@@ -36,7 +36,7 @@
                          foreach (var city in item.Cities)
                          {
                               <span class="dropdown-item">
-                         <input class="form-check-input @item.Name" type="checkbox" value="" onchange="addcountries('@city.Name','mobile')">
+                         <input class="form-check-input @city.Name" type="checkbox" value="" onchange="addcities('@city.Name','mobile')">
                          <label class="form-check-label" for="flexCheckDefault">
                          @city.Name
                             </label>
@@ -89,7 +89,7 @@
     <div class="d-flex search-div align-items-center">
     <img class="search" src="~/images/search.png" alt="not load" />
         <div class="form-floating w-75 d-flex">
-            <input type="search" class="form-control search-input" id="floatingSearch" onkeyup='search_missions()' placeholder="Search Misssions...." />
+            <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Misssions...." />
             <label for="floatingSearch" class="d-flex align-items-center">Search Missions....</label>
         </div>
     </div>
@@ -105,7 +105,7 @@
                      foreach (var item in Model.Country)
                      {
                          <span class="dropdown-item">
-                         <input class="form-check-input" type="checkbox" autocomplete="off" value="" onchange="addcountries('@item.Name')" id="@item.Name">
+                         <input class="form-check-input" type="checkbox" value="" onchange="addcountries('@item.Name')" id="@item.Name">
                          <label class="form-check-label" for="flexCheckDefault">
                          @item.Name
                             </label>
@@ -135,7 +135,7 @@
                         foreach (var item in Model.themes)
                         {
                             <span class="dropdown-item">
-                 <input class="form-check-input" type="checkbox" autocomplete="off"  onchange="addthemes('@item.Title')" value="" id="@item.Title">
+                 <input class="form-check-input" type="checkbox" onchange="addthemes('@item.Title')" value="" id="@item.Title">
                  <label class="form-check-label" for="flexCheckDefault">
                  @item.Title
                 </label>
@@ -154,7 +154,7 @@
                         foreach (var item in Model.skills)
                         {
                             <span class="dropdown-item">
-                                <input class="form-check-input" type="checkbox" autocomplete="off"  onchange="addskills('@item.SkillName')" value="" id="@item.SkillName">
+                                <input class="form-check-input" type="checkbox" onchange="addskills('@item.SkillName')" value="" id="@item.SkillName">
                                 <label class="form-check-label" for="flexCheckDefault">
                                     @item.SkillName
                                 </label>

@@ -9,15 +9,11 @@ namespace CI.DataAcess.Repository.IRepository
     {
         void Save();
         Models.ViewModels.Mission GetAllMission();
-        Models.ViewModels.Mission GetFilteredMissions(List<string> countries,List<string>cities, List<string> themes, List<string> skills,string sort_by,int page_index,long user_id);
-        Models.ViewModels.Mission GetSearchMissions(string key, int page_index);
+        Models.ViewModels.Mission GetFilteredMissions(List<string> countries,List<string>cities, List<string> themes, List<string> skills,string sort_by,long user_id);
+        Models.ViewModels.Mission GetSearchMissions(string key);
         CI.Models.ViewModels.Volunteer_Mission Mission(long id,long user_id);
         IEnumerable<Models.ViewModels.Comment_Viewmodel> comment(long user_id,long mission_id,string comment,int length);
         bool apply_for_mission(long user_id, long mission_id);
-
-        CI.Models.ViewModels.Mission change(long id, long user_id);
-
-
         bool add_to_favourite(long user_id, long mission_id);
         bool Rate_mission(long user_id, long mission_id,int rating);
         bool Recommend(long user_id, long mission_id,List<long> co_workers);

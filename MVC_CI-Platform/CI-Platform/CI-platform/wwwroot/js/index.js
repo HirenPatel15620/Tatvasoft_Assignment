@@ -12,24 +12,22 @@ let city_count = 0;
 let theme_count = 0;
 let skill_count = 0;
 let pageindex = 0;
-var view = "grid"
-var clearall = "<span  id= 'clear-allid' class='ms-1 clear-all'>" + "Clear All" + "</span>";
-
+var view="grid"
+var clearall = "<span class='ms-1 clear-all'>" + "Clear All" + "</span>";
+var key = document.getElementById('floatingSearch')
 const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
     let item = document.getElementById(id);
     item.style.display = "block";
 }
-
 const view_detail_onmouseout = (id, img) => {
     let image = document.getElementById(img)
     image.classList.remove("story-image")
     let item = document.getElementById(id);
     item.style.display = "none";
 }
-
-function listview() {
+function listview() { 
     for (var i = 0; i < items.length; i++) {
         items[i].classList.remove("col-lg-4")
         items[i].classList.add("col-lg-12")
@@ -45,9 +43,8 @@ function listview() {
     grid.classList.remove("view")
     list.classList.add("view")
     list.style.marginLeft = 20 + "px";
-    view = "list"
+    view="list"
 }
-
 function gridview() {
     for (var i = 0; i < items.length; i++) {
         items[i].classList.add("col-lg-4")
@@ -64,7 +61,7 @@ function gridview() {
     grid.classList.add("view")
     list.classList.remove("view")
     list.style.marginLeft = 0 + "px";
-    view = "grid"
+    view="grid"
 }
 
 
@@ -109,7 +106,7 @@ function addcities(name, type) {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
             loadmissions(result.mission.result, result.length)
         },
@@ -124,10 +121,10 @@ const addcountries = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var country;
     if (type == 'mobile') {
-        country = document.getElementsByClassName(name)[0]
+         country = document.getElementsByClassName(name)[0]
     }
     else {
-        country = document.getElementById(name)
+         country = document.getElementById(name)
     }
     if (country.checked) {
         if (!countries.includes(name)) {
@@ -138,7 +135,7 @@ const addcountries = (name, type) => {
                 + "</div>";
             var $mybadge = $(badge)
             $mybadge.attr('id', `badge-${name.replace(/\s/g, '')}`)
-            $mybadge.find('img').attr('onclick', `remove_badges("badge-${name}","country")`)
+            //$mybadge.find('img').attr('onclick', `remove_badges("badge-${name}","country")`)
             badge = $mybadge
             $('.all-choices').append(badge)
             if ($('.all-choices').find('div').length > 1 && $('.clear-all').length == 0) {
@@ -155,13 +152,13 @@ const addcountries = (name, type) => {
             countries.splice(countries.indexOf(name), 1)
             $('.all-choices').find(`#badge-${name.replace(/\s/g, '')}`).remove()
             country_count--;
-
+            
         }
     }
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
             loadmissions(result.mission.result, result.length)
             loadcities(result.city.result);
@@ -173,7 +170,7 @@ const addcountries = (name, type) => {
 }
 
 //filters by themes
-const addthemes = (name, type) => {
+const addthemes = (name,type) => {
     var selected = $('#sort').find(':selected').text();
     var theme;
     if (type == 'mobile') {
@@ -213,18 +210,18 @@ const addthemes = (name, type) => {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
-        success: function (result) {
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        success:  function (result) {
             loadmissions(result.mission.result, result.length)
         },
         error: function () {
             console.log("Error updating variable");
         }
-    })
+        })
 }
 
 //filters by skills
-const addskills = (name, type) => {
+const addskills = (name,type) => {
     var selected = $('#sort').find(':selected').text();
     var skill;
     if (type == 'mobile') {
@@ -264,8 +261,8 @@ const addskills = (name, type) => {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
-        success: function (result) {
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        success:  function (result) {
             loadmissions(result.mission.result, result.length)
         },
         error: function () {
@@ -302,13 +299,16 @@ const loadmissions = (missions, length) => {
 
 //load search missions
 const search_missions = () => {
+    var selected = $('#sort').find(':selected').text();
     var key = document.getElementById('floatingSearch').value
-    if (key.length > 3) {
+    if (key.length > 3)
+    {
         key = key.toLowerCase();
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { key: key, page_index: pageindex, countries: countries, cities: cities, themes: themes, skills: skills },
+            
+            data: { key: key, sort_by: selected.toLowerCase()},
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
             },
@@ -321,9 +321,9 @@ const search_missions = () => {
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { countries: countries, cities: cities, themes: themes, skills: skills, page_index: pageindex },
+            data: { countries: countries, cities: cities, themes: themes, skills: skills },
             success: function (result) {
-                loadmissions(result.mission.result, result.length)
+                loadmissions(result.mission.result,result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -331,7 +331,11 @@ const search_missions = () => {
         })
     }
 }
-
+key.addEventListener("keydown", function (e) {
+    if (e.code === "Enter") {
+        search_missions()
+    }
+})
 
 //sort missions
 const sort_by = (user_id) => {
@@ -340,9 +344,9 @@ const sort_by = (user_id) => {
         $.ajax({
             url: '/home',
             type: 'POST',
-            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex, user_id: user_id },
+            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), user_id: user_id },
             success: function (result) {
-                loadmissions(result.mission.result, result.length)
+                loadmissions(result.mission.result,result.length)
             },
             error: function () {
                 console.log("Error updating variable");
@@ -354,26 +358,11 @@ const sort_by = (user_id) => {
 
 //clear all
 const clear_all = () => {
-    //if (countries, cities, themes, skills == null) {
-
-    //    var div = document.getElementById("clear-all");
-    //    if (div.innerHTML.trim() === '') {
-    //        div.parentNode.removeChild(div);
-    //    }
-    //}
-    var btn = document.getElementById('clear-allid');
-    btn.addEventListener('click', function () {
-        var div = document.getElementById('clear-all');
-        if (div.innerHTML.trim() === '') {
-            div.remove();
-        }
-    });
     var selected = $('#sort').find(':selected').text();
-
     countries = []
     cities = []
     themes = []
-    skills = []
+    skills=[]
     //$.ajax({
     //    url: '/home',
     //    type: 'POST',
@@ -389,39 +378,53 @@ const clear_all = () => {
     $('#clear-all').empty()
 }
 
+
+//add to favourite
+const add_to_favourite = (user_id, mission_id) => {
+    $.ajax({
+        url: `/home`,
+        type: 'POST',
+        data: { mission_id: mission_id, user_id: user_id },
+        success: function (result) {
+            console.log(result)
+            if (result.success) {
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/red-heart.png')
+                $(`.heart-${mission_id}`).css('height',24)
+            }
+            else {
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/heart.png')
+                $(`.heart-${mission_id}`).css('height', 20)
+            }
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
 //remove badges
 const remove_badges = (id, badge_type) => {
     var selected = $('#sort').find(':selected').text();
     $(`#${id.slice(6)}`).prop('checked', false);
     $('.all-choices').find(`#${id.replace(/\s/g, '')}`).remove()
     if (badge_type == "city") {
-        $(`#${id.slice(6)}`).prop('checked', false);
-
         if (cities.includes(id.slice(6))) {
             cities.splice(cities.indexOf(id.slice(6)), 1)
-            prop('checked', false);
             city_count--;
         }
     }
     else if (badge_type == "country") {
-        $(`#${id.slice(6)}`).prop('checked', false);
-
         if (countries.includes(id.slice(6))) {
             countries.splice(countries.indexOf(id.slice(6)), 1)
             country_count--;
         }
     }
     else if (badge_type == "theme") {
-        $(`#${id.slice(6)}`).prop('checked', false);
-
         if (themes.includes(id.slice(6))) {
             themes.splice(themes.indexOf(id.slice(6)), 1)
             theme_count--;
         }
     }
     else if (badge_type == "skill") {
-        $(`#${id.slice(6)}`).prop('checked', false);
-
         if (skills.includes(id.slice(6))) {
             skills.splice(skills.indexOf(id.slice(6)), 1)
             skill_count--;
@@ -430,9 +433,9 @@ const remove_badges = (id, badge_type) => {
     $.ajax({
         url: '/home',
         type: 'POST',
-        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
-            loadmissions(result.mission.result, result.length)
+            loadmissions(result.mission.result,result.length)
         },
         error: function () {
             console.log("Error updating variable");
@@ -440,134 +443,291 @@ const remove_badges = (id, badge_type) => {
     })
 }
 
-const pagination = (page_index) => {
-    var selected = $('#sort').find(':selected').text();
-    pageindex = page_index - 1;
-    $('.pagination li span').each(function (i, item) {
-        item.classList.remove('page-active')
-    })
-    $(`#page-${page_index}`).addClass('page-active')
-    $.ajax({
-        url: '/home',
-        type: 'POST',
-        data: { page_index: page_index - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-        success: function (result) {
-            loadmissions(result.mission.result, result.length)
-        },
-        error: function (e) {
-            console.log(e);
-        }
-    })
-}
-const prev = () => {
-    var selected = $('#sort').find(':selected').text();
-    var current_page;
-    $('.pagination li span').each(function (i, item) {
-        if (item.classList.contains('page-active')) {
-            current_page = i - 1;
-            if (current_page !== 1) {
-                $('.pagination li span').eq(i - 1).addClass('page-active')
-                item.classList.remove('page-active')
-            }
-        }
-    })
-    if (current_page !== 1) {
-        pageindex = current_page - 2
-        $.ajax({
-            url: '/home',
-            type: 'POST',
-            data: { page_index: current_page - 2, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-            success: function (result) {
-                loadmissions(result.mission.result, result.length)
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        })
+
+
+
+
+//pagination
+
+var perpagecard = 9;
+var currentindex;
+var startpageindex;
+var endpageindex;
+
+function setpages() {
+    let page_add = $("#pagination");
+
+    var pages = Math.ceil(cards.length / perpagecard);
+    if (pages < 2) {
+        $(page_add).parent().hide();
     }
+    else {
+        $(page_add).parent().show();
+        $(page_add).empty();
+        for (let i = 1; i <= pages; i++) {
+            $(page_add).append(`<li class="pagination_box" onclick="pagination(${i},${pages})">${i}</li>`);
+        }
+        $("ul#pagination li:first").addClass("active");
+    }
+    pagination(1, pages);
 }
-const next = (max_page) => {
-    var selected = $('#sort').find(':selected').text();
-    var current_page;
-    $('.pagination li span').each(function (i, item) {
-        if (item.classList.contains('page-active')) {
-            current_page = i - 1;
-            if (current_page !== max_page) {
-                $('.pagination li span').eq(i + 1).addClass('page-active')
-                item.classList.remove('page-active')
-                return false
+
+
+
+function pagination(page, totalpages) {
+    currentindex = page;
+
+    var pages = totalpages;
+    var startpage = (currentindex - 1) * perpagecard;
+    var endpage = startpage + perpagecard;
+    for (let i = 0; i < cards.length; i++) {
+        if (i >= startpage && i < endpage) {
+            $(cards[i]).removeClass("d-none");
+        }
+        else {
+            $(cards[i]).addClass("d-none");
+        }
+    }
+    $("ul#pagination li").removeClass("active");
+    $("ul#pagination li").eq(currentindex - 1).addClass("active");
+    if (pages <= 3) {
+        $("ul#pagination li").removeClass("d-none");
+        $("li#prevpage-btn").hide();
+        $("li#nextpage-btn").hide();
+    }
+    else {
+        startpageindex = currentindex - 2;
+        endpageindex = currentindex;
+        for (let i = 0; i < pages; i++) {
+            if (i >= startpageindex && i <= endpageindex) {
+                $("ul#pagination li").eq(i).removeClass("d-none");
+            }
+            else {
+                $("ul#pagination li").eq(i).addClass("d-none");
             }
         }
-    })
-    if (current_page !== max_page) {
-        pageindex = current_page
-        $.ajax({
-            url: '/home',
-            type: 'POST',
-            data: { page_index: current_page, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-            success: function (result) {
-                loadmissions(result.mission.result, result.length)
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        })
     }
 }
 
-const first_page = () => {
-    var selected = $('#sort').find(':selected').text();
-    var current_page;
-    $('.pagination li span').each(function (i, item) {
-        if (item.classList.contains('page-active')) {
-            current_page = i - 1;
-            if (current_page !== 1) {
-                $('.pagination li span').eq(2).addClass('page-active')
-                item.classList.remove('page-active')
-            }
-        }
-    })
-    if (current_page !== 1) {
-        pageindex = 0
-        $.ajax({
-            url: '/home',
-            type: 'POST',
-            data: { page_index: 0, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-            success: function (result) {
-                loadmissions(result.mission.result, result.length)
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        })
+
+function nextpage() {
+    let cards = $(".card1");
+    var pages = Math.ceil(cards.length / perpagecard);
+    startpageindex++;
+    endpageindex++;
+    if (startpageindex > pages - 3) {
+        startpageindex = pages - 3;
+        endpageindex = pages - 1;
     }
-}
-const last_page = (max_page) => {
-    var selected = $('#sort').find(':selected').text();
-    var current_page;
-    $('.pagination li span').each(function (i, item) {
-        if (item.classList.contains('page-active')) {
-            current_page = i - 1;
-            if (current_page !== max_page) {
-                $('.pagination li span').eq(max_page + 1).addClass('page-active')
-                item.classList.remove('page-active')
-                return false
-            }
+    if (startpageindex < 0) {
+        startpageindex = 0;
+        endpageindex = 2;
+    }
+    for (let i = 0; i < pages; i++) {
+        if (i >= startpageindex && i <= endpageindex) {
+            $("ul#pagination li").eq(i).removeClass("d-none");
         }
-    })
-    if (current_page !== max_page) {
-        pageindex = max_page - 1
-        $.ajax({
-            url: '/home',
-            type: 'POST',
-            data: { page_index: max_page - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-            success: function (result) {
-                loadmissions(result.mission.result, result.length)
-            },
-            error: function (e) {
-                console.log(e);
-            }
-        })
+        else {
+            $("ul#pagination li").eq(i).addClass("d-none");
+        }
     }
 }
 
+
+
+function prevpage() {
+    let cards = $(".card1");
+    var pages = Math.ceil(cards.length / perpagecard);
+    startpageindex--;
+    endpageindex--;
+    if (startpageindex > pages - 3) {
+        startpageindex = pages - 3;
+        endpageindex = pages - 1;
+    }
+    if (startpageindex < 0) {
+        startpageindex = 0;
+        endpageindex = 2;
+    }
+    for (let i = 0; i < pages; i++) {
+        if (i >= startpageindex && i <= endpageindex) {
+            $("ul#pagination li").eq(i).removeClass("d-none");
+        }
+        else {
+            $("ul#pagination li").eq(i).addClass("d-none");
+        }
+    }
+}
+
+
+$(document).ready(function () {
+    var pages;
+    $("li#firstpage").click(function () {
+        let cards = $(".card1");
+        pages = Math.ceil(cards.length / perpagecard);
+        pagination(1, pages);
+    });
+    $("li#lastpage").click(function () {
+        let cards = $(".card1");
+        pages = Math.ceil(cards.length / perpagecard);
+        pagination(pages, pages);
+    });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//const pagination = (page_index) => {
+//    var selected = $('#sort').find(':selected').text();
+//    pageindex = page_index - 1;
+//    $('.pagination li span').each(function (i, item) {
+//            item.classList.remove('page-active')
+//    })
+//    $(`#page-${page_index}`).addClass('page-active')
+//    $.ajax({
+//        url: '/home',
+//        type: 'POST',
+//        data: { page_index: page_index - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+//        success: function (result) {
+//            loadmissions(result.mission.result, result.length)
+//        },
+//        error: function (e) {
+//            console.log(e);
+//        }
+//    })
+//}
+//const prev = () => {
+//    var selected = $('#sort').find(':selected').text();
+//    var current_page;
+//    $('.pagination li span').each(function (i, item) {
+//        if (item.classList.contains('page-active')) {
+//            current_page = i - 1;
+//            if (current_page !== 1) {
+//                $('.pagination li span').eq(i - 1).addClass('page-active')
+//                item.classList.remove('page-active')
+//            }
+//        }
+//    })
+//    if (current_page !== 1) {
+//        pageindex = current_page - 2
+//        $.ajax({
+//        url: '/home',
+//            type: 'POST',
+//            data: { page_index: current_page - 2, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase()},
+//        success: function (result) {
+//            loadmissions(result.mission.result, result.length)
+//        },
+//        error: function (e) {
+//            console.log(e);
+//        }
+//    })
+//    }
+//}
+//const next = (max_page) => {
+//    var selected = $('#sort').find(':selected').text();
+//    var current_page;
+//    $('.pagination li span').each(function (i, item) {
+//        if (item.classList.contains('page-active')) {
+//            current_page = i - 1;
+//            if (current_page !== max_page) {
+//                $('.pagination li span').eq(i + 1).addClass('page-active')
+//                item.classList.remove('page-active')
+//                return false
+//            }
+//        }
+//    })
+//    if (current_page !== max_page) {
+//        pageindex = current_page
+//        $.ajax({
+//            url: '/home',
+//            type: 'POST',
+//            data: { page_index: current_page, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+//            success: function (result) {
+//                loadmissions(result.mission.result, result.length)
+//            },
+//            error: function (e) {
+//                console.log(e);
+//            }
+//        })
+//    }
+//}
+
+//const first_page = () => {
+//    var selected = $('#sort').find(':selected').text();
+//    var current_page;
+//    $('.pagination li span').each(function (i, item) {
+//        if (item.classList.contains('page-active')) {
+//            current_page = i - 1;
+//            if (current_page !== 1) {
+//                $('.pagination li span').eq(2).addClass('page-active')
+//                item.classList.remove('page-active')
+//            }
+//        }
+//    })
+//    if (current_page !== 1) {
+//        pageindex = 0
+//        $.ajax({
+//            url: '/home',
+//            type: 'POST',
+//            data: { page_index: 0, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+//            success: function (result) {
+//                loadmissions(result.mission.result, result.length)
+//            },
+//            error: function (e) {
+//                console.log(e);
+//            }
+//        })
+//    }
+//}
+//const last_page = (max_page) => {
+//    var selected = $('#sort').find(':selected').text();
+//    var current_page;
+//    $('.pagination li span').each(function (i, item) {
+//        if (item.classList.contains('page-active')) {
+//            current_page = i - 1;
+//            if (current_page !== max_page) {
+//                $('.pagination li span').eq(max_page+1).addClass('page-active')
+//                item.classList.remove('page-active')
+//                return false
+//            }
+//        }
+//    })
+//    if (current_page !== max_page) {
+//        pageindex = max_page-1
+//        $.ajax({
+//            url: '/home',
+//            type: 'POST',
+//            data: { page_index: max_page - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+//            success: function (result) {
+//                loadmissions(result.mission.result, result.length)
+//            },
+//            error: function (e) {
+//                console.log(e);
+//            }
+//        })
+//    }
+//}
+   

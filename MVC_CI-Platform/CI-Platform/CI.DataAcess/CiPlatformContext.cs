@@ -57,6 +57,8 @@ public partial class CiPlatformContext : DbContext
 
     public virtual DbSet<StoryMedia> StoryMedia { get; set; }
 
+    public virtual DbSet<StoryView> StoryViews { get; set; }
+
     public virtual DbSet<Timesheet> Timesheets { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -784,6 +786,27 @@ public partial class CiPlatformContext : DbContext
                 .HasForeignKey(d => d.StoryId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__story_med__story__40F9A68C");
+        });
+
+        modelBuilder.Entity<StoryView>(entity =>
+        {
+            entity.HasKey(e => e.ViewId).HasName("PK__story_vi__B5A34EE2D4ED1665");
+
+            entity.ToTable("story_views");
+
+            entity.Property(e => e.ViewId).HasColumnName("view_id");
+            entity.Property(e => e.StoryId).HasColumnName("story_id");
+            entity.Property(e => e.UserId).HasColumnName("user_id");
+
+            entity.HasOne(d => d.Story).WithMany(p => p.StoryViews)
+                .HasForeignKey(d => d.StoryId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_story_views_story");
+
+            entity.HasOne(d => d.User).WithMany(p => p.StoryViews)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_story_views_user");
         });
 
         modelBuilder.Entity<Timesheet>(entity =>

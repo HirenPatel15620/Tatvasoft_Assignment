@@ -24,7 +24,7 @@
   </div>
    <div class=" col-lg-3 col-md-3 col-sm-3 mt-2"><label  class="form-label">My Story Title</label>
         <input class="form-control title" type="text" placeholder="Enter Story Title"/>
-        <span class="text-danger d-none" id="title">Title Required</span>
+        <span class="text-danger d-none" id="title">Title Is Too Small</span>
         <span class="text-danger d-none" id="title-big">Title Is Too Big</span>
    </div>
    <div class=" col-lg-3 col-md-3 col-sm-3 mt-2">
@@ -38,9 +38,9 @@
     @*ckeditor*@
     <div class="ck-editor w-100 mt-3">
          <label  class="form-label">My Story</label>
-         <textarea class="form-control" rows=8 id="editor"></textarea>
-          <span class="text-danger d-none" id="mystory">Story Must Be Not Empty</span>
-          <span class="text-danger d-none" id="mystory-big">Story Is Too Big</span>
+         <textarea class="form-control " rows=8  ></textarea>
+          <span class="text-danger d-none" id="mystory">Story Is Too Small</span> id="editor"
+           <span class="text-danger d-none" id="mystory-big">Story Is Too Big</span>
     </div>
     <div class="video-url w-100 mt-4">
          <label  class="form-label">Enter Video URL</label>
@@ -61,8 +61,8 @@
 </div>
 
 <div class="buttons d-flex justify-content-between">
-    <div><button class="applyButton btn">Cancle</button></div>
-    <div><button class="applyButton btn">Save</button> <button onclick="getdetails()" class="applyButton btn">Submit</button></div>
+    <div><button class="applyButton btn">Cancle</button> <a  href="/stories/preview" target="_blank" class="applyButton btn">Preview</a></div>
+    <div><button onclick="getdetails()" class="applyButton btn">Save</button> <button onclick="getdetails('PUBLISHED')" class="applyButton btn">Submit</button></div>
 </div>
 </div>
 

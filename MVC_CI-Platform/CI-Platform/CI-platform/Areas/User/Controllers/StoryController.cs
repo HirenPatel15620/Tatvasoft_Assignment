@@ -2,6 +2,7 @@
 using CI.DataAcess.Repository.IRepository;
 using System.Security.Claims;
 using CI.Models;
+using CI_platform.Areas.User.Controllers;
 
 namespace CI_platform.Controllers
 {
@@ -16,8 +17,19 @@ namespace CI_platform.Controllers
         [Route("stories")]
         public IActionResult StoryListing()
         {
-            List<Story> stories = allRepository.Story.GetStories();
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            CI.Models.ViewModels.Mission stories = allRepository.Story.GetStories(user_id);
             return View(stories);
+        }
+        [HttpPost]
+        [Route("stories")]
+        public JsonResult StoryListing(int page_index)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+           
+                CI.Models.ViewModels.Mission stories = allRepository.Story.GetFileredStories(page_index,user_id);
+                var next_stories = this.RenderViewAsync("story_partial", stories, true);
+                return Json(new { next_stories});
         }
         [Route("stories/share")]
         public IActionResult ShareStory()
@@ -28,10 +40,43 @@ namespace CI_platform.Controllers
         }
         [HttpPost]
         [Route("stories/share")]
-        public JsonResult ShareStory(long mission_id, string title,string published_date, string mystory, List<string>media)
+        public JsonResult ShareStory(long story_id,long mission_id, string title,string published_date, string mystory, List<string>media,string type)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            bool success = allRepository.Story.AddStory(user_id, mission_id, title, published_date, mystory, media);
+            if (type=="PUBLISHED")
+            {
+                bool success = allRepository.Story.AddStory(user_id,story_id,mission_id, title, published_date, mystory, media,type);
+                return Json(new { success });
+            }
+            else
+            {
+                bool success = allRepository.Story.AddStory(user_id,0,mission_id, title, published_date, mystory, media,type);
+                return Json(new { success });
+            }
+           
+        }
+
+        [Route("stories/detail/{id}")]
+        public IActionResult StoryDetail(long id)
+        {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            CI.Models.ViewModels.StoryViewModel story = allRepository.Story.GetStory(user_id, id);
+            if (story is not null)
+            {
+                allRepository.Story.Add_View(user_id, id);
+                return View(story);
+            }
+            else
+            {
+                return View("page_not_found");
+            }
+        }
+
+        [HttpPost]
+        [Route("stories/detail/{id}")]
+        public JsonResult StoryDetail(List<long> co_workers,long user_id,long story_id)
+        {
+            bool success=allRepository.Story.Recommend(user_id,story_id, co_workers);
             return Json(new { success });
         }
     }

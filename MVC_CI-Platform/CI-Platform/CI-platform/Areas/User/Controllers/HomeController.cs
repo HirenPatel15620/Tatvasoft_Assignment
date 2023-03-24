@@ -24,53 +24,41 @@ namespace CI_platform.Controllers
                 CI.Models.ViewModels.Mission missions = allRepository.Mission.GetAllMission();
                 return View(missions);
             }
-
             else
             {
                 return RedirectToAction("login", "userAuthentication");
-            }
-            //if(User.Identity.IsAuthenticated)
-            //{
-            //    CI.Models.ViewModels.Mission missions = allRepository.Mission.change();
-            //    return View(missions);
-            //}
-            using (var db = new CiPlatformContext())
-            {
-                int count = db.Missions.Count();
-                ViewBag.RecordCount = count;
-                //var model = db.Missions.ToList();
-                return View(ViewBag.RecordCount);
             }
         }
         [HttpPost]
         [Route("Home")]
         public  JsonResult home(List<string> countries, List<string> cities, List<string> themes, List<string> skills,string key,string sort_by,int page_index,long user_id,long mission_id)
         {
-                if (page_index != 0)
+               if (key is not null)
+              {
+                CI.Models.ViewModels.Mission search_missions = allRepository.Mission.GetSearchMissions(key);
+                var filtered_missions = this.RenderViewAsync("mission_partial", search_missions, true);
+                return Json(new { mission = filtered_missions, success = true, length = search_missions.Missions.Count });
+              }
+
+               else if (mission_id != 0)
                 {
-                    CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index, user_id);
+                bool success = allRepository.Mission.add_to_favourite(user_id, mission_id);
+                return Json(new { success = success });
+                }
+
+               else if (page_index != 0)
+                {
+                    CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by,  user_id);
                     var page_missions = this.RenderViewAsync("mission_partial", missions, true);
                     return Json(new { mission = page_missions, length = missions.Missions.Count });
                 }
-                if (key is not null)
+                else
                 {
-                    CI.Models.ViewModels.Mission search_missions = allRepository.Mission.GetSearchMissions(key, page_index);
-                    var filtered_missions = this.RenderViewAsync("mission_partial", search_missions, true);
-                    return Json(new { mission = filtered_missions, success = true, length = search_missions.Missions.Count });
+                    CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by,  user_id);
+                    var Cities = this.RenderViewAsync("City_partial", missions, true);
+                    var filtered_missions = this.RenderViewAsync("mission_partial", missions, true);
+                    return Json(new { mission = filtered_missions, city = Cities, success = true, length = missions.Missions.Count });
                 }
-            //else if (add_to_favourite==1)
-            //{
-            //    bool success = allRepository.Mission.add_to_favourite(user_id, mission_id);
-            //    return Json(new { success = success });
-            //}
-
-            else
-            {
-                CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by, page_index, user_id);
-                var Cities = this.RenderViewAsync("City_partial", missions, true);
-                var filtered_missions = this.RenderViewAsync("mission_partial", missions, true);
-                return Json(new { mission = filtered_missions, city = Cities, success = true, length = missions.Missions.Count });
-            }
         }
         [Route("volunteering_mission/{id}")]
         public IActionResult volunteering_mission(int id)
@@ -78,7 +66,14 @@ namespace CI_platform.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 CI.Models.ViewModels.Volunteer_Mission mission = allRepository.Mission.Mission(id, long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value));
-                return View(mission);
+                if(mission is not null)
+                {
+                    return View(mission);
+                }
+                else
+                {
+                    return View("page_not_found");
+                }
             }
             else
             {

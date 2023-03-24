@@ -1,4 +1,12 @@
-﻿var count = 0
+﻿var mission
+var title
+var date
+var current_date
+var comparedate
+var mystory
+var video_url
+var media = []
+var count = 0
 $(function () {
     $("#datepicker").datepicker();
 });
@@ -64,14 +72,33 @@ function loadimages() {
     }
 }
 
-function getdetails() {
-    var mission = parseInt($('.form-select').find(':selected').val())
-    var title = $('.title').val()
-    var date = $('#datepicker').datepicker().val()
-    var current_date = new Date()
-    var mystory = CKEDITOR.instances.editor.getData();
-    var video_url = $('.video').val()
-    var media = []
+function getdetails(type) {   
+    validate()
+    if (mission != 0 && title.trim().length > 50 && title.trim().length < 255 && $('#datepicker').datepicker().val().length != 0
+        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && $('.gallary').find('.main-image').length != 0) {
+        $.ajax({
+            url: '/stories/share',
+            type: 'POST',
+            data: { mission_id: mission, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
+            success: function (result) {
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+
+    }
+}
+
+
+function validate() {
+     mission = parseInt($('.form-select').find(':selected').val())
+     title = $('.title').val()
+     date = convertDate($('#datepicker').datepicker().val())
+     current_date = new Date()
+     comparedate = new Date($('#datepicker').datepicker().val())
+     mystory = CKEDITOR.instances.editor.getData();
+     video_url = $('.video').val()
     if (video_url.trim().length > 3) {
         media.push(video_url)
     }
@@ -85,11 +112,11 @@ function getdetails() {
     else {
         $('#mission').removeClass('d-block').addClass('d-none')
     }
-    if (title.trim().length == 0) {
+    if (title.trim().length < 50) {
         $('#title').removeClass('d-none').addClass('d-block')
     }
     else {
-        $('#title').removeClass('d-block').addClass('d-none') 
+        $('#title').removeClass('d-block').addClass('d-none')
     }
     if (title.trim().length > 255) {
         $('#title-big').removeClass('d-none').addClass('d-block')
@@ -97,55 +124,46 @@ function getdetails() {
     else {
         $('#title-big').removeClass('d-block').addClass('d-none')
     }
-    if (date.length == 0) {
+    if ($('#datepicker').datepicker().val().length == 0) {
         $('#date').removeClass('d-none').addClass('d-block')
     }
     else {
         $('#date').removeClass('d-block').addClass('d-none')
     }
-    if (Date.parse(current_date) <= Date.parse(date)) {
+    if (Date.parse(current_date) <= Date.parse(comparedate)) {
         $('#date-valid').removeClass('d-none').addClass('d-block')
     }
     else {
         $('#date-valid').removeClass('d-block').addClass('d-none')
-       
+
     }
-    if (mystory.trim().length == 0) {
+    if (mystory.trim().length < 70) {
         $('#mystory').removeClass('d-none').addClass('d-block')
-      
+
     }
     else {
         $('#mystory').removeClass('d-block').addClass('d-none')
-        
+
     }
     if (mystory.trim().length > 40000) {
         $('#mystory-big').removeClass('d-none').addClass('d-block')
-        
+
     }
     else {
         $('#mystory-big').removeClass('d-block').addClass('d-none')
-       
+
     }
     if ($('.gallary').find('.main-image').length == 0) {
         $('#image').removeClass('d-none').addClass('d-block')
-       
+
     }
     else {
         $('#image').removeClass('d-block').addClass('d-none')
-        
-    }
-    if (mission != 0 && title.trim().length != 0 && title.trim().length < 255 && date.length != 0
-        && Date.parse(current_date) >= Date.parse(date) && mystory.trim().length != 0 && mystory.trim().length < 40000 && $('.gallary').find('.main-image').length != 0) {
-        $.ajax({
-            url: '/stories/share',
-            type: 'POST',
-            data: { mission_id: mission, title: title, published_date: date.toString(), mystory: mystory, media: media },
-            success: function (result) {
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
 
     }
+}
+function convertDate(inputFormat) {
+    function pad(s) { return (s < 10) ? '0' + s : s; }
+    var d = new Date(inputFormat)
+    return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
 }

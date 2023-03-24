@@ -9,6 +9,6 @@
             <div class='d-flex flex-column ms-2'>
              <span>@Model?.ElementAt(0)?.user?.FirstName @Model?.ElementAt(0)?.user?.LastName </span>
             <span> @Model?.ElementAt(0)?.User_Comment?.CreatedAt.ToString().Substring(0,10) </span>
-            <span class='mt-2'>@Model?.ElementAt(0)?.User_Comment?.Comment1 </span>
+            <span class='mt-2' maxlength = "5">@Model?.ElementAt(0)?.User_Comment?.Comment1 </span>
             </div>
              </div>

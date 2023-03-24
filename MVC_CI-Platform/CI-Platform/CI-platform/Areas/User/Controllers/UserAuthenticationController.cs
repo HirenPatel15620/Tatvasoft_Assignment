@@ -99,8 +99,7 @@ namespace CI_platform.Controllers
             if (ModelState.IsValid)
             {
                 var check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
-                   var bcheck = db.UserAuthentication.GetFirstOrDefault(e => e.PhoneNumber.Equals(user.PhoneNumber));
-                if (check == null && bcheck == null)
+                if (check == null)
                 {
                     string secpass = BCrypt.Net.BCrypt.HashPassword(user.Password);
                     User newuser = new User();
@@ -211,9 +210,9 @@ namespace CI_platform.Controllers
                 {
                     string token = BCrypt.Net.BCrypt.HashString(user.Email.ToLower().ToString());
                     TempData["email"]=user.Email;
-                    var senderEmail = new MailAddress("tatvasoft41@gmail.com", "Tatvasoft");
+                    var senderEmail = new MailAddress("dhruvikkothiya732002@gmail.com", "dhruvik");
                     var receiverEmail = new MailAddress(user.Email, "Receiver");
-                    var password = "vlpzyhibrvpaewte";
+                    var password = "clpd gojh borl hemp";
                     var sub = "Reset Your Password";
                     var body = "Your Reset Password Token" + token;
                     var smtp = new SmtpClient
