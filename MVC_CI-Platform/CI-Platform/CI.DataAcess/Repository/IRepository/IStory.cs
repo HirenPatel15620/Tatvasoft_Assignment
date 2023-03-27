@@ -14,7 +14,5 @@ namespace CI.DataAcess.Repository.IRepository
         List<CI.Models.Mission> Get_User_Missions(long user_id);
         bool AddStory(long user_id,long story_id, long mission_id, string title, string published_date, string mystory, List<string> media,string type);
         CI.Models.ViewModels.StoryViewModel GetStory(long user_id, long id);
-
-        bool Recommend(long user_id, long story_id, List<long> co_workers);
     }
 }

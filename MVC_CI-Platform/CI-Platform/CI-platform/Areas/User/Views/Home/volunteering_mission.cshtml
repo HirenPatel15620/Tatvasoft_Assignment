@@ -262,17 +262,17 @@
                 </div>
                 <div class="d-flex apply-button mb-4 p-4 justify-content-center mt-1">
                     @{
-                         if (DateTime.Now > @Model.mission.StartDate)
+
+                        @if (@Model.Applied_or_not)
                         {
-                            <button class="closeButton btn" disabled>
-                                closed<img src="images/right-arrow.png" alt="">
+                            <button class="applyButton btn" disabled>
+                                Already Applied<img src="images/right-arrow.png" alt="">
                             </button>
                         }
-
-                        else if (@Model.Applied_or_not)
+                        else if (DateTime.Now > @Model.mission.StartDate)
                         {
-                            <button class="alreadyapplyButton btn" disabled>
-                                Already Applied<img src="images/right-arrow.png" alt="">
+                            <button class="applyButton btn" disabled>
+                                closed<img src="images/right-arrow.png" alt="">
                             </button>
                         }
                         else

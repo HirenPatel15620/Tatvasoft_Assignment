@@ -9,45 +9,26 @@
         <div class="item card1 col-md-6 col-lg-4 col-sm-6 mt-3">
             <div class="thumbnail card d-flex">
                 <div class="img-event">
-
                     <img class="group list-group-image w-100 h-100"
                  src='~/images/@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath' onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
-
-
-                    @if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
-                    {
-                        <span class=" btn badge rounded-pill text-bg-success" disable>Applied</span>
-                    }
-
-
-
                     <div class="location-img">
                         <img class="text-light" src="images/pin.png" alt="">
                         <span class="text-light">@item.City.Name</span>
                     </div>
                     @{
-                        if (@item.FavoriteMissions.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                        if(@item.FavoriteMissions.Where(c=>c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value))).ToList().Count>0 )
                         {
-
-                            <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
-                                <img class="text-light heart-@item.MissionId" style="height:24px;" src="images/red-heart.png" alt="">
-                            </button>
+                            
+                    <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                        <img class="text-light heart-@item.MissionId" style="height:24px;" src="images/red-heart.png" alt="">
+                    </button>
                         }
-                        else
-                        {
-                            <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
-                                <img class="text-light heart-@item.MissionId" src="images/heart.png" alt="">
-                            </button>
+                        else{
+                         <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                        <img class="text-light heart-@item.MissionId" src="images/heart.png" alt="">
+                    </button>
                         }
                     }
-
-                    @{
-                        <button onclick="" class="stop-img border-0" data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;">
-                            <img class="text-light" src="images/user.png" alt="">
-                        </button>
-
-                    }
-
                     <button class="stop-img border-0">
                         <img class="text-light" src="images/user.png" alt="">
                     </button>
@@ -56,34 +37,23 @@
                     </button>
 
 
-
-
-
-                    @*//view details conditions*@
-
-                    @if (@item.Deadline < DateTime.Now || @item.EndDate < DateTime.Now || @item.AvbSeat == 0 || (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0))
-                    {
-                        <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
-                            <a href='/volunteering_mission/@item.MissionId' class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
+                    @if(@item.Deadline< DateTime.Now  || @item.EndDate<DateTime.Now ||@item.AvbSeat==0){
+                    <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
+                        <a href='/volunteering_mission/@item.MissionId' class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
                                 View Details <img class="ms-2" src="images/right-arrow.png" alt="">
-                            </a>
+                        </a>
                         </div>
                     }
-
-
+                    
                     else
                     {
                         <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
-                            <a class=" applyButton   btn d-flex  justify-content-center align-items-center" style="border: 2px solid white; color: white;" disable>
-                                Apply First To Access
-                            </a>
-                            @*  StartDate is @item.StartDate.ToString().Substring(0,10)*@
+                        <a  class=" applyButton   btn d-flex  justify-content-center align-items-center" style="border: 2px solid white; color: white;" disable>
+                                StartDate is @item.StartDate.ToString().Substring(0,10)
+                        </a>
                         </div>
                     }
                 </div>
-
-
-
                 <div class="caption card-body">
                     <h4 class="group card-title inner list-group-item-heading">
                         @item.Title?.Substring(0,50)...
@@ -99,21 +69,21 @@
                                 int total = @item.MissionRatings.Count;
                                 foreach (var rating in @item.MissionRatings)
                                 {
-                                    avg_rating = avg_rating + rating.Rating;
+                                    avg_rating= avg_rating + rating.Rating;
                                 }
                                 avg_rating = avg_rating / total;
                                 for (var i = 1; i <= 5; i++)
                                 {
                                     if (i <= @avg_rating)
                                     {
-                                        <img style="height:30px" src="~/images/selected-star.png" alt="" />
+                                        <img style="height:30px"  src="~/images/selected-star.png"alt="" />
                                     }
                                     else
                                     {
-                                        <img style="height:30px" src="~/images/star-empty.png" alt="" />
+                                       <img style="height:30px"  src="~/images/star-empty.png" alt="" /> 
                                     }
                                 }
-                            }
+                                }
                         </div>
                     </div>
                     <div class="duration-seats-info mt-4">
@@ -167,7 +137,7 @@
                                     <img src="images/deadline.png" alt="">
                                     <span>
                                         @item.Deadline.ToString().Substring(0,10)
-                                        @*?*@
+                                @*?*@
 
                                         <p>Deadline</p>
                                     </span>
@@ -177,38 +147,29 @@
                         </div>
                     </div>
                     <div class="d-flex justify-content-center mt-4">
-                        <a>
-                            @if (DateTime.Now > @item.StartDate)
-                            {
-                                <button class="closeButton btn" disabled>
-                                    Closed
-                                </button>
-                            }
+                     <a  >    
+                        @if (DateTime.Now > @item.StartDate)
+                        {
+                            <button  class="applyButton btn" disabled>closed
+                            </button>
+                        }
+                        //@else if (@item.)
+                        //{
+                        //    <button  class="applyButton btn" disabled>Already Applied<img src="images/right-arrow.png" alt="">
+                        //    </button>
+                        //}
+                        else{
+                         <a href='/volunteering_mission/@item.MissionId'  class="applyButton btn">apply    <img src="images/right-arrow.png" alt=""></a>
 
+                          //<button onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item?.MissionId)" class="applyButton btn">Apply Now<img src="images/right-arrow.png" alt="">
+                          //  </button>
 
-                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
-                            {
-                                <button class="alreadyapplyButton btn " disabled>
-                                    Already Applied
-                                </button>
-
-                            }
-
-                            else
-                            {
-
-                                <button onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="applyButton btn">
-                                    Apply Now<img src="images/right-arrow.png" alt="">
-                                </button>
-
-                                //<button id="tempalreadyapplied" class=" d-none alreadyapplyButton btn " disabled>
-                                //    Already Applied
-                                //</button>
-                            }
+                       }
                         </a>
                     </div>
                 </div>
             </div>
         </div>
+
     }
 }

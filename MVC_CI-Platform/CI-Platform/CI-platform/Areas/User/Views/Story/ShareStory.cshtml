@@ -5,12 +5,6 @@
     ViewData["title"] = "Share Your Story";
     ViewData["css"] = "ShareStory.css";
 }
-@*toaster*@
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-
-
 @model List<Mission>
 <div class="container mt-5">
     <h1> Share Your Story</h1>
@@ -69,12 +63,7 @@
 <div class="buttons d-flex justify-content-between">
     <div><button class="applyButton btn">Cancle</button> </div>
     @*<a  href="/stories/preview" target="_blank" class="applyButton btn">Preview</a>*@
-    <div><button onclick="getdetails()" class="applyButton btn">Save</button> <button onclick="getdetails('PUBLISHED')" class="applyButton btn">Submit</button>
-      @*{
-            toastr.success('Have fun storming the castle!', 'Miracle Max Says')
-
-        }*@
-</div>
+    <div><button onclick="getdetails()" class="applyButton btn">Save</button> <button onclick="getdetails('PUBLISHED')" class="applyButton btn">Submit</button></div>
 </div>
 </div>
 
@@ -87,7 +76,3 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 <script src="~/js/ShareStory.js"></script>
-
-
-
-

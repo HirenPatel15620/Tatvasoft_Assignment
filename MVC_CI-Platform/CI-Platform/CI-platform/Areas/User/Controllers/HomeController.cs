@@ -145,19 +145,6 @@ namespace CI_platform.Controllers
             //}
         }
 
-        [Route("Profile")]
-        public IActionResult Profile()
-        {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            return View(Profile);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("login", "userAuthentication");   
-            //}
-        }
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

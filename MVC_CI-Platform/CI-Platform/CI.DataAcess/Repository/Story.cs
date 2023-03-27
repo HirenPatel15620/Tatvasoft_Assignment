@@ -108,7 +108,6 @@ namespace CI.DataAcess.Repository
             _db.SaveChanges();
             return true;
             
-            
         }
 
         //access all needed data
@@ -202,7 +201,6 @@ namespace CI.DataAcess.Repository
             }
         }
 
-       
         public bool Recommend(long user_id, long story_id, List<long> co_workers)
         {
             foreach (var user in co_workers)
@@ -250,12 +248,7 @@ namespace CI.DataAcess.Repository
         public void Add_View(long user_id, long story_id)
         {
             var view_exist = _db.StoryViews.FirstOrDefault(c => c.UserId.Equals(user_id) && c.StoryId.Equals(story_id));
-
-
-            //stories = (from story in stories where story.Status == "DRAFT" select story).ToList();
-
-
-            if (view_exist is null)
+            if(view_exist is null)
             {
                 _db.StoryViews.Add(new StoryView { StoryId = story_id, UserId = user_id });
                 _db.SaveChanges();
