@@ -210,11 +210,11 @@ namespace CI_platform.Controllers
                 {
                     string token = BCrypt.Net.BCrypt.HashString(user.Email.ToLower().ToString());
                     TempData["email"]=user.Email;
-                    var senderEmail = new MailAddress("dhruvikkothiya732002@gmail.com", "dhruvik");
+                    var senderEmail = new MailAddress("tatvasoft51@gmail.com", "CI-Platform");
                     var receiverEmail = new MailAddress(user.Email, "Receiver");
-                    var password = "clpd gojh borl hemp";
+                    var password = "vlpzyhibrvpaewte";
                     var sub = "Reset Your Password";
-                    var body = "Your Reset Password Token" + token;
+                    var body = "Your Reset Password Token" + "\n"  + token;
                     var smtp = new SmtpClient
                     {
                         Host = "smtp.gmail.com",

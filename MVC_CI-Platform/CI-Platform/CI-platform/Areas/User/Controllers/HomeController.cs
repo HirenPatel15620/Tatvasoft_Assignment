@@ -63,12 +63,16 @@ namespace CI_platform.Controllers
         [Route("volunteering_mission/{id}")]
         public IActionResult volunteering_mission(int id)
         {
+
+            //, string returnUrl = null
+            //returnUrl ??= Url.Content("https://localhost:44334/volunteering_mission/{id}");
             if (User.Identity.IsAuthenticated)
             {
                 CI.Models.ViewModels.Volunteer_Mission mission = allRepository.Mission.Mission(id, long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value));
                 if(mission is not null)
                 {
                     return View(mission);
+                    //return Redirect(returnUrl);
                 }
                 else
                 {
@@ -128,8 +132,32 @@ namespace CI_platform.Controllers
                 return RedirectToAction("login", "userAuthentication");
             }
         }
+        [Route("Policy")]
+        public IActionResult Policy()
+        {
+            //if (User.Identity.IsAuthenticated)
+            //{
+               return View(Policy);
+            //}
+            //else
+            //{
+            //    return RedirectToAction("login", "userAuthentication");   
+            //}
+        }
 
-    
+        [Route("Profile")]
+        public IActionResult Profile()
+        {
+            //if (User.Identity.IsAuthenticated)
+            //{
+            return View(Profile);
+            //}
+            //else
+            //{
+            //    return RedirectToAction("login", "userAuthentication");   
+            //}
+        }
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

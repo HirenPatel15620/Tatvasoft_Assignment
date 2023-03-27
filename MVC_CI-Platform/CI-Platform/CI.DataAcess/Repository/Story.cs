@@ -91,6 +91,7 @@ namespace CI.DataAcess.Repository
                 story.Description = mystory;
                 story.PublishedAt = DateTime.Parse(published_date);
                 _db.Stories.Add(story);
+                //_db.Stories.update(story);
                 _db.SaveChanges();
                 long story_id = story.StoryId;
                 foreach (var item in media)
@@ -106,6 +107,7 @@ namespace CI.DataAcess.Repository
             }
             _db.SaveChanges();
             return true;
+            
             
         }
 
@@ -200,6 +202,7 @@ namespace CI.DataAcess.Repository
             }
         }
 
+       
         public bool Recommend(long user_id, long story_id, List<long> co_workers)
         {
             foreach (var user in co_workers)
@@ -218,9 +221,9 @@ namespace CI.DataAcess.Repository
                                         select u.Email).ToList();
             foreach (var email in Email_users)
             {
-                var senderEmail = new MailAddress("dhruvikkothiya732002@gmail.com", "dhruvik");
+                var senderEmail = new MailAddress("tatvasoft51@gmail.com", "CI-Platform");
                 var receiverEmail = new MailAddress(email, "Receiver");
-                var password = "clpd gojh borl hemp";
+                var password = "vlpzyhibrvpaewte";
                 var sub = "Recommendation";
                 var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44334/stories/detail/{story_id}";
                 var smtp = new SmtpClient
@@ -247,7 +250,12 @@ namespace CI.DataAcess.Repository
         public void Add_View(long user_id, long story_id)
         {
             var view_exist = _db.StoryViews.FirstOrDefault(c => c.UserId.Equals(user_id) && c.StoryId.Equals(story_id));
-            if(view_exist is null)
+
+
+            //stories = (from story in stories where story.Status == "DRAFT" select story).ToList();
+
+
+            if (view_exist is null)
             {
                 _db.StoryViews.Add(new StoryView { StoryId = story_id, UserId = user_id });
                 _db.SaveChanges();

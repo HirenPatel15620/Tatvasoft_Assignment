@@ -1,22 +1,37 @@
-﻿@{
+﻿@using System.Security.Claims
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
     ViewData["title"] = "Story Details";
     ViewData["css"] = "volunteering_mission.css";
 }
 @model CI.Models.ViewModels.StoryViewModel
-@using System.Security.Claims
+
+
 <div class="container mt-5">
+
     <div class="row w-100">
     <div class="images col-lg-6 col-md-6 col-sm-12">
          <div class="carousel slide" data-bs-interval="false" id="sub-images">
             <div class="carousel-inner">
-                @{
+                    @{
                         int count = 0;
                         foreach (var item in Model?.story?.StoryMedia)
                         {
                             if (count == 0)
                             {
-                                <img class="w-100 carousel-item active main-image" src='@item.Path' alt=""/>
-                                count = count + 1;
+                              //  if (@item.Path.Length > 300)
+                              //  {
+                                    <img class="w-100 carousel-item active main-image" src='@item.Path' alt=""/>
+                                    count = count + 1;
+                              //  }
+                              //  else
+                              //  {
+                              //    <iframe src="//www.youtube.com/embed/@item.Path.Split("v=").ElementAt(1)" class="w-100 carousel-item active main-image" allowfullscreen></iframe>
+                              //      count = count + 1;
+                              //}
+
                             }
                             else
                             {
@@ -42,7 +57,21 @@
                                                 {
                                                     @for (int j = 0; j < sub_count; j++)
                                                     {
-                                                        <img src='@Model?.story?.StoryMedia.ElementAt(j).Path'  data-bs-target="#sub-images" data-bs-slide-to=@j  class="other-image" alt=""/>
+                                                        if (j == 0)
+                                                        {
+                                                                <img src='@Model?.story?.StoryMedia.ElementAt(j).Path'  data-bs-target="#sub-images" data-bs-slide-to=@j  class="other-image" alt=""/>
+                                                            //if (@Model?.story?.StoryMedia.ElementAt(j).Path.Length > 300)
+                                                            //{
+                                                            //}
+                                                            //else  
+                                                            //{
+                                                            //    //<img src="https://img.youtube.com/vi/@Model?.story?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg"  data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt=""/>
+                                                            //}
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src='@Model?.story?.StoryMedia.ElementAt(j).Path'  data-bs-target="#sub-images" data-bs-slide-to=@j  class="other-image" alt=""/>
+                                                        }
                                                     }
                                                 }
                                                 else
@@ -101,7 +130,7 @@
            </span>
            <div class="views border rounded-pill mt-5 h-25 w-25 d-flex justify-content-center align-items-center border-1">
                <img src="~/images/eye.png" />
-              @* <span class="ms-1">@Model.story.StoryViews.Count views</span>*@
+               <span class="ms-1">@Model.story.StoryViews.Count views</span>
            </div>
        </div>
        <p class="ms-3 mt-5">
@@ -125,9 +154,9 @@
      <u class="ms-2 mb-3 active-detail introduction"></u>
      </div>
      @{
-         string content = System.Text.RegularExpressions.Regex.Replace(@Model.story.Description, "<.*?>", string.Empty);
-     <p class="mt-5 text-muted">@content</p>
+     <p class="mt-5 text-muted">@Html.Raw(@Model.story.Description)</p>
      }
+     <hr>
 </div>
  
 
@@ -157,5 +186,6 @@
     </div>
   </div>
 </div>
+
 
 <script src="~/js/StoryDetail.js"></script>

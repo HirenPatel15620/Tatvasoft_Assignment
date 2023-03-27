@@ -65,6 +65,26 @@ function gridview() {
 }
 
 
+//Apply for mission
+
+const apply_for_mission = (user_id, mission_id) => {
+    $.ajax({
+        url: `/volunteering_mission/${mission_id}`,
+        type: 'POST',
+        data: { user_id: user_id, mission_id: mission_id, request_for: "mission" },
+        success: function (result) {
+            if (result.success) {
+                $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
+                
+            }
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
+
+
 //filters by cities
 function addcities(name, type) {
     var selected = $('#sort').find(':selected').text();
