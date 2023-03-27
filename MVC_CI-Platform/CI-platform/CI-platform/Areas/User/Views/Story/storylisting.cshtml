@@ -1,0 +1,137 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using System.Security.Claims;
+@model CI.Models.ViewModels.Mission
+@{
+    ViewData["title"] = "Stories";
+    ViewData["css"] = "index.css";
+}
+@*share story*@
+<div class="w-100 d-flex justify-content-center align-items-center position-relative">
+    <img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="w-100" style="height: 300px;object-fit:cover;object-position: 0 40%;filter:brightness(45%)"/>
+<div class="w-50 position-absolute">
+    <p style="color:white;">
+        img src="~/images/Grow-Trees-On-the-path-to-environment-sustainability-login.png" class="w-100" style="height: 300px;object-fit:cover;object-position: 0 40%;filter:brightness(45%)"
+    </p>
+     <div class="mt-2 d-flex justify-content-center">
+                            <a href="/stories/share" class="applyButton btn d-flex justify-content-around align-items-center" style="border: 2px solid white; color: white;">Share your Story <img class="ms-2" src="images/right-arrow.png" alt="">
+                           </a>
+                        </div>
+</div>
+</div>
+
+@*main body*@
+ <div class="container body pt-3">
+            <div class="row stories">
+                <partial name="story_partial" />
+</div>
+</div>
+@*pagination*@
+
+<nav aria-label="Page navigation example" class="mt-5">
+    <ul class="pagination justify-content-center">
+         <li class="page-item">
+            <span class="page-link" onclick="first_page()"><img src="~/images/previous.png" alt="not load" /></span>
+        </li> 
+         <li class="page-item">
+            <span class="page-link" onclick="prev_page()"><img src="~/images/left.png" alt="not load" /></span>
+        </li>
+         @{
+            int pages=(int)Math.Ceiling((double)@Model?.total_missions/9);
+            for (var i = 1; i <= pages; i++)
+            {
+                if (i == 1)
+                {
+                    <li class="page-item" style="cursor:pointer;"><span class="page-link page-active" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                }
+                else
+                {
+                     <li class="page-item" style="cursor:pointer;"><span class="page-link" id='page-@i' onclick="pagination(@i)">@i</span></li>
+                }
+            }
+        }
+        <li class="page-item">
+            <span class="page-link" onclick="next_page(@pages)"><img src="~/images/right-arrow1.png" alt="not load" /></span>
+        </li>
+        <li class="page-item">
+            <span class="page-link" onclick="last_page(@pages)"><img src="~/images/next.png" alt="not load" /></span>
+        </li>
+    </ul>
+</nav>
+@{
+    foreach (var item in Model.Stories.Where(c=>c.UserId==long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) && c.Status=="DRAFT").ToList())
+    {
+            <div class="modal fade" id="edit-@item.StoryId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-scrollable">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Edit Your Saved Story</h5>
+                        </div>
+                        <div class="modal-body">
+                        <div class="page-1">
+                            <div class=" mt-2"><label  class="form-label">My Story Title</label>
+                                <input class="form-control title" value="@item.Title" type="text" placeholder="Enter Story Title"/>
+                            </div>
+                            <div class="mt-2 w-100">
+                                <label  class="form-label">Select Date</label>
+                                <input type="date" class="form-control"  id="datepicker" placeholder="Select Date" />
+                            </div>
+
+                            @*ckeditor*@
+                            <div class="ck-editor w-100 mt-3">
+                                <label  class="form-label">My Story</label>
+                                <textarea class="form-control" rows=8 id="editor-@item.StoryId">@item.Description</textarea>
+                            </div>
+                            </div>
+                            <div class="page-2 d-none">
+                             <div class="video-url w-100 mt-4">
+         <label  class="form-label">Enter Video URL</label>
+         <input class="form-control video" type="url" placeholder="Enter Your URL"/>
+    </div>
+
+     <div class="images w-100 mt-4 ">
+        <label  class="form-label">Upload Your Photos</label>
+        <div class="w-100 border rounded d-flex flex-column align-items-center justify-content-center" style="height:100px;border-style:dashed;">
+            <img src="~/images/add.png" style="cursor:pointer;position:relative; top:20px;" />
+            <input type="file" accept="image/*" onchange="load_userimages('@item.StoryId')" id="images-@item.StoryId" style="opacity:0;cursor:pointer;" multiple/>
+            <p style="margin-block:0px;cursor:pointer;"> Upload Pictures Here</p>
+        </div>
+        <span class="text-danger d-none" id="image">At Least Select One Image</span>
+        <div class="gallary-@item.StoryId mt-4 d-flex flex-wrap">
+                                        @{
+                                            int count = 1;
+                                            foreach(var image in item.StoryMedia)
+                                            {
+                                                <div class="main-image-div" id='story-@item.StoryId-user-image-@count'>
+                                                <img src=@image.Path  class="main-image"/>
+                                                <div onclick="remove('story-@item.StoryId-user-image-@count')" class="bg-black close d-flex justify-content-center align-items-center">
+                                                <img src=~/images/cancel.png/>
+                                                </div>
+                                                </div>
+                                                count = count + 1;
+                                            }
+                                        }
+        </div>
+</div>
+                            </div>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
+                            <span class="text-danger d-none" id="alert">Please Fill All Fields</span>
+                            <button type="button"  class="btn applyButton prev" onclick="next()">Next</button>
+                            <div class="d-none next">
+                            <button type="button"  class="btn applyButton" onclick="prev()">Prev</button>
+                            <button type="button"  class="btn applyButton" onclick="poststory('PUBLISHED',@item.StoryId,@item.MissionId)" >Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    }
+}
+
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="~/js/StoryListing.js"></script>

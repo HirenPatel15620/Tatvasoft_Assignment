@@ -1,0 +1,93 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "Share Your Story";
+    ViewData["css"] = "ShareStory.css";
+}
+@*toaster*@
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+
+@model List<Mission>
+<div class="container mt-5">
+    <h1> Share Your Story</h1>
+    <div class="story-details row justify-content-between w-100 mt-4">
+        <div class=" col-lg-3 col-md-3 col-sm-3 mt-2">
+            <label  class="form-label">Select Mission</label>
+         <select class="form-select me-3" aria-label="Select Mission">
+  <option value=0 disabled  selected>Select Your Mission</option>
+  @{
+      foreach (var item in Model)
+      {
+           <option value=@item.MissionId id=@item.MissionId>@item.Title.ToString().Substring(0,50)...</option>
+      }
+  }
+  </select>
+  <span class="text-danger d-none" id="mission">Mission Must Be Selected</span>
+  </div>
+   <div class=" col-lg-3 col-md-3 col-sm-3 mt-2"><label  class="form-label">My Story Title</label>
+        <input class="form-control title" type="text" placeholder="Enter Story Title"/>
+        <span class="text-danger d-none" id="title">Title Is need to beetween 50 to 255 </span>
+   </div>
+
+   <div class=" col-lg-3 col-md-3 col-sm-3 mt-2">
+       <label  class="form-label">Select Date</label>
+       <input type="text" class="form-control" id="datepicker" placeholder="Select Date"  />
+        <span class="text-danger d-none" id="date">Date Is Required</span>
+        <span class="text-danger d-none" id="date-valid">Select Valid Date</span>
+       </div>
+    </div>
+
+    @*ckeditor*@
+    <div class="ck-editor w-100 mt-3">
+         <label  class="form-label">My Story</label>
+         <textarea class="form-control" id="editor" rows=5 placeholder="Do not use the fuctionality of the textbox " ></textarea>
+          <span class="text-danger d-none" id="mystory">Story Is Need To Between 70 to 20000</span> 
+         
+    </div>  
+    <div class="video-url w-100 mt-4">
+         <label  class="form-label">Enter Video URL</label>
+         <input class="form-control video" type="url" placeholder="Enter Your URL"/>
+    </div>
+
+    @*upload images*@
+    <div class="images w-100 mt-4 ">
+        <label  class="form-label">Upload Your Photos</label>
+        <div class="w-100 border rounded d-flex flex-column align-items-center justify-content-center" style="height:100px;border-style:dashed;">
+            <img src="~/images/add.png" style="cursor:pointer;position:relative; top:20px;" />
+            <input  type="file" accept="image/*" onchange="loadimages()" id="images" style="opacity:0;cursor:pointer;" multiple/>
+            <p style="margin-block:0px;cursor:pointer;"> Upload Pictures Here</p>
+        </div>
+        <span class="text-danger d-none" id="image">At Least Select One Image</span>
+        <div class="gallary mt-4 d-flex flex-wrap">
+        </div>
+</div>
+
+<div class="buttons d-flex justify-content-between">
+    <div><button class="applyButton btn">Cancle</button> </div>
+    @*<a  href="/stories/preview" target="_blank" class="applyButton btn">Preview</a>*@
+    <div><button onclick="getdetails()" class="applyButton btn">Save</button> <button onclick="getdetails('PUBLISHED')" class="applyButton btn">Submit</button>
+      @*{
+            toastr.success('Have fun storming the castle!', 'Miracle Max Says')
+
+        }*@
+</div>
+</div>
+</div>
+
+
+
+
+
+@*javascript*@
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="~/js/ShareStory.js"></script>
+
+
+
+
