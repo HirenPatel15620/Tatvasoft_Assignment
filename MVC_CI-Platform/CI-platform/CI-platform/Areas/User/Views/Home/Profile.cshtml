@@ -1,0 +1,85 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Profile page";
+    ViewData["css"] = "profile.css";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-3 my-5">
+            <input type="file"></input>
+
+        </div>
+        <div class="col-lg-9">
+            <div class="w-100 border-bottom">
+                <h5 class="border-border-bottom">Basic Information</h5>
+            </div>
+
+            <div class="row mt-2">
+
+                <div class="col-lg-6 mt-2"><label class="form-label">Name</label><input placeholder="Enter Your Name" type="text" class="form-control" /> </div>
+                <div class="col-lg-6 mt-2"><label class="form-label">Surname</label><input placeholder="Enter Your Surname" type="text" class="form-control" /> </div>
+
+                <div class="col-lg-6 mt-2"><label class="form-label">Employee ID</label><input placeholder="Enter Your Employee ID" type="text" class="form-control" /> </div>
+                <div class="col-lg-6 mt-2"><label class="form-label">Manager</label><input placeholder="Enter Your Manager Details" type="text" class="form-control" /> </div>
+
+                <div class="col-lg-6 mt-2"><label class="form-label">Title</label><input placeholder="Enter Your Employee ID" type="text" class="form-control" /> </div>
+                <div class="col-lg-6 mt-2"><label class="form-label">Department</label><input placeholder="Enter Your Manager Details" type="text" class="form-control" /> </div>
+
+            </div>
+
+
+            <div class="row mt-5">
+                <div class="col-lg-12"><label class="form-label">My Profile</label><textarea placeholder="Enter Your Bio..." rows=5 class="form-control"></textarea></div>
+                <div class="col-lg-12 mt-4"><label class="form-label">Why I Volunteer?</label><textarea placeholder="Enter Your Volunteering Reason..." rows=5 class="form-control"></textarea></div>
+            </div>
+
+            <div class="w-100 border-bottom mt-5">
+                <h5>Address Location</h5>
+            </div>
+
+            <div class="row mt-2">
+
+                <div class="col-lg-6 mt-2"><label class="form-label">City</label><input placeholder="Enter Your Surname" type="text" class="form-control" /> </div>
+                <div class="col-lg-6 mt-2"><label class="form-label">Country</label><input placeholder="Enter Your Name" type="text" class="form-control" /> </div>
+            </div>
+
+
+
+            <div class="w-100 border-bottom mt-5">
+                <h5>Professional Informnation</h5>
+            </div>
+
+            <div class="row mt-2">
+
+                <div class="col-lg-6 mt-2"><label class="form-label">Avalibility</label><input placeholder="Enter Your Avalibility" type="text" class="form-control" /> </div>
+                <div class="col-lg-6 mt-2"><label class="form-label">LinkedIn</label><input placeholder="Enter Your LinkIn Username" type="text" class="form-control" /> </div>
+            </div>
+
+
+            <div class="w-100 border-bottom mt-5">
+                <h5>My Skill</h5>
+            </div>
+
+
+            <div class="row">
+
+                <div class="col-lg-12 "><label class="form-label"></label><textarea placeholder="Enter Your Volunteering Reason..." rows=5 class="form-control"></textarea></div>
+            </div>
+            <div data-bs-toggle="modal" data-bs-target="#addskills" style="cursor:pointer;" class=" mt-3 col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                <span class="p-1 text-muted" style="white-space:nowrap;">Add Skills</span>
+            </div>
+
+
+
+            <div class="d-flex justify-content-end">
+                <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn mt-4">Save</button>
+            </div>
+
+        </div>
+    </div>
+
+
+</div>

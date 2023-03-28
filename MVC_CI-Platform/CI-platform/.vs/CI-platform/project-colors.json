@@ -1,0 +1,41 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "07d5d421-2114-45e8-878a-0472a49fcf01": {
+      "ProjectGuid": "07d5d421-2114-45e8-878a-0472a49fcf01",
+      "DisplayName": "CI-platform",
+      "ColorIndex": 0
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "7ee3e4de-a599-4a94-9eec-f22f10e312c9": {
+      "ProjectGuid": "7ee3e4de-a599-4a94-9eec-f22f10e312c9",
+      "DisplayName": "CI.Models",
+      "ColorIndex": 1
+    },
+    "17746600-1c09-487b-94a6-1841dc9897f3": {
+      "ProjectGuid": "17746600-1c09-487b-94a6-1841dc9897f3",
+      "DisplayName": "CI.DataAcess",
+      "ColorIndex": 2
+    },
+    "5ebc0a53-fb10-429d-8ebf-ce1b0b6f7d1a": {
+      "ProjectGuid": "5ebc0a53-fb10-429d-8ebf-ce1b0b6f7d1a",
+      "DisplayName": "CI.Utilities",
+      "ColorIndex": 3
+    },
+    "b662f43b-0cea-4be3-8da9-35303bbbb3ac": {
+      "ProjectGuid": "b662f43b-0cea-4be3-8da9-35303bbbb3ac",
+      "DisplayName": "CI.Repositories",
+      "ColorIndex": 4
+    },
+    "919fd655-f067-4ba2-b932-d926e85dd6b4": {
+      "ProjectGuid": "919fd655-f067-4ba2-b932-d926e85dd6b4",
+      "DisplayName": "Script Documents",
+      "ColorIndex": 5
+    }
+  },
+  "NextColorIndex": 6
+}

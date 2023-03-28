@@ -1,0 +1,305 @@
+﻿.main-image{
+    height:450px;
+}
+.other-image{
+    margin-right:1.15%;
+    width:24.1%;
+    height:125px;
+    cursor:pointer;
+}
+.left{
+    width:2%;
+    opacity:50%;
+    cursor:pointer;
+}
+.stamps{
+    height:20%;
+}
+.usercomment-image{
+    width:7%;
+}
+.user-comments {
+    overflow-x: auto;
+}
+.user-comments::-webkit-scrollbar {
+        width: 2px;
+        background-color: white;
+}
+    .user-comments::-webkit-scrollbar-thumb {
+        background-color: lightgray;
+    }
+.applyButton {
+    border: 2px solid #F88634;
+    border-radius: 100px;
+    color: #F88634;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.duration-seats-info {
+    position: relative;
+    width: 100%;
+    border-top: 1px solid #E8E8E8;
+    text-align: center;
+}
+
+.duration {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border: 1px solid #E8E8E8;
+    border-radius: 18px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translate(0, -55%);
+    margin-left: 15%;
+    margin-right: 15%;
+}
+.stars {
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    transform: translate(0, -55%);
+    margin-left: 35%;
+    margin-right: 35%;
+}
+
+.Seats p, .deadline p {
+    margin-block-end: 0;
+    margin-block-start: 0;
+}
+
+.Seats span, .deadline p {
+    margin-left: 10px;
+}
+.active-detail{
+text-decoration-thickness:3px;
+text-underline-offset:1.1rem;
+cursor:pointer;
+}
+.detail {
+    text-decoration: none;
+    cursor:pointer;
+}
+.volunteers p {
+    font-size: 10px;
+    white-space: nowrap;
+}
+.document span {
+    font-size: 12px;
+}
+.document img {
+    height:75%;
+}
+
+.img-event, .caption {
+    position: relative;
+}
+
+.list-group-image {
+    display: block;
+}
+.location-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #000000 0% 0% no-repeat padding-box;
+    border-radius: 18px;
+    opacity: 0.5;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 13px;
+    padding-right: 13px;
+    margin: 10px;
+    border: none;
+}
+
+.like-img {
+    position: absolute;
+    top: 40%;
+    right: 0;
+    background: #000000 0% 0% no-repeat padding-box;
+    border-radius: 18px;
+    opacity: 0.5;
+    margin: 10px;
+    padding: 7px;
+}
+
+.stop-img {
+    position: absolute;
+    top: 60%;
+    right: 0;
+    background: #000000 0% 0% no-repeat padding-box;
+    border-radius: 18px;
+    opacity: 0.5;
+    margin: 10px;
+    padding: 7px;
+}
+
+.mission-theme {
+    position: absolute;
+    bottom: -4%;
+    left: 35%;
+    bottom: -6%;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    border-radius: 18px;
+    opacity: 1;
+}
+.related-mission{
+    margin-left:40%;
+    font-size:1.5rem;
+}
+.inner-content{
+    display:none;
+}
+.progress {
+    height: 10px;
+    border-radius: 20px;
+}
+.progress-bar {
+    background-color: #F88634;
+}
+@media (max-width:1200px) and (min-width:992px) {
+    .mission-info {
+        height: 100px;
+    }
+    .other-image {
+        height: 105px;
+    }
+}
+    @media (max-width:992px) and (min-width:768px) {
+        .mission-info {
+            height: 90px;
+        }
+        .other-image {
+            height: 105px;
+        }
+    }
+ @media (max-width:768px) and (min-width:576px) {
+        .container {
+            font-size: 15px;
+        }
+
+        .missions {
+            font-size: 10px;
+        }
+
+        .stamps {
+            height: 25%;
+        }
+
+            .stamps p {
+                font-size: 10px;
+            }
+
+        .main-image {
+            height: 300px;
+        }
+
+        .user-comments span {
+            font-size: 10px;
+        }
+    .mission-info {
+        height: 90px;
+    }
+    .other-image {
+        height: 105px;
+    }
+    }
+
+    @media (max-width:576px) {
+        .other-image {
+            height: 105px;
+        }
+        .document img {
+            height: 50%;
+        }
+
+        .document span {
+            font-size: 9px;
+        }
+
+        .missions {
+            font-size: 0.9rem;
+        }
+
+        .main-image {
+            height: 300px;
+        }
+
+        .stamps {
+            height: 15%;
+        }
+
+            .stamps p {
+                font-size: 10px;
+            }
+
+        .usercomment-image {
+            width: 50px;
+        }
+
+        .user-comments span {
+            font-size: 12px;
+        }
+
+        .related-mission {
+            margin-left: 30%;
+            font-size: 1.5rem;
+        }
+    }
+.view-detail {
+    left: 30%;
+    bottom: 40%;
+}
+.story-image {
+    cursor: pointer;
+}
+
+.story-image {
+    filter: brightness(45%);
+}
+
+
+
+
+
+
+.applyButton {
+    border: 2px solid #F88634;
+    border-radius: 100px;
+    color: #F88634;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .applyButton:hover {
+        color: #F88634;
+    }
+
+.alreadyapplyButton {
+    border: 2px solid green;
+    border-radius: 100px;
+    color: green;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .alreadyapplyButton:hover {
+        color: green;
+    }
+
+
+.closeButton {
+    border: 2px solid red;
+    border-radius: 100px;
+    color: red;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .closeButton:hover {
+        color: red;
+    }
