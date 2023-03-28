@@ -46,3 +46,15 @@ C:\Users\pca107\Desktop\main backup\CI-platform\CI.Models\obj\Debug\net6.0\CI.Mo
 C:\Users\pca107\Desktop\main backup\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.dll
 C:\Users\pca107\Desktop\main backup\CI-platform\CI.Models\obj\Debug\net6.0\ref\CI.Models.dll
 C:\Users\pca107\Desktop\main backup\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.pdb
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\bin\Debug\net6.0\CI.Models.deps.json
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\bin\Debug\net6.0\CI.Models.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\bin\Debug\net6.0\ref\CI.Models.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\bin\Debug\net6.0\CI.Models.pdb
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.csproj.AssemblyReference.cache
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.AssemblyInfoInputs.cache
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.AssemblyInfo.cs
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.csproj.CoreCompileInputs.cache
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\obj\Debug\net6.0\ref\CI.Models.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI.Models\obj\Debug\net6.0\CI.Models.pdb

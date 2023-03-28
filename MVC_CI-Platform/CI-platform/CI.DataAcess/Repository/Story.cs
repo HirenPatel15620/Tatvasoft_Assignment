@@ -154,7 +154,7 @@ namespace CI.DataAcess.Repository
                        where s.Status == "PUBLISHED" || s.UserId == user_id
                        orderby s.Status ascending
                        select s).ToList();
-            return new CI.Models.ViewModels.Mission {  Stories = stories.Skip(9*page_index).Take(9).ToList() };
+            return new CI.Models.ViewModels.Mission {  Stories = stories.Skip(3*page_index).Take(3).ToList() };
         }
 
 
@@ -165,7 +165,7 @@ namespace CI.DataAcess.Repository
                        where s.Status == "PUBLISHED" || s.UserId == user_id
                        orderby s.Status ascending
                        select s).ToList();
-            return new CI.Models.ViewModels.Mission { Stories=stories.Take(9).ToList(),total_missions=stories.Count} ;
+            return new CI.Models.ViewModels.Mission { Stories=stories.Take(3).ToList(),total_missions=stories.Count} ;
         }
 
 

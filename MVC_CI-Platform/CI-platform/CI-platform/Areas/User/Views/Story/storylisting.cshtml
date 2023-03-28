@@ -73,7 +73,7 @@
             <span class="page-link" onclick="prev_page()"><img src="~/images/left.png" alt="not load" /></span>
         </li>
         @{
-            int pages = (int)Math.Ceiling((double)@Model?.total_missions / 9);
+            int pages = (int)Math.Ceiling((double)@Model?.total_missions / 3  );
             for (var i = 1; i <= pages; i++)
             {
                 if (i == 1)

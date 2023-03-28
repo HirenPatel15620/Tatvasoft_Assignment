@@ -18,6 +18,7 @@ namespace CI.DataAcess.Repository
             Mission = new Mission(_db);
             ResetPassword = new ResetPassword(_db);
             Story=new Story(_db);
+            Profile = new Profile(_db);
         }
         public IUserAuthentication UserAuthentication { get;private set; }
 
@@ -25,6 +26,8 @@ namespace CI.DataAcess.Repository
 
         public IResetPassword ResetPassword { get; private set; }
         public IStory Story { get; private set; }
+
+        public IProfile Profile { get; private set; }   
 
         public void save()
         {

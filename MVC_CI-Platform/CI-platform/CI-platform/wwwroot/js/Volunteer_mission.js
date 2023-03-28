@@ -16,6 +16,7 @@ const tabs = (id) => {
     }
     element.classList.remove("inner-content")
 }
+
 const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
@@ -52,61 +53,7 @@ const load_comments = (comments) => {
     $('.user-comments').append(comments);
     $('#usercomment').val("")
 }
-
-const apply_for_mission = (user_id, mission_id) => {
-    $.ajax({
-        url: `/volunteering_mission/${mission_id}`,
-        type: 'POST',
-        data: { user_id: user_id, mission_id: mission_id, request_for: "mission" },
-        success: function (result) {
-            if (result.success) {
-                $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
-                $('.validate-recommend').removeClass('d-none').addClass('d-flex')
-            }
-        },
-        error: function () {
-            console.log("Error updating variable");
-        }
-    })
-}
-
-const prev_volunteers = (user_id,mission_id) => {
-    var one_page_volunteers = 9
-    if (count > 1) {
-        count--;
-        $.ajax({
-            url: `/volunteering_mission/${mission_id}`,
-            type: 'POST',
-            data: { count: count - 1, request_for: "next_volunteers", user_id: user_id, mission_id: mission_id },
-            success: function (result) {
-                $('.volunteers').empty().append(result.recent_volunteers.result)
-                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) == 0 ? 1 : one_page_volunteers * (count - 1)}-${one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
-    }
-}
-const next_volunteers = (max_page, user_id, mission_id) => {
-    var one_page_volunteers=9
-    if (count < max_page) {
-        count++;
-        $.ajax({
-            url: `/volunteering_mission/${mission_id}`,
-            type: 'POST',
-            data: { count: count - 1, request_for: "next_volunteers", mission_id: mission_id,user_id:user_id },
-            success: function (result) {
-                $('.volunteers').empty().append(result.recent_volunteers.result)
-                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.total_volunteers ? result.total_volunteers : one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
-    }
-}
-const add_to_favourite = (user_id,mission_id) => {
+const add_to_favourite = (user_id, mission_id) => {
     $.ajax({
         url: `/volunteering_mission/${mission_id}`,
         type: 'POST',
@@ -118,13 +65,13 @@ const add_to_favourite = (user_id,mission_id) => {
             else {
                 $('.heart').removeAttr('src').attr('src', '/images/heart1.png')
             }
-           },
+        },
         error: function () {
             console.log("Error updating variable");
         }
     })
 }
-const rating = (rating,user_id,mission_id) => {
+const rating = (rating, user_id, mission_id) => {
     if (rating == 1) {
         $('.rating').find('img').each(function (i, item) {
             if (i == (rating - 1)) {
@@ -199,7 +146,7 @@ const add_coworkers = (id) => {
         co_workers.push(id)
     }
     else {
-        co_workers.splice(co_workers.indexOf(id),1)
+        co_workers.splice(co_workers.indexOf(id), 1)
     }
 }
 const recommend = (user_id, mission_id) => {
@@ -210,6 +157,65 @@ const recommend = (user_id, mission_id) => {
             data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend" },
             success: function (result) {
                 console.log(result)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
+const apply_for_mission = (user_id, mission_id) => {
+    $.ajax({
+        url: `/volunteering_mission/${mission_id}`,
+        type: 'POST',
+        data: { user_id: user_id, mission_id: mission_id, request_for: "mission" },
+        success: function (result) {
+            if (result.success) {
+                $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
+                $('.validate-recommend').removeClass('d-none').addClass('d-flex')
+            }
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
+
+
+
+
+
+
+
+const prev_volunteers = (user_id,mission_id) => {
+    var one_page_volunteers = 9
+    if (count > 1) {
+        count--;
+        $.ajax({
+            url: `/volunteering_mission/${mission_id}`,
+            type: 'POST',
+            data: { count: count - 1, request_for: "next_volunteers", user_id: user_id, mission_id: mission_id },
+            success: function (result) {
+                $('.volunteers').empty().append(result.recent_volunteers.result)
+                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) == 0 ? 1 : one_page_volunteers * (count - 1)}-${one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
+const next_volunteers = (max_page, user_id, mission_id) => {
+    var one_page_volunteers=9
+    if (count < max_page) {
+        count++;
+        $.ajax({
+            url: `/volunteering_mission/${mission_id}`,
+            type: 'POST',
+            data: { count: count - 1, request_for: "next_volunteers", mission_id: mission_id,user_id:user_id },
+            success: function (result) {
+                $('.volunteers').empty().append(result.recent_volunteers.result)
+                $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.total_volunteers ? result.total_volunteers : one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)
             },
             error: function () {
                 console.log("Error updating variable");

@@ -11,9 +11,12 @@ $(function () {
     $("#datepicker").datepicker();
 });
 CKEDITOR.replace('editor', {
-    maxLength: 20000,
+    maxLength: 40000,
 
 });
+
+//images 
+
 
 function loadimages() {
     var image = document.getElementById('images').files
@@ -68,15 +71,19 @@ function loadimages() {
     }
 }
 
+
+//
+
 function getdetails(type) {
     validate()
     if (mission != 0 && title.trim().length > 50 && title.trim().length < 255 && $('#datepicker').datepicker().val().length != 0
-        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 20000 && $('.gallary').find('.main-image').length != 0) {
+        && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && $('.gallary').find('.main-image').length != 0) {
         $.ajax({
             url: '/stories/share',
             type: 'POST',
             data: { mission_id: mission, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
             success: function (result) {
+                alert("story save successful")
             },
             error: function () {
                 console.log("Error updating variable");
@@ -86,7 +93,7 @@ function getdetails(type) {
     }
 }
 
-
+//validation 
 function validate() {
     mission = parseInt($('.form-select').find(':selected').val())
     title = $('.title').val()
@@ -141,7 +148,7 @@ function validate() {
     }
 
 
-    if (mystory.trim().length < 70 || mystory.trim().length > 20000) {
+    if (mystory.trim().length < 70 || mystory.trim().length > 40000) {
         $('#mystory').removeClass('d-none').addClass('d-block')
 
     }
@@ -162,6 +169,9 @@ function validate() {
 
     }
 }
+
+
+
 function convertDate(inputFormat) {
     function pad(s) { return (s < 10) ? '0' + s : s; }
     var d = new Date(inputFormat)

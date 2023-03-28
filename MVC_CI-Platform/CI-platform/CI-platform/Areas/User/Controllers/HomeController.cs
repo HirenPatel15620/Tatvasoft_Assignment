@@ -31,7 +31,7 @@ namespace CI_platform.Controllers
         }
         [HttpPost]
         [Route("Home")]
-        public JsonResult home(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string request_for, string sort_by, int page_index, 
+        public JsonResult home(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string request_for, string sort_by, int page_index,
             long user_id, long mission_id, List<long> co_workers)
         {
             if (key is not null)
@@ -128,6 +128,10 @@ namespace CI_platform.Controllers
                 return Json(new { comments = new_comment, success = true });
             }
         }
+
+
+        [Route("Privacy")]
+        [Route("User/Home/Privacy")]
         public IActionResult Privacy()
         {
             if (User.Identity.IsAuthenticated)
@@ -139,30 +143,26 @@ namespace CI_platform.Controllers
                 return RedirectToAction("login", "userAuthentication");
             }
         }
-        [Route("Policy")]
-        public IActionResult Policy()
-        {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            return View(Policy);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("login", "userAuthentication");   
-            //}
-        }
+        
 
         [Route("Profile")]
         public IActionResult Profile()
         {
-            //if (User.Identity.IsAuthenticated)
-            //{
-            return View(Profile);
-            //}
-            //else
-            //{
-            //    return RedirectToAction("login", "userAuthentication");   
-            //}
+
+            CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0);
+            return View(details);
+
+
+        }
+        [HttpPost]
+        [Route("Profile")]
+        public JsonResult Profile(int country)
+        {
+            CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country);
+            var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
+            return Json(new { cities });
+
+
         }
 
 

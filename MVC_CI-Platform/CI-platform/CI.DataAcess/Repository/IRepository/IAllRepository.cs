@@ -13,5 +13,7 @@ namespace CI.DataAcess.Repository.IRepository
         public IMission Mission { get; }
         public IResetPassword ResetPassword { get; }
         public IStory Story { get; }
+
+        public IProfile Profile { get; }
     }
 }
