@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 namespace CI.Models;
-
 public partial class GoalMission
 {
     public long GoalMissionId { get; set; }

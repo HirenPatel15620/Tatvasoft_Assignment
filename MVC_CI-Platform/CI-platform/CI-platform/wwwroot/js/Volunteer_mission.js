@@ -1,4 +1,25 @@
-﻿var count = 1
+﻿////const { Toast } = require("../lib/bootstrap/dist/js/bootstrap")
+toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "1000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "swing",
+    "showMethod": "slideDown",
+    "hideMethod": "slideUp"
+}
+
+
+
+var count = 1
 var co_workers=[]
 const tabs = (id) => {
     let active_mission = document.getElementsByClassName("active-detail")
@@ -60,10 +81,13 @@ const add_to_favourite = (user_id, mission_id) => {
         data: { request_for: "add_to_favourite", mission_id: mission_id, user_id: user_id },
         success: function (result) {
             if (result.success) {
+                //alert("add to favourite");
                 $('.heart').removeAttr('src').attr('src', '/images/red-heart.png')
+                toastr.success("add to favourite");
             }
             else {
                 $('.heart').removeAttr('src').attr('src', '/images/heart1.png')
+                toastr.error("Remove from favourite");
             }
         },
         error: function () {
@@ -140,6 +164,12 @@ const rating = (rating, user_id, mission_id) => {
     }
 
 }
+
+
+
+
+
+
 const add_coworkers = (id) => {
     id = parseInt(id.slice(9))
     if (!co_workers.includes(id)) {
@@ -149,6 +179,10 @@ const add_coworkers = (id) => {
         co_workers.splice(co_workers.indexOf(id), 1)
     }
 }
+
+
+
+
 const recommend = (user_id, mission_id) => {
     if (co_workers.length > 0) {
         $.ajax({
@@ -157,13 +191,23 @@ const recommend = (user_id, mission_id) => {
             data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend" },
             success: function (result) {
                 console.log(result)
+                toastr.success("send mail successly");
+
             },
             error: function () {
                 console.log("Error updating variable");
+                toastr.error("Fail To Send Mail ");
             }
         })
     }
 }
+
+
+
+
+
+
+
 const apply_for_mission = (user_id, mission_id) => {
     $.ajax({
         url: `/volunteering_mission/${mission_id}`,
@@ -173,6 +217,7 @@ const apply_for_mission = (user_id, mission_id) => {
             if (result.success) {
                 $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
                 $('.validate-recommend').removeClass('d-none').addClass('d-flex')
+                toastr.success("successfully Applied");
             }
         },
         error: function () {

@@ -156,12 +156,19 @@ namespace CI_platform.Controllers
         }
         [HttpPost]
         [Route("Profile")]
-        public JsonResult Profile(int country)
+        public JsonResult Profile(int country,CI.Models.ViewModels.ProfileViewModel model)
         {
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            if (country != 0)
+            {
+                bool success = allRepository.Profile.Update_Profile(model, user_id);
+                //return RedirectToAction("Profile");
+            }
+
+
             CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country);
             var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
             return Json(new { cities });
-
 
         }
 

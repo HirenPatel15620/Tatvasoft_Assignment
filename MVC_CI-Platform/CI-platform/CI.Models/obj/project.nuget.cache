@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "NE+X6vhKXsnwSySpgj48jaoT8D3mGfVSHC7J3JMDaDwtHG0EmCm/uWrUueKHUJKj0b91aU3zM/D8aQYexKE3Sg==",
+  "dgSpecHash": "C2Q7u5Hzm74U/dejTgu5wt69w2Z+oNPiHVrjmpI4LQMGjG4ahljFDUf4Lx66W9mE/vY9WAOvyFSYN1Lzp89vFw==",
   "success": true,
   "projectFilePath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\pca107\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
+    "C:\\Users\\pca107\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.1\\microsoft.extensions.primitives.5.0.1.nupkg.sha512",
+    "C:\\Users\\pca107\\.nuget\\packages\\system.io.pipelines\\5.0.2\\system.io.pipelines.5.0.2.nupkg.sha512"
+  ],
   "logs": []
 }

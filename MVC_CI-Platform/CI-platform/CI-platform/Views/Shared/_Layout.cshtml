@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
     <link rel="stylesheet" href="~/CI_platform.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 </head>
 <body onload="setpages();">
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
@@ -74,23 +77,21 @@
 
     @*<footer class=" footer text-muted">
         <div class="container">
-            &copy; 2023 - CI_platform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+        &copy; 2023 - CI_platform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
         </div>
-    </footer>*@
+        </footer>*@
     <footer class="bg-dark text-center text-white">
-  <!-- Grid container -->
-  <div class="container p-4 pb-0">
-   
-  </div>
-  <!-- Grid container -->
-
-  <!-- Copyright -->
-  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    &copy; 2023 - CI_platform - 
-     <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
-  </div>
-  <!-- Copyright -->
-</footer>
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            &copy; 2023 - CI_platform -
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

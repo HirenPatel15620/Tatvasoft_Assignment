@@ -1,4 +1,26 @@
-﻿let items = document.getElementsByClassName("item")
+﻿toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "1000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "swing",
+    "showMethod": "slideDown",
+    "hideMethod": "slideUp"
+}
+
+
+
+
+
+let items = document.getElementsByClassName("item")
 let cards = document.getElementsByClassName("thumbnail")
 let img_event = document.getElementsByClassName('img-event')
 let list = document.getElementById("list")
@@ -13,7 +35,11 @@ let theme_count = 0;
 let skill_count = 0;
 let pageindex = 0;
 var view="grid"
-var clearall = "<span class='ms-1 clear-all'>" + "Clear All" + "</span>";
+
+
+
+
+
 
 
 //mouse hover effect
@@ -83,6 +109,7 @@ const apply_for_mission = (user_id, mission_id) => {
         success: function (result) {
             if (result.success) {
                 $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
+                toastr.success("successfully Applied");
                 
             }
         },
@@ -384,27 +411,42 @@ const sort_by = (user_id) => {
 }
 
 
+
 //clear all
-const clear_all = () => {
-    var selected = $('#sort').find(':selected').text();
-    countries = []
-    cities = []
-    themes = []
-    skills=[]
-    //$.ajax({
-    //    url: '/home',
-    //    type: 'POST',
-    //    data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
-    //    success: function (result) {
-    //        loadmissions(result.mission.result, result.length)
-    //    },
-    //    error: function () {
-    //        console.log("Error updating variable");
-    //    }
-    //})
-    $('.all-choices').empty()
-    $('#clear-all').empty()
-}
+//const clear_all = () => {
+//    var selected = $('#sort').find(':selected').text();
+//    countries = []
+//    cities = []
+//    themes = []
+//    skills=[]
+//    //$.ajax({
+//    //    url: '/home',
+//    //    type: 'POST',
+//    //    data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
+//    //    success: function (result) {
+//    //        loadmissions(result.mission.result, result.length)
+//    //    },
+//    //    error: function () {
+//    //        console.log("Error updating variable");
+//    //    }
+//    //})
+//    $('.all-choices').empty()
+//    $('#clear-all').empty()
+//}
+
+const searchdiv = document.getElementById("searchdiv");
+const allchoicediv = document.getElementById("allchoicediv");
+const clearalldiv = document.getElementById("clearalldiv");
+
+searchdiv.addEventListener("DOMNodeRemoved", function (event) {
+    if (event.target === allchoicediv) {
+        searchdiv.removeChild(clearalldiv);
+    }
+});
+
+
+
+
 
 
 //add to favourite
@@ -417,11 +459,13 @@ const add_to_favourite = (user_id, mission_id) => {
             console.log(result)
             if (result.success) {
                 $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/red-heart.png')
-                $(`.heart-${mission_id}`).css('height',24)
+                $(`.heart-${mission_id}`).css('height', 24)
+                toastr.success("add to favourite");
             }
             else {
                 $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/heart.png')
                 $(`.heart-${mission_id}`).css('height', 20)
+                toastr.error("Remove from favourite");
             }
         },
         error: function () {
@@ -436,6 +480,7 @@ const remove_badges = (id, badge_type) => {
     var selected = $('#sort').find(':selected').text();
     $(`#${id.slice(6)}`).prop('checked', false);
     $('.all-choices').find(`#${id.replace(/\s/g, '')}`).remove()
+   
     if (badge_type == "city") {
         if (cities.includes(id.slice(6))) {
             cities.splice(cities.indexOf(id.slice(6)), 1)
@@ -471,27 +516,40 @@ const remove_badges = (id, badge_type) => {
             console.log("Error updating variable");
         }
     })
+    
 }
 
 
 
 //recommand
-//const recommend = (user_id, mission_id) => {
-//    if (co_workers.length > 0) {
-//        $.ajax({
-//            url: `/home`,
-//            type: 'POST', 
-//            data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend" },
-//            successworker: function (result) {
-//                debugger
-//                console.log(result)
-//            },
-//            error: function () {
-//                console.log("Error updating variable");
-//            }
-//        })
-//    }
-//}
+const add_coworkers = (id) => {
+    id = parseInt(id.slice(9))
+    if (!co_workers.includes(id)) {
+        co_workers.push(id)
+    }
+    else {
+        co_workers.splice(co_workers.indexOf(id), 1)
+    }
+}
+
+
+const recommend = (user_id, mission_id) => {
+    debugger
+    if (co_workers.length > 0) {
+        $.ajax({
+            url: `/home`,
+            type: 'POST', 
+            data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend" },
+            successworker: function (result) {
+                debugger
+                console.log(result)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
 
 
 

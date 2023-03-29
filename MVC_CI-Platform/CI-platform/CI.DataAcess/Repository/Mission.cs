@@ -64,6 +64,8 @@ namespace CI.DataAcess.Repository
         {
             CI.Models.ViewModels.Mission Missions = new Models.ViewModels.Mission();
             List<City> city = new List<City>();
+            List<User> all_volunteers = new List<User>();
+            List<User> already_recommended = new List<User>();
             List<CI.Models.Mission> mission = new List<CI.Models.Mission>();
 
             //get missions as per page
@@ -87,6 +89,47 @@ namespace CI.DataAcess.Repository
             {
                 city = cities;
             }
+
+
+
+
+            // List<User> myusers = (from ma in missionApplications
+            //                          where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
+            //                          select ma.User).ToList();
+
+            //already_recommended_users = (from a in already_recommended_users
+            //                             where a.MissionId == id && a.FromUserId == user_id
+            //                             select a).ToList();
+            //if (already_recommended_users.Count > 0)
+            //{
+            //    foreach (var item in already_recommended_users)
+            //    {
+            //        already_recommended.Add(item.ToUser);
+            //    }
+            //}
+
+            //users = (from u in users
+            //         where !myusers.Contains(u) && user_id != u.UserId
+            //         select u).ToList();
+            //if (users.Count > 0)
+            //{
+            //    foreach (var item in users)
+            //    {
+            //        if (!already_recommended.Contains(item))
+            //        {
+            //            all_volunteers.Add(item);
+            //        }
+            //    }
+            //}
+
+
+
+
+
+
+
+
+
             //filter as per city,theme and skill, if country selected it doesn't matter because filter work as per city first
             if (Cities.Count > 0)
             {

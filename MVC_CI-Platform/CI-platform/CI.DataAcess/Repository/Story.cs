@@ -27,21 +27,21 @@ namespace CI.DataAcess.Repository
 
         //get search story=============================================================================
 
-        public Models.ViewModels.StoryViewModel GetSearchStory(string key)
-        {
+        //public Models.ViewModels.StoryViewModel GetSearchStory(string key)
+        //{
 
-            stories = stories.ToList();
+        //    stories = stories.ToList();
          
-            var storys = (from s in stories
-                           where s.Title.ToLower().Contains(key) || s.Description.ToLower().Contains(key)
-                           select s).ToList();
-            var story = new Models.ViewModels.StoryViewModel
-            {
-                storys = storys,
-            };
+        //    var storys = (from s in stories
+        //                   where s.Title.ToLower().Contains(key) || s.Description.ToLower().Contains(key)
+        //                   select s).ToList();
+        //    var story = new Models.ViewModels.StoryViewModel
+        //    {
+        //        storys = storys,
+        //    };
 
-            return story;
-        }
+        //    return story;
+        //}
 
 
 
@@ -50,37 +50,59 @@ namespace CI.DataAcess.Repository
 
 
         //for share story page=================================================================================
-        public bool AddStory(long user_id,long id, long mission_id, string title, string published_date, string mystory, List<string> media,string type)
+        public bool AddStory(long user_id, long id, long mission_id, string title, string published_date, string mystory, List<string> media, string type)
         {
             CI.Models.Story story = new CI.Models.Story();
             if (type == "PUBLISHED")
             {
-                //if story is save in draft
+                //if story is save in draft====================================================
 
                 if (id != 0)
                 {
                     CI.Models.Story edit_story = _db.Stories.FirstOrDefault(c => c.StoryId.Equals(id));
                     edit_story.Title = title;
-                    edit_story.PublishedAt= DateTime.Parse(published_date);
+                    edit_story.PublishedAt = DateTime.Parse(published_date);
                     edit_story.Description = mystory;
                     edit_story.Status = "PUBLISHED";
                     List<StoryMedia> storymedias = (from m in medias
-                                       where m.StoryId == id
-                                       select m).ToList();
-                            _db.StoryMedia.RemoveRange(storymedias);
-                    foreach (var item in media)
+                                                    where m.StoryId == id
+                                                    select m).ToList();
+                    _db.StoryMedia.RemoveRange(storymedias);
+                    if (media.ElementAt(0).Length > 300)
+                    {
+                        foreach (var item in media)
+                        {
+                            _db.StoryMedia.Add(new StoryMedia
+                            {
+                                StoryId = id,
+                                Type = "images",
+                                Path = item
+                            });
+                        }
+                    }
+                    else
                     {
                         _db.StoryMedia.Add(new StoryMedia
                         {
                             StoryId = id,
-                            Type = "images",
-                            Path = item
+                            Type = "video",
+                            Path = media.ElementAt(0)
                         });
+                        media.RemoveAt(0);
+                        foreach (var item in media)
+                        {
+                            _db.StoryMedia.Add(new StoryMedia
+                            {
+                                StoryId = id,
+                                Type = "images",
+                                Path = item
+                            });
+                        }
                     }
                     _db.SaveChanges();
                 }
 
-                //direct published at first time=============================================================================
+                //direct published at first time=========================================
 
                 else
                 {
@@ -93,6 +115,53 @@ namespace CI.DataAcess.Repository
                     _db.Stories.Add(story);
                     _db.SaveChanges();
                     long story_id = story.StoryId;
+                    if (media.ElementAt(0).Length > 300)
+                    {
+                        foreach (var item in media)
+                        {
+                            _db.StoryMedia.Add(new StoryMedia
+                            {
+                                StoryId = story_id,
+                                Type = "images",
+                                Path = item
+                            });
+                        }
+                    }
+                    else
+                    {
+                        _db.StoryMedia.Add(new StoryMedia
+                        {
+                            StoryId = story_id,
+                            Type = "video",
+                            Path = media.ElementAt(0)
+                        });
+                        media.RemoveAt(0);
+                        foreach (var item in media)
+                        {
+                            _db.StoryMedia.Add(new StoryMedia
+                            {
+                                StoryId = story_id,
+                                Type = "images",
+                                Path = item
+                            });
+                        }
+                    }
+                }
+            }
+
+            //if user save story ================================================
+            else
+            {
+                story.UserId = user_id;
+                story.MissionId = mission_id;
+                story.Title = title;
+                story.Description = mystory;
+                story.PublishedAt = DateTime.Parse(published_date);
+                _db.Stories.Add(story);
+                _db.SaveChanges();
+                long story_id = story.StoryId;
+                if (media.ElementAt(0).Length > 300)
+                {
                     foreach (var item in media)
                     {
                         _db.StoryMedia.Add(new StoryMedia
@@ -103,35 +172,30 @@ namespace CI.DataAcess.Repository
                         });
                     }
                 }
-            }
-
-            //if user save story =============================================================================
-            else
-            {
-                story.UserId = user_id;
-                story.MissionId = mission_id;
-                story.Title = title;
-                story.Description = mystory;
-                story.PublishedAt = DateTime.Parse(published_date);
-                _db.Stories.Add(story);
-                //_db.Stories.update(story);
-                _db.SaveChanges();
-                long story_id = story.StoryId;
-                foreach (var item in media)
+                else
                 {
                     _db.StoryMedia.Add(new StoryMedia
                     {
                         StoryId = story_id,
-                        Type = "images",
-                        Path = item
+                        Type = "video",
+                        Path = media.ElementAt(0)
                     });
+                    media.RemoveAt(0);
+                    foreach (var item in media)
+                    {
+                        _db.StoryMedia.Add(new StoryMedia
+                        {
+                            StoryId = story_id,
+                            Type = "images",
+                            Path = item
+                        });
+                    }
                 }
 
             }
             _db.SaveChanges();
             return true;
-            
-            
+
         }
 
         //access all needed data=============================================================================

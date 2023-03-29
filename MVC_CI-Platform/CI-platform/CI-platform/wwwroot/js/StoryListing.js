@@ -1,4 +1,8 @@
-﻿//mouse hover effect=======================================================================
+﻿
+
+//mouse over & out effect=======================================================
+
+
 const view_detail_onmouseover = (id, img) => {
     let image = document.getElementById(img)
     image.classList.add("story-image")
@@ -14,17 +18,23 @@ const view_detail_onmouseout = (id, img) => {
 
 
 
+
+
 var count = 0
 
+//limatation of story lenght===========================================================
 const editor = (StoryId) => {
     CKEDITOR.replace(`editor-${StoryId}`, {
         maxLength: 40000,
-        //toolbar: [
-        //    { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
-        //    { name: 'clipboard', items: ['RemoveFormat'] }
-        //]
+       
     });
 }
+
+
+
+
+//pagination class changes=================================================================
+
 
 const next = () => {
     $('.prev').removeClass('d-block').addClass('d-none')
@@ -42,11 +52,30 @@ const remove = (id) => {
     document.getElementById(id).remove()
 }
 
+
+
+
+
+//date change according to database 
 function convertDate(inputFormat) {
     function pad(s) { return (s < 10) ? '0' + s : s; }
     var d = new Date(inputFormat)
     return [pad(d.getDate()), pad(d.getMonth() + 1), d.getFullYear()].join('/')
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function load_userimages(id) {
     var image = document.getElementById(`images-${id}`).files
     var images_count = $(`.gallary-${id}`).find('.main-image').length
@@ -100,6 +129,11 @@ function load_userimages(id) {
     }
 }
 
+
+
+
+
+
 function poststory(type, id, mission_id) {
     var current_date = new Date()
     var title = $(`#edit-${id}`).find('.title').val()
@@ -109,86 +143,80 @@ function poststory(type, id, mission_id) {
     var video = $(`#edit-${id}`).find(`.video`).val()
     var media = []
     if (video.trim().length > 3) {
-        media.push(video_url)
+        media.push(video)
     }
     $(`.gallary-${id}`).find('.main-image').each(function (i, item) {
         media.push(item.src)
     })
-    if (title.trim().length > 50 && title.trim().length < 255 && date.length != 0
-        && Date.parse(current_date) >= Date.parse(compareddate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && $(`.gallary-${id}`).find('.main-image').length != 0) {
-        $.ajax({
-            url: '/stories/share',
-            type: 'POST',
-            data: { story_id: id, mission_id: mission_id, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
-            success: function (result) {
-                if (result.success) {
-                    $("#edit-story").addClass('d-none')
-                    $(`#edit-${id}`).modal('hide');
+    if (video.trim().length > 0 && video.trim().length < 300) {
+        if (video.split('.').includes("youtube")) {
+            if (title.trim().length > 50 && title.trim().length < 255 && date.length != 0
+                && Date.parse(current_date) >= Date.parse(compareddate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && $(`.gallary-${id}`).find('.main-image').length != 0) {
+                $.ajax({
+                    url: '/stories/share',
+                    type: 'POST',
+                    data: { story_id: id, mission_id: mission_id, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
+                    success: function (result) {
+                        if (result.success) {
+                            $(`#edit-story-${id}`).addClass('d-none')
+                            $(`#edit-${id}`).modal('hide');
+                        }
+                    },
+                    error: function () {
+                        alert('some error accured')
+                    }
+                })
+                $('#alert').removeClass('d-block').addClass('d-none')
+                $('#alert-video-url').removeClass('d-block').addClass('d-none')
+
+            }
+            else {
+                $('#alert').removeClass('d-none').addClass('d-block')
+                $('#alert-video-url').removeClass('d-block').addClass('d-none')
+            }
+        }
+        else {
+            $('#alert').removeClass('d-block').addClass('d-none')
+            $('#alert-video-url').removeClass('d-none').addClass('d-block')
+        }
+    }
+    else {
+        if (title.trim().length > 50 && title.trim().length < 255 && date.length != 0
+            && Date.parse(current_date) >= Date.parse(compareddate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && $(`.gallary-${id}`).find('.main-image').length != 0) {
+            $.ajax({
+                url: '/stories/share',
+                type: 'POST',
+                data: { story_id: id, mission_id: mission_id, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
+                success: function (result) {
+                    if (result.success) {
+                        $(`#edit-story-${id}`).addClass('d-none')
+                        $(`#edit-${id}`).modal('hide');
+                    }
+                },
+                error: function () {
+                    alert('some error accured')
                 }
-            },
-            error: function () {
-                alert('some error accured')
-            }
-        })
-        $('#alert').removeClass('d-block').addClass('d-none')
-
-    }
-    else {
-        $('#alert').removeClass('d-none').addClass('d-block')
+            })
+            $('#alert').removeClass('d-block').addClass('d-none')
+            $('#alert-video-url').removeClass('d-block').addClass('d-none')
+        }
+        else {
+            $('#alert').removeClass('d-none').addClass('d-block')
+            $('#alert-video-url').removeClass('d-block').addClass('d-none')
+        }
     }
 
 }
 
 
-
-//search mission=================================================================================
-
-const search_missions = () => {
-    
-    var key = document.getElementById('floatingSearch').value
-    if (key.length > 3) {
-        key = key.toLowerCase();
-        $.ajax({
-            url: '/home',
-            type: 'POST',
-
-            data: { key: key },
-            success: function (result) {
-                loadmissions(result.mission.result, result.length)
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
-    }
-    else {
-        alert("search is not loading");
-    }
-}
-key.addEventListener("keydown", function (e) {
-    if (e.code === "Enter") {
-        search_missions()
-    }
-})
-
-
-
-
-
-
-
-    // pageindex
 let pageindex = 0;
 const loadstories = (stories) => {
     $('.stories').empty().append(stories)
 }
+//pagination==========================================================================================================
 
 
-//pagination=============================================================================
-
-
-
-
+//page number=============================================================================================
 const pagination = (page_index) => {
     pageindex = page_index - 1;
     $('.pagination li span').each(function (i, item) {
@@ -208,7 +236,7 @@ const pagination = (page_index) => {
     })
 }
 
-
+//previous page and next page===============================================================================
 const prev_page = () => {
     var current_page;
     $('.pagination li span').each(function (i, item) {
@@ -235,8 +263,6 @@ const prev_page = () => {
         })
     }
 }
-
-
 const next_page = (max_page) => {
     var current_page;
     $('.pagination li span').each(function (i, item) {
@@ -266,7 +292,7 @@ const next_page = (max_page) => {
 }
 
 
-
+//first and last page======================================================================================================
 const first_page = () => {
     var current_page;
     $('.pagination li span').each(function (i, item) {
@@ -293,8 +319,6 @@ const first_page = () => {
         })
     }
 }
-
-
 const last_page = (max_page) => {
     var current_page;
     $('.pagination li span').each(function (i, item) {

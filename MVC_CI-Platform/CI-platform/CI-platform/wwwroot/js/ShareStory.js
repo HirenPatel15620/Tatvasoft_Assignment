@@ -1,4 +1,6 @@
-﻿var mission
+﻿
+
+var mission
 var title
 var date
 var current_date
@@ -12,6 +14,7 @@ $(function () {
 });
 CKEDITOR.replace('editor', {
     maxLength: 40000,
+            //close_div.className = "bg-black close d-flex justify-content-center align-items-center"
 
 });
 
@@ -27,7 +30,6 @@ function loadimages() {
             const div = document.createElement('div')
             const img = document.createElement('img')
             const close_div = document.createElement('div')
-            close_div.className = "bg-black close d-flex justify-content-center align-items-center"
             const close_img = document.createElement('img')
             close_img.src = "/images/cancel.png"
             div.id = `image-${count}`
@@ -51,7 +53,7 @@ function loadimages() {
                     const div = document.createElement('div')
                     const img = document.createElement('img')
                     const close_div = document.createElement('div')
-                    close_div.className = "bg-black close d-flex justify-content-center align-items-center"
+                    //close_div.className = "bg-black close d-flex justify-content-center align-items-center"
                     const close_img = document.createElement('img')
                     close_img.src = "/images/cancel.png"
                     div.id = `image-${count}`
@@ -76,6 +78,7 @@ function loadimages() {
 
 function getdetails(type) {
     validate()
+
     if (mission != 0 && title.trim().length > 50 && title.trim().length < 255 && $('#datepicker').datepicker().val().length != 0
         && Date.parse(current_date) >= Date.parse(comparedate) && mystory.trim().length > 70 && mystory.trim().length < 40000 && $('.gallary').find('.main-image').length != 0) {
         $.ajax({

@@ -7,6 +7,9 @@
     ViewData["title"] = "volunteering mission";
     ViewData["css"] = "volunteering_mission.css";
 }
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 @*mission details with images*@
 <div class=" container mt-4">
     <div class="row">
@@ -262,7 +265,7 @@
                 </div>
                 <div class="d-flex apply-button mb-4 p-4 justify-content-center mt-1">
                     @{
-                         if (DateTime.Now > @Model.mission.StartDate)
+                        if (DateTime.Now > @Model.mission.StartDate)
                         {
                             <button class="closeButton btn" disabled>
                                 closed<img src="images/right-arrow.png" alt="">
@@ -326,8 +329,8 @@
                         }
                         else
                         {
-              
-                            <h6 >No Document Uploaded</h6>
+
+                            <h6>No Document Uploaded</h6>
 
                         }
                     }
@@ -400,7 +403,7 @@
                     </div>
                 </div>
             </div>
-           @* recent volunteers partical view*@
+            @* recent volunteers partical view*@
             <div class="volunteers  mt-4 border">
                 <partial name="recent_volunteers_partial" />
             </div>
@@ -419,18 +422,53 @@
                 <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
                     <div class="thumbnail card d-flex">
                         <div class="img-event">
+
+                            @if (DateTime.Now > @item.StartDate || @item.AvbSeat == 0)
+                            {
+                                <div class=" closeicon-badge">Close</div>
+                            }
+                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                            {
+                                <div class=" appliedicon-badge">Applied</div>
+                            }
+
                             <img class="group list-group-image w-100 h-100"
                          src='~/images/@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath' onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
                             <div class="location-img">
                                 <img class="text-light" src="~/images/pin.png" alt="">
                                 <span class="text-light">@item.City.Name</span>
                             </div>
-                            <button class="like-img border-0">
-                                <img class="text-light" src="~/images/heart.png" alt="">
+                     
+                            
+                            @{
+                                if (@item.FavoriteMissions.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                                {
+
+                                    <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                                        <img class="text-light heart-@item.MissionId" style="height:24px;" src="~/images/red-heart.png" alt="">
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                                        <img class="text-light heart-@item.MissionId" src="~/images/heart.png" alt="">
+                                    </button>
+                                }
+                            }
+
+
+                                                        <button data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;" class="stop-img border-0">
+                                <img src="~/images/add1.png" class="p-1" alt="" />
+                                <span class="p-1" style="white-space:nowrap;"> </span>
                             </button>
+
+
+
+
+                            @*
                             <button class="stop-img border-0">
                                 <img class="text-light" src="~/images/user.png" alt="">
-                            </button>
+                            </button>*@
                             <button class="mission-theme border-0">
                                 <span class="p-2">@item.Theme.Title</span>
                             </button>
@@ -520,9 +558,24 @@
                                 </div>
                             </div>
                             <div class="d-flex justify-content-center mt-4">
-                                <button class="applyButton btn">
-                                    Apply <img src="~/images/right-arrow.png" alt="">
-                                </button>
+                                @if (DateTime.Now > @item.StartDate || @item.AvbSeat == 0)
+                                {
+                                    <button class="closeButton btn" disabled>
+                                        Closed
+                                    </button>
+                                }
+                                else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                                {
+                                    <button class="alreadyapplyButton btn " disabled>
+                                        Already Applied
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="applyButton btn">
+                                        Apply Now<img src="images/right-arrow.png" alt="">
+                                    </button>
+                                }
                             </div>
                         </div>
                     </div>
@@ -560,3 +613,11 @@
 </div>
 
 <script src="~/js/Volunteer_mission.js"></script>
+
+@*toastr*@
+
+@*
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+*@

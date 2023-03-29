@@ -4,16 +4,32 @@
 @using System.Security.Claims;
 @model CI.Models.ViewModels.Mission
 @{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet" />
     foreach (var item in Model.Missions)
     {
         <div class="item card1 col-md-6 col-lg-4 col-sm-6 mt-3">
             <div class="thumbnail card d-flex">
                 <div class="img-event">
 
+
+
+                    @if (DateTime.Now > @item.StartDate || @item.AvbSeat == 0)
+                    {
+                        <div class=" closeicon-badge">Close</div>
+                    }
+                    else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                    {
+                        <div class=" appliedicon-badge">Applied</div>
+                    }
+
+
                     <img class="group list-group-image w-100 h-100"
                  src='~/images/@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath'
                  onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
                  onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
+
+
+
                     <div class="location-img">
                         <img class="text-light" src="images/pin.png" alt="">
                         <span class="text-light">@item.City.Name</span>
@@ -36,7 +52,7 @@
 
                     @{
 
-                        <button onclick="" class="stop-img border-0" data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;">
+                        <button class="stop-img border-0" data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;">
                             <img class="text-light" src="images/user.png" alt="">
                         </button>
 
@@ -202,13 +218,43 @@
             </div>
 
         </div>
+
+
+
+        @*recommand*@
+
+        //        <div class="modal fade" id="recommend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        //    <div class="modal-dialog modal-dialog-scrollable">
+        //        <div class="modal-content">
+        //            <div class="modal-header">
+        //                <h5 class="modal-title" id="staticBackdropLabel">Select Co-Workers Who You Want To Recommend This Mission</h5>
+        //            </div>
+        //            <div class="modal-body">
+        //                @{
+        //                    @foreach (var Model in @Model.All_volunteers)
+        //                    {
+        //                        <div class="d-flex mt-3 bg-white align-items-center">
+        //                            <input class="form-check-input" onclick="add_coworkers('coworker-@Model.UserId')" type="checkbox" value="" id='coworker-@Model.UserId'>
+        //                            <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
+        //                            <span class="ms-2">@Model.FirstName @Model.LastName</span>
+        //                        </div>
+        //                    }
+        //                }
+        //            </div>
+        //            <div class="modal-footer">
+        //                <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
+        //                <button type="button" onclick="recommend(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions)" class="btn applyButton" data-bs-dismiss="modal">Recommend</button>
+        //            </div>
+        //        </div>
+        //    </div>
+        //</div>
+
+
+
+
+
+
     }
-
-
-
-
-
-
 
 
 }
