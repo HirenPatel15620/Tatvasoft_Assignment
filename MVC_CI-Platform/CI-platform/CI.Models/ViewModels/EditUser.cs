@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CI.Models.ViewModels
 {
-    public class EditProfile
+    public class EditUser
     {
         [Required]
         [MinLength(3, ErrorMessage = "minimum write 4 letters")]

@@ -1,4 +1,23 @@
-﻿
+﻿toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "2000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "swing",
+    "showMethod": "slideDown",
+    "hideMethod": "slideUp"
+}
+
+
+
 
 var mission
 var title
@@ -14,7 +33,6 @@ $(function () {
 });
 CKEDITOR.replace('editor', {
     maxLength: 40000,
-            //close_div.className = "bg-black close d-flex justify-content-center align-items-center"
 
 });
 
@@ -30,6 +48,7 @@ function loadimages() {
             const div = document.createElement('div')
             const img = document.createElement('img')
             const close_div = document.createElement('div')
+            close_div.className = "bg-black close d-flex justify-content-center align-items-center"
             const close_img = document.createElement('img')
             close_img.src = "/images/cancel.png"
             div.id = `image-${count}`
@@ -53,7 +72,7 @@ function loadimages() {
                     const div = document.createElement('div')
                     const img = document.createElement('img')
                     const close_div = document.createElement('div')
-                    //close_div.className = "bg-black close d-flex justify-content-center align-items-center"
+                    close_div.className = "bg-black close d-flex justify-content-center align-items-center"
                     const close_img = document.createElement('img')
                     close_img.src = "/images/cancel.png"
                     div.id = `image-${count}`
@@ -86,7 +105,7 @@ function getdetails(type) {
             type: 'POST',
             data: { mission_id: mission, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
             success: function (result) {
-                alert("story save successful")
+                toastr.success("story save successful")
             },
             error: function () {
                 console.log("Error updating variable");

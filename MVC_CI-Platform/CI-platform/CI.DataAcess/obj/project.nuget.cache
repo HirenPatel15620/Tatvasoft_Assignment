@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "drzEG6fTtoa+diOqxIMHxAkgvsZWYhwS/GY+QQI+IiIWjOm6RmZtvuBS/yO1A2wVVC+Tk2f8ZptJtrF//6Fjcg==",
+  "dgSpecHash": "fG7MwtrjDwYuU0IDu7lmdWqJ9QQkHj+N2q6Ol8fVw7KCaRXd87aeSP+Twy66ILisfgSVwAgkDQk3tRJGpbTU1A==",
   "success": true,
   "projectFilePath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.DataAcess.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pca107\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pca107\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",
+    "C:\\Users\\pca107\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\pca107\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\pca107\\.nuget\\packages\\microsoft.aspnetcore.http.features\\5.0.17\\microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512",
     "C:\\Users\\pca107\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.1\\microsoft.bcl.asyncinterfaces.1.1.1.nupkg.sha512",

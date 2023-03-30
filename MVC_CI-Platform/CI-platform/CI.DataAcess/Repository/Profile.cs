@@ -2,10 +2,12 @@
 using CI.Models;
 using CI.Models.ViewModels;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using BCrypt.Net;
 
 namespace CI.DataAcess.Repository
 {
@@ -17,6 +19,31 @@ namespace CI.DataAcess.Repository
         {
             _db = db;
         }
+
+        public bool Change_Password(string oldpassword, string newpassword, long User_id)
+        {
+            User user = _db.Users.FirstOrDefault(c => c.UserId == User_id);
+            if (user is not null)
+            {
+                bool verify = BCrypt.Net.BCrypt.Verify(oldpassword, user.Password);
+                if (verify)
+                {
+                    user.Password = BCrypt.Net.BCrypt.HashPassword(newpassword);
+                    _db.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+        }
+
         public ProfileViewModel Get_Initial_Details(int country)
         {
             if (country == 0)
@@ -33,34 +60,43 @@ namespace CI.DataAcess.Repository
             }
         }
 
-        public bool Update_Profile(ProfileViewModel Details, long User_id)
+        public bool Update_Details(ProfileViewModel Details, long User_id)
         {
             User? user = _db.Users.FirstOrDefault(c => c.UserId == User_id);
-            if (user != null)
+            if (user is not null)
             {
                 user.FirstName = Details.user.FirstName;
                 user.LastName = Details.user.LastName;
                 user.Title = Details.user.Title;
-                user.CountryId = Details.user.CountryId;
                 user.WhyIVolunteer = Details.user.WhyIVolunteer;
-                user.CityId = Details.user.CityId;
-                user.LinkedInUrl = Details.user.LinkedInUrl;
                 user.Availablity = Details.user.Availablity;
                 user.ProfileText = Details.user.ProfileText;
+                user.LinkedInUrl = Details.user.LinkedInUrl;
                 user.Department = Details.user.Department;
+                user.CityId = Details.user.CityId;
+                user.CountryId = Details.user.CountryId;
                 user.UpdatedAt = DateTime.Now;
 
-
+                if (Details.profile is not null)
+                {
+                    using (var stream = Details.profile?.OpenReadStream())
+                    {
+                        var bytes = new byte[Details.profile.Length];
+                        stream.Read(bytes, 0, (int)Details.profile.Length);
+                        var base64string = Convert.ToBase64String(bytes);
+                        user.Avatar = "data:image/png;base64," + base64string;
+                    }
+                }
                 if (Details.Selected_Skills is not null)
                 {
-                    List<UserSkill> user_Skills = _db.UserSkills.Where(c => c.UserId == User_id).ToList();
-                    if (user_Skills.Count > 0)
+                    List<UserSkill> user_skills = _db.UserSkills.Where(c => c.UserId == User_id).ToList();
+                    if (user_skills.Count > 0)
                     {
-                        _db.RemoveRange(user_Skills);
+                        _db.RemoveRange(user_skills);
                         string[] skills = Details.Selected_Skills.Split(',');
-                        foreach (string sk in skills)
+                        foreach (var skill in skills)
                         {
-                            _db.UserSkills.Add(new UserSkill { SkillId = int.Parse(sk), UserId = User_id });
+                            _db.UserSkills.Add(new UserSkill { SkillId = int.Parse(skill), UserId = User_id });
                         }
                     }
                     else
@@ -72,7 +108,6 @@ namespace CI.DataAcess.Repository
                         }
                     }
                 }
-
                 _db.SaveChanges();
                 return true;
             }
@@ -81,5 +116,7 @@ namespace CI.DataAcess.Repository
                 return false;
             }
         }
+
     }
 }
+

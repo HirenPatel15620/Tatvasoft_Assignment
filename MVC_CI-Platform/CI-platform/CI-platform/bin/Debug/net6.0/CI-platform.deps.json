@@ -2591,6 +2591,7 @@
       },
       "CI.DataAcess/1.0.0": {
         "dependencies": {
+          "BCrypt.Net-Next": "4.0.3",
           "CI.Models": "1.0.0",
           "Microsoft.EntityFrameworkCore": "7.0.3",
           "Microsoft.EntityFrameworkCore.SqlServer": "7.0.3",

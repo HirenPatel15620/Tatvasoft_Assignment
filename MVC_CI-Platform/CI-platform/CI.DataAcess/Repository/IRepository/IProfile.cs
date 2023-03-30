@@ -9,6 +9,7 @@ namespace CI.DataAcess.Repository.IRepository
     public interface IProfile
     {
         CI.Models.ViewModels.ProfileViewModel Get_Initial_Details(int country);
-        bool Update_Profile(CI.Models.ViewModels.ProfileViewModel Details, long User_id);
+        bool Update_Details(CI.Models.ViewModels.ProfileViewModel Details, long User_id);
+        bool Change_Password(string oldpassword, string newpassword, long User_id);
     }
 }

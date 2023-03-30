@@ -348,5 +348,19 @@ namespace CI.DataAcess.Repository
                 _db.SaveChanges();
             }
         }
+
+        public Models.ViewModels.StoryViewModel GetSearchStory(long user_id, long story_id,string key)
+        {
+          stories=stories.ToList();
+            var story=(from s in stories where s.Title.ToLower().Contains(key)||s.Description.ToLower().Contains(key) select s).ToList();
+            var Storys = new Models.ViewModels.StoryViewModel
+            {
+                stories = story,
+            };
+            return Storys;
+        }
+
+
     }
+
 }

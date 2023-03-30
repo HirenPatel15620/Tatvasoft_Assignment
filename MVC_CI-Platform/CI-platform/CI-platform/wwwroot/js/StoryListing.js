@@ -67,6 +67,39 @@ function convertDate(inputFormat) {
 
 
 
+//const search_story = () => {
+   
+//    var key = document.getelementbyid('floatingsearch').value
+//    if (key.length > 3) {
+//        key = key.tolowercase();
+//        $.ajax({
+//            url: '/stories',
+//            type: 'post',
+
+//            data: { key: key },
+//            success: function (result) {
+//                story(result.stories.result, result.length)
+//            },
+//            error: function () {
+//                console.log("error updating variable");
+//            }
+//        })
+//    }
+//    else {
+//        $.ajax({
+//            url: '/home',
+//            type: 'POST',
+//            data: {  },
+//            success: function (result) {
+//                loadmissions(result.mission.result, result.length)
+//            },
+//            error: function () {
+//                console.log("Error updating variable");
+//            }
+//        }
+//        )
+//    }
+//}
 
 
 

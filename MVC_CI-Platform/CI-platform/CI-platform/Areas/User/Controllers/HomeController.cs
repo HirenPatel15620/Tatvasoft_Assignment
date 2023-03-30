@@ -143,34 +143,63 @@ namespace CI_platform.Controllers
                 return RedirectToAction("login", "userAuthentication");
             }
         }
-        
 
-        [Route("Profile")]
+        [Route("profile")]
         public IActionResult Profile()
         {
-
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
             CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0);
             return View(details);
-
-
         }
+
         [HttpPost]
-        [Route("Profile")]
-        public JsonResult Profile(int country,CI.Models.ViewModels.ProfileViewModel model)
+        [Route("profile")]
+        public IActionResult Profile(CI.Models.ViewModels.ProfileViewModel model, int country, string? oldpassword, string? newpassword)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            if (country != 0)
+            if (oldpassword is not null && newpassword is not null)
             {
-                bool success = allRepository.Profile.Update_Profile(model, user_id);
-                //return RedirectToAction("Profile");
+                bool success = allRepository.Profile.Change_Password(oldpassword, newpassword, user_id);
+                return Json(new { success });
             }
+            else
+            {
+                if (ModelState.IsValid)
+                {
+                    if (country != 0)
+                    {
+                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country);
+                        var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
+                        return Json(new { cities = cities });
+                    }
+                    else
+                    {
 
+                    }
+                    {
+                        bool success = allRepository.Profile.Update_Details(model, user_id);
+                        return RedirectToAction("Profile");
+                    }
 
-            CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country);
-            var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
-            return Json(new { cities });
-
+                }
+                else
+                {
+                    if (country != 0)
+                    {
+                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country);
+                        var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
+                        return Json(new { cities = cities });
+                    }
+                    else
+                    {
+                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0);
+                        return View(details);
+                    }
+                }
+            }
         }
+
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

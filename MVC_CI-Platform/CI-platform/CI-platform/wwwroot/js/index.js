@@ -8,7 +8,7 @@
     "onclick": null,
     "showDuration": "300",
     "hideDuration": "1000",
-    "timeOut": "1000",
+    "timeOut": "2000",
     "extendedTimeOut": "1000",
     "showEasing": "swing",
     "hideEasing": "swing",
@@ -510,12 +510,15 @@ const remove_badges = (id, badge_type) => {
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
-            loadmissions(result.mission.result,result.length)
+            loadmissions(result.mission.result, result.length)
+            toastr.success("remove badge")
+
         },
         error: function () {
             console.log("Error updating variable");
         }
     })
+
     
 }
 

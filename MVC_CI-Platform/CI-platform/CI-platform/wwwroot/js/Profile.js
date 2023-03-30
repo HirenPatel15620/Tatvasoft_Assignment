@@ -1,4 +1,26 @@
-﻿var skills = []
+﻿toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "2000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "swing",
+    "showMethod": "slideDown",
+    "hideMethod": "slideUp"
+}
+
+
+
+
+
+var skills = []
 var skills_name = []
 var first_name
 var last_name
@@ -21,6 +43,7 @@ const getcities = () => {
             data: { country: country },
             success: function (result) {
                 $('.city').empty().append(result.cities.result)
+                toastr.success("country selected")
             },
             error: function () {
                 console.log("Error updating variable");
@@ -43,6 +66,8 @@ const addskill = (skill_id, skill_name) => {
         skills.splice(skills.indexOf(id), 1)
         skills_name.splice(skills_name.indexOf(skill_name), 1)
     }
+    document.getElementById('selected_skills').value = skills
+
 }
 
 const saveskills = () => {
@@ -50,6 +75,7 @@ const saveskills = () => {
     skills_name.forEach((item, i) => {
         $('.saved-skills').append(`<span class="mt-1 ms-3">` + item + '</span>')
     })
+    toastr.success("skill selected")
 }
 
 const upload_profile_image = () => {
@@ -61,9 +87,50 @@ const upload_profile_image = () => {
     fr.readAsDataURL(image)
 }
 
-const save_details = () => { }
-const validate = () => {
-    first_name = document.getElementById('first-name').value
-    last_name = document.getElementById('last-name').value
-
+const change_password = () => {
+    var oldpassword = document.getElementById("oldpassword").value
+    var newpassword = document.getElementById("newpassword").value
+    var confirmpassword = document.getElementById("confirmpassword").value
+    if (oldpassword.length < 8) {
+        $('.wrong-oldpassword').addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $('.wrong-oldpassword').addClass('d-none').removeClass('d-block')
+    }
+    if (newpassword.length < 8) {
+        $('.newpassword').addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $('.newpassword').addClass('d-none').removeClass('d-block')
+    }
+    if (confirmpassword != newpassword) {
+        $('.confirmpassword').addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $('.confirmpassword').addClass('d-none').removeClass('d-block')
+    }
+    if (oldpassword.length >= 8 && newpassword.length >= 8 && confirmpassword.length >= 8 && confirmpassword == newpassword) {
+        $.ajax({
+            url: '/profile',
+            type: 'POST',
+            data: { oldpassword: oldpassword, newpassword: newpassword },
+            success: function (result) {
+                if (result.success) {
+                    $("#changepassword").modal('hide')
+                    document.getElementById("oldpassword").value = ""
+                    document.getElementById("newpassword").value = ""
+                    document.getElementById("confirmpassword").value = ""
+                    $('.wrong-oldpassword').addClass('d-none').removeClass('d-block')
+                    toastr.success("password change")
+                }
+                else {
+                    $('.wrong-oldpassword').addClass('d-block').removeClass('d-none')
+                    toastr.error("password error")
+                }
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
 }

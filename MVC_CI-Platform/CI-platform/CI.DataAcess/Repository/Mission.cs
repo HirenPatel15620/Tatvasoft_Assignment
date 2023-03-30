@@ -53,7 +53,7 @@ namespace CI.DataAcess.Repository
         public Models.ViewModels.Mission GetAllMission()
         {
             int total_missions = missions.Count;
-            missions = missions.Take(Range.All).ToList();
+            missions = missions.ToList();
 
             var Missions = new CI.Models.ViewModels.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions };
             return Missions;
