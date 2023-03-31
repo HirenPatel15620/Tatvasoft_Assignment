@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "U89Y/1JNvG5YBPOYEHDS7xJzIqYAJxxtuuzW0jeqQkw=",
+  "Hash": "WQ4UkG3xAGswrp81Ap8C533AZO7IfdVjIdVdL2oIFiM=",
   "Source": "CI-platform",
   "BasePath": "_content/CI-platform",
   "Mode": "Default",
@@ -151,6 +151,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\css\\volunteering_mission.css"
+    },
+    {
+      "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\css\\Volunteering_Timesheet.css",
+      "SourceId": "CI-platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\",
+      "BasePath": "_content/CI-platform",
+      "RelativePath": "css/Volunteering_Timesheet.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Volunteering_Timesheet.css"
     },
     {
       "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\documents\\Progress_Report_1_Hiren_(191310132091).docx",

@@ -27,21 +27,21 @@ namespace CI.DataAcess.Repository
 
         //get search story=============================================================================
 
-        //public Models.ViewModels.StoryViewModel GetSearchStory(string key)
-        //{
+        public Models.ViewModels.StoryViewModel GetSearchStory(string key)
+        {
 
-        //    stories = stories.ToList();
-         
-        //    var storys = (from s in stories
-        //                   where s.Title.ToLower().Contains(key) || s.Description.ToLower().Contains(key)
-        //                   select s).ToList();
-        //    var story = new Models.ViewModels.StoryViewModel
-        //    {
-        //        storys = storys,
-        //    };
+            stories = stories.ToList();
 
-        //    return story;
-        //}
+            var storys = (from s in stories
+                          where s.Title.ToLower().Contains(key) || s.Description.ToLower().Contains(key)
+                          select s).ToList();
+            var story = new Models.ViewModels.StoryViewModel
+            {
+                stories = storys,
+            };
+
+            return story;
+        }
 
 
 
@@ -229,7 +229,7 @@ namespace CI.DataAcess.Repository
                        where s.Status == "PUBLISHED" || s.UserId == user_id
                        orderby s.Status ascending
                        select s).ToList();
-            return new CI.Models.ViewModels.Mission { Stories=stories.Take(3).ToList(),total_missions=stories.Count} ;
+            return new CI.Models.ViewModels.Mission { Stories= stories.Take(3).ToList(),total_missions=stories.Count} ;
         }
 
 
@@ -349,16 +349,16 @@ namespace CI.DataAcess.Repository
             }
         }
 
-        public Models.ViewModels.StoryViewModel GetSearchStory(long user_id, long story_id,string key)
-        {
-          stories=stories.ToList();
-            var story=(from s in stories where s.Title.ToLower().Contains(key)||s.Description.ToLower().Contains(key) select s).ToList();
-            var Storys = new Models.ViewModels.StoryViewModel
-            {
-                stories = story,
-            };
-            return Storys;
-        }
+        //public Models.ViewModels.StoryViewModel GetSearchStory(string key)
+        //{
+        //  stories=stories.ToList();
+        //    var story=(from s in stories where s.Title.ToLower().Contains(key)||s.Description.ToLower().Contains(key) select s).ToList();
+        //    var Storys = new Models.ViewModels.StoryViewModel
+        //    {
+        //        stories = story,
+        //    };
+        //    return Storys;
+        //}
 
 
     }

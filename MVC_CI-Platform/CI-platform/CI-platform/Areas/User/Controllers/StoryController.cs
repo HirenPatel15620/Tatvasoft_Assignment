@@ -27,13 +27,22 @@ namespace CI_platform.Controllers
 
         [HttpPost]
         [Route("stories")]
-        public JsonResult StoryListing(int page_index)
+        public JsonResult StoryListing(int page_index, string key)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
 
             CI.Models.ViewModels.Mission stories = allRepository.Story.GetFileredStories(page_index, user_id);
             var next_stories = this.RenderViewAsync("story_partial", stories, true);
             return Json(new { next_stories });
+
+            if (key is not null)
+            {
+                CI.Models.ViewModels.StoryViewModel GetSearchStory = allRepository.Story.GetSearchStory(key);
+                var filtered_story = this.RenderViewAsync("story_partial", GetSearchStory, true);
+                return Json(new { Story = filtered_story, success = true });
+            }
+
+
         }
 
 
@@ -90,18 +99,16 @@ namespace CI_platform.Controllers
             {
                 return RedirectToAction("login", "userAuthentication");
             }
-            }
+        }
 
-            [HttpPost]
-            [Route("stories/detail/{id}")]
-            public JsonResult StoryDetail(long user_id, long story_id, List<long> co_workers)
-            {
+        [HttpPost]
+        [Route("stories/detail/{id}")]
+        public JsonResult StoryDetail(long user_id, long story_id, List<long> co_workers)
+        {
 
-                bool success = allRepository.Story.Recommend(user_id, story_id, co_workers);
-                return Json(new { success });
-            }
-
-
+            bool success = allRepository.Story.Recommend(user_id, story_id, co_workers);
+            return Json(new { success });
 
         }
     }
+}

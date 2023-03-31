@@ -1,0 +1,36 @@
+﻿.main-div {
+    width: 48%;
+}
+
+.edbutton {
+    height: 15px;
+}
+
+.applybutton {
+    border: 2px solid #F88634;
+    border-radius: 100px;
+    color: #F88634;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+@media (max-width:768px) {
+    .main-div {
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .edbutton {
+        height: 10px;
+    }
+}
+
+@media(max-width:576px) {
+    .edbutton {
+        height: 15px;
+    }
+
+    .main-div span {
+        font-size: 13px;
+    }
+}

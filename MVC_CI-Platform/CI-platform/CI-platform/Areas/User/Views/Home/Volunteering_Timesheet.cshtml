@@ -1,0 +1,87 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["title"] = "Volunteering_Timesheet";
+    ViewData["css"]="Volunteering_Timesheet.css";
+}
+
+
+<div class="container mt-5">
+    <h4>
+        Volunteering Timesheet
+    </h4>
+
+    <div class="row justify-content-between mt-4" style="height:400px;">
+        <div class="border border-1 main-div">
+            <div class="d-flex justify-content-between align-items-center mt-4">
+                <span>Volunteering Hours</span>
+                <button data-bs-toggle="modal" data-bs-target="#time" class="btn applybutton d-flex justify-content-between align-items-center" ><img src="~/images/plus.png" class="me-2" style="height:13px;"/><span>Add</span></button>
+            </div>
+            <div class="mt-4 row justify-content-between">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column">
+                <h6>Mission</h6>
+               
+                </div>
+                <div class="d-flex col-lg-8 col-md-8 col-sm-8 col-8 justify-content-between">
+                <div class="d-flex flex-column"><h6>Date</h6>
+             
+                </div>
+                <div class="d-flex flex-column"><h6>Hours</h6>
+                
+                </div>
+                <div class="d-flex flex-column"><h6>Minutes</h6>
+           
+                </div>
+                <div>
+                    <h6></h6>
+                    <div class="d-flex justify-content-between align-items-center" style="margin-top:2.3rem;">
+                        <img src="~/images/edit.png" class="edbutton" alt=""/>
+                        <img src="~/images/bin.png" class="ms-2 edbutton" alt=""  />
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <img src="~/images/edit.png" class="edbutton" alt=""/>
+                        <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="border border-1 main-div">
+             <div class="d-flex justify-content-between align-items-center mt-4">
+                <span>Volunteering Goals</span>
+                <button data-bs-toggle="modal" data-bs-target="#goal" class="btn d-flex applybutton justify-content-between align-items-center"><img src="~/images/plus.png" class="me-2" style="height:13px;"/><span>Add</span></button>
+            </div>
+            <div class="mt-4 row">
+                <div class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column">
+                <h6>Mission</h6>
+              
+                </div>
+                <div class="d-flex col-lg-7 col-md-7 col-sm-7 col-7 justify-content-between">
+                <div class="d-flex flex-column"><h6>Date</h6>
+    
+                </div>
+                <div class="d-flex flex-column"><h6>Action</h6>
+              
+                </div>
+                <div>
+                    <h6></h6>
+                    <div class="d-flex justify-content-between align-items-center" style="margin-top:2.3rem;">
+                        <img src="~/images/edit.png" class="edbutton"  alt=""/>
+                        <img src="~/images/bin.png" class="ms-2 edbutton" alt=""  />
+                    </div>
+                    <div class="d-flex justify-content-between align-items-center mt-3">
+                        <img src="~/images/edit.png" class="edbutton"  alt=""/>
+                        <img src="~/images/bin.png" class="ms-2 edbutton" alt=""  />
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </div>
+</div>

@@ -23,6 +23,7 @@ namespace CI_platform.Controllers
             {
                 CI.Models.ViewModels.Mission missions = allRepository.Mission.GetAllMission();
                 return View(missions);
+
             }
             else
             {
@@ -199,6 +200,19 @@ namespace CI_platform.Controllers
             }
         }
 
+
+[Route("Volunteering_Timesheet")]
+        public IActionResult Volunteering_Timesheet()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("login", "userAuthentication");
+            }
+        }
 
 
 

@@ -12,6 +12,7 @@ namespace CI.Models.ViewModels
         public List<User>? co_workers { get; set; }
 
         public List<CI.Models.Story>? stories { get; set; }
-        
+        public int? total_story { get; set; }
+
     }
 }

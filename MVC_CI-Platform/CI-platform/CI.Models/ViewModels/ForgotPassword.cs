@@ -11,7 +11,7 @@ namespace CI.Models.ViewModels
     {
         [Required]
         [RegularExpression(@"\A(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)\Z",
-       ErrorMessage = "Please enter correct email address")]
+        ErrorMessage = "Please enter correct email address in small word")]
         public string Email { get; set; } = null!;
     }
 }

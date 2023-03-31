@@ -54,6 +54,7 @@ namespace CI_platform.Controllers
                 else
                 {
                     bool verify = BCrypt.Net.BCrypt.Verify(login.Password, check.Password);
+                        ViewData["login"] = "mainpage";
                     if (verify is true)
                     {
                         var claims = new List<Claim>
@@ -67,6 +68,7 @@ namespace CI_platform.Controllers
 
                         await HttpContext.SignInAsync("AuthCookie", Principle);
                         return RedirectToAction("home", "home");
+
                     }
                     else
                     {
@@ -110,7 +112,7 @@ namespace CI_platform.Controllers
                         newuser.Password = secpass;
                         newuser.PhoneNumber = user.PhoneNumber;
                         newuser.CreatedAt = DateTime.Now;
-                        //newuser.CreatedAt = DateTime.Now.ToString("mm/dd/yyyy");
+                
                     }
                     db.UserAuthentication.Add(newuser);
                     db.save();
@@ -214,7 +216,7 @@ namespace CI_platform.Controllers
                     var receiverEmail = new MailAddress(user.Email, "Receiver");
                     var password = "vlpzyhibrvpaewte";
                     var sub = "Reset Your Password";
-                    var body = "Your Reset Password Token" + "\n"  + token;
+                    var body = "Your Reset Password Token : " +  token;
                     var smtp = new SmtpClient
                     {
                         Host = "smtp.gmail.com",

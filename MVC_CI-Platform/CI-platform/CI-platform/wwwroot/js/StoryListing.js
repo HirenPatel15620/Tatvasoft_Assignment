@@ -67,18 +67,18 @@ function convertDate(inputFormat) {
 
 
 
-//const search_story = () => {
-   
-//    var key = document.getelementbyid('floatingsearch').value
+//const SearchStories = () => {
+  
+//    var key = document.getElementById('SearchStory').value
 //    if (key.length > 3) {
-//        key = key.tolowercase();
+//        key = key;
 //        $.ajax({
 //            url: '/stories',
-//            type: 'post',
+//            type: 'POST',
 
 //            data: { key: key },
 //            success: function (result) {
-//                story(result.stories.result, result.length)
+//                Story(result.stories.result, result.length)
 //            },
 //            error: function () {
 //                console.log("error updating variable");
@@ -87,17 +87,16 @@ function convertDate(inputFormat) {
 //    }
 //    else {
 //        $.ajax({
-//            url: '/home',
+//            url: '/stories',
 //            type: 'POST',
 //            data: {  },
 //            success: function (result) {
-//                loadmissions(result.mission.result, result.length)
+//                Story(result.stories.result, result.length)
 //            },
 //            error: function () {
 //                console.log("Error updating variable");
 //            }
-//        }
-//        )
+//        })
 //    }
 //}
 
@@ -193,6 +192,7 @@ function poststory(type, id, mission_id) {
                         if (result.success) {
                             $(`#edit-story-${id}`).addClass('d-none')
                             $(`#edit-${id}`).modal('hide');
+                            toastr.success("story change")
                         }
                     },
                     error: function () {

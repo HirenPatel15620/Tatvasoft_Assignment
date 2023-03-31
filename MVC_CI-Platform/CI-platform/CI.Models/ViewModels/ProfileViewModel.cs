@@ -16,5 +16,6 @@ namespace CI.Models.ViewModels
         public EditUser? user { get; set; }
         public IFormFile? profile { get; set; }
         public string? Selected_Skills { get; set; }
+      
     }
 }
