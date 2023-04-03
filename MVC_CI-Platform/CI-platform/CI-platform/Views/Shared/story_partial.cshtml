@@ -10,13 +10,41 @@
         <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
             <div class="thumbnail card d-flex">
                 <div class="img-event">
-                    <img class="group  list-group-image w-100 h-100"
-                     src=@item.StoryMedia.ElementAt(0).Path id="image-@item.StoryId" alt="" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" />
+
+                  @if (item.Status=="DRAFT")
+                    {
+                        <div class=" closeicon-badge">DRAFT</div>
+                    }
+                
+
+
+
+                    @{
+                        if (item.StoryMedia.ElementAt(0).Path.Length > 500)
+                        {
+                            <img class="group  list-group-image w-100 h-100"
+                         src=@item.StoryMedia.ElementAt(0).Path id="image-@item.StoryId" alt="" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" />
+                        }
+                        else
+                        {
+                            <img class="group  list-group-image w-100 h-100"
+                         src=@item.StoryMedia.ElementAt(1).Path id="image-@item.StoryId" alt="" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" />
+                        }
+                    }
+                    @if(@item.Status=="DRAFT"){
                     <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
-                        <a href="/stories/detail/@item.StoryId" class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
-                            View Details <img class="ms-2" src="images/right-arrow.png" alt="">
+                        <a  class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;" disable>
+                            Need To Publish 
                         </a>
                     </div>
+                    }
+                    else{
+                            <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
+                        <a href="/stories/detail/@item.StoryId" class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;" >
+                        View Details<img class="ms-2" src="images/right-arrow.png" alt="">
+                        </a>
+                    </div>
+                    }
                     <button class="mission-theme border-0">
                         <span class="p-2">@item.Mission.Theme.Title</span>
                     </button>

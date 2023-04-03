@@ -30,17 +30,17 @@ namespace CI_platform.Controllers
         public JsonResult StoryListing(int page_index, string key)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            if (key is not null)
+            {
+                CI.Models.ViewModels.Mission GetSearchStory = allRepository.Story.GetSearchStory(key);
+                var filtered_story = this.RenderViewAsync("story_partial", GetSearchStory, true);
+                return Json(new { Stories = filtered_story, success = true });
+            }
+
 
             CI.Models.ViewModels.Mission stories = allRepository.Story.GetFileredStories(page_index, user_id);
             var next_stories = this.RenderViewAsync("story_partial", stories, true);
             return Json(new { next_stories });
-
-            if (key is not null)
-            {
-                CI.Models.ViewModels.StoryViewModel GetSearchStory = allRepository.Story.GetSearchStory(key);
-                var filtered_story = this.RenderViewAsync("story_partial", GetSearchStory, true);
-                return Json(new { Story = filtered_story, success = true });
-            }
 
 
         }

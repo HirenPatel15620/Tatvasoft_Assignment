@@ -17,6 +17,6 @@ namespace CI.DataAcess.Repository.IRepository
 
         bool Recommend(long user_id, long story_id, List<long> co_workers);
 
-        CI.Models.ViewModels.StoryViewModel GetSearchStory(string key);
+        CI.Models.ViewModels.Mission GetSearchStory(string key);
     }
 }

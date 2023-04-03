@@ -1,4 +1,20 @@
-﻿
+﻿toastr.options = {
+    "closeButton": true,
+    "debug": false,
+    "newestOnTop": false,
+    "progressBar": true,
+    "positionClass": "toast-top-right",
+    "preventDuplicates": false,
+    "onclick": null,
+    "showDuration": "300",
+    "hideDuration": "1000",
+    "timeOut": "3000",
+    "extendedTimeOut": "1000",
+    "showEasing": "swing",
+    "hideEasing": "swing",
+    "showMethod": "slideDown",
+    "hideMethod": "slideUp"
+}
 
 //mouse over & out effect=======================================================
 
@@ -67,38 +83,39 @@ function convertDate(inputFormat) {
 
 
 
-//const SearchStories = () => {
+const SearchStories = () => {
   
-//    var key = document.getElementById('SearchStory').value
-//    if (key.length > 3) {
-//        key = key;
-//        $.ajax({
-//            url: '/stories',
-//            type: 'POST',
+    var key = document.getElementById('SearchStory').value
+    if (key.length > 3) {
+        console.log("das")
+        key = key;
+        $.ajax({
+            url: '/stories',
+            type: 'POST',
 
-//            data: { key: key },
-//            success: function (result) {
-//                Story(result.stories.result, result.length)
-//            },
-//            error: function () {
-//                console.log("error updating variable");
-//            }
-//        })
-//    }
-//    else {
-//        $.ajax({
-//            url: '/stories',
-//            type: 'POST',
-//            data: {  },
-//            success: function (result) {
-//                Story(result.stories.result, result.length)
-//            },
-//            error: function () {
-//                console.log("Error updating variable");
-//            }
-//        })
-//    }
-//}
+            data: { key: key },
+            success: function (result) {
+                $(".stories").empty().append(result.stories.result)
+            },
+            error: function () {
+                console.log("error updating variable");
+            }
+        })
+    }
+    else {
+        $.ajax({
+            url: '/stories',
+            type: 'POST',
+            data: {  },
+            success: function (result) {
+                Stories(result.stories.result, result.length)
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
 
 
 
@@ -222,8 +239,13 @@ function poststory(type, id, mission_id) {
                 data: { story_id: id, mission_id: mission_id, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
                 success: function (result) {
                     if (result.success) {
-                        $(`#edit-story-${id}`).addClass('d-none')
-                        $(`#edit-${id}`).modal('hide');
+                        toastr.success("story published succesfully")
+                        toastr.info("shortly, you re-direct to the story page")
+                        setTimeout(function () {
+                            location.reload();
+                        }, 4000);
+                        //$(`#edit-story-${id}`).addClass('d-none')
+                        //$(`#edit-${id}`).modal('hide');
                     }
                 },
                 error: function () {
