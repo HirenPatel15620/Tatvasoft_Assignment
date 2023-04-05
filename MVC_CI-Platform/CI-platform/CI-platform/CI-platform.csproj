@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CI.DataAcess\CI.DataAcess.csproj" />
+    <ProjectReference Include="..\CI.DataAcess\CI.Repository.csproj" />
     <ProjectReference Include="..\CI.Models\CI.Models.csproj" />
   </ItemGroup>
 

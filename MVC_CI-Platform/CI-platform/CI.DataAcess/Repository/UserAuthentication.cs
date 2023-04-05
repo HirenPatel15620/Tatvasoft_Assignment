@@ -1,4 +1,4 @@
-﻿using CI.DataAcess.Repository.IRepository;
+﻿using CI.Repository.Repository.IRepository;
 using CI.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CI.DataAcess.Repository
+namespace CI.Repository.Repository
 {
     public class UserAuthentication : Repository<User>, IUserAuthentication
     {

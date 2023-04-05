@@ -280,9 +280,7 @@ C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\ne
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\CI.DataAcess.dll
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\CI.Models.dll
-C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\CI.DataAcess.pdb
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\CI.Models.pdb
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\obj\Debug\net6.0\CI-platform.csproj.AssemblyReference.cache
 C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\obj\Debug\net6.0\CI-platform.GeneratedMSBuildEditorConfig.editorconfig
@@ -608,3 +606,5 @@ C:\Users\pca107\Desktop\main backup\CI-platform\CI-platform\obj\Debug\net6.0\sco
 C:\Users\pca107\Desktop\main backup\CI-platform\CI-platform\obj\Debug\net6.0\scopedcss\projectbundle\CI-platform.bundle.scp.css
 C:\Users\pca107\Desktop\main backup\CI-platform\CI-platform\obj\Debug\net6.0\CI-platform.csproj.CopyComplete
 C:\Users\pca107\Desktop\main backup\CI-platform\CI-platform\obj\Debug\net6.0\CI-platform.genruntimeconfig.cache
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\bin\Debug\net6.0\CI.Repository.pdb

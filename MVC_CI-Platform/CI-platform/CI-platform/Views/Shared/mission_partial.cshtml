@@ -15,7 +15,7 @@
 
                     @if (DateTime.Now > @item.StartDate || @item.AvbSeat == 0)
                     {
-                        <div class=" closeicon-badge">Close</div>
+                        <div class=" closeicon-badge">Closed</div>
                     }
                     else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
                     {

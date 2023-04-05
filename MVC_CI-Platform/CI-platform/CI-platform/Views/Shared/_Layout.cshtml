@@ -12,8 +12,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    toastr.options = {
+    "closeButton": true,
+    "debug": false,"newestOnTop": false,"progressBar": true,"positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "300","hideDuration": "1000","timeOut": "2000",
+    "extendedTimeOut": "1000","showEasing": "swing","hideEasing": "swing","showMethod": "slideDown","hideMethod": "slideUp"
+}
+
+</script>
+    
 </head>
 <body onload="setpages();">
+    @{
+            if (@ViewData["home"] == "true")
+        {
+            <script>
+                toastr.success("Authentication Successfull")
+            </script>
+        }
+        }
 
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
         <div class="offcanvas-header">
@@ -26,11 +43,14 @@
         </div>
     </div>
     <header>
+
+        
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom">
             @* <img src="~/images/logo.png" class="logo" alt="not found" />*@
             <div class="container w-100 d-flex justify-content-between header">
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
                 <div class="d-flex pages">
+                    <a class="nav-link text-muted" href="/Home">Home</a>
                     @*<span class="nav-link text-muted explore" asp-area="">Explore <img src="~/images/drop-down.png" alt="not load" /></span>*@
                     <a class="nav-link text-muted" href="/stories">Stories</a>
                     @*<a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">News</a>*@
@@ -58,11 +78,11 @@
                         </div>
                         </div>
                         </div>*@
-                    <div class="dropdown d-flex align-items-center">
+                    <div class="dropdown d-flex align-items-center"style="right: 36px;">
                         <img src="~/images/user-img.png" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                         <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
                         <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
                             <a class="dropdown-item" href="/profile">Profile</a>
                             <a class="dropdown-item" href="/volunteering_timesheet">Volunteering Timesheet</a>
                             <a class="dropdown-item" href="/logout">LogOut</a>

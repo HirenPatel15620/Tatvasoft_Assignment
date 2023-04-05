@@ -1,4 +1,4 @@
-﻿using CI.DataAcess.Repository.IRepository;
+﻿using CI.Repository.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using CI.Models;
 using System.Net.Mail;
 using System.Net;
 
-namespace CI.DataAcess.Repository
+namespace CI.Repository.Repository
 {
     public class Story:Repository<CI.Models.Story>,IStory
     {
@@ -53,7 +53,7 @@ namespace CI.DataAcess.Repository
         public bool AddStory(long user_id, long id, long mission_id, string title, string published_date, string mystory, List<string> media, string type)
         {
             CI.Models.Story story = new CI.Models.Story();
-            if (type == "PUBLISHED")
+            if (type == "PENDING")
             {
                 //if story is save in draft====================================================
 
@@ -63,7 +63,7 @@ namespace CI.DataAcess.Repository
                     edit_story.Title = title;
                     edit_story.PublishedAt = DateTime.Parse(published_date);
                     edit_story.Description = mystory;
-                    edit_story.Status = "PUBLISHED";
+                    edit_story.Status = "PENDING";
                     List<StoryMedia> storymedias = (from m in medias
                                                     where m.StoryId == id
                                                     select m).ToList();
@@ -111,7 +111,7 @@ namespace CI.DataAcess.Repository
                     story.Title = title;
                     story.Description = mystory;
                     story.PublishedAt = DateTime.Parse(published_date);
-                    story.Status = "PUBLISHED";
+                    story.Status = "PENDING";
                     _db.Stories.Add(story);
                     _db.SaveChanges();
                     long story_id = story.StoryId;

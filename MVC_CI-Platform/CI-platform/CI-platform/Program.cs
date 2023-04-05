@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using CI.DataAcess.Repository.IRepository;
-using CI.DataAcess.Repository;
+using CI.Repository.Repository.IRepository;
+using CI.Repository.Repository;
 using CI.Models;
 
 var builder = WebApplication.CreateBuilder(args);

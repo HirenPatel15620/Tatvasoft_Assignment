@@ -108,7 +108,7 @@
 
 
 @{
-    foreach (var item in Model.Stories.Where(c => c.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) && c.Status == "DRAFT").ToList())
+    foreach (var item in Model.Stories.Where(c => c.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) && (c.Status == "DRAFT" || c.Status=="PENDING")).ToList())
     {
         <div class="modal fade" id="edit-@item.StoryId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-scrollable">
@@ -171,7 +171,7 @@
                         <button type="button" class="btn applyButton prev" onclick="next()">Next</button>
                         <div class="d-none next">
                             <button type="button" class="btn applyButton" onclick="prev()">Prev</button>
-                            <button type="button" class="btn applyButton" onclick="poststory('PUBLISHED',@item.StoryId,@item.MissionId)"  >Submit</button>
+                            <button type="button" class="btn applyButton" onclick="poststory('PENDING',@item.StoryId,@item.MissionId)"  >Submit</button>
                         </div>
                     </div>
                 </div>

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CI.DataAcess.Repository.IRepository
+namespace CI.Repository.Repository.IRepository
 {
     public interface IAllRepository
     {
@@ -15,5 +15,7 @@ namespace CI.DataAcess.Repository.IRepository
         public IStory Story { get; }
 
         public IProfile Profile { get; }
+
+        public ISheet Sheet { get; }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using CI.Models;
 using Microsoft.AspNetCore.Mvc;
-using CI.DataAcess.Repository.IRepository;
+using CI.Repository.Repository.IRepository;
 using CI.Models.ViewModels;
 using System.Net.Mail;
 using System.Net;

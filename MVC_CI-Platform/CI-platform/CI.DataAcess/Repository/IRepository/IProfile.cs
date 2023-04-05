@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CI.DataAcess.Repository.IRepository
+namespace CI.Repository.Repository.IRepository
 {
     public interface IProfile
     {

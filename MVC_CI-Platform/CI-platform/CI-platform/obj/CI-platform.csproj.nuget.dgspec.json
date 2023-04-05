@@ -33,8 +33,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.DataAcess.csproj": {
-                "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.DataAcess.csproj"
+              "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj": {
+                "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj"
               },
               "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj": {
                 "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj"
@@ -112,12 +112,12 @@
         }
       }
     },
-    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.DataAcess.csproj": {
+    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.DataAcess.csproj",
-        "projectName": "CI.DataAcess",
-        "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.DataAcess.csproj",
+        "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj",
+        "projectName": "CI.Repository",
+        "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj",
         "packagesPath": "C:\\Users\\pca107\\.nuget\\packages\\",
         "outputPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\obj\\",
         "projectStyle": "PackageReference",

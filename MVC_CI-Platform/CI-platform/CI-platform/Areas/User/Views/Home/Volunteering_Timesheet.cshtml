@@ -1,87 +1,257 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model CI.Models.ViewModels.VMTimeSheet
 @{
     ViewData["title"] = "Volunteering_Timesheet";
-    ViewData["css"]="Volunteering_Timesheet.css";
+    ViewData["css"] = "Volunteering_Timesheet.css";
 }
 
 
-<div class="container mt-5">
-    <h4>
-        Volunteering Timesheet
-    </h4>
+<div class="modal fade" id="timesheetpartial" tabindex="-1" aria-bs-labelledby="exampleModalLabel" aria-bs-hidden="true">
 
-    <div class="row justify-content-between mt-4" style="height:400px;">
-        <div class="border border-1 main-div">
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <span>Volunteering Hours</span>
-                <button data-bs-toggle="modal" data-bs-target="#time" class="btn applybutton d-flex justify-content-between align-items-center" ><img src="~/images/plus.png" class="me-2" style="height:13px;"/><span>Add</span></button>
-            </div>
-            <div class="mt-4 row justify-content-between">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column">
-                <h6>Mission</h6>
-               
-                </div>
-                <div class="d-flex col-lg-8 col-md-8 col-sm-8 col-8 justify-content-between">
-                <div class="d-flex flex-column"><h6>Date</h6>
-             
-                </div>
-                <div class="d-flex flex-column"><h6>Hours</h6>
-                
-                </div>
-                <div class="d-flex flex-column"><h6>Minutes</h6>
-           
-                </div>
-                <div>
-                    <h6></h6>
-                    <div class="d-flex justify-content-between align-items-center" style="margin-top:2.3rem;">
-                        <img src="~/images/edit.png" class="edbutton" alt=""/>
-                        <img src="~/images/bin.png" class="ms-2 edbutton" alt=""  />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <img src="~/images/edit.png" class="edbutton" alt=""/>
-                        <img src="~/images/bin.png" class="ms-2 edbutton" alt="" />
-                    </div>
-                </div>
-                </div>
-            </div>
-
-
-        </div>
-        <div class="border border-1 main-div">
-             <div class="d-flex justify-content-between align-items-center mt-4">
-                <span>Volunteering Goals</span>
-                <button data-bs-toggle="modal" data-bs-target="#goal" class="btn d-flex applybutton justify-content-between align-items-center"><img src="~/images/plus.png" class="me-2" style="height:13px;"/><span>Add</span></button>
-            </div>
-            <div class="mt-4 row">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-4 d-flex flex-column">
-                <h6>Mission</h6>
-              
-                </div>
-                <div class="d-flex col-lg-7 col-md-7 col-sm-7 col-7 justify-content-between">
-                <div class="d-flex flex-column"><h6>Date</h6>
     
-                </div>
-                <div class="d-flex flex-column"><h6>Action</h6>
-              
-                </div>
-                <div>
-                    <h6></h6>
-                    <div class="d-flex justify-content-between align-items-center" style="margin-top:2.3rem;">
-                        <img src="~/images/edit.png" class="edbutton"  alt=""/>
-                        <img src="~/images/bin.png" class="ms-2 edbutton" alt=""  />
-                    </div>
-                    <div class="d-flex justify-content-between align-items-center mt-3">
-                        <img src="~/images/edit.png" class="edbutton"  alt=""/>
-                        <img src="~/images/bin.png" class="ms-2 edbutton" alt=""  />
-                    </div>
-                </div>
+</div>
+<div class="mainbody mt-5">
+    <div class=" mt-md-5 mt-0">
+        <span class="fs-1">Volunteering Timesheet</span>
+    </div>
+    <div class="row">
+        <div class="volunteer_hour col-12 col-md-6">
+            <div class="card-header">
+                <span class="fw-bold fs-4">Volunteering Hour</span>
+                <div class="btn">
+                    <button class="Add_btn" onclick="CreateorEdit(@Model.TimesheetId, 0)">
+                        <span>+ Add</span>
+                    </button>
                 </div>
             </div>
-
-
-
+            <div class="data_list">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th>
+                                Mission
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Hours
+                            </th>
+                            <th>
+                                Minute
+                            </th>
+                            <th> </th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.timesheets)
+                        {
+                            if (i.Mission.MissionType == "TIME")
+                            {
+                                <tr>
+                                    <td>
+                                        @i.Mission.Title
+                                    </td>
+                                    <td>
+                                        @i.DateVolunteered.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td>
+                                        @i.Time.Value.Hours
+                                    </td>
+                                    <td>
+                                        @i.Time.Value.Minutes
+                                    </td>
+                                    <td>
+                                        <button class="remove_style" onclick="CreateorEdit(@i.TimesheetId, 0)"><img src="/images/edit.png" /></button>
+                                    </td>
+                                    <td>
+                                        <button class="remove_style" onclick="DeleteRecord(@i.TimesheetId)"><img src="~/images/bin.png" /></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="volunteer_goal col-12 col-md-6">
+            <div class="card-header">
+                <span class="fw-bold fs-4">Volunteering Goal</span>
+                <div class="btn">
+                    <button class="Add_btn" onclick="CreateorEdit(@Model.TimesheetId, 1)">
+                        <span>+ Add</span>
+                    </button>
+                </div>
+            </div>
+            <div class="data_list">
+                <table class="table table-borderless">
+                    <thead>
+                        <tr>
+                            <th>
+                                Mission
+                            </th>
+                            <th>
+                                Date
+                            </th>
+                            <th>
+                                Action
+                            </th>
+                            <th> </th>
+                            <th> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var i in Model.timesheets)
+                        {
+                            if (i.Mission.MissionType == "GOAL")
+                            {
+                                <tr>
+                                    <td>
+                                        @i.Mission.Title
+                                    </td>
+                                    <td>
+                                        @i.DateVolunteered.ToString("dd/MM/yyyy")
+                                    </td>
+                                    <td>
+                                        @i.Action
+                                    </td>
+                                    <td>
+                                        <button class="remove_style" onclick="CreateorEdit(@i.TimesheetId, 1)"><img src="/images/edit.png" /></button>
+                                    </td>
+                                    <td>
+                                        <button class="remove_style" onclick="DeleteRecord(@i.TimesheetId)"><img src="/images/bin.png" /></button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+<div class="modal fade" id="deleterec" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-action="DeleteTimesheetRecord" asp-controller="Missions">
+                <input name="timesheetId" id="timesheetid" type="hidden" value="" />
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-danger rounded-pill" type="submit">Delete</button>
+                    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="~/js/Volunteering_Timesheet.js"></script>
+
+@*modal of edit and add*@
+
+@*<div class="modal fade" id="addtime" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Please input below Volunteering Hour</h1>
+                    <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="row">
+                            <div class=" col-12">
+                                <label for="select-mission">select mission</label>
+                                <select asp-for="@Model.timesheet.MissionId" class="form-select ">
+                                    @foreach (var j in Model.missionApplicatoinsByTime)
+                                    {
+                                        <option value="@j.MissionId">@j.Mission.Title</option>
+                                    }
+                                </select>
+                            </div>
+                            <input asp-for="@Model.timesheet.TimesheetId" hidden />
+                            <div class="col-12">
+                                <label asp-for="@Model.timesheet.DateVolunteered">Date Volunteered</label>
+                                <input asp-for="@Model.timesheet.DateVolunteered" type="date" id="name" class="form-control" placeholder="Select Date" required>
+                                <span asp-validation-for="@Model.timesheet.DateVolunteered" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label asp-for="hour">Hours</label>
+                                <input asp-for="hour" type="number" id="name" class="form-control" placeholder="Enter Spent Minutes" required>
+                                <span asp-validation-for="hour" class="text-danger"></span>
+                            </div>
+                            <div class="col-12 col-sm-6">
+                                <label asp-for="minute">Minutes</label>
+                                <input asp-for="minute" type="number" id="name" class="form-control" placeholder="Enter Spent Hours" max="59" min="0" required>
+                                <span asp-validation-for="minute" class="text-danger"></span>
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="@Model.timesheet.Notes">Message</label>
+                                <textarea class="form-control" asp-for="@Model.timesheet.Notes" rows="6" placeholder="Enter Your Message"></textarea>
+                                <span asp-validation-for="@Model.timesheet.Notes" class="text-danger"></span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                                <div class="applybtn"><button class="btn" type="submit">Submit</button></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="addgoal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Please input below Volunteering Goal</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        <div class="row">
+                            <div class=" col-12">
+                                <label for="select-mission">select mission</label>
+                                <select asp-for="@Model.timesheet.MissionId" class="form-select ">
+                                    @foreach (var j in Model.missionApplicatoinsByGoal)
+                                    {
+                                        <option value="@j.MissionId">@j.Mission.Title</option>
+                                    }
+                                </select>
+                            </div>
+                            <input asp-for="@Model.timesheet.TimesheetId" hidden />
+                            <div class="col-12">
+                                <label asp-for="@Model.timesheet.DateVolunteered">Date Volunteered</label>
+                                <input asp-for="@Model.timesheet.DateVolunteered" type="date" id="name" class="form-control" placeholder="Select Date" required>
+                                <span asp-validation-for="@Model.timesheet.DateVolunteered" class="text-danger"></span>
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="@Model.timesheet.Action">Action</label>
+                                <input asp-for="@Model.timesheet.Action" type="number" id="name" class="form-control" placeholder="Enter Action" required>
+                                <span asp-validation-for="@Model.timesheet.Action" class="text-danger"></span>
+                            </div>
+                            <div class="col-12">
+                                <label asp-for="@Model.timesheet.Notes">Message</label>
+                                <textarea class="form-control" asp-for="@Model.timesheet.Notes" rows="6" placeholder="Enter Your Message"></textarea>
+                                <span asp-validation-for="@Model.timesheet.Notes" class="text-danger"></span>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                                <div class="applybtn"><button class="btn" type="submit">Submit</button></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+

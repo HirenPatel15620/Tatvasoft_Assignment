@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using CI.DataAcess.Repository.IRepository;
+using CI.Repository.Repository.IRepository;
 using CI.Models;
 
-namespace CI.DataAcess.Repository
+namespace CI.Repository.Repository
 {
     public class ResetPassword:Repository<CI.Models.PasswordReset>,IResetPassword
     {

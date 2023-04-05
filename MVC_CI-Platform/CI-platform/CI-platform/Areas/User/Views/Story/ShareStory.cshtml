@@ -1,4 +1,5 @@
-﻿@*
+﻿@using System.Security.Claims
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -12,6 +13,7 @@
 
 
 @model List<Mission>
+
 <div class="container mt-5">
     <h1> Share Your Story</h1>
     <div class="story-details row justify-content-between w-100 mt-4">
@@ -20,10 +22,16 @@
             <select class="form-select me-3" aria-label="Select Mission">
                 <option value=0 disabled selected>Select Your Mission</option>
                 @{
-
                     foreach (var item in Model)
                     {
-                        <option value=@item.MissionId id=@item.MissionId>@item.Title.ToString().Substring(0,50)...</option>
+                        @if (@item.Stories.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                        {
+                            <option value=@item.MissionId id=@item.MissionId disabled>@item.Title.ToString().Substring(0,35)...(Draft available)</option>
+                        }
+                        else
+                        {
+                            <option value=@item.MissionId id=@item.MissionId >@item.Title.ToString().Substring(0,50)...</option>
+                        }
                     }
                 }
             </select>
@@ -74,7 +82,7 @@
         </div>
         @*<a  href="/stories/preview" target="_blank" class="applyButton btn">Preview</a>*@
         <div>
-            <button onclick="getdetails()" class="applyButton btn">Save</button> <button onclick="getdetails('PUBLISHED')" class="applyButton btn">Submit</button>
+            <button onclick="getdetails()" class="applyButton btn">Save</button> <button onclick="getdetails('PENDING')" class="applyButton btn">Submit</button>
          
         </div>
     </div>

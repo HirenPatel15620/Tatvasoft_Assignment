@@ -1,4 +1,4 @@
-﻿using CI.DataAcess.Repository.IRepository;
+﻿using CI.Repository.Repository.IRepository;
 using CI.Models;
 using CI.Models.ViewModels;
 using System;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BCrypt.Net;
 
-namespace CI.DataAcess.Repository
+namespace CI.Repository.Repository
 {
     public class Profile : IProfile
     {

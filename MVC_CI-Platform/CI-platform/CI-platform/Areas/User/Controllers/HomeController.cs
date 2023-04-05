@@ -1,10 +1,11 @@
 ﻿using CI.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using CI.DataAcess;
-using CI.DataAcess.Repository.IRepository;
+using CI.Repository;
+using CI.Repository.Repository.IRepository;
 using CI_platform.Areas.User.Controllers;
 using System.Security.Claims;
+using CI.Models.ViewModels;
 
 namespace CI_platform.Controllers
 {
@@ -21,6 +22,8 @@ namespace CI_platform.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
+                //return RedirectToAction("Profile", "home");
+                ViewData["home"] = "true";
                 CI.Models.ViewModels.Mission missions = allRepository.Mission.GetAllMission();
                 return View(missions);
 
@@ -201,19 +204,102 @@ namespace CI_platform.Controllers
         }
 
 
-[Route("Volunteering_Timesheet")]
+        [Route("Volunteering_Timesheet")]
         public IActionResult Volunteering_Timesheet()
         {
-            if (User.Identity.IsAuthenticated)
+            var identity = User.Identity as ClaimsIdentity;
+            var userid = identity?.FindFirst(ClaimTypes.Sid)?.Value;
+            VMTimeSheet vMVolunteering = new VMTimeSheet();
+            vMVolunteering.timesheets = allRepository.Sheet.GetAllTimeSheetRecordsByUser(userid);
+            vMVolunteering.missionApplicatoinsByTime = allRepository.Sheet.GetTimetypeMissionsByUserId(userid);
+            vMVolunteering.missionApplicatoinsByGoal = allRepository.Sheet.GetGoaltypeMissionsByUserId(userid);
+            return View(vMVolunteering);
+        }
+
+        [HttpPost]
+        public IActionResult Volunteering_Timesheet(VMTimeSheet vMVolunteering)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userid = identity?.FindFirst(ClaimTypes.Sid)?.Value;
+            var missiontype = allRepository.Sheet.GetMissionTypeById(Convert.ToInt32(vMVolunteering.timesheet.MissionId));
+            if (vMVolunteering.timesheet.TimesheetId == 0)
             {
-                return View();
+                Timesheet timesheet = new Timesheet();
+                timesheet.UserId = Convert.ToInt32(userid);
+                timesheet.MissionId = vMVolunteering.timesheet.MissionId;
+                timesheet.DateVolunteered = vMVolunteering.timesheet.DateVolunteered;
+                timesheet.Notes = vMVolunteering.timesheet.Notes;
+                if (missiontype != "GOAL")
+                {
+                    var hour = vMVolunteering.hour;
+                    var minute = vMVolunteering.minute;
+                    timesheet.Time = TimeSpan.Parse(hour + ":" + minute);
+                }
+                else
+                {
+                    timesheet.Action = vMVolunteering.timesheet.Action;
+                }
+                allRepository.Sheet.AddTimeSheetRecords(timesheet);
             }
             else
             {
-                return RedirectToAction("login", "userAuthentication");
+                var record = allRepository.Sheet.GetTimesheetrecordByTimesheetId(Convert.ToInt32(vMVolunteering.timesheet.TimesheetId));
+                record.UserId = Convert.ToInt32(userid);
+                record.MissionId = vMVolunteering.timesheet.MissionId;
+                record.DateVolunteered = vMVolunteering.timesheet.DateVolunteered;
+                record.Notes = vMVolunteering.timesheet.Notes;
+                if (missiontype != "GOAL")
+                {
+                    var hour = vMVolunteering.hour;
+                    var minute = vMVolunteering.minute;
+                    record.Time = TimeSpan.Parse(hour + ":" + minute);
+                }
+                else
+                {
+                    record.Action = vMVolunteering.timesheet.Action;
+                }
+                allRepository.Sheet.UpdateTimeSheetRecord(record);
             }
+            vMVolunteering.timesheets = allRepository.Sheet.GetAllTimeSheetRecordsByUser(userid);
+            vMVolunteering.missionApplicatoinsByTime = allRepository.Sheet.GetTimetypeMissionsByUserId(userid);
+            vMVolunteering.missionApplicatoinsByGoal = allRepository.Sheet.GetGoaltypeMissionsByUserId(userid);
+            return View(vMVolunteering);
         }
 
+        public IActionResult GetEditData(int id)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            var userid = identity?.FindFirst(ClaimTypes.Sid)?.Value;
+            VMTimeSheet timesheet = new VMTimeSheet();
+            if (id == 0)
+            {
+                timesheet.timesheet = null;
+            }
+            else
+            {
+                timesheet.timesheet = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id);
+                var missiontype = allRepository.Sheet.GetMissionTypeById(id);
+                if (missiontype == "TIME")
+                {
+                    timesheet.hour = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id).Time.Value.Hours;
+                    timesheet.minute = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id).Time.Value.Minutes;
+                }
+                else
+                {
+                    timesheet.timesheet.Action = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id).Action;
+                }
+            }
+            timesheet.missionApplicatoinsByTime = allRepository.Sheet.GetTimetypeMissionsByUserId(userid);
+            timesheet.missionApplicatoinsByGoal = allRepository.Sheet.GetGoaltypeMissionsByUserId(userid);
+            return PartialView("TimesheetModal.cshtml", timesheet);
+        }
+
+        public IActionResult DeleteTimesheetRecord(int timesheetId)
+        {
+            var record = allRepository.Sheet.GetTimesheetrecordByTimesheetId(timesheetId);
+            allRepository.Sheet.DeleteTimesheetRecord(record);
+            return RedirectToAction("Volunteering_Timesheet", "Home");
+        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

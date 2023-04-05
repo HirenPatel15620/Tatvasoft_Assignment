@@ -1,9 +1,9 @@
-﻿using CI.DataAcess.Repository.IRepository;
+﻿using CI.Repository.Repository.IRepository;
 using CI.Models;
 using System.Net;
 using System.Net.Mail;
 
-namespace CI.DataAcess.Repository
+namespace CI.Repository.Repository
 {
     public class Mission : Repository<CI.Models.Mission>, IMission
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using CI.DataAcess.Repository.IRepository;
+using CI.Repository.Repository.IRepository;
 using System.Security.Claims;
 using CI.Models;
 using CI_platform.Areas.User.Controllers;
@@ -42,7 +42,6 @@ namespace CI_platform.Controllers
             var next_stories = this.RenderViewAsync("story_partial", stories, true);
             return Json(new { next_stories });
 
-
         }
 
 
@@ -59,7 +58,7 @@ namespace CI_platform.Controllers
         public JsonResult ShareStory(long story_id, long mission_id, string title, string published_date, string mystory, List<string> media, string type)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            if (type == "PUBLISHED")
+            if (type == "PENDING")
             {
                 bool success = allRepository.Story.AddStory(user_id, story_id, mission_id, title, published_date, mystory, media, type);
                 return Json(new { success });

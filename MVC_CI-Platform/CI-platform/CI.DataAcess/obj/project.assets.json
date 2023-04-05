@@ -3430,9 +3430,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.DataAcess.csproj",
-      "projectName": "CI.DataAcess",
-      "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.DataAcess.csproj",
+      "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj",
+      "projectName": "CI.Repository",
+      "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj",
       "packagesPath": "C:\\Users\\pca107\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\obj\\",
       "projectStyle": "PackageReference",

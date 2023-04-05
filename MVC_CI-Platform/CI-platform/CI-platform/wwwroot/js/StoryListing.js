@@ -1,20 +1,9 @@
 ﻿toastr.options = {
     "closeButton": true,
-    "debug": false,
-    "newestOnTop": false,
-    "progressBar": true,
-    "positionClass": "toast-top-right",
-    "preventDuplicates": false,
-    "onclick": null,
-    "showDuration": "300",
-    "hideDuration": "1000",
-    "timeOut": "3000",
-    "extendedTimeOut": "1000",
-    "showEasing": "swing",
-    "hideEasing": "swing",
-    "showMethod": "slideDown",
-    "hideMethod": "slideUp"
+    "debug": false, "newestOnTop": false, "progressBar": true, "positionClass": "toast-top-right", "preventDuplicates": false, "onclick": null, "showDuration": "300", "hideDuration": "500",
+    "timeOut": "4000", "extendedTimeOut": "1000", "showEasing": "swing", "hideEasing": "swing", "showMethod": "slideDown", "hideMethod": "slideUp"
 }
+
 
 //mouse over & out effect=======================================================
 
@@ -239,8 +228,11 @@ function poststory(type, id, mission_id) {
                 data: { story_id: id, mission_id: mission_id, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
                 success: function (result) {
                     if (result.success) {
-                        toastr.success("story published succesfully")
-                        toastr.info("shortly, you re-direct to the story page")
+                       
+                        if (type == "PENDING") {
+                            toastr.success("story approve request send")
+                        }
+                        toastr.info("shortly, you are re-direct to the story page")
                         setTimeout(function () {
                             location.reload();
                         }, 4000);

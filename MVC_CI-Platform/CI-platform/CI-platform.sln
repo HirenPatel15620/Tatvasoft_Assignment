@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI-platform", "CI-platform\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI.Models", "CI.Models\CI.Models.csproj", "{7EE3E4DE-A599-4A94-9EEC-F22F10E312C9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI.DataAcess", "CI.DataAcess\CI.DataAcess.csproj", "{17746600-1C09-487B-94A6-1841DC9897F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CI.Repository", "CI.DataAcess\CI.Repository.csproj", "{17746600-1C09-487B-94A6-1841DC9897F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
