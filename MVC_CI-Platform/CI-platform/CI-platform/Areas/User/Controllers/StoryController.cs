@@ -42,6 +42,7 @@ namespace CI_platform.Controllers
             var next_stories = this.RenderViewAsync("story_partial", stories, true);
             return Json(new { next_stories });
 
+
         }
 
 

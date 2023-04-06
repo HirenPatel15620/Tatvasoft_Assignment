@@ -88,10 +88,10 @@ namespace CI.Repository.Repository
             return true;
         }
 
-        //public List<City> GetCityByCountryName(string CountryName)
-        //{
-        //    return _db.Cities.Where(x => x.Country.Name.Contains(CountryName)).ToList();
-        //}
+        public List<City> GetCityByCountryName(string CountryName)
+        {
+            return _db.Cities.Where(x => x.Country.Name.Contains(CountryName)).ToList();
+        }
 
         //public List<CmsPage> GetALLPolicies()
         //{

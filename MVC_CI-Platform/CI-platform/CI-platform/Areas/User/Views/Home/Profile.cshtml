@@ -24,8 +24,7 @@
                     <div class="row mt-2">
                         <div class="col-lg-6 col-md-6 mt-2">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" id='first-name' asp-for=user.FirstName placeholder="Enter Your Name"  name="FirstName" value="@if(Model.user != null) {
-                            @Model.user.FirstName}"/>
+                            <input type="text" class="form-control" id='first-name' asp-for=user.FirstName placeholder="Enter Your Name" />
                             <span asp-validation-for=user.FirstName class="text-danger d-block"></span>
                         </div>
                         <div class="col-lg-6 col-md-6 mt-2">

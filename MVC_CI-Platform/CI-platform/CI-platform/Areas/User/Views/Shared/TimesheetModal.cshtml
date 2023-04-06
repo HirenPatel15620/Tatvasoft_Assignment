@@ -14,12 +14,11 @@
                 <button type="reset" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" asp-action="Volunteering_Timesheet" asp-area="User" asp-controller="Home">
+                <form method="post">
                     <div class="row">
                         <div class=" col-12">
                             <label for="select-mission">select mission</label>
                             <select asp-for="@Model.timesheet.MissionId" class="form-select ">
-                                <option value=0 disabled selected>Select Your Mission</option>
                                 @foreach (var j in Model.missionApplicatoinsByTime)
                                 {
                                     <option value="@j.MissionId">@j.Mission.Title</option>
@@ -65,12 +64,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post" asp-action="Volunteering_Timesheet" asp-area="User" asp-controller="Home">
+                <form method="post">
                     <div class="row">
                         <div class=" col-12">
                             <label for="select-mission">select mission</label>
                             <select asp-for="@Model.timesheet.MissionId" class="form-select ">
-                                <option value=0 disabled selected>Select Your Mission</option>
                                 @foreach (var j in Model.missionApplicatoinsByGoal)
                                 {
                                     <option value="@j.MissionId">@j.Mission.Title</option>

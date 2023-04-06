@@ -217,6 +217,7 @@ namespace CI_platform.Controllers
         }
 
         [HttpPost]
+        [Route("Volunteering_Timesheet")]
         public IActionResult Volunteering_Timesheet(VMTimeSheet vMVolunteering)
         {
             var identity = User.Identity as ClaimsIdentity;
@@ -234,10 +235,13 @@ namespace CI_platform.Controllers
                     var hour = vMVolunteering.hour;
                     var minute = vMVolunteering.minute;
                     timesheet.Time = TimeSpan.Parse(hour + ":" + minute);
+                    ViewData["Volunteering_Timesheet"] = "time";
                 }
                 else
                 {
                     timesheet.Action = vMVolunteering.timesheet.Action;
+                    ViewData["Volunteering_Timesheet"] = "goal";
+
                 }
                 allRepository.Sheet.AddTimeSheetRecords(timesheet);
             }
@@ -265,7 +269,7 @@ namespace CI_platform.Controllers
             vMVolunteering.missionApplicatoinsByGoal = allRepository.Sheet.GetGoaltypeMissionsByUserId(userid);
             return View(vMVolunteering);
         }
-
+        [HttpPost]
         public IActionResult GetEditData(int id)
         {
             var identity = User.Identity as ClaimsIdentity;
@@ -283,21 +287,27 @@ namespace CI_platform.Controllers
                 {
                     timesheet.hour = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id).Time.Value.Hours;
                     timesheet.minute = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id).Time.Value.Minutes;
+
                 }
                 else
                 {
                     timesheet.timesheet.Action = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id).Action;
                 }
             }
+            ViewData["GetEditData"] = "edit";
+
             timesheet.missionApplicatoinsByTime = allRepository.Sheet.GetTimetypeMissionsByUserId(userid);
             timesheet.missionApplicatoinsByGoal = allRepository.Sheet.GetGoaltypeMissionsByUserId(userid);
-            return PartialView("TimesheetModal.cshtml", timesheet);
+            return PartialView("TimesheetModal", timesheet);
         }
 
+
+        [HttpPost]
         public IActionResult DeleteTimesheetRecord(int timesheetId)
         {
             var record = allRepository.Sheet.GetTimesheetrecordByTimesheetId(timesheetId);
             allRepository.Sheet.DeleteTimesheetRecord(record);
+           
             return RedirectToAction("Volunteering_Timesheet", "Home");
         }
 

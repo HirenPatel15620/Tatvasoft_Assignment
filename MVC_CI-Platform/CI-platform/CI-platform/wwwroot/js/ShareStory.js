@@ -97,7 +97,7 @@ function getdetails(type) {
                 toastr.success("story save successful")
                 }
                 if (type == "PENDING") {
-                    toastr.success("story approval request send")
+                    toastr.success("story approve request send")
                 }
             },
             error: function () {
