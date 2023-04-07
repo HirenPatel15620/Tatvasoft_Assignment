@@ -64,7 +64,7 @@ namespace CI.Repository.Repository
             return true;
         }
 
-        public Timesheet GetTimesheetrecordByTimesheetId(int timesheetid)
+        public Timesheet GetTimesheetrecordByTimesheetId(long timesheetid)
         {
             return _db.Timesheets.Where(x => x.TimesheetId == timesheetid).FirstOrDefault();
         }
@@ -76,9 +76,10 @@ namespace CI.Repository.Repository
             return true;
         }
 
-        public string GetMissionTypeById(int missionid)
+        public string GetMissionTypeById(long missionid)
         {
-            return _db.Missions.Where(x => x.MissionId == missionid).Select(x => x.MissionType).FirstOrDefault();
+            //return _db.Missions.Where(x => x.MissionId == missionid).Select(x => x.MissionType).FirstOrDefault();
+            return _db.Missions.Where(mission=>mission.MissionId == missionid).Select(miss=>miss.MissionType).FirstOrDefault();
         }
 
         public bool DeleteTimesheetRecord(Timesheet timesheet)

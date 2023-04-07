@@ -76,7 +76,13 @@ namespace CI.Repository.Repository
             //else
             //{
             missions = missions.ToList();
+            //missions = missions.Take(9).ToList();
             //}
+
+            if(missions.Count > 9)
+            {
+                missions= missions.Take(9).ToList();
+            }
 
             //get cities as per country
             if (Countries.Count > 0)

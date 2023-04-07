@@ -20,7 +20,7 @@ namespace CI_platform.Controllers
         [Route("Home")]
         public IActionResult home()
         {
-            if (User.Identity.IsAuthenticated)
+            if (User.Identity.IsAuthenticated )
             {
                 //return RedirectToAction("Profile", "home");
                 ViewData["home"] = "true";
@@ -154,13 +154,15 @@ namespace CI_platform.Controllers
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
             CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0);
             return View(details);
-        }
+            }
 
         [HttpPost]
         [Route("profile")]
         public IActionResult Profile(CI.Models.ViewModels.ProfileViewModel model, int country, string? oldpassword, string? newpassword)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            CI.Models.ViewModels.ProfileViewModel detail = allRepository.Profile.Get_Initial_Details(0);
+
             if (oldpassword is not null && newpassword is not null)
             {
                 bool success = allRepository.Profile.Change_Password(oldpassword, newpassword, user_id);
@@ -182,7 +184,7 @@ namespace CI_platform.Controllers
                     }
                     {
                         bool success = allRepository.Profile.Update_Details(model, user_id);
-                        return RedirectToAction("Profile");
+                        return RedirectToAction("login", "userAuthentication");
                     }
 
                 }
@@ -270,7 +272,7 @@ namespace CI_platform.Controllers
             return View(vMVolunteering);
         }
         [HttpPost]
-        public IActionResult GetEditData(int id)
+        public IActionResult GetEditData(long id)
         {
             var identity = User.Identity as ClaimsIdentity;
             var userid = identity?.FindFirst(ClaimTypes.Sid)?.Value;
@@ -282,7 +284,7 @@ namespace CI_platform.Controllers
             else
             {
                 timesheet.timesheet = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id);
-                var missiontype = allRepository.Sheet.GetMissionTypeById(id);
+                var missiontype = allRepository.Sheet.GetMissionTypeById(timesheet.timesheet.MissionId);
                 if (missiontype == "TIME")
                 {
                     timesheet.hour = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id).Time.Value.Hours;

@@ -1,6 +1,8 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
 @model CI.Models.ViewModels.ProfileViewModel
 @{
     ViewData["css"] = "Profile.css";
@@ -8,12 +10,13 @@
 }
 
 @{
+    
     <div class="container mt-5">
         <form asp-action="Profile" id="form" asp-controller="Home" method="post" enctype="multipart/form-data">
             <div class="row main w-100">
                 <div class="col-lg-3 col-md-4 profile-photo border border-1 d-flex flex-column justify-content-center position-relative align-items-center">
                     <input type="file" asp-for=profile onchange="upload_profile_image()" class="h-50 w-50" accept="image/*" id="profile-image" style="opacity:0;position:absolute;top:10%;cursor:pointer;" />
-                    <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="~/images/volunteer1.png" alt="" />
+                    <img style="cursor:pointer;" class="w-50 h-50 rounded-circle" id="old-profile-image" src="@Accesor.HttpContext.Session.GetString("Avatar")" alt="" />
                     <h5 class="mt-4">@base.User.Identity.Name</h5>
                     <span style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#changepassword">Change Password</span>
                 </div>
@@ -24,7 +27,7 @@
                     <div class="row mt-2">
                         <div class="col-lg-6 col-md-6 mt-2">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" id='first-name' asp-for=user.FirstName placeholder="Enter Your Name" />
+                            <input type="text" class="form-control" id='first-name' asp-for=user.FirstName  placeholder="Enter Your Name"  />
                             <span asp-validation-for=user.FirstName class="text-danger d-block"></span>
                         </div>
                         <div class="col-lg-6 col-md-6 mt-2">
@@ -94,7 +97,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <button type="submit" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn mt-4">Save</button>
+                        <button type="submit" onclick="logout()" style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" class="btn mt-4">Save</button>
                     </div>
 
                 </div>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "/a137QnCQa/Ve4BwVaUGX4aRLMgTz7BKFfA8otSORIk=",
+  "Hash": "I5IHdmtjNd0U4ViFD/pNlynjO24eo9mjJMyk2labjwo=",
   "Source": "CI-platform",
   "BasePath": "_content/CI-platform",
   "Mode": "Default",
@@ -797,6 +797,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\down.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\images\\download.png",
+      "SourceId": "CI-platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\",
+      "BasePath": "_content/CI-platform",
+      "RelativePath": "images/download.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\download.png"
     },
     {
       "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\images\\drag-and-drop.png",

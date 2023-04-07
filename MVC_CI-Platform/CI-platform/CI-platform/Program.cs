@@ -14,7 +14,13 @@ builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", options
     options.LoginPath = "/Auth/Login";
     options.LogoutPath = "/Auth/LogOut";
 });
-
+builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromDays(1);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 builder.Services.AddDbContext<CiPlatformContext>(options => options.UseSqlServer(
     builder.Configuration.GetConnectionString("SqlConnectionString")
     ));
@@ -38,6 +44,7 @@ app.UseStaticFiles();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=User}/{controller=UserAuthentication}/{action=Login}");

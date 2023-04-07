@@ -73,7 +73,7 @@
             <span class="page-link" onclick="prev_page()"><img src="~/images/left.png" alt="not load" /></span>
         </li>
         @{
-            int pages = (int)Math.Ceiling((double)@Model?.total_missions / 9  );
+            int pages = (int)Math.Ceiling((double)@Model?.total_missions / 3  );
             for (var i = 1; i <= pages; i++)
             {
                 if (i == 1)
@@ -124,7 +124,7 @@
                             </div>
                             <div class="mt-2 w-100">
                                 <label class="form-label">Select Date</label>
-                                <input type="date" class="form-control" id="datepicker" placeholder="Select Date" />
+                                <input  class="form-control" value="@item.PublishedAt.ToString().Substring(0,10)" id="datepicker" placeholder="DD-MM-YYYY" />
                             </div>
 
                             @*ckeditor*@

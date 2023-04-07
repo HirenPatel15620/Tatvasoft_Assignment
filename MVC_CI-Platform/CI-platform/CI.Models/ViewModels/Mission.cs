@@ -16,7 +16,7 @@ namespace CI.Models.ViewModels
         public List<MissionTheme>? themes { get; set; }
         public List<Skill>? skills { get; set; }
         //public bool Applied_or_not { get; set; }
-       
+  
        public List<User>? All_volunteers { get; set; }
 
     }

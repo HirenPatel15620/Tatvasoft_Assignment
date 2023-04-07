@@ -11,19 +11,19 @@
             <div class="thumbnail card d-flex">
                 <div class="img-event">
 
-                  @if (item.Status=="DRAFT")
+                    @if (item.Status == "DRAFT")
                     {
                         <div class=" closeicon-badge">Draft</div>
                     }
-                    else if(item.Status=="PENDING")
+                    else if (item.Status == "PENDING")
                     {
                         <div class=" pendingicon-badge">Pending</div>
                     }
-                    else if(item.Status=="PUBLISHED")
+                    else if (item.Status == "PUBLISHED")
                     {
                         <div class=" appliedicon-badge">Published</div>
                     }
-                    
+
                     @{
                         if (item.StoryMedia.ElementAt(0).Path.Length > 500)
                         {
@@ -36,19 +36,21 @@
                          src=@item.StoryMedia.ElementAt(1).Path id="image-@item.StoryId" alt="" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" />
                         }
                     }
-                    @if(@item.Status=="DRAFT" || @item.Status=="PENDING"){
-                    <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
-                        <a  class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;" disable>
-                            Need To Publish 
-                        </a>
-                    </div>
+                    @if (@item.Status == "DRAFT" || @item.Status == "PENDING")
+                    {
+                        <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
+                            <a class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;" disable>
+                                Need To Publish
+                            </a>
+                        </div>
                     }
-                    else{
-                            <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
-                        <a href="/stories/detail/@item.StoryId" class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;" >
-                        View Details<img class="ms-2" src="images/right-arrow.png" alt="">
-                        </a>
-                    </div>
+                    else
+                    {
+                        <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
+                            <a href="/stories/detail/@item.StoryId" class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
+                                View Details<img class="ms-2" src="images/right-arrow.png" alt="">
+                            </a>
+                        </div>
                     }
                     <button class="mission-theme border-0">
                         <span class="p-2">@item.Mission.Theme.Title</span>
@@ -68,11 +70,18 @@
                     </span>
                     <div class="d-flex list-view justify-content-between mt-3 align-items-center">
                         <div class="w-100">
-                            <img class="rounded-circle" src="~/images/volunteer1.png" alt="" style="width:13%;" />
+                            @if (@item.User.Avatar is null)
+                            {
+                                <img class=" h-25 rounded-circle" src="/images/organization.png" alt="" />
+                            }
+                            else
+                            {
+                                <img class="rounded-circle" src="@item.User.Avatar" alt="" style="width:13%;" />
+                            }
                             <span class="ms-2">@item.User.FirstName @item.User.LastName</span>
                         </div>
                         @{
-                            if ((@item.Status == "DRAFT" || @item.Status=="PENDING") && @item.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value))
+                            if ((@item.Status == "DRAFT" || @item.Status == "PENDING") && @item.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value))
                             {
                                 <button data-bs-toggle="modal" id="edit-story" onclick="editor(@item.StoryId,@item.PublishedAt.ToString().Substring(0,10))" data-bs-target="#edit-@item.StoryId" class="applyButton btn">Edit</button>
                             }

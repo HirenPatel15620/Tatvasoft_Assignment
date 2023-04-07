@@ -32,6 +32,7 @@ function loadimages() {
     var images_count = $('.gallary').find('.main-image').length
     if (images_count + image.length <= 20 && image.length<=20) {
         if (images_count == 1) {
+            
             var fr = new FileReader()
             const div = document.createElement('div')
             const img = document.createElement('img')
@@ -54,6 +55,7 @@ function loadimages() {
             count++
         }
         else {
+            
             for (var i = 0; i < image.length; i++) {
                 let fr = new FileReader()
                 fr.onload = () => {

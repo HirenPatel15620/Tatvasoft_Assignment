@@ -1,3 +1,5 @@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,6 +32,7 @@
                 toastr.success("Authentication Successfull")
             </script>
         }
+
         }
 
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
@@ -79,7 +82,7 @@
                         </div>
                         </div>*@
                     <div class="dropdown d-flex align-items-center"style="right: 36px;">
-                        <img src="~/images/user-img.png" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                        <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                         <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
                         <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">

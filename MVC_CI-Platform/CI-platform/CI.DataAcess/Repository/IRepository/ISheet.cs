@@ -13,9 +13,9 @@ namespace CI.Repository.Repository.IRepository
         List<MissionApplication> GetTimetypeMissionsByUserId(string? userid);
         List<MissionApplication> GetGoaltypeMissionsByUserId(string? userid);
         bool AddTimeSheetRecords(Timesheet timesheet);
-        Timesheet GetTimesheetrecordByTimesheetId(int timesheetid);
+        Timesheet GetTimesheetrecordByTimesheetId(long timesheetid);
         bool UpdateTimeSheetRecord(Timesheet record);
-        string GetMissionTypeById(int missionid);
+        string GetMissionTypeById(long missionid);
         bool DeleteTimesheetRecord(Timesheet timesheet);
         List<City> GetCityByCountryName(string CountryName);
         //List<CmsPage> GetALLPolicies();

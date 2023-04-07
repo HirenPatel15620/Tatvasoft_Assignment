@@ -113,7 +113,7 @@ const change_password = () => {
                 else {
                     $('.wrong-oldpassword').addClass('d-block').removeClass('d-none')
                     toastr.error("password error")
-                }
+                }this
             },
             error: function () {
                 console.log("Error updating variable");
@@ -121,3 +121,4 @@ const change_password = () => {
         })
     }
 }
+

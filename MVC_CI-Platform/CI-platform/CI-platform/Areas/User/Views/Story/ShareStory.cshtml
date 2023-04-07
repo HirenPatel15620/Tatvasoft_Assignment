@@ -25,7 +25,7 @@
                     {
                         @if (@item.Stories.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
                         {
-                            <option value=@item.MissionId id=@item.MissionId disabled>@item.Title.ToString().Substring(0,35)...(Draft available)</option>
+                            <option value=@item.MissionId id=@item.MissionId disabled>@item.Title.ToString().Substring(0,35)...(Already Used)</option>
                         }
                         else
                         {

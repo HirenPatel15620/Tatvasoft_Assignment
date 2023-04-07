@@ -527,8 +527,8 @@ const recommend = (user_id, mission_id) => {
     debugger
     if (co_workers.length > 0) {
         $.ajax({
-            url: `/home`,
             type: 'POST', 
+            url: `/User/Home/volunteering_mission`,
             data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend" },
             successworker: function (result) {
                 debugger
