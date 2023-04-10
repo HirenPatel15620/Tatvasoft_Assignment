@@ -20,7 +20,7 @@ namespace CI_platform.Controllers
         [Route("Home")]
         public IActionResult home()
         {
-            if (User.Identity.IsAuthenticated )
+            if (User.Identity.IsAuthenticated)
             {
                 //return RedirectToAction("Profile", "home");
                 ViewData["home"] = "true";
@@ -151,10 +151,10 @@ namespace CI_platform.Controllers
         [Route("profile")]
         public IActionResult Profile()
         {
-            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value); 
             CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0);
             return View(details);
-            }
+        }
 
         [HttpPost]
         [Route("profile")]
@@ -203,6 +203,20 @@ namespace CI_platform.Controllers
                     }
                 }
             }
+        }
+        [HttpPost]
+        public IActionResult contactus(string subject, string message)
+        {
+            var identity = User.Identity as ClaimsIdentity;
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+
+            if (subject != null && message != null)
+            {
+                bool success = allRepository.Profile.contactus(subject, message, user_id);
+                return Json(new { success });
+            }
+
+            return View();
         }
 
 
@@ -309,7 +323,7 @@ namespace CI_platform.Controllers
         {
             var record = allRepository.Sheet.GetTimesheetrecordByTimesheetId(timesheetId);
             allRepository.Sheet.DeleteTimesheetRecord(record);
-           
+
             return RedirectToAction("Volunteering_Timesheet", "Home");
         }
 

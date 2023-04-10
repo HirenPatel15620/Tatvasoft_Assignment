@@ -36,5 +36,7 @@ namespace CI.Models.ViewModels
 
         public string? Title { get; set; }
 
+        public long UserId { get; set; }
+        public string? Manager { get; set; }
     }
 }

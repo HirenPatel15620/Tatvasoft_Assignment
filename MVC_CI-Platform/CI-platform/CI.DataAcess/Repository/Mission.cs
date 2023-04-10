@@ -47,6 +47,7 @@ namespace CI.Repository.Repository
             ratings = _db.MissionRatings.ToList();
             skills = _db.Skills.ToList();
             users = _db.Users.ToList();
+
         }
 
         //get first 9 mission in landing page
@@ -54,6 +55,7 @@ namespace CI.Repository.Repository
         {
             int total_missions = missions.Count;
             missions = missions.ToList();
+
 
             var Missions = new CI.Models.ViewModels.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions };
             return Missions;
@@ -79,9 +81,9 @@ namespace CI.Repository.Repository
             //missions = missions.Take(9).ToList();
             //}
 
-            if(missions.Count > 9)
+            if (missions.Count > 9)
             {
-                missions= missions.Take(9).ToList();
+                missions = missions.Take(9).ToList();
             }
 
             //get cities as per country
@@ -97,36 +99,6 @@ namespace CI.Repository.Repository
             }
 
 
-
-
-            // List<User> myusers = (from ma in missionApplications
-            //                          where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
-            //                          select ma.User).ToList();
-
-            //already_recommended_users = (from a in already_recommended_users
-            //                             where a.MissionId == id && a.FromUserId == user_id
-            //                             select a).ToList();
-            //if (already_recommended_users.Count > 0)
-            //{
-            //    foreach (var item in already_recommended_users)
-            //    {
-            //        already_recommended.Add(item.ToUser);
-            //    }
-            //}
-
-            //users = (from u in users
-            //         where !myusers.Contains(u) && user_id != u.UserId
-            //         select u).ToList();
-            //if (users.Count > 0)
-            //{
-            //    foreach (var item in users)
-            //    {
-            //        if (!already_recommended.Contains(item))
-            //        {
-            //            all_volunteers.Add(item);
-            //        }
-            //    }
-            //}
 
 
 
@@ -428,12 +400,25 @@ namespace CI.Repository.Repository
         //apply for mission
         public bool apply_for_mission(long user_id, long mission_id)
         {
+
             DateTime current = DateTime.Now;
             if (user_id != 0 && mission_id != 0)
             {
                 var missionapplication = (from ma in missionApplications
                                           where ma.UserId.Equals(user_id) && ma.MissionId.Equals(mission_id)
                                           select ma).ToList();
+                //for seat decreament
+                var missionseats = _db.Missions.SingleOrDefault(e => e.MissionId == mission_id);
+                if (missionseats == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    missionseats.TotalSeats--;
+                }
+                //finish seat decrement
+
                 if (missionapplication.Count == 0)
                 {
                     _db.MissionApplications.Add(new MissionApplication
@@ -442,6 +427,7 @@ namespace CI.Repository.Repository
                         UserId = user_id,
                         MissionId = mission_id
                     });
+
                     Save();
                     return true;
                 }

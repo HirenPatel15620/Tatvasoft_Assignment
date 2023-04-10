@@ -44,10 +44,33 @@ namespace CI.Repository.Repository
 
         }
 
+        public bool contactus(string subject, string message, long User_id)
+        {
+            User user = _db.Users.FirstOrDefault(c => c.UserId == User_id);
+            if (user is not null)
+            {
+                ContactU contact = new ContactU()
+                {
+                    Subject = subject,
+                    Message = message,
+                    Email = user.Email,
+                    UserId = User_id
+
+                };
+                _db.ContactUs.Add(contact);
+                _db.SaveChanges();
+                return true;
+            }
+            else { return false; }
+
+        }
+
         public ProfileViewModel Get_Initial_Details(int country)
         {
+
             if (country == 0)
             {
+
                 List<Country> countries = _db.Countries.ToList();
                 List<Skill> skills = _db.Skills.ToList();
                 List<City> cities = _db.Cities.ToList();
@@ -68,6 +91,7 @@ namespace CI.Repository.Repository
                 user.FirstName = Details.user.FirstName;
                 user.LastName = Details.user.LastName;
                 user.Title = Details.user.Title;
+                user.Manager = Details.user.Manager;
                 user.WhyIVolunteer = Details.user.WhyIVolunteer;
                 user.Availablity = Details.user.Availablity;
                 user.ProfileText = Details.user.ProfileText;

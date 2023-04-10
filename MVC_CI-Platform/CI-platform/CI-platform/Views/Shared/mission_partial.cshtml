@@ -52,7 +52,7 @@
 
                     @{
 
-                        <button class="stop-img border-0"  data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;">
+                        <button class="stop-img border-0" data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;">
                             <img class="text-light" src="images/user.png" alt="">
                         </button>
 
@@ -150,7 +150,15 @@
                                 {
                                     <img src="images/Seats-left.png" alt="">
                                     <span>
-                                        @item.AvbSeat <p>seats left</p>
+                                        @item.TotalSeats <p>seats left</p>
+                                        @*   @item.AvbSeat <p>seats left</p>
+
+                                            //@{
+                                            //    @item.TotalSeats
+                                            //    -
+                                            //    @item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId)).ToList().Count()
+                                            //}*@
+
                                     </span>
                                 }
                             }
@@ -194,7 +202,7 @@
                     </div>
                     <div class="d-flex justify-content-center mt-4">
                         <a>
-                            @if (DateTime.Now > @item.StartDate || @item.AvbSeat == 0)
+                            @if (DateTime.Now > @item.StartDate || @item.TotalSeats == 0)
                             {
                                 <button class="closeButton btn" disabled>
                                     Closed
@@ -259,29 +267,29 @@
 
 }
 @*
-<div class="modal fade" id="recommend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
+    <div class="modal fade" id="recommend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="staticbackdroplabel">select co-workers who you want to recommend this mission</h5>
-            </div>
-            <div class="modal-body">
-                @{
-                    @foreach (var item in @model.all_volunteers)
-                    {
-                        <div class="d-flex mt-3 bg-white align-items-center">
-                            <input class="form-check-input" onclick="add_coworkers('coworker-@item.userid')" type="checkbox" value="" id='coworker-@item.userid'>
-                            <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
-                            <span class="ms-2">@item.firstname @item.lastname</span>
-                        </div>
-                    }
-                }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn applybutton" data-bs-dismiss="modal">close</button>
-                <button type="button" onclick="recommend(@user?.claims.firstordefault(c=>c.type==claimtypes.sid)?.value,@model.missions)" class="btn applybutton" data-bs-dismiss="modal">recommend</button>
-            </div>
-        </div>
+    <div class="modal-content">
+    <div class="modal-header">
+    <h5 class="modal-title" id="staticbackdroplabel">select co-workers who you want to recommend this mission</h5>
     </div>
-</div>
+    <div class="modal-body">
+    @{
+    @foreach (var item in @model.all_volunteers)
+    {
+    <div class="d-flex mt-3 bg-white align-items-center">
+    <input class="form-check-input" onclick="add_coworkers('coworker-@item.userid')" type="checkbox" value="" id='coworker-@item.userid'>
+    <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
+    <span class="ms-2">@item.firstname @item.lastname</span>
+    </div>
+    }
+    }
+    </div>
+    <div class="modal-footer">
+    <button type="button" class="btn applybutton" data-bs-dismiss="modal">close</button>
+    <button type="button" onclick="recommend(@user?.claims.firstordefault(c=>c.type==claimtypes.sid)?.value,@model.missions)" class="btn applybutton" data-bs-dismiss="modal">recommend</button>
+    </div>
+    </div>
+    </div>
+    </div>
 *@

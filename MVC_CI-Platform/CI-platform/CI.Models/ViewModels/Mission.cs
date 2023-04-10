@@ -19,5 +19,7 @@ namespace CI.Models.ViewModels
   
        public List<User>? All_volunteers { get; set; }
 
+        public int? Availableseats { get; set; }
+
     }
 }

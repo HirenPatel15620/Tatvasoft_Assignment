@@ -44,6 +44,7 @@ public partial class User
     public DateTime? DeletedAt { get; set; }
 
     public string? Availablity { get; set; }
+    public string? Manager { get; set; }
 
     public virtual City? City { get; set; }
 
@@ -66,4 +67,5 @@ public partial class User
     public virtual ICollection<Timesheet> Timesheets { get; } = new List<Timesheet>();
 
     public virtual ICollection<UserSkill> UserSkills { get; } = new List<UserSkill>();
+
 }

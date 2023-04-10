@@ -122,3 +122,31 @@ const change_password = () => {
     }
 }
 
+function contactus(){
+
+
+    var subject = document.getElementById("subject").value
+    var message = document.getElementById("message").value
+    $.ajax({
+        type: 'POST',
+        url: '/User/Home/contactus',
+        data: { subject: subject, message: message },
+        success: function (result) {
+            if (result.success) {
+                $("#contactus").modal('hide')
+                document.getElementById("subject").value = ""
+                document.getElementById("message").value = ""
+                
+                toastr.success("Thank You For Your Suggestion")
+            }
+            else {
+                
+                toastr.error(" Sorry,But Please send it again")
+            } this
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+
+}
