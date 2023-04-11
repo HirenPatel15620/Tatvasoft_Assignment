@@ -4,39 +4,14 @@
     ViewData["Title"] = "Admin_control";
     ViewData["css"] = "Admin.css";
 }
-@model List<User>
+@model List<Mission>
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@*<!DOCTYPE html>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
-    <link rel="stylesheet" href="~/CI_platform.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />
 
 
-    <div class="container-fluid mt-5">
 
-    <div class="row main w-100">
-    <div class="col-lg-3 col-md-4 profile-photo border border-1 d-flex flex-column  position-relative userdifine" >
-    Navigation
-    <div class="">
-    <img  src="~/images/user.png"/>
-    User</div>
-    <div class="">CMS Page</div>
-    <div class="">Mission</div>
-    <div class="">Mission Theme</div>
-    <div class="">Mission Skill</div>
-    <div class="">Mission Application</div>
-    <div class="">Story</div>
-    <div class="">Banner</div>
 
-    </div>
-    <div class="col-lg-8 col-md-7 profile-details">
-    </div>
-    </div>
-    </div>*@
 
 <div class="container-fluid m-0 p-0 d-flex">
     <div class="sidebar" id="side_nav">
@@ -47,7 +22,7 @@
             </button>
         </div>
         <ul class="list-unstyled px-2">
-            <li class="active  mb-2">
+            <li class=" mb-2">
                 <a href="/Admin/User/Index" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
                     <i class="bi bi-person-fill fs-5 me-2"></i>User
                 </a>
@@ -57,7 +32,7 @@
                     <i class="bi bi-file-earmark-text fs-5 me-2"></i>CMS Page
                 </a>
             </li>
-            <li class="mb-2">
+            <li class=" active mb-2">
                 <a href="/Admin/Mission/Mission" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
                     <i class="bi bi-bullseye fs-5 me-2"></i>Mission
                 </a>
@@ -110,12 +85,6 @@
                             <a class="dropdown-item" href="/logout">LogOut</a>
                         </div>
                     </div>
-
-
-
-
-
-
                 </div>
         </nav>
         <div class="c p-3">
@@ -135,12 +104,10 @@
                 <table class="table border ">
                     <thead class="bg-primary ">
                         <tr class="rounded-3">
-                            <th>FirstName</th>
-                            <th>LastName</th>
-                            <th>Email</th>
-                            <th>Employee Id</th>
-                            <th>Department</th>
-                            <th>Status</th>
+                            <th>Mission Title</th>
+                            <th>Mission Type</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
                             <th>Action</th>
                             <th></th>
                            
@@ -154,24 +121,13 @@
                         {
                             <tbody>
                                 <tr>
-                                    <td>@item.FirstName</td>
-                                    <td>@item.LastName</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.EmployeeId</td>
-                                    <td>@item.Department</td>
-                                    <td>
-                                        @if(@item.Status=="1")
-                                        {
-                                            <p class="text-success">Active</p>
-                                        }
-                                        else
-                                        {
-                                            <p class="text-danger">Deactive</p>
-                                        }
-                                        </td>
+                                    <td>@item.Title</td>
+                                    <td>@item.MissionType</td>
+                                    <td>@item.StartDate</td>
+                                    <td>@item.EndDate</td>
                                     <td>
                                         <button class="remove_style"><img src="/images/edit.png" /></button> @* onclick="CreateorEdit(@i.TimesheetId, 0)"*@
-                                        <button class="remove_style" onclick="DeleteRecord(@item.UserId)" ><img src="~/images/bin.png" /></button>  @*onclick="DeleteRecord(@i.TimesheetId)"*@
+                                        <button class="remove_style" onclick="DeleteRecord(@item.MissionId)" ><img src="~/images/bin.png" /></button>  @*onclick="DeleteRecord(@i.TimesheetId)"*@
                                     </td>
                                     
                                     
@@ -186,46 +142,3 @@
 
 </div>
 
-
-<script>
-    $(".sidebar ul li").on('click', function () {
-    $(".sidebar ul li.active").removeClass('active');
-    $(this).addClass('active');
-    });
-    $(".open-btn").on('click', function () {
-    $(".sidebar").addClass('active');
-    });
-    $(".close-btn").on('click', function () {
-    $(".sidebar").removeClass('active');
-    });
-    $(".c").on('click', function () {
-    $(".sidebar").removeClass('active');
-    });
-    function LiveTime() {
-    let now = new Date();
-    document.getElementById("dateTime").innerHTML = now;
-    }
-    setInterval(LiveTime, 1000);
-</script>
-
-
-
-
-
-
-<div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form asp-action="GetDeleteUser" asp-area="Admin" asp-controller="User">
-                <input name="userId" id="userid" type="hidden" value="" />
-                <div class="modal-header border-0">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-outline-danger rounded-pill" onclick="showthis()" type="submit">Delete</button>
-                    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>

@@ -17,6 +17,9 @@ namespace CI_platform.Controllers
         {
             allRepository = _allRepository;
         }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         [Route("Home")]
         public IActionResult home()
         {
@@ -71,6 +74,10 @@ namespace CI_platform.Controllers
                 return Json(new { mission = filtered_missions, city = Cities, success = true, length = missions.Missions.Count });
             }
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
         [Route("volunteering_mission/{id}")]
         public IActionResult volunteering_mission(int id)
         {
@@ -132,7 +139,7 @@ namespace CI_platform.Controllers
                 return Json(new { comments = new_comment, success = true });
             }
         }
-
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         [Route("Privacy")]
         [Route("User/Home/Privacy")]
@@ -147,12 +154,13 @@ namespace CI_platform.Controllers
                 return RedirectToAction("login", "userAuthentication");
             }
         }
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         [Route("profile")]
         public IActionResult Profile()
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value); 
-            CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0);
+            CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0, user_id);
             return View(details);
         }
 
@@ -161,7 +169,7 @@ namespace CI_platform.Controllers
         public IActionResult Profile(CI.Models.ViewModels.ProfileViewModel model, int country, string? oldpassword, string? newpassword)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            CI.Models.ViewModels.ProfileViewModel detail = allRepository.Profile.Get_Initial_Details(0);
+            CI.Models.ViewModels.ProfileViewModel detail = allRepository.Profile.Get_Initial_Details(0,user_id);
 
             if (oldpassword is not null && newpassword is not null)
             {
@@ -174,7 +182,7 @@ namespace CI_platform.Controllers
                 {
                     if (country != 0)
                     {
-                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country);
+                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country,user_id);
                         var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
                         return Json(new { cities = cities });
                     }
@@ -192,13 +200,13 @@ namespace CI_platform.Controllers
                 {
                     if (country != 0)
                     {
-                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country);
+                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country,user_id);
                         var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
                         return Json(new { cities = cities });
                     }
                     else
                     {
-                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0);
+                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0,user_id);
                         return View(details);
                     }
                 }
@@ -218,7 +226,7 @@ namespace CI_platform.Controllers
 
             return View();
         }
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         [Route("Volunteering_Timesheet")]
         public IActionResult Volunteering_Timesheet()
@@ -327,7 +335,7 @@ namespace CI_platform.Controllers
             return RedirectToAction("Volunteering_Timesheet", "Home");
         }
 
-
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

@@ -407,17 +407,6 @@ namespace CI.Repository.Repository
                 var missionapplication = (from ma in missionApplications
                                           where ma.UserId.Equals(user_id) && ma.MissionId.Equals(mission_id)
                                           select ma).ToList();
-                //for seat decreament
-                var missionseats = _db.Missions.SingleOrDefault(e => e.MissionId == mission_id);
-                if (missionseats == null)
-                {
-                    return false;
-                }
-                else
-                {
-                    missionseats.TotalSeats--;
-                }
-                //finish seat decrement
 
                 if (missionapplication.Count == 0)
                 {
@@ -428,7 +417,21 @@ namespace CI.Repository.Repository
                         MissionId = mission_id
                     });
 
+                    
                     Save();
+                    //for seat decreament
+                    var missionseats = _db.Missions.SingleOrDefault(e => e.MissionId == mission_id);
+                    if (missionseats == null)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        missionseats.TotalSeats--;
+                    }
+                    //finish seat decrement
+                    
+                    
                     return true;
                 }
                 else

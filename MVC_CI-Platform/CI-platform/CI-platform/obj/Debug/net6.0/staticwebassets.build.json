@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "oHDmKuD+SMsiMGep7R+EEUaPfqKVTCdjVAHhGN+YK94=",
+  "Hash": "KKrFNZVQ83pm1lxSwesCr/qTTNwv3YHjOZ0c0NMnUeE=",
   "Source": "CI-platform",
   "BasePath": "_content/CI-platform",
   "Mode": "Default",
@@ -49,6 +49,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\obj\\Debug\\net6.0\\scopedcss\\projectbundle\\CI-platform.bundle.scp.css"
+    },
+    {
+      "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\css\\Admin.css",
+      "SourceId": "CI-platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\",
+      "BasePath": "_content/CI-platform",
+      "RelativePath": "css/Admin.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\css\\Admin.css"
     },
     {
       "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\css\\Index.css",
@@ -2259,6 +2276,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\xlsx.png"
+    },
+    {
+      "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\js\\Admin.js",
+      "SourceId": "CI-platform",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\",
+      "BasePath": "_content/CI-platform",
+      "RelativePath": "js/Admin.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\Admin.js"
     },
     {
       "Identity": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\wwwroot\\js\\index.js",

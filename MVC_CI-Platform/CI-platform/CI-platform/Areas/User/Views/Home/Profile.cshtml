@@ -55,12 +55,6 @@
                     </div>
                     <div class="mt-2 row">
                         <div class="col-lg-6 col-md-6 mt-2">
-                            <label class="form-label">City</label><select id='city' asp-for=user.CityId class="form-select city me-3" aria-label="Select Mission">
-                                <option disabled selected>Select Your City</option>
-                            </select>
-                            <span asp-validation-for=user.CityId class="text-danger d-block"></span>
-                        </div>
-                        <div class="col-lg-6 col-md-6 mt-2">
                             <label class="form-label">Country</label><select id='country' asp-for=user.CountryId onchange="getcities()" class="form-select country me-3" aria-label="Select Mission">
                                 <option disabled selected>Select Your Country</option>
                                 @{
@@ -71,6 +65,12 @@
                                 }
                             </select>
                             <span asp-validation-for=user.CountryId class="text-danger d-block"></span>
+                        </div>
+                        <div class="col-lg-6 col-md-6 mt-2">
+                            <label class="form-label">City</label><select id='city' asp-for=user.CityId class="form-select city me-3" aria-label="Select Mission">
+                                <option disabled selected>Select Your City</option>
+                            </select>
+                            <span asp-validation-for=user.CityId class="text-danger d-block"></span>
                         </div>
                     </div>
 
@@ -207,7 +207,7 @@
                 </div>
                 <div class="w-100">
                     <label class="form-label mt-2">Mail</label>
-                    <input class="form-control" />
+                    <input class="form-control" asp-for=user.Email disabled />
                 </div>
                 <div class="w-100">
                     <label class="form-label mt-2">Subject</label>

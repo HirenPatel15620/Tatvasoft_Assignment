@@ -38,5 +38,7 @@ namespace CI.Models.ViewModels
 
         public long UserId { get; set; }
         public string? Manager { get; set; }
+
+        public string? Email { get; set; }
     }
 }

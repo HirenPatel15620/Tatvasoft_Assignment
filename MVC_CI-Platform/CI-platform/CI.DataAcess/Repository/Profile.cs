@@ -65,8 +65,27 @@ namespace CI.Repository.Repository
 
         }
 
-        public ProfileViewModel Get_Initial_Details(int country)
+        public ProfileViewModel Get_Initial_Details(int country, long User_id)
         {
+            User? user = _db.Users.FirstOrDefault(c => c.UserId == User_id);
+
+            EditUser editUser = new EditUser()
+            {
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Availablity = user.Availablity,
+                Title = user.Title,
+                Manager = user.Manager,
+                CountryId = user.CountryId,
+                CityId = user.CityId,
+                Department = user.Department,
+                EmployeeId = user.EmployeeId,
+                ProfileText = user.ProfileText,
+                LinkedInUrl = user.LinkedInUrl,
+                WhyIVolunteer = user.WhyIVolunteer,
+            };
+
 
             if (country == 0)
             {
@@ -74,12 +93,12 @@ namespace CI.Repository.Repository
                 List<Country> countries = _db.Countries.ToList();
                 List<Skill> skills = _db.Skills.ToList();
                 List<City> cities = _db.Cities.ToList();
-                return new ProfileViewModel { Countries = countries, Cities = cities, Skills = skills };
+                return new ProfileViewModel { Countries = countries, Cities = cities, Skills = skills, user = editUser };
             }
             else
             {
                 List<City> cities = _db.Cities.Where(c => c.CountryId == country).ToList();
-                return new ProfileViewModel { Cities = cities };
+                return new ProfileViewModel { Cities = cities, user = editUser };
             }
         }
 

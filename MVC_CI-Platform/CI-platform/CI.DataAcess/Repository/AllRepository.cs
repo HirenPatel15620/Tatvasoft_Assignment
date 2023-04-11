@@ -20,6 +20,8 @@ namespace CI.Repository.Repository
             Story=new Story(_db);
             Profile = new Profile(_db);
             Sheet = new Sheet(_db);
+            AdminUser = new AdminUser(_db);
+            AdminMission = new AdminMission(_db);
         }
         public IUserAuthentication UserAuthentication { get;private set; }
 
@@ -31,6 +33,10 @@ namespace CI.Repository.Repository
         public IProfile Profile { get; private set; }   
 
         public ISheet Sheet { get; private set; }
+
+        public IAdminUser AdminUser { get; private set; }
+
+        public IAdminMission AdminMission { get; private set; }
 
         public void save()
         {

@@ -1,0 +1,153 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CI_platform</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <script src="./lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
+    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />*@
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+            toastr.options = {
+            "closeButton": true,
+            "debug": false,"newestOnTop": false,"progressBar": true,"positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "300","hideDuration": "1000","timeOut": "2000",
+            "extendedTimeOut": "1000","showEasing": "swing","hideEasing": "swing","showMethod": "slideDown","hideMethod": "slideUp"
+        }
+
+    </script>
+
+</head>
+<body onload="setpages();">
+
+
+    <main role="main" class="pb-3">
+        @*<div class="container-fluid m-0 p-0 d-flex">
+            <div class="sidebar" id="side_nav">
+                <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-3 mb-lg-3 mb-2">
+                    <h4 class="fs-4 p-0 m-0"><span class="text-white fw-bold">CI - Platform</span></h4>
+                    <button class="btn close-btn d-lg-none d-block px-1 py-0 text-white">
+                        <i class="bi bi-text-left fs-4 fw-bold text-white"></i>
+                    </button>
+                </div>
+                <ul class="list-unstyled px-2">
+                    <li class="active mb-2">
+                        <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                            <i class="bi bi-person-fill fs-5 me-2"></i>User
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="/Admin/User/Cmspage" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                            <i class="bi bi-file-earmark-text fs-5 me-2"></i>CMS Page
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                            <i class="bi bi-bullseye fs-5 me-2"></i>Mission
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                            <i class="bi bi-layout-wtf fs-5 me-2"></i>Mission Theme
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                            <i class="bi bi-tools fs-5 me-2"></i>Mission Skills
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                            <i class="bi bi-folder-fill fs-5 me-2"></i>Mission Application
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                            <i class="bi bi-journal-medical fs-5 me-2"></i>Story
+                        </a>
+                    </li>
+                    <li class="mb-2">
+                        <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                            <i class="bi bi-map-fill fs-5 me-2"></i>Banner Management
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="content">
+                <nav class="navbar">
+                    <div class="d-flex justify-content-between align-items-center fs-7 w-100 px-3 py-2">
+                        <div class="fs-7 d-flex align-items-center">
+                            <button class="btn open-btn d-lg-none d-block px-1 py-0 text-white">
+                                <i class="bi bi-text-left fs-4 fw-bold text-dark"></i>
+                            </button>
+                            <div id="dateTime" class="me-2"></div>
+                        </div>
+
+                        <div class="dropdown d-flex align-items-center" style="right: 36px;">
+                            <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                            <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
+                            <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
+                                <a class="dropdown-item" href="/profile">Profile</a>
+                                <a class="dropdown-item" href="/volunteering_timesheet">Volunteering Timesheet</a>
+                                <a class="dropdown-item" href="/logout">LogOut</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>*@
+                @RenderBody()
+    </main>
+
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            &copy; 2023 - CI_platform -
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Admin.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap-datepicker.min.js"></script>
+    <script>
+
+                $(".sidebar ul li").on('click', function () {
+            $(".sidebar ul li.active").removeClass('active');
+            $(this).addClass('active');
+        });
+        $(".open-btn").on('click', function () {
+            $(".sidebar").addClass('active');
+        });
+        $(".close-btn").on('click', function () {
+            $(".sidebar").removeClass('active');
+        });
+        $(".c").on('click', function () {
+            $(".sidebar").removeClass('active');
+        });
+        function LiveTime() {
+            let now = new Date();
+            document.getElementById("dateTime").innerHTML = now;
+        }
+        setInterval(LiveTime, 1000);
+
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

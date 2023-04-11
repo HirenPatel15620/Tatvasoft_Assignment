@@ -15,8 +15,36 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Mission/Mission.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxNaXNzaW9uLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionApplication.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxNaXNzaW9uQXBwbGljYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionSkill.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxNaXNzaW9uU2tpbGwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionTheme.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxNaXNzaW9uVGhlbWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/User/Cmspage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxDbXNwYWdlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Home/home.cshtml]
@@ -129,6 +157,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/UserAuthentication_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFVzZXJBdXRoZW50aWNhdGlvbl9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/_AdminLayout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/_ValidationScriptsPartial.cshtml]

@@ -1,0 +1,95 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+@{
+    ViewData["Title"] = "Admin_control";
+    ViewData["css"] = "Admin.css";
+}
+@model List<User>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+
+
+<div class="container-fluid m-0 p-0 d-flex">
+    <div class="sidebar" id="side_nav">
+        <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-3 mb-lg-3 mb-2">
+            <h4 class="fs-4 p-0 m-0"><span class="text-white fw-bold">CI - Platform</span></h4>
+            <button class="btn close-btn d-lg-none d-block px-1 py-0 text-white">
+                <i class="bi bi-text-left fs-4 fw-bold text-white"></i>
+            </button>
+        </div>
+        <ul class="list-unstyled px-2">
+            <li class=" mb-2">
+                <a href="/Admin/User/Index" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                    <i class="bi bi-person-fill fs-5 me-2"></i>User
+                </a>
+            </li>
+            <li class=" mb-2">
+                <a href="/Admin/User/Cmspage" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                    <i class="bi bi-file-earmark-text fs-5 me-2"></i>CMS Page
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="/Admin/Mission/Mission" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                    <i class="bi bi-bullseye fs-5 me-2"></i>Mission
+                </a>
+            </li>
+            <li class="active mb-2">
+                <a href="/Admin/Mission/MissionTheme" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                    <i class="bi bi-layout-wtf fs-5 me-2"></i>Mission Theme
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="/Admin/Mission/MissionSkill" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                    <i class="bi bi-tools fs-5 me-2"></i>Mission Skills
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="/Admin/Mission/MissionApplication" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                    <i class="bi bi-folder-fill fs-5 me-2"></i>Mission Application
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                    <i class="bi bi-journal-medical fs-5 me-2"></i>Story
+                </a>
+            </li>
+            <li class="mb-2">
+                <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
+                    <i class="bi bi-map-fill fs-5 me-2"></i>Banner Management
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="content">
+        <nav class="navbar">
+            <div class="d-flex justify-content-between align-items-center fs-7 w-100 px-3 py-2">
+                <div class="fs-7 d-flex align-items-center">
+                    <button class="btn open-btn d-lg-none d-block px-1 py-0 text-white">
+                        <i class="bi bi-text-left fs-4 fw-bold text-dark"></i>
+                    </button>
+                    <div id="dateTime" class="me-2"></div>
+                </div>
+
+
+                <div class="d-flex">
+                    <div class="dropdown d-flex align-items-center" style="right: 36px;">
+                        <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                        <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
+                        <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <a class="dropdown-item" href="/logout">LogOut</a>
+                        </div>
+                    </div>
+
+
+
+
+
+
+                </div>
+        </nav>

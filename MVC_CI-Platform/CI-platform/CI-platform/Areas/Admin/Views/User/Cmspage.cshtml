@@ -4,39 +4,13 @@
     ViewData["Title"] = "Admin_control";
     ViewData["css"] = "Admin.css";
 }
-@model List<User>
+@model List<CmsPage>
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-@*<!DOCTYPE html>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
-    <link rel="stylesheet" href="~/CI_platform.styles.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />
 
 
-    <div class="container-fluid mt-5">
 
-    <div class="row main w-100">
-    <div class="col-lg-3 col-md-4 profile-photo border border-1 d-flex flex-column  position-relative userdifine" >
-    Navigation
-    <div class="">
-    <img  src="~/images/user.png"/>
-    User</div>
-    <div class="">CMS Page</div>
-    <div class="">Mission</div>
-    <div class="">Mission Theme</div>
-    <div class="">Mission Skill</div>
-    <div class="">Mission Application</div>
-    <div class="">Story</div>
-    <div class="">Banner</div>
-
-    </div>
-    <div class="col-lg-8 col-md-7 profile-details">
-    </div>
-    </div>
-    </div>*@
 
 <div class="container-fluid m-0 p-0 d-flex">
     <div class="sidebar" id="side_nav">
@@ -47,17 +21,17 @@
             </button>
         </div>
         <ul class="list-unstyled px-2">
-            <li class="active  mb-2">
+            <li class=" mb-2">
                 <a href="/Admin/User/Index" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
                     <i class="bi bi-person-fill fs-5 me-2"></i>User
                 </a>
             </li>
-            <li class=" mb-2">
+            <li class="active  mb-2">
                 <a href="/Admin/User/Cmspage" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
                     <i class="bi bi-file-earmark-text fs-5 me-2"></i>CMS Page
                 </a>
             </li>
-            <li class="mb-2">
+            <li class=" mb-2">
                 <a href="/Admin/Mission/Mission" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
                     <i class="bi bi-bullseye fs-5 me-2"></i>Mission
                 </a>
@@ -135,16 +109,10 @@
                 <table class="table border ">
                     <thead class="bg-primary ">
                         <tr class="rounded-3">
-                            <th>FirstName</th>
-                            <th>LastName</th>
-                            <th>Email</th>
-                            <th>Employee Id</th>
-                            <th>Department</th>
+                            <th>Title</th>
                             <th>Status</th>
                             <th>Action</th>
                             <th></th>
-                           
-                            
                         </tr>
                     </thead>
 
@@ -154,13 +122,9 @@
                         {
                             <tbody>
                                 <tr>
-                                    <td>@item.FirstName</td>
-                                    <td>@item.LastName</td>
-                                    <td>@item.Email</td>
-                                    <td>@item.EmployeeId</td>
-                                    <td>@item.Department</td>
+                                    <td>@item.Title</td>
                                     <td>
-                                        @if(@item.Status=="1")
+                                        @if (@item.Status == "1")
                                         {
                                             <p class="text-success">Active</p>
                                         }
@@ -168,17 +132,19 @@
                                         {
                                             <p class="text-danger">Deactive</p>
                                         }
-                                        </td>
-                                    <td>
-                                        <button class="remove_style"><img src="/images/edit.png" /></button> @* onclick="CreateorEdit(@i.TimesheetId, 0)"*@
-                                        <button class="remove_style" onclick="DeleteRecord(@item.UserId)" ><img src="~/images/bin.png" /></button>  @*onclick="DeleteRecord(@i.TimesheetId)"*@
                                     </td>
-                                    
-                                    
+                                    <td>
+                                        <button class="remove_style"><img src="/images/edit.png" /></button>
+                                        <button class="remove_style" onclick="DeleteRecord(@item.CmsPageId)"><img src="~/images/bin.png" /></button>
+                                    </td>
+
+
                                 </tr>
                             </tbody>
                         }
                     }
+                    @* onclick="CreateorEdit(@i.TimesheetId, 0)"*@
+                    @*onclick="DeleteRecord(@i.TimesheetId)"*@
                 </table>
             </div>
         </div>
@@ -188,6 +154,10 @@
 
 
 <script>
+
+ 
+
+
     $(".sidebar ul li").on('click', function () {
     $(".sidebar ul li.active").removeClass('active');
     $(this).addClass('active');
@@ -206,9 +176,15 @@
     document.getElementById("dateTime").innerHTML = now;
     }
     setInterval(LiveTime, 1000);
+
+
+
+
+    
+
+
 </script>
-
-
+@*<script src="./js/Admin.js"></script>*@
 
 
 
@@ -216,8 +192,8 @@
 <div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form asp-action="GetDeleteUser" asp-area="Admin" asp-controller="User">
-                <input name="userId" id="userid" type="hidden" value="" />
+            <form asp-action="GetDeleteCms" asp-area="Admin" asp-controller="User">
+                <input name="cmsId" id="cmsid" type="hidden" value="" />
                 <div class="modal-header border-0">
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
                 </div>

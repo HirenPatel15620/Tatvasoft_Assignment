@@ -17,5 +17,9 @@ namespace CI.Repository.Repository.IRepository
         public IProfile Profile { get; }
 
         public ISheet Sheet { get; }
+
+        public IAdminUser AdminUser { get; }
+
+        public IAdminMission AdminMission { get; }
     }
 }
