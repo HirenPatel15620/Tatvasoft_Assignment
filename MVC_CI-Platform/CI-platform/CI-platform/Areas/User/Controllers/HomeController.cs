@@ -145,9 +145,11 @@ namespace CI_platform.Controllers
         [Route("User/Home/Privacy")]
         public IActionResult Privacy()
         {
+            var cms=allRepository.Sheet.GetALLPolicies();
+
             if (User.Identity.IsAuthenticated)
             {
-                return View();
+                return View(cms);
             }
             else
             {

@@ -94,10 +94,10 @@ namespace CI.Repository.Repository
             return _db.Cities.Where(x => x.Country.Name.Contains(CountryName)).ToList();
         }
 
-        //public List<CmsPage> GetALLPolicies()
-        //{
-        //    return _db.CmsPages.Where(x => x.Status == 1).ToList();
-        //}
+        public List<CmsPage> GetALLPolicies()
+        {
+            return _db.CmsPages.Where(x => x.Status == "1").ToList();
+        }
 
 
 

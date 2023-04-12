@@ -113,7 +113,7 @@ const change_password = () => {
                 else {
                     $('.wrong-oldpassword').addClass('d-block').removeClass('d-none')
                     toastr.error("password error")
-                }this
+                } this
             },
             error: function () {
                 console.log("Error updating variable");
@@ -122,31 +122,51 @@ const change_password = () => {
     }
 }
 
-function contactus(){
+function contactus() {
 
 
     var subject = document.getElementById("subject").value
     var message = document.getElementById("message").value
-    $.ajax({
-        type: 'POST',
-        url: '/User/Home/contactus',
-        data: { subject: subject, message: message },
-        success: function (result) {
-            if (result.success) {
-                $("#contactus").modal('hide')
-                document.getElementById("subject").value = ""
-                document.getElementById("message").value = ""
-                
-                toastr.success("Thank You For Your Suggestion")
-            }
-            else {
-                
-                toastr.error(" Sorry,But Please send it again")
-            } this
-        },
-        error: function () {
-            console.log("Error updating variable");
-        }
-    })
 
+    if (subject.length < 5 || subject.length > 255) {
+        $('.subject').addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $('.subject').addClass('d-none').removeClass('d-block')
+    }
+
+    if (message.length < 10 || subject.length > 60000) {
+        $('.message').addClass('d-block').removeClass('d-none')
+    }
+    else {
+        $('.message').addClass('d-none').removeClass('d-block')
+    }
+    if ((subject.length > 5 || subject.length < 255) && (message.length > 10 || message.length < 60000)) {
+
+
+        $.ajax({
+            type: 'POST',
+            url: '/User/Home/contactus',
+            data: { subject: subject, message: message },
+            success: function (result) {
+                if (result.success) {
+
+                    $("#contactus").modal('hide')
+                    document.getElementById("subject").value = ""
+                    document.getElementById("message").value = ""
+                    $('.subject').addClass('d-none').removeClass('d-block')
+                    $('.message').addClass('d-none').removeClass('d-block')
+
+                    toastr.success("Thank You For Your Suggestion")
+                }
+                else {
+
+                    toastr.error("Please send it again")
+                } this
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
 }

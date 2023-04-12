@@ -24,14 +24,49 @@ namespace CI_platform.Areas.Admin.Controllers
             return View();
         }
 
+
         public IActionResult MissionSkill()
         {
             return View();
         }
 
+
+
+
+
+        /// ///////////////////////////////////////////////mission application ///////////////////////////////////////////////////////////////////
+
+
+
         public IActionResult MissionApplication()
         {
-            return View();
+            var missionapplication = allRepository.AdminMission.GetAllMissionApplication();
+            return View(missionapplication);
         }
+        [HttpPost]
+        public IActionResult Decline(long id, int flag)
+        {
+            if (id != 0)
+            {
+                if (flag == 0)
+                {
+                    var record = allRepository.AdminMission.GetMissionApplicationById(id);
+                    record.ApprovalStatus = "DECLINE";
+                    allRepository.AdminMission.DeclineUser(record);
+
+                }
+                if (flag == 1)
+                {
+                    var record = allRepository.AdminMission.GetMissionApplicationById(id);
+                    record.ApprovalStatus = "APPROVE";
+                    allRepository.AdminMission.DeclineUser(record);
+
+                }
+            }
+            return RedirectToAction("MissionApplication", "Mission");
+        }
+
+
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 }

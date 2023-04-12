@@ -61,6 +61,20 @@ namespace CI.Repository.Repository
             return _db.CmsPages.Where(x => x.CmsPageId == cmsid).FirstOrDefault();
         }
 
+        
+
+        public CmsPage GetCmsrecordByCmsid(long cmsid)
+        {
+            return _db.CmsPages.Where(x => x.CmsPageId == cmsid).FirstOrDefault();
+        }
+
+        public bool savecms(CmsPage cmsPage)
+        {
+            _db.CmsPages.Add(cmsPage);
+            _db.SaveChanges();
+            return true;
+        }
+
         public bool GetDeleteCms(CmsPage cmss)
         {
             _db.CmsPages.Remove(cmss);
@@ -68,10 +82,18 @@ namespace CI.Repository.Repository
             return true;
         }
 
-        //////////////////////////   mission page //////////////////////////////////////////////
-        
 
-   
+        public bool updatecms(CmsPage cmspage)
+        {
+            _db.CmsPages.Update(cmspage);
+            _db.SaveChanges();
+            return true;
+        }
+
+        ////////////////////////// //////////////////////////////////////////////
+
+
+
 
     }
 }

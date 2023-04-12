@@ -123,8 +123,8 @@
                                 <tr>
                                     <td>@item.Title</td>
                                     <td>@item.MissionType</td>
-                                    <td>@item.StartDate</td>
-                                    <td>@item.EndDate</td>
+                                    <td>@item.StartDate.ToString().Substring(0,10)</td>
+                                    <td>@item.EndDate.ToString().Substring(0,10)</td>
                                     <td>
                                         <button class="remove_style"><img src="/images/edit.png" /></button> @* onclick="CreateorEdit(@i.TimesheetId, 0)"*@
                                         <button class="remove_style" onclick="DeleteRecord(@item.MissionId)" ><img src="~/images/bin.png" /></button>  @*onclick="DeleteRecord(@i.TimesheetId)"*@

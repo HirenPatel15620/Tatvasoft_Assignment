@@ -84,6 +84,7 @@ namespace CI.Repository.Repository
                 ProfileText = user.ProfileText,
                 LinkedInUrl = user.LinkedInUrl,
                 WhyIVolunteer = user.WhyIVolunteer,
+                UserId = user.UserId,
             };
 
 

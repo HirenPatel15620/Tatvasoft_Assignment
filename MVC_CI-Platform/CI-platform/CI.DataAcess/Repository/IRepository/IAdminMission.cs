@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CI.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,8 @@ namespace CI.Repository.Repository.IRepository
     {
 
         List<Models.Mission> GetAllMission();
+        List<Models.MissionApplication> GetAllMissionApplication();
+        MissionApplication GetMissionApplicationById(long id);
+        bool DeclineUser(MissionApplication missionapplication);
     }
 }

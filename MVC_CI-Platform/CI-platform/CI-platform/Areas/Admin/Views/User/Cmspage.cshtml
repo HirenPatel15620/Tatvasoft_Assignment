@@ -103,7 +103,9 @@
             </div>
             <div class="py-3 d-flex justify-content-between align-items-center">
                 <input type="text" class="form-control w-25" placeholder="search">
-                <input type="button" class="btn-primary" value="+ Add">
+                @*  <input type="button" class="btn-primary" value="+ Add">*@
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">+ Add</button>
+
             </div>
             <div class="w-100 h-100">
                 <table class="table border ">
@@ -134,7 +136,10 @@
                                         }
                                     </td>
                                     <td>
-                                        <button class="remove_style"><img src="/images/edit.png" /></button>
+                                        <button type="button" id="editcms" onclick="editor(@item.CmsPageId)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-@item.CmsPageId">Edit</button>
+                                        @*
+                                            <button class="remove_style"><img src="/images/edit.png" /></button>
+                                        *@
                                         <button class="remove_style" onclick="DeleteRecord(@item.CmsPageId)"><img src="~/images/bin.png" /></button>
                                     </td>
 
@@ -153,37 +158,6 @@
 </div>
 
 
-<script>
-
- 
-
-
-    $(".sidebar ul li").on('click', function () {
-    $(".sidebar ul li.active").removeClass('active');
-    $(this).addClass('active');
-    });
-    $(".open-btn").on('click', function () {
-    $(".sidebar").addClass('active');
-    });
-    $(".close-btn").on('click', function () {
-    $(".sidebar").removeClass('active');
-    });
-    $(".c").on('click', function () {
-    $(".sidebar").removeClass('active');
-    });
-    function LiveTime() {
-    let now = new Date();
-    document.getElementById("dateTime").innerHTML = now;
-    }
-    setInterval(LiveTime, 1000);
-
-
-
-
-    
-
-
-</script>
 @*<script src="./js/Admin.js"></script>*@
 
 
@@ -205,3 +179,99 @@
         </div>
     </div>
 </div>
+
+
+
+@*modal of edit*@
+
+@{
+    foreach (var item in Model.ToList())
+    {
+        <div class="modal fade bd-example-modal-xl" id="edit-@item.CmsPageId" tabindex="-1" role="dialog" aria-bs-labelledby="myExtraLargeModalLabel" aria-bs-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <form asp-action="GetEditCms" asp-area="Admin" asp-controller="User">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Contact Us</h5>
+                        </div>
+                        <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                            <div class="w-100">
+                                <label class="form-label mt-2">Title</label>
+                                <input class="form-control title" value="@item.Title" />
+
+                            </div>
+                            <div class="w-100">
+                                <label class="form-label mt-2">Description</label>
+                                <input rows="4" type="text" id="message" class="form-control discription" value="@item.Description"></input>
+                                <span class="d-none text-danger  message">Message between 10 to 60000 required </span>
+                            </div>
+                            <div class="w-100">
+                                <label class="form-label mt-2">Slug</label>
+                                <input class="form-control slug" value="@item.Slug" />
+                            </div>
+                            <div class="w-100">
+                                <label class="form-label mt-2">Status</label>
+                                <input type="text" id="subject" class="form-control status" value="@item.Status" />
+                                <span class="d-none text-danger subject">Subject between 5 to 255 required</span>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                                <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+
+                            </div>
+                            <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" onclick="updatecms(@item.CmsPageId)">Save</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@*for create  //////////////////////////////////////////////////////////////////////////////////////////*@
+<div class="modal fade bd-example-modal-lg" id="edit-0" tabindex="-1" role="dialog" aria-bs-labelledby="myLargeModalLabel" aria-bs-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <form asp-action="GetEditCms" asp-area="Admin" asp-controller="User">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Contact Us</h5>
+                </div>
+                <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                    <div class="w-100">
+                        <label class="form-label mt-2">Title</label>
+                        <input class="form-control title" value="" />
+
+                    </div>
+                    <div class="w-100">
+                        <label class="form-label mt-2">Description</label>
+                        <input rows="4" type="text" id="message" class="form-control discription" value=""></input>
+                        <span class="d-none text-danger  message">Message between 10 to 60000 required </span>
+                    </div>
+                    <div class="w-100">
+                        <label class="form-label mt-2">Slug</label>
+                        <input class="form-control slug" value="" />
+                    </div>
+                    <div class="w-100">
+                        <label class="form-label mt-2">Status</label>
+                        <input type="text" id="subject" class="form-control status" value="" />
+                        <span class="d-none text-danger subject">Subject between 5 to 255 required</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                        <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+
+                    </div>
+                    <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" onclick="createcms(0)">Save</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+

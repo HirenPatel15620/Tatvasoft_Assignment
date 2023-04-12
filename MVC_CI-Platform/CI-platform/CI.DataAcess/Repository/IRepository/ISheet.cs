@@ -18,7 +18,7 @@ namespace CI.Repository.Repository.IRepository
         string GetMissionTypeById(long missionid);
         bool DeleteTimesheetRecord(Timesheet timesheet);
         List<City> GetCityByCountryName(string CountryName);
-        //List<CmsPage> GetALLPolicies();
+        List<CmsPage> GetALLPolicies();
 
 
     }
