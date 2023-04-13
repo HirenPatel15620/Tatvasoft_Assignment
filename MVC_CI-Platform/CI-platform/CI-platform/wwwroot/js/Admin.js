@@ -3,6 +3,7 @@
 //common//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(".sidebar ul li").on('click', function () {
+
     $(".sidebar ul li.active").removeClass('active');
     $(this).addClass('active');
 });
@@ -22,18 +23,11 @@ function LiveTime() {
 setInterval(LiveTime, 1000);
 
 
-//delete user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function DeleteRecord(userid) {
-
-
-    $('#deleterec').modal('show');
-    $('#userid').val(userid);
-}
 
 
 
 //missin application////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-function Decline(id,flag) {
+function Decline(id, flag) {
 
     $('#deleterec').modal('show');
     $('#id').val(id);
@@ -43,6 +37,16 @@ function Decline(id,flag) {
 
 
 
+
+//delete user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function update(id, flag) {
+
+    debugger
+    $('#deleterec').modal('show');
+    $('#id').val(id);
+    $('#flag').val(flag);
+
+}
 
 
 
@@ -64,7 +68,7 @@ function updatecms(id) {
             toastr.success("Cms Update")
             $(`#edit-${id}`).modal('hide');
             setTimeout(function () {
-                location.reload(); 
+                location.reload();
             }, 1000);
 
             //$(`#edit-${id}`).addClass('d-none')
@@ -76,7 +80,7 @@ function updatecms(id) {
 }
 
 
-function createcms(id=0) {
+function createcms(id = 0) {
     debugger
     var title = $(`#edit-${id}`).find('.title').val()
     var description = $(`#edit-${id}`).find('.discription').val()
@@ -89,7 +93,7 @@ function createcms(id=0) {
         url: '/Admin/User/Editcms',
         data: { id: id, title: title, description: description, slug: slug, status: status },
         success: function () {
-           
+
             toastr.success("Cms Update")
             $(`#edit-${id}`).modal('hide');
             setTimeout(function () {
@@ -112,3 +116,45 @@ function DeleteRecord(cmsid) {
 }
 
 //##################################################################################################################
+
+//function ThemeDecline(id, flag) {
+//    debugger
+//    $(`#deleterec-${id}`).modal('show');
+//    $('#id').val(id);
+//    $('#flag').val(flag);
+//    //$('#title').val(title);
+//    //$.ajax({
+//    //    type: 'POST',
+//    //    url: '/Admin/User/ThemeDecline',
+//    //    data: { id: id, flag: flag, title: title },
+//    //    success: function () {
+
+//    //        toastr.success("reached");
+//    //        debugger
+//    //        //$(`#edit-${id}`).addClass('d-none')
+//    //    },
+//    //    error: function () {
+//    //        alert("Some Error From Cms.");
+//    //    }
+//    //});
+//}
+
+
+
+//function ThemeGenerate() {
+//    debugger
+//    $('#deleterec').modal('show');
+//    $('#title').val(title);
+
+//}
+
+
+
+
+function SkillDecline(id, flag) {
+
+    $('#deleterec').modal('show');
+    $('#id').val(id);
+    $('#flag').val(flag);
+
+}

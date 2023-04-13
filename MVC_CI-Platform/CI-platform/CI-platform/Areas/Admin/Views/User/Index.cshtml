@@ -108,7 +108,7 @@
                             <th>Department</th>
                             <th>Status</th>
                             <th>Action</th>
-                            <th></th>
+
 
 
                         </tr>
@@ -135,11 +135,12 @@
                                             <p class="text-danger">Deactive</p>
                                         }
                                     </td>
-                                    <td>
-                                        <button class="remove_style"><img src="/images/edit.png" /></button> @* onclick="CreateorEdit(@i.TimesheetId, 0)"*@
-                                        <button class="remove_style" onclick="DeleteRecord(@item.UserId)"><img src="~/images/bin.png" /></button>  @*onclick="DeleteRecord(@i.TimesheetId)"*@
+                                   
+                                    <td >
+                                        <img onclick="update(@item.UserId,1)" src="/images/right.png" style="margin: 3px 3px 3px 3px;" /> 
+                                        
+                                        <img onclick="update(@item.UserId,0)" src="/images/cancel.png" style="margin: 3px 3px 3px 3px;" />
                                     </td>
-
 
                                 </tr>
                             </tbody>
@@ -154,24 +155,61 @@
 
 
 
-
-
-
-
-
 <div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form asp-action="GetDeleteUser" asp-area="Admin" asp-controller="User">
-                <input name="userId" id="userid" type="hidden" value="" />
+            <form asp-action="GetEditUser" asp-area="Admin" asp-controller="User">
+                <input name="id" id="id" type="hidden" value="" />
+                <input name="flag" id="flag" type="hidden" value="" />
                 <div class="modal-header border-0">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
                 </div>
                 <div class="modal-footer">
-                    <button class="btn btn-outline-danger rounded-pill" onclick="showthis()" type="submit">Delete</button>
+                    <button class="btn btn-outline-warning rounded-pill" onclick="showthis()" type="submit">Change</button>
                     <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
+
+
+@*
+
+    <div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <form asp-action="GetDeleteUser" asp-area="Admin" asp-controller="User">
+    <input name="userId" id="userid" type="hidden" value="" />
+    <div class="modal-header border-0">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-outline-danger rounded-pill" onclick="showthis()" type="submit">Delete</button>
+    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>*@
+
+
+@*<div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <form asp-action="GetDeleteUser" asp-area="Admin" asp-controller="User">
+    <input name="UserId" id="userid" type="hidden" value="" />
+    <div class="modal-header border-0">
+    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to Update?</h1>
+    </div>
+    <div class="modal-footer">
+    <button class="btn btn-outline-danger rounded-pill" onclick="showthis()" type="submit">Update</button>
+    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+    </div>
+    </form>
+    </div>
+    </div>
+    </div>
+*@
+

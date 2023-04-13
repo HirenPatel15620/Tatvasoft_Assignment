@@ -168,10 +168,10 @@ namespace CI_platform.Controllers
 
         [HttpPost]
         [Route("profile")]
-        public IActionResult Profile(CI.Models.ViewModels.ProfileViewModel model, int country, string? oldpassword, string? newpassword)
+        public IActionResult Profile(ProfileViewModel model, int country, string? oldpassword, string? newpassword)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            CI.Models.ViewModels.ProfileViewModel detail = allRepository.Profile.Get_Initial_Details(0,user_id);
+            ProfileViewModel detail = allRepository.Profile.Get_Initial_Details(0,user_id);
 
             if (oldpassword is not null && newpassword is not null)
             {
@@ -184,7 +184,7 @@ namespace CI_platform.Controllers
                 {
                     if (country != 0)
                     {
-                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country,user_id);
+                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country,user_id);
                         var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
                         return Json(new { cities = cities });
                     }
@@ -193,6 +193,7 @@ namespace CI_platform.Controllers
 
                     }
                     {
+                     
                         bool success = allRepository.Profile.Update_Details(model, user_id);
                         return RedirectToAction("login", "userAuthentication");
                     }
@@ -202,13 +203,13 @@ namespace CI_platform.Controllers
                 {
                     if (country != 0)
                     {
-                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country,user_id);
+                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country,user_id);
                         var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
                         return Json(new { cities = cities });
                     }
                     else
                     {
-                        CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0,user_id);
+                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0,user_id);
                         return View(details);
                     }
                 }

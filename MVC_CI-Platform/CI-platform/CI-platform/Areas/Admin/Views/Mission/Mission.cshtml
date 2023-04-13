@@ -99,6 +99,7 @@
             <div class="py-3 d-flex justify-content-between align-items-center">
                 <input type="text" class="form-control w-25" placeholder="search">
                 <input type="button" class="btn-primary" value="+ Add">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".bd-example-modal-xl">Extra large modal</button>
             </div>
             <div class="w-100 h-100">
                 <table class="table border ">
@@ -126,8 +127,8 @@
                                     <td>@item.StartDate.ToString().Substring(0,10)</td>
                                     <td>@item.EndDate.ToString().Substring(0,10)</td>
                                     <td>
-                                        <button class="remove_style"><img src="/images/edit.png" /></button> @* onclick="CreateorEdit(@i.TimesheetId, 0)"*@
-                                        <button class="remove_style" onclick="DeleteRecord(@item.MissionId)" ><img src="~/images/bin.png" /></button>  @*onclick="DeleteRecord(@i.TimesheetId)"*@
+                                        <button class="remove_style"><img src="/images/edit.png"   style="margin: 3px 3px 3px 3px;"/></button> 
+                                        <button class="remove_style" onclick="DeleteRecord(@item.MissionId)" ><img src="~/images/bin.png"   style="margin: 3px 3px 3px 3px;"/></button>  
                                     </td>
                                     
                                     
@@ -142,3 +143,11 @@
 
 </div>
 
+@*Modal of add mission*@
+<div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      
+    </div>
+  </div>
+</div>

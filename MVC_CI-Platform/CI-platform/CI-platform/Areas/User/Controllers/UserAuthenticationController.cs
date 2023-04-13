@@ -58,139 +58,145 @@ namespace CI_platform.Controllers
                     ViewData["login"] = "mainpage";
                     if (verify is true)
                     {
-                        if (check.Avatar is not null || check.CountryId is not null)
+                        if (check.Avatar is not null)
                         {
-                            
+
                             var claims = new List<Claim>
                             {
                             new Claim(ClaimTypes.Name, $"{check.FirstName} {check.LastName}"),
                                   new Claim(ClaimTypes.Email, check.Email),
                                   new Claim(ClaimTypes.Sid, check.UserId.ToString()),
                                };
-                        var identity = new ClaimsIdentity(claims, "AuthCookie");
-                        var Principle = new ClaimsPrincipal(identity);
-                        HttpContext.Session.SetString("Avatar", check.Avatar);
-                        await HttpContext.SignInAsync("AuthCookie", Principle);
-                        return RedirectToAction("home", "home");
+                            var identity = new ClaimsIdentity(claims, "AuthCookie");
+                            var Principle = new ClaimsPrincipal(identity);
+                            HttpContext.Session.SetString("Avatar", check.Avatar);
+                            await HttpContext.SignInAsync("AuthCookie", Principle);
+                            return RedirectToAction("home", "home");
+                        }
+                        else
+                        {
+                            var claims = new List<Claim>
+                            {
+
+                                  new Claim(ClaimTypes.Name, $"{check.FirstName} {check.LastName}"),
+                                  new Claim(ClaimTypes.Email, check.Email),
+                                  new Claim(ClaimTypes.Sid, check.UserId.ToString()),
+                               };
+                            var identity = new ClaimsIdentity(claims, "AuthCookie");
+                            var Principle = new ClaimsPrincipal(identity);
+
+                            await HttpContext.SignInAsync("AuthCookie", Principle);
+                            return RedirectToAction("Profile", "Home");
+                        }
+
                     }
                     else
                     {
-                        var claims = new List<Claim>
-                            {
-
-                                  new Claim(ClaimTypes.Name, $"{check.FirstName} {check.LastName}"),
-                                  new Claim(ClaimTypes.Email, check.Email),
-                                  new Claim(ClaimTypes.Sid, check.UserId.ToString()),
-                               };
-                        var identity = new ClaimsIdentity(claims, "AuthCookie");
-                        var Principle = new ClaimsPrincipal(identity);
-
-                        await HttpContext.SignInAsync("AuthCookie", Principle);
-                        return RedirectToAction("Profile", "Home");
+                        ViewData["login"] = "password";
+                        return View();
                     }
 
                 }
-                    else
-                {
-                    ViewData["login"] = "password";
-                    return View();
-                }
-
             }
-        }
             return View();
-    }
+        }
 
-    [Route("Register")]
-    public IActionResult Register()
-    {
-        if (User.Identity.IsAuthenticated)
+        [Route("Register")]
+        public IActionResult Register()
         {
-            return RedirectToAction("home", "home");
-        }
-        else
-        {
-            return View();
-        }
-    }
-    [Route("Register")]
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Register(Register user)
-    {
-        if (ModelState.IsValid)
-        {
-            var check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
-            if (check == null)
+            if (User.Identity.IsAuthenticated)
             {
-                string secpass = BCrypt.Net.BCrypt.HashPassword(user.Password);
-                User newuser = new User();
-                {
-                    newuser.Email = user.Email;
-                    newuser.FirstName = user.FirstName;
-                    newuser.LastName = user.LastName;
-                    newuser.Password = secpass;
-                    newuser.PhoneNumber = user.PhoneNumber;
-                    newuser.CreatedAt = DateTime.Now;
-
-                }
-                db.UserAuthentication.Add(newuser);
-                db.save();
-                check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
-                var claims = new List<Claim>
-                            {
-                                  new Claim(ClaimTypes.Name, $"{check.FirstName} {check.LastName}"),
-                                  new Claim(ClaimTypes.Email, check.Email),
-                                  new Claim(ClaimTypes.Sid, check.UserId.ToString()),
-                               };
-                var identity = new ClaimsIdentity(claims, "AuthCookie");
-                var Principle = new ClaimsPrincipal(identity);
-                await HttpContext.SignInAsync("AuthCookie", Principle);
-                return RedirectToAction("home", "Home");
+                return RedirectToAction("home", "home");
             }
             else
             {
-                ViewData["register"] = "warning";
                 return View();
             }
         }
-        return View();
-
-
-    }
-    [Route("ResetPassword")]
-    public IActionResult ResetPassword()
-    {
-        if (TempData.Peek("email") is not null)
+        [Route("Register")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(Register user)
         {
-            ViewData["ResetPassword"] = "EmailSent";
+            if (ModelState.IsValid)
+            {
+                var check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+                if (check == null)
+                {
+                    string secpass = BCrypt.Net.BCrypt.HashPassword(user.Password);
+                    User newuser = new User();
+                    {
+                        newuser.Email = user.Email;
+                        newuser.FirstName = user.FirstName;
+                        newuser.LastName = user.LastName;
+                        newuser.Password = secpass;
+                        newuser.PhoneNumber = user.PhoneNumber;
+                        newuser.CreatedAt = DateTime.Now;
+
+                    }
+                    db.UserAuthentication.Add(newuser);
+                    db.save();
+                    check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+                    var claims = new List<Claim>
+                            {
+                                  new Claim(ClaimTypes.Name, $"{check.FirstName} {check.LastName}"),
+                                  new Claim(ClaimTypes.Email, check.Email),
+                                  new Claim(ClaimTypes.Sid, check.UserId.ToString()),
+                               };
+                    var identity = new ClaimsIdentity(claims, "AuthCookie");
+                    var Principle = new ClaimsPrincipal(identity);
+                    await HttpContext.SignInAsync("AuthCookie", Principle);
+                    return RedirectToAction("home", "Home");
+                }
+                else
+                {
+                    ViewData["register"] = "warning";
+                    return View();
+                }
+            }
             return View();
+
+
         }
-        return View();
-    }
-    [HttpPost]
-    [Route("ResetPassword")]
-    public IActionResult ResetPassword(ResetPassword pass)
-    {
-        if (ModelState.IsValid)
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword()
         {
             if (TempData.Peek("email") is not null)
             {
-                string email = TempData.Peek("email").ToString();
-                PasswordReset data = db.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(email));
-                if (data.Token == pass.Token)
+                ViewData["ResetPassword"] = "EmailSent";
+                return View();
+            }
+            return View();
+        }
+        [HttpPost]
+        [Route("ResetPassword")]
+        public IActionResult ResetPassword(ResetPassword pass)
+        {
+            if (ModelState.IsValid)
+            {
+                if (TempData.Peek("email") is not null)
                 {
-                    string passtoken = BCrypt.Net.BCrypt.HashPassword(pass.Password);
-                    User myuser = db.UserAuthentication.ResetPassword(passtoken, email);
-                    if (myuser == null)
+                    string email = TempData.Peek("email").ToString();
+                    PasswordReset data = db.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(email));
+                    if (data.Token == pass.Token)
                     {
-                        ViewData["ResetPassword"] = "false";
-                        return View();
+                        string passtoken = BCrypt.Net.BCrypt.HashPassword(pass.Password);
+                        User myuser = db.UserAuthentication.ResetPassword(passtoken, email);
+                        if (myuser == null)
+                        {
+                            ViewData["ResetPassword"] = "false";
+                            return View();
+                        }
+                        else
+                        {
+                            db.save();
+                            return RedirectToAction("Login");
+                        }
                     }
                     else
                     {
-                        db.save();
-                        return RedirectToAction("Login");
+                        ViewData["ResetPassword"] = "false";
+                        return View();
                     }
                 }
                 else
@@ -205,77 +211,71 @@ namespace CI_platform.Controllers
                 return View();
             }
         }
-        else
+        [Route("ForgotPassword")]
+        public IActionResult ForgotPassword()
         {
-            ViewData["ResetPassword"] = "false";
             return View();
         }
-    }
-    [Route("ForgotPassword")]
-    public IActionResult ForgotPassword()
-    {
-        return View();
-    }
-    [HttpPost]
-    [Route("ForgotPassword")]
-    public IActionResult ForgotPassword(ForgotPassword user)
+        [HttpPost]
+        [Route("ForgotPassword")]
+        public IActionResult ForgotPassword(ForgotPassword user)
 
-    {
-        if (ModelState.IsValid)
         {
-            User myuser = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
-            if (myuser == null)
+            if (ModelState.IsValid)
             {
-                return View();
-            }
-            else
-            {
-                string token = BCrypt.Net.BCrypt.HashString(user.Email.ToLower().ToString());
-                TempData["email"] = user.Email;
-                var senderEmail = new MailAddress("tatvasoft51@gmail.com", "CI-Platform");
-                var receiverEmail = new MailAddress(user.Email, "Receiver");
-                var password = "vlpzyhibrvpaewte";
-                var sub = "Reset Your Password";
-                var body = "Your Reset Password Token : " + token;
-                var smtp = new SmtpClient
+                User myuser = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+                if (myuser == null)
                 {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true,
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = false,
-                    Credentials = new NetworkCredential(senderEmail.Address, password)
-                };
-                using (var mess = new MailMessage(senderEmail, receiverEmail)
-                {
-                    Subject = sub,
-                    Body = body
-                })
-                {
-                    smtp.Send(mess);
-                }
-                PasswordReset passwordReset = new PasswordReset()
-                {
-                    Email = user.Email,
-                    Token = token
-                };
-                PasswordReset data = db.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(user.Email));
-                if (data is null)
-                {
-                    db.ResetPassword.Add(passwordReset);
-                    db.save();
+                    return View();
                 }
                 else
                 {
-                    db.ResetPassword.DeleteData(data);
-                    db.ResetPassword.Add(passwordReset);
-                    db.save();
-                }
-                return RedirectToAction("ResetPassword");
+                    string token = BCrypt.Net.BCrypt.HashString(user.Email.ToLower().ToString());
+                    TempData["email"] = user.Email;
+                    var senderEmail = new MailAddress("tatvasoft51@gmail.com", "CI-Platform");
+                    var receiverEmail = new MailAddress(user.Email, "Receiver");
+                    var password = "vlpzyhibrvpaewte";
+                    var sub = "Reset Your Password";
+                    var body = "Your Reset Password Token : " + token;
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(senderEmail.Address, password)
+                    };
+                    using (var mess = new MailMessage(senderEmail, receiverEmail)
+                    {
+                        Subject = sub,
+                        Body = body
+                    })
+                    {
+                        smtp.Send(mess);
+                    }
+                    PasswordReset passwordReset = new PasswordReset()
+                    {
+                        Email = user.Email,
+                        Token = token
+                    };
+                    PasswordReset data = db.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(user.Email));
+                    if (data is null)
+                    {
+                        db.ResetPassword.Add(passwordReset);
+                        db.save();
+                    }
+                    else
+                    {
+                        db.ResetPassword.DeleteData(data);
+                        db.ResetPassword.Add(passwordReset);
+                        db.save();
+                    }
+                    return RedirectToAction("ResetPassword");
 
+                }
             }
+            return View();
         }
-        return View();
     }
-}
 }

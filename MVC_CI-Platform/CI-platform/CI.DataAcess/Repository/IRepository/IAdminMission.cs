@@ -14,5 +14,12 @@ namespace CI.Repository.Repository.IRepository
         List<Models.MissionApplication> GetAllMissionApplication();
         MissionApplication GetMissionApplicationById(long id);
         bool DeclineUser(MissionApplication missionapplication);
+        List<Models.Skill> GetAllSkil();
+        Skill GetSkillById(long id);
+        bool DeclineSkill(Skill skill);
+        List<Models.MissionTheme> GetAllTheme();
+        MissionTheme GetThemeById(long id);
+        bool DeclineTheme(MissionTheme theme);
+        bool AddTheme(MissionTheme theme);
     }
 }

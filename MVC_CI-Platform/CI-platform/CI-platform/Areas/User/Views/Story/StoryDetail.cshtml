@@ -74,7 +74,21 @@
                                                 {
                                                     @for (int j = 0; j < @Model?.story?.StoryMedia.Count; j++)
                                                     {
-                                                        <img src='@Model?.story?.StoryMedia.ElementAt(j).Path' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                         if (j == 0)
+                                                        {
+                                                            if (@Model?.story?.StoryMedia.ElementAt(j).Path.Length > 300)
+                                                            {
+                                                                <img src='@Model?.story?.StoryMedia.ElementAt(j).Path' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                            }
+                                                            else
+                                                            {
+                                                                <img src="https://img.youtube.com/vi/@Model?.story?.StoryMedia.ElementAt(j).Path.Split("v=").ElementAt(1)/0.jpg" data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                            }
+                                                        }
+                                                        else
+                                                        {
+                                                            <img src='@Model?.story?.StoryMedia.ElementAt(j).Path' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                        }
                                                     }
                                                 }
                                             </div>

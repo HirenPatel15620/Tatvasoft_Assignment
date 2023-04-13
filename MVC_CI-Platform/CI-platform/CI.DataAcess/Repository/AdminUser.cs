@@ -38,10 +38,9 @@ namespace CI.Repository.Repository
             return _db.Users.Where(x => x.UserId == userid).FirstOrDefault();
         }
 
-        public bool GetDeleteUser(User user)
+        public bool GetUpdateUser(User user)
         {
-            _db.Users.Remove(user);
-            //_db.UserSkills.Remove(user);
+            _db.Users.Update(user);
             _db.SaveChanges();
             return true;
         }
@@ -77,7 +76,7 @@ namespace CI.Repository.Repository
 
         public bool GetDeleteCms(CmsPage cmss)
         {
-            _db.CmsPages.Remove(cmss);
+            _db.CmsPages.Update(cmss);
             _db.SaveChanges();
             return true;
         }

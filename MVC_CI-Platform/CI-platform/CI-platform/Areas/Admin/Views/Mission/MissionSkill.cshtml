@@ -4,7 +4,7 @@
     ViewData["Title"] = "Admin_control";
     ViewData["css"] = "Admin.css";
 }
-@model List<User>
+@model List<Skill>
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -82,11 +82,98 @@
                             <a class="dropdown-item" href="/logout">LogOut</a>
                         </div>
                     </div>
-
-
-
-
-
-
                 </div>
         </nav>
+
+         <div class="c p-3">
+            <div class="my-3 ">
+                <div class="fs-3 d-flex">
+                    <div class="border-bottom border-dark pe-3">
+                        User
+                    </div>
+                </div>
+                <hr class="m-0 p-0">
+            </div>
+            <div class="py-3 d-flex justify-content-between align-items-center">
+                <input type="text" class="form-control w-25" placeholder="search">
+                <input type="button" class="btn-primary" value="+ Add">
+            </div>
+            <div class="w-100 h-100">
+                <table class="table border ">
+                    <thead class="bg-primary ">
+                        <tr class="rounded-3">
+                            <th>Mission Skill</th>
+                            <th>Status</th>
+                            <th>Action</th>
+
+                           
+                            
+                        </tr>
+                    </thead>
+
+
+                    @{
+                        foreach (var item in Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td >@item.SkillName</td>
+                                    <td>
+                                        @if (@item.Status == 1)
+                                        {
+                                            <p class="text-success">Active</p>
+                                        }
+                                        else
+                                        {
+                                            <p class="text-danger">Deactive</p>
+                                        }
+                                    </td>
+                                    
+                                    <td>
+
+                                        <img onclick="SkillDecline(@item.SkillId,1)" src="~/images/right.png"  style="margin: 3px 3px 3px 3px;" />
+                                        <img  onclick="SkillDecline(@item.SkillId,0)" src="~/images/bin.png"   style="margin: 3px 3px 3px 3px;"/>
+                                    </td>
+                                    
+                                    
+                                </tr>
+                            </tbody>
+                        }
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-action="SkillDecline" asp-area="Admin" asp-controller="Mission">
+                <input name="id" id="id" type="hidden" value="" />
+                <input name="flag" id="flag" type="hidden" value="" />
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-warning rounded-pill" onclick="showthis()" type="submit">Change</button>
+                    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+
+    function SkillDecline(id,flag) {
+
+    $('#deleterec').modal('show');
+    $('#id').val(id);
+    $('#flag').val(flag);
+
+}
+</script>

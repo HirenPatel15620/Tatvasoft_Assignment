@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-
+@*remove approve and decline users*@
 
 <div class="container-fluid m-0 p-0 d-flex">
     <div class="sidebar" id="side_nav">
@@ -107,7 +107,7 @@
                             <th>User Name</th>
                             <th>Applied Date</th>
                             <th>Action</th>
-                            <th></th>
+
                         </tr>
                     </thead>
 
@@ -122,11 +122,10 @@
                                     <td>@item.UserId</td>
                                     <td>@item.User.FirstName @item.User.LastName</td>
                                     <td>@item.AppliedAt</td>
-                                    <td onclick="Decline(@item.MissionApplicationId,1)">
-                                    <img src="/images/right.png" />
-                                    </td>
-                                    <td onclick="Decline(@item.MissionApplicationId,0)"> 
-                                    <img src="/images/cancel.png" />
+                                    <td>
+                                        <img onclick="Decline(@item.MissionApplicationId,1)" src="/images/right.png" style="margin: 3px 3px 3px 3px;" />
+
+                                        <img onclick="Decline(@item.MissionApplicationId,0)" src="/images/cancel.png" style="margin: 3px 3px 3px 3px;" />
                                     </td>
                                 </tr>
                             </tbody>

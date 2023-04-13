@@ -19,15 +19,99 @@ namespace CI_platform.Areas.Admin.Controllers
             return View(allmission);
         }
 
+
+
         public IActionResult MissionTheme()
         {
-            return View();
+            var missiontheme = allRepository.AdminMission.GetAllTheme();
+            return View(missiontheme);
+        }
+        [HttpPost]
+        public IActionResult ThemeDecline(long id, int flag)
+        {
+            if (id != 0)
+            {
+                if (flag == 0)
+                {
+                    var record = allRepository.AdminMission.GetThemeById(id);
+                    record.Status = 0;
+                    allRepository.AdminMission.DeclineTheme(record);
+
+                }
+                if (flag == 1)
+                {
+                    var record = allRepository.AdminMission.GetThemeById(id);
+                    record.Status = 1;
+                    allRepository.AdminMission.DeclineTheme(record);
+
+                }
+            }
+            return RedirectToAction("MissionTheme", "Mission");
         }
 
+        //public IActionResult ThemeDecline(long id, int flag)
+        //{
+        //    if (id != 0)
+        //    {
+        //        if (flag == 0)
+        //        {
+        //            var record = allRepository.AdminMission.GetThemeById(id);
+        //            record.Status = 0;
+        //            //record.Title = title;
+        //            allRepository.AdminMission.DeclineTheme(record);
+
+        //        }
+        //        if (flag == 1)
+        //        {
+        //            var record = allRepository.AdminMission.GetThemeById(id);
+        //            record.Status = 1;
+        //            //record.Title = title;
+        //            allRepository.AdminMission.DeclineTheme(record);
+
+        //        }
+        //    }
+        //    if (id == 0)
+        //    {
+        //        CI.Models.MissionTheme missiontheme = new CI.Models.MissionTheme()
+        //        {
+        //            //Title = title,
+        //            Status = 1,
+        //            CreatedAt = DateTime.Now,
+        //        };
+        //        allRepository.AdminMission.AddTheme(missiontheme);
+        //    }
+        //    return RedirectToAction("MissionTheme", "Mission");
+        //}
+
+        ///skill //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public IActionResult MissionSkill()
         {
-            return View();
+            var missionskill=allRepository.AdminMission.GetAllSkil();
+            return View(missionskill);
+        }
+
+        [HttpPost]
+        public IActionResult SkillDecline(long id, int flag)
+        {
+            if (id != 0)
+            {
+                if (flag == 0)
+                {
+                    var record = allRepository.AdminMission.GetSkillById(id);
+                    record.Status = 0;
+                    allRepository.AdminMission.DeclineSkill(record);
+
+                }
+                if (flag == 1)
+                {
+                    var record = allRepository.AdminMission.GetSkillById(id);
+                    record.Status = 1;
+                    allRepository.AdminMission.DeclineSkill(record);
+
+                }
+            }
+            return RedirectToAction("MissionSkill", "Mission");
         }
 
 

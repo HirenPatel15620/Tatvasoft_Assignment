@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6slmGK5XD4YXGCR+66bPrnvsf3kPuy6wEJkPF4ELkZgagHHzUh6+0q5WKjztJbHzgdaWsCLpGgliMDuhTaXn1A==",
+  "dgSpecHash": "z3Dunw684mzHnsKANbqef3eXhS+xwzQK1JnSukKJaJ8mvtV7ATllGWfdxjbqS8CMcMEXenb7YSjfQjDPGeS47g==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj",
+  "projectFilePath": "C:\\Users\\pca107\\Desktop\\CI-platform\\CI.DataAcess\\CI.Repository.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pca107\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\pca107\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

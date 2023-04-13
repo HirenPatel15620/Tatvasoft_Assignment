@@ -13,7 +13,7 @@ namespace CI.Repository.Repository.IRepository
         List<Models.User> GetAllUser();
         User GetUserByUserId(long userid);
 
-        bool GetDeleteUser(User user);
+        bool GetUpdateUser(User user);
 
         //cms page///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         List<Models.CmsPage> GetAllCms();

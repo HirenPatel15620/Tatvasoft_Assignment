@@ -137,10 +137,10 @@
                                     </td>
                                     <td>
                                         <button type="button" id="editcms" onclick="editor(@item.CmsPageId)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-@item.CmsPageId">Edit</button>
-                                        @*
-                                            <button class="remove_style"><img src="/images/edit.png" /></button>
+                                        <button type="button" id="editcms" onclick="DeleteRecord(@item.CmsPageId)" class="btn btn-danger" >Delete</button>
+                                   @*
+                                        <img  onclick="DeleteRecord(@item.CmsPageId)"><img src="~/images/cancel.png" />
                                         *@
-                                        <button class="remove_style" onclick="DeleteRecord(@item.CmsPageId)"><img src="~/images/bin.png" /></button>
                                     </td>
 
 
@@ -148,8 +148,7 @@
                             </tbody>
                         }
                     }
-                    @* onclick="CreateorEdit(@i.TimesheetId, 0)"*@
-                    @*onclick="DeleteRecord(@i.TimesheetId)"*@
+              
                 </table>
             </div>
         </div>
@@ -202,8 +201,8 @@
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Description</label>
-                                <input rows="4" type="text" id="message" class="form-control discription" value="@item.Description"></input>
-                                <span class="d-none text-danger  message">Message between 10 to 60000 required </span>
+                                <input rows="4" type="text"  class="form-control discription" value="@item.Description"></input>
+                              
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Slug</label>
@@ -211,8 +210,8 @@
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Status</label>
-                                <input type="text" id="subject" class="form-control status" value="@item.Status" />
-                                <span class="d-none text-danger subject">Subject between 5 to 255 required</span>
+                                <input type="text"  class="form-control status" value="@item.Status" />
+                          
                             </div>
                         </div>
                         <div class="modal-footer">
