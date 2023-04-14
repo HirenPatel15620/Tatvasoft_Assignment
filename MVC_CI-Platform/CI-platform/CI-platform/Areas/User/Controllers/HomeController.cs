@@ -161,7 +161,8 @@ namespace CI_platform.Controllers
         [Route("profile")]
         public IActionResult Profile()
         {
-            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value); 
+            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+           
             CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0, user_id);
             return View(details);
         }

@@ -8,173 +8,181 @@ build_property.PlatformNeutralAssembly =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = CI_platform
 build_property.RootNamespace = CI_platform
-build_property.ProjectDir = C:\Users\pca107\Desktop\CI-platform\CI-platform\
+build_property.ProjectDir = C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\pca107\Desktop\CI-platform\CI-platform
+build_property.MSBuildProjectDirectory = C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-platform\CI-platform
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/Admin/Views/Mission/Mission.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Mission/Mission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxNaXNzaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionApplication.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionApplication.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxNaXNzaW9uQXBwbGljYXRpb24uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionSkill.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionSkill.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxNaXNzaW9uU2tpbGwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionTheme.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Mission/MissionTheme.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcTWlzc2lvblxNaXNzaW9uVGhlbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/Admin/Views/User/Cmspage.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Story/Banner.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3RvcnlcQmFubmVyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/Story/Story.cshtml]
+build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcU3RvcnlcU3RvcnkuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/User/Cmspage.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxDbXNwYWdlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/Admin/Views/User/Index.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/User/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcVXNlclxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/Admin/Views/_ViewImports.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/Admin/Views/_ViewStart.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/Admin/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcQWRtaW5cVmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Home/home.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Home/home.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXGhvbWUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Home/Privacy.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Home/Privacy.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXFByaXZhY3kuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Home/Profile.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Home/Profile.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXFByb2ZpbGUuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Home/volunteering_mission.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Home/volunteering_mission.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXHZvbHVudGVlcmluZ19taXNzaW9uLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Home/Volunteering_Timesheet.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Home/Volunteering_Timesheet.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xIb21lXFZvbHVudGVlcmluZ19UaW1lc2hlZXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Shared/page_not_found.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Shared/page_not_found.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xTaGFyZWRccGFnZV9ub3RfZm91bmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Shared/ProfileCity_partial.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Shared/ProfileCity_partial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xTaGFyZWRcUHJvZmlsZUNpdHlfcGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Shared/TimesheetModal.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Shared/TimesheetModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xTaGFyZWRcVGltZXNoZWV0TW9kYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Story/ShareStory.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Story/ShareStory.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xTdG9yeVxTaGFyZVN0b3J5LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Story/StoryDetail.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Story/StoryDetail.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xTdG9yeVxTdG9yeURldGFpbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/Story/storylisting.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/Story/storylisting.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xTdG9yeVxzdG9yeWxpc3RpbmcuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/ForgotPassword.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/ForgotPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xVc2VyQXV0aGVudGljYXRpb25cRm9yZ290UGFzc3dvcmQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/Login.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/Login.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xVc2VyQXV0aGVudGljYXRpb25cTG9naW4uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/Register.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/Register.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xVc2VyQXV0aGVudGljYXRpb25cUmVnaXN0ZXIuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/ResetPassword.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/UserAuthentication/ResetPassword.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xVc2VyQXV0aGVudGljYXRpb25cUmVzZXRQYXNzd29yZC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/_ViewImports.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xfVmlld0ltcG9ydHMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Areas/User/Views/_ViewStart.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Areas/User/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = QXJlYXNcVXNlclxWaWV3c1xfVmlld1N0YXJ0LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/City_partial.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/City_partial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENpdHlfcGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/CmsModal.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/CmsModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXENtc01vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/comment_partial.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/comment_partial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXGNvbW1lbnRfcGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/Error.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/mission_partial.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/mission_partial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXG1pc3Npb25fcGFydGlhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/ProfileModal.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/ProfileModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFByb2ZpbGVNb2RhbC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/recent_volunteers_partial.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/recent_volunteers_partial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXHJlY2VudF92b2x1bnRlZXJzX3BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/SecondHeader_partial.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/SecondHeader_partial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFNlY29uZEhlYWRlcl9wYXJ0aWFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/story_partial.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/story_partial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXHN0b3J5X3BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/TimesheetModal.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/TimesheetModal.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFRpbWVzaGVldE1vZGFsLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/UserAuthentication_Layout.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/UserAuthentication_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXFVzZXJBdXRoZW50aWNhdGlvbl9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/_AdminLayout.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/_AdminLayout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9BZG1pbkxheW91dC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/_ValidationScriptsPartial.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/_ValidationScriptsPartial.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/_ViewImports.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/_ViewImports.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/_ViewStart.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/_ViewStart.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/pca107/Desktop/CI-platform/CI-platform/Views/Shared/_Layout.cshtml]
+[C:/Users/pca107/Desktop/git/MVC_CI-Platform/CI-platform/CI-platform/Views/Shared/_Layout.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = b-aej11ftgui

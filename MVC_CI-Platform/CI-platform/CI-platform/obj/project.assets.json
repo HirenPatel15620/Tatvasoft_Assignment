@@ -10559,11 +10559,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\pca107\\Desktop\\CI-platform\\CI-platform\\CI-platform.csproj",
+      "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\CI-platform.csproj",
       "projectName": "CI-platform",
-      "projectPath": "C:\\Users\\pca107\\Desktop\\CI-platform\\CI-platform\\CI-platform.csproj",
+      "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\CI-platform.csproj",
       "packagesPath": "C:\\Users\\pca107\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\pca107\\Desktop\\CI-platform\\CI-platform\\obj\\",
+      "outputPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI-platform\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -10585,11 +10585,11 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "C:\\Users\\pca107\\Desktop\\CI-platform\\CI.DataAcess\\CI.Repository.csproj": {
-              "projectPath": "C:\\Users\\pca107\\Desktop\\CI-platform\\CI.DataAcess\\CI.Repository.csproj"
+            "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj": {
+              "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.DataAcess\\CI.Repository.csproj"
             },
-            "C:\\Users\\pca107\\Desktop\\CI-platform\\CI.Models\\CI.Models.csproj": {
-              "projectPath": "C:\\Users\\pca107\\Desktop\\CI-platform\\CI.Models\\CI.Models.csproj"
+            "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj": {
+              "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj"
             }
           }
         }

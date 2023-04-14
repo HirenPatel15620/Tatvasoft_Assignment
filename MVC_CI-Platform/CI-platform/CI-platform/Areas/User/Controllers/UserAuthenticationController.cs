@@ -47,6 +47,7 @@ namespace CI_platform.Controllers
             if (ModelState.IsValid)
             {
                 User check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(login.Email));
+                
                 if (check == null)
                 {
                     ViewData["login"] = "register";
@@ -55,9 +56,11 @@ namespace CI_platform.Controllers
                 else
                 {
                     bool verify = BCrypt.Net.BCrypt.Verify(login.Password, check.Password);
+
                     ViewData["login"] = "mainpage";
                     if (verify is true)
                     {
+                        
                         if (check.Avatar is not null)
                         {
 

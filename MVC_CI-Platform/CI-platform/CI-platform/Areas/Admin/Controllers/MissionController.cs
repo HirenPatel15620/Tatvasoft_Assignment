@@ -27,7 +27,7 @@ namespace CI_platform.Areas.Admin.Controllers
             return View(missiontheme);
         }
         [HttpPost]
-        public IActionResult ThemeDecline(long id, int flag)
+        public IActionResult ThemeDecline(long id, int flag,string title)
         {
             if (id != 0)
             {
@@ -35,6 +35,7 @@ namespace CI_platform.Areas.Admin.Controllers
                 {
                     var record = allRepository.AdminMission.GetThemeById(id);
                     record.Status = 0;
+                    record.Title = title;
                     allRepository.AdminMission.DeclineTheme(record);
 
                 }
@@ -42,46 +43,27 @@ namespace CI_platform.Areas.Admin.Controllers
                 {
                     var record = allRepository.AdminMission.GetThemeById(id);
                     record.Status = 1;
+                    record.Title = title;
                     allRepository.AdminMission.DeclineTheme(record);
 
                 }
             }
+            if (id == 0)
+            {
+                CI.Models.MissionTheme missiontheme = new CI.Models.MissionTheme()
+                {
+                    Title = title,
+                    Status = 1,
+                    CreatedAt = DateTime.Now,
+                };
+                allRepository.AdminMission.AddTheme(missiontheme);
+            }
             return RedirectToAction("MissionTheme", "Mission");
         }
 
-        //public IActionResult ThemeDecline(long id, int flag)
-        //{
-        //    if (id != 0)
-        //    {
-        //        if (flag == 0)
-        //        {
-        //            var record = allRepository.AdminMission.GetThemeById(id);
-        //            record.Status = 0;
-        //            //record.Title = title;
-        //            allRepository.AdminMission.DeclineTheme(record);
-
-        //        }
-        //        if (flag == 1)
-        //        {
-        //            var record = allRepository.AdminMission.GetThemeById(id);
-        //            record.Status = 1;
-        //            //record.Title = title;
-        //            allRepository.AdminMission.DeclineTheme(record);
-
-        //        }
-        //    }
-        //    if (id == 0)
-        //    {
-        //        CI.Models.MissionTheme missiontheme = new CI.Models.MissionTheme()
-        //        {
-        //            //Title = title,
-        //            Status = 1,
-        //            CreatedAt = DateTime.Now,
-        //        };
-        //        allRepository.AdminMission.AddTheme(missiontheme);
-        //    }
-        //    return RedirectToAction("MissionTheme", "Mission");
-        //}
+       
+        
+        
 
         ///skill //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -92,13 +74,14 @@ namespace CI_platform.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SkillDecline(long id, int flag)
+        public IActionResult SkillDecline(long id, int flag,string skillname)
         {
             if (id != 0)
             {
                 if (flag == 0)
                 {
                     var record = allRepository.AdminMission.GetSkillById(id);
+                    record.SkillName = skillname;
                     record.Status = 0;
                     allRepository.AdminMission.DeclineSkill(record);
 
@@ -106,10 +89,21 @@ namespace CI_platform.Areas.Admin.Controllers
                 if (flag == 1)
                 {
                     var record = allRepository.AdminMission.GetSkillById(id);
+                    record.SkillName=skillname;
                     record.Status = 1;
                     allRepository.AdminMission.DeclineSkill(record);
 
                 }
+            }
+            if (id == 0)
+            {
+                CI.Models.Skill skill = new CI.Models.Skill()
+                {
+                    SkillName = skillname,
+                    Status = 1,
+                    CreatedAt = DateTime.Now,
+                };
+                allRepository.AdminMission.AddSkill(skill);
             }
             return RedirectToAction("MissionSkill", "Mission");
         }

@@ -42,7 +42,7 @@ function Decline(id, flag) {
 function update(id, flag) {
 
     debugger
-    $('#deleterec').modal('show');
+    $(`#deleterec-${id}`).modal('show');
     $('#id').val(id);
     $('#flag').val(flag);
 
@@ -117,44 +117,44 @@ function DeleteRecord(cmsid) {
 
 //##################################################################################################################
 
-//function ThemeDecline(id, flag) {
-//    debugger
-//    $(`#deleterec-${id}`).modal('show');
-//    $('#id').val(id);
-//    $('#flag').val(flag);
-//    //$('#title').val(title);
-//    //$.ajax({
-//    //    type: 'POST',
-//    //    url: '/Admin/User/ThemeDecline',
-//    //    data: { id: id, flag: flag, title: title },
-//    //    success: function () {
+function ThemeDecline(id) {
+    debugger
+    $(`#deleterec-${id}`).modal('show');
+    $('#id').val(id);
+    $('#flag').val(flag);
+    $('#title').val(title);
 
-//    //        toastr.success("reached");
-//    //        debugger
-//    //        //$(`#edit-${id}`).addClass('d-none')
-//    //    },
-//    //    error: function () {
-//    //        alert("Some Error From Cms.");
-//    //    }
-//    //});
-//}
+   
+
+}
 
 
 
-//function ThemeGenerate() {
-//    debugger
-//    $('#deleterec').modal('show');
-//    $('#title').val(title);
+function ThemeGenerate() {
+    debugger
+    $('#addrec').modal('show');
+    $('#title').val(title);
 
-//}
+}
 
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function SkillDecline(id, flag) {
 
-    $('#deleterec').modal('show');
+    $(`#deleterec-${id}`).modal('show');
     $('#id').val(id);
     $('#flag').val(flag);
+    $('#skillname').val(skillname);
+
+
+}
+
+
+
+function SkillGenerate() {
+    debugger
+    $('#addrec').modal('show');
+    $('#skillname').val(skillname);
 
 }

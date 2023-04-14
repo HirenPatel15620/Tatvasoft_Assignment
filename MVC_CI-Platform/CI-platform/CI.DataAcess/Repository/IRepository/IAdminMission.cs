@@ -17,6 +17,7 @@ namespace CI.Repository.Repository.IRepository
         List<Models.Skill> GetAllSkil();
         Skill GetSkillById(long id);
         bool DeclineSkill(Skill skill);
+        bool AddSkill(Skill skill);
         List<Models.MissionTheme> GetAllTheme();
         MissionTheme GetThemeById(long id);
         bool DeclineTheme(MissionTheme theme);

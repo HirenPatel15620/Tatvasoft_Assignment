@@ -10,80 +10,6 @@
 }
 
 
-<div class="container-fluid m-0 p-0 d-flex">
-    <div class="sidebar" id="side_nav">
-        <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-3 mb-lg-3 mb-2">
-            <h4 class="fs-4 p-0 m-0"><span class="text-white fw-bold">CI - Platform</span></h4>
-            <button class="btn close-btn d-lg-none d-block px-1 py-0 text-white">
-                <i class="bi bi-text-left fs-4 fw-bold text-white"></i>
-            </button>
-        </div>
-        <ul class="list-unstyled px-2">
-            <li class="active  mb-2">
-                <a href="/Admin/User/Index" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-person-fill fs-5 me-2"></i>User
-                </a>
-            </li>
-            <li class=" mb-2">
-                <a href="/Admin/User/Cmspage" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-file-earmark-text fs-5 me-2"></i>CMS Page
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="/Admin/Mission/Mission" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-bullseye fs-5 me-2"></i>Mission
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="/Admin/Mission/MissionTheme" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-layout-wtf fs-5 me-2"></i>Mission Theme
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="/Admin/Mission/MissionSkill" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-tools fs-5 me-2"></i>Mission Skills
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="/Admin/Mission/MissionApplication" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-folder-fill fs-5 me-2"></i>Mission Application
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-journal-medical fs-5 me-2"></i>Story
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-map-fill fs-5 me-2"></i>Banner Management
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="content">
-        <nav class="navbar">
-            <div class="d-flex justify-content-between align-items-center fs-7 w-100 px-3 py-2">
-                <div class="fs-7 d-flex align-items-center">
-                    <button class="btn open-btn d-lg-none d-block px-1 py-0 text-white">
-                        <i class="bi bi-text-left fs-4 fw-bold text-dark"></i>
-                    </button>
-                    <div id="dateTime" class="me-2"></div>
-                </div>
-
-
-                <div class="d-flex">
-                    <div class="dropdown d-flex align-items-center" style="right: 36px;">
-                        <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
-                        <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
-                        <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
-                            <a class="dropdown-item" href="/profile">Profile</a>
-                            <a class="dropdown-item" href="/logout">LogOut</a>
-                        </div>
-                    </div>
-                </div>
-        </nav>
         <div class="c p-3">
             <div class="my-3 ">
                 <div class="fs-3 d-flex">
@@ -95,7 +21,7 @@
             </div>
             <div class="py-3 d-flex justify-content-between align-items-center">
                 <input type="text" class="form-control w-25" placeholder="search">
-                <input type="button" class="btn-primary" value="+ Add">
+          
             </div>
             <div class="w-100 h-100">
                 <table class="table border ">
@@ -137,9 +63,13 @@
                                     </td>
                                    
                                     <td >
+                                       <button onclick="update(@item.UserId,1)" class="btn btn-danger">Edit</button>
+                                       @*
+                                       <button onclick="update(@item.UserId,0)" class="btn btn-danger">Deactive</button>
                                         <img onclick="update(@item.UserId,1)" src="/images/right.png" style="margin: 3px 3px 3px 3px;" /> 
                                         
                                         <img onclick="update(@item.UserId,0)" src="/images/cancel.png" style="margin: 3px 3px 3px 3px;" />
+                                        *@
                                     </td>
 
                                 </tr>
@@ -154,8 +84,59 @@
 </div>
 
 
+@*edit*@
+@{
+    foreach (var item in Model)
+    {
 
-<div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="deleterec-@item.UserId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form asp-action="GetEditUser" asp-area="Admin" asp-controller="User">
+                        <input name="id" id="id" type="hidden" value="@item.UserId" />
+                        @*
+                            <input name="flag" id="flag" type="hidden" />
+                            *@
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                        </div>
+                        <div class="modal-body ">
+                            <label> User Name  </label>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">User Name </span>
+                                </div>
+                                <input disabled value="@item.FirstName @item.LastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                                </div>
+                                <input name="flag" id="flag" value="@item.Status" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-warning rounded-pill" type="submit">Change</button>
+                            <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+  
+
+
+
+
+
+@*Approve and decline modal *@
+@*<div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form asp-action="GetEditUser" asp-area="Admin" asp-controller="User">
@@ -172,44 +153,8 @@
         </div>
     </div>
 </div>
-
-
-
-@*
-
-    <div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-    <form asp-action="GetDeleteUser" asp-area="Admin" asp-controller="User">
-    <input name="userId" id="userid" type="hidden" value="" />
-    <div class="modal-header border-0">
-    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
-    </div>
-    <div class="modal-footer">
-    <button class="btn btn-outline-danger rounded-pill" onclick="showthis()" type="submit">Delete</button>
-    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
-    </div>
-    </form>
-    </div>
-    </div>
-    </div>*@
-
-
-@*<div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-    <form asp-action="GetDeleteUser" asp-area="Admin" asp-controller="User">
-    <input name="UserId" id="userid" type="hidden" value="" />
-    <div class="modal-header border-0">
-    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to Update?</h1>
-    </div>
-    <div class="modal-footer">
-    <button class="btn btn-outline-danger rounded-pill" onclick="showthis()" type="submit">Update</button>
-    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
-    </div>
-    </form>
-    </div>
-    </div>
-    </div>
 *@
+
+
+
 

@@ -15,7 +15,7 @@ namespace CI.Models.ViewModels
 
         public EditUser? user { get; set; }
 
-        public List<Admin>? AdminUser { get; set; }
+        public List<Admin> AdminUser { get; set; }=new List<Admin>();
         public long UserId { get; set; }
         public IFormFile? profile { get; set; }
         public string? Selected_Skills { get; set; }

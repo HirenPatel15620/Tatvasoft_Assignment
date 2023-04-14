@@ -11,92 +11,11 @@
 
 
 
-
-<div class="container-fluid m-0 p-0 d-flex">
-    <div class="sidebar" id="side_nav">
-        <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-3 mb-lg-3 mb-2">
-            <h4 class="fs-4 p-0 m-0"><span class="text-white fw-bold">CI - Platform</span></h4>
-            <button class="btn close-btn d-lg-none d-block px-1 py-0 text-white">
-                <i class="bi bi-text-left fs-4 fw-bold text-white"></i>
-            </button>
-        </div>
-        <ul class="list-unstyled px-2">
-            <li class=" mb-2">
-                <a href="/Admin/User/Index" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-person-fill fs-5 me-2"></i>User
-                </a>
-            </li>
-            <li class="active  mb-2">
-                <a href="/Admin/User/Cmspage" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-file-earmark-text fs-5 me-2"></i>CMS Page
-                </a>
-            </li>
-            <li class=" mb-2">
-                <a href="/Admin/Mission/Mission" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-bullseye fs-5 me-2"></i>Mission
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="/Admin/Mission/MissionTheme" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-layout-wtf fs-5 me-2"></i>Mission Theme
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="/Admin/Mission/MissionSkill" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-tools fs-5 me-2"></i>Mission Skills
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="/Admin/Mission/MissionApplication" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-folder-fill fs-5 me-2"></i>Mission Application
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-journal-medical fs-5 me-2"></i>Story
-                </a>
-            </li>
-            <li class="mb-2">
-                <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-                    <i class="bi bi-map-fill fs-5 me-2"></i>Banner Management
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="content">
-        <nav class="navbar">
-            <div class="d-flex justify-content-between align-items-center fs-7 w-100 px-3 py-2">
-                <div class="fs-7 d-flex align-items-center">
-                    <button class="btn open-btn d-lg-none d-block px-1 py-0 text-white">
-                        <i class="bi bi-text-left fs-4 fw-bold text-dark"></i>
-                    </button>
-                    <div id="dateTime" class="me-2"></div>
-                </div>
-
-
-                <div class="d-flex">
-                    <div class="dropdown d-flex align-items-center" style="right: 36px;">
-                        <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
-                        <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
-                        <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
-                            <a class="dropdown-item" href="/profile">Profile</a>
-                            <a class="dropdown-item" href="/logout">LogOut</a>
-                        </div>
-                    </div>
-
-
-
-
-
-
-                </div>
-        </nav>
         <div class="c p-3">
             <div class="my-3 ">
                 <div class="fs-3 d-flex">
                     <div class="border-bottom border-dark pe-3">
-                        User
+                        Cms Page
                     </div>
                 </div>
                 <hr class="m-0 p-0">
@@ -161,7 +80,7 @@
 
 
 
-
+@*delete Modal*@
 <div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -191,7 +110,7 @@
                 <div class="modal-content">
                     <form asp-action="GetEditCms" asp-area="Admin" asp-controller="User">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel">Contact Us</h5>
+                            <h5 class="modal-title" id="staticBackdropLabel">Cms Page</h5>
                         </div>
                         <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
                             <div class="w-100">
@@ -237,7 +156,7 @@
 
             <form asp-action="GetEditCms" asp-area="Admin" asp-controller="User">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Contact Us</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Cms Page</h5>
                 </div>
                 <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
                     <div class="w-100">
@@ -247,8 +166,8 @@
                     </div>
                     <div class="w-100">
                         <label class="form-label mt-2">Description</label>
-                        <input rows="4" type="text" id="message" class="form-control discription" value=""></input>
-                        <span class="d-none text-danger  message">Message between 10 to 60000 required </span>
+                        <input rows="4" type="text" id="message" class="form-control discription" value=""/>
+                       
                     </div>
                     <div class="w-100">
                         <label class="form-label mt-2">Slug</label>
@@ -257,7 +176,7 @@
                     <div class="w-100">
                         <label class="form-label mt-2">Status</label>
                         <input type="text" id="subject" class="form-control status" value="" />
-                        <span class="d-none text-danger subject">Subject between 5 to 255 required</span>
+                  
                     </div>
                 </div>
                 <div class="modal-footer">

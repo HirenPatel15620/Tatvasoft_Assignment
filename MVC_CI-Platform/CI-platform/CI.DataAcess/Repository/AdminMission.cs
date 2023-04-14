@@ -70,6 +70,13 @@ namespace CI.Repository.Repository
             _db.SaveChanges();
             return true;
         }
+        public bool AddSkill(Skill skill)
+        {
+            _db.Skills.Add(skill);
+            _db.SaveChanges();
+            return true;
+        }
+
 
         //mission theme//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

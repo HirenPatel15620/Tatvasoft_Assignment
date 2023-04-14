@@ -21,7 +21,7 @@ namespace CI.Repository.Repository
         }
 
 
-
+     
 
         public bool Change_Password(string oldpassword, string newpassword, long User_id)
         {
@@ -124,6 +124,7 @@ namespace CI.Repository.Repository
                 user.CountryId = Details.user.CountryId;
                 user.UpdatedAt = DateTime.Now;
                 user.EmployeeId = Details.user.EmployeeId;
+
 
 
                 if (_db.Users.Any(u => u.EmployeeId == Details.EmployeeId && u.UserId != Details.user.UserId))
