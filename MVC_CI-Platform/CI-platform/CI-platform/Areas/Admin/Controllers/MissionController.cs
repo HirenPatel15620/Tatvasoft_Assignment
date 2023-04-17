@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CI.Repository.Repository.IRepository;
+using CI.Models.ViewModels;
+using CI.Models;
+using System.Security.Claims;
 
 namespace CI_platform.Areas.Admin.Controllers
 {
@@ -15,11 +18,74 @@ namespace CI_platform.Areas.Admin.Controllers
 
         public IActionResult Mission()
         {
-            var allmission = allRepository.AdminMission.GetAllMission();
-            return View(allmission);
+            AdminMission adminMission = new AdminMission();
+            adminMission.Missions = allRepository.AdminMission.GetAllMission();
+            adminMission.skills=allRepository.AdminMission.GetAllSkil();
+            adminMission.themes=allRepository.AdminMission.GetAllTheme();
+            adminMission.Country = allRepository.AdminMission.GetAllCountry();
+            //if (country != 0)
+            //{
+            //    ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country, user_id);
+            //    var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
+            //    return Json(new { cities = cities });
+            //}
+            adminMission.Cities=allRepository.AdminMission.GetAllCities();
+            return View(adminMission);
         }
 
 
+
+        [HttpPost]
+        public IActionResult AddMission(AdminMission model)
+       {
+
+
+            if (ModelState.IsValid)
+            {
+            CI.Models.Mission mission = new CI.Models.Mission();
+                model.Availability = mission.Availability;
+                model.Description = mission.Description;
+                model.CityId= mission.CityId;
+                model.EndDate= mission.EndDate;
+                model.StartDate= mission.StartDate;
+                model.MissionThemeId = mission.ThemeId;
+
+
+                return View();
+
+            }
+            else
+            {
+                return View();
+            }
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public IActionResult DeleteMission(long id)
+        {
+            if (id != 0)
+            {
+                var record = allRepository.AdminMission.GetMissionById(id);
+                record.Status = false;
+                record.DeletedAt = DateTime.Now;    
+                allRepository.AdminMission.DeleteMission(record);
+
+            }
+            return RedirectToAction("MissionApplication", "Mission");
+        }
 
         public IActionResult MissionTheme()
         {
@@ -27,7 +93,7 @@ namespace CI_platform.Areas.Admin.Controllers
             return View(missiontheme);
         }
         [HttpPost]
-        public IActionResult ThemeDecline(long id, int flag,string title)
+        public IActionResult ThemeDecline(long id, int flag, string title)
         {
             if (id != 0)
             {
@@ -61,20 +127,20 @@ namespace CI_platform.Areas.Admin.Controllers
             return RedirectToAction("MissionTheme", "Mission");
         }
 
-       
-        
-        
+
+
+
 
         ///skill //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public IActionResult MissionSkill()
         {
-            var missionskill=allRepository.AdminMission.GetAllSkil();
+            var missionskill = allRepository.AdminMission.GetAllSkil();
             return View(missionskill);
         }
 
         [HttpPost]
-        public IActionResult SkillDecline(long id, int flag,string skillname)
+        public IActionResult SkillDecline(long id, int flag, string skillname)
         {
             if (id != 0)
             {
@@ -89,7 +155,7 @@ namespace CI_platform.Areas.Admin.Controllers
                 if (flag == 1)
                 {
                     var record = allRepository.AdminMission.GetSkillById(id);
-                    record.SkillName=skillname;
+                    record.SkillName = skillname;
                     record.Status = 1;
                     allRepository.AdminMission.DeclineSkill(record);
 

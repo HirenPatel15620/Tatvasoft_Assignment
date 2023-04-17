@@ -11,8 +11,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/Admin.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />*@
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
@@ -42,14 +41,14 @@
                     if (Context.Request.Path.Equals("/Admin/User/Index"))
                     {
                         <a href="/Admin/User/Index" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
-                             <i class="bi bi-person-fill fs-5 me-2"></i>
+                            <i class="bi bi-person-fill fs-5 me-2"></i>
                             <span class="ms-3" style="color:orange">User</span>
                         </a>
                     }
                     else
                     {
                         <a href="/Admin/User/Index" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
-                             <i class="bi bi-person-fill fs-5 me-2"></i>
+                            <i class="bi bi-person-fill fs-5 me-2"></i>
                             <span class="ms-3" style="color:white">User</span>
                         </a>
                     }
@@ -64,7 +63,7 @@
                     else
                     {
                         <a href="/Admin/User/Cmspage" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
-                           <i class="bi bi-file-earmark-text fs-5 me-2"></i>
+                            <i class="bi bi-file-earmark-text fs-5 me-2"></i>
                             <span class="ms-3" style="color:white">Cms Page</span>
                         </a>
                     }
@@ -78,7 +77,7 @@
                     else
                     {
                         <a href="/Admin/Mission/Mission" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
-                             <i class="bi bi-bullseye fs-5 me-2"></i>
+                            <i class="bi bi-bullseye fs-5 me-2"></i>
                             <span class="ms-3" style="color:white">Mission</span>
                         </a>
                     }
@@ -92,14 +91,14 @@
                     else
                     {
                         <a href="/Admin/Mission/MissionApplication" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
-                           <i class="bi bi-folder-fill fs-5 me-2"></i>
+                            <i class="bi bi-folder-fill fs-5 me-2"></i>
                             <span class="ms-3" style="color:white">Mission Application</span>
                         </a>
                     }
                     if (Context.Request.Path.Equals("/Admin/Mission/MissionSkill"))
                     {
                         <a href="/Admin/Mission/MissionSkill" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
-                             <i class="bi bi-tools fs-5 me-2"></i>
+                            <i class="bi bi-tools fs-5 me-2"></i>
                             <span class="ms-3" style="color:orange">Mission Skill</span>
                         </a>
                     }
@@ -113,32 +112,32 @@
                     if (Context.Request.Path.Equals("/Admin/Mission/MissionTheme"))
                     {
                         <a href="/Admin/Mission/MissionTheme" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
-                           <i class="bi bi-layout-wtf fs-5 me-2"></i>
+                            <i class="bi bi-layout-wtf fs-5 me-2"></i>
                             <span class="ms-3" style="color:orange">Mission Theme</span>
                         </a>
                     }
                     else
                     {
                         <a href="/Admin/Mission/MissionTheme" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
-                          <i class="bi bi-layout-wtf fs-5 me-2"></i>
+                            <i class="bi bi-layout-wtf fs-5 me-2"></i>
                             <span class="ms-3" style="color:white">Mission Theme</span>
                         </a>
                     }
-                         if (Context.Request.Path.Equals("/Admin/Story/Story"))
+                    if (Context.Request.Path.Equals("/Admin/Story/Story"))
                     {
                         <a href="/Admin/Story/Story" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
-                             <i class="bi bi-journal-medical fs-5 me-2"></i>
+                            <i class="bi bi-journal-medical fs-5 me-2"></i>
                             <span class="ms-3" style="color:orange">Story</span>
                         </a>
                     }
                     else
                     {
                         <a href="/Admin/Story/Story" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
-                             <i class="bi bi-journal-medical fs-5 me-2"></i>
+                            <i class="bi bi-journal-medical fs-5 me-2"></i>
                             <span class="ms-3" style="color:white">Story</span>
                         </a>
                     }
-                             if (Context.Request.Path.Equals("/Admin/Story/Banner"))
+                    if (Context.Request.Path.Equals("/Admin/Story/Banner"))
                     {
                         <a href="/Admin/Story/Banner" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
                             <i class="bi bi-map-fill fs-5 me-2"></i>
@@ -148,15 +147,13 @@
                     else
                     {
                         <a href="/Admin/Story/Banner" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
-                        <i class="bi bi-map-fill fs-5 me-2"></i>
-                        @*
-                            <img class="ms-2" src="~/images/mission-white.png" />
-                            *@
+                            <i class="bi bi-map-fill fs-5 me-2"></i>
+
                             <span class="ms-3" style="color:white">Banner</span>
                         </a>
                     }
                 }
-              
+
             </div>
 
             <div class="content">
@@ -169,19 +166,24 @@
                             <div id="dateTime" class="me-2"></div>
                         </div>
 
-                        <div class="dropdown d-flex align-items-center" style="right: 36px;">
-                            <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
-                            <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
-                            <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
-                                <a class="dropdown-item" href="/profile">Profile</a>
-                                <a class="dropdown-item" href="/volunteering_timesheet">Volunteering Timesheet</a>
-                                <a class="dropdown-item" href="/logout">LogOut</a>
+
+                        <div class="d-flex">
+
+                            <div class="dropdown d-flex align-items-center" style="right: 36px;">
+                                <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                                <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
+                                <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
+                                    <a class="dropdown-item" href="/profile">Profile</a>
+                                    <a class="dropdown-item" href="/volunteering_timesheet">Volunteering Timesheet</a>
+                                    <a class="dropdown-item" href="/logout">LogOut</a>
+                                </div>
                             </div>
                         </div>
+
                     </div>
                 </nav>
-        @RenderBody()
+                @RenderBody()
             </div>
         </div>
     </main>
@@ -200,87 +202,11 @@
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    <script src="~/js/Admin.js" asp-append-version="true"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap-datepicker.min.js"></script>
-    <script>
+    <script src="~/js/Admin.js" asp-append-version="true"></script>
 
-                $(".sidebar ul li").on('click', function () {
-            $(".sidebar ul li.active").removeClass('active');
-            $(this).addClass('active');
-        });
-        $(".open-btn").on('click', function () {
-            $(".sidebar").addClass('active');
-        });
-        $(".close-btn").on('click', function () {
-            $(".sidebar").removeClass('active');
-        });
-        $(".c").on('click', function () {
-            $(".sidebar").removeClass('active');
-        });
-        function LiveTime() {
-            let now = new Date();
-            document.getElementById("dateTime").innerHTML = now;
-        }
-        setInterval(LiveTime, 1000);
-
-    </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-
-@*
-<div class="container-fluid m-0 p-0 d-flex">
-    <div class="sidebar" id="side_nav">
-      <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-3 mb-lg-3 mb-2">
-        <h4 class="fs-4 p-0 m-0"><span class="text-white fw-bold">CSI - Platform</span></h4>
-        <button class="btn close-btn d-lg-none d-block px-1 py-0 text-white"><i
-            class="bi bi-text-left fs-4 fw-bold text-white"></i>
-        </button>
-      </div>
-      <ul class="list-unstyled px-2">
-        <li class="active mb-2">
-          <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-            <i class="bi bi-person-fill fs-5 me-2"></i>User
-          </a>
-        </li>
-        <li class="mb-2">
-          <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-            <i class="bi bi-file-earmark-text fs-5 me-2"></i>CMS Page
-          </a>
-        </li>
-        <li class="mb-2">
-          <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-            <i class="bi bi-bullseye fs-5 me-2"></i>Mission
-          </a>
-        </li>
-        <li class="mb-2">
-          <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-            <i class="bi bi-layout-wtf fs-5 me-2"></i>Mission Theme
-          </a>
-        </li>
-        <li class="mb-2">
-          <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-            <i class="bi bi-tools fs-5 me-2"></i>Mission Skills
-          </a>
-        </li>
-        <li class="mb-2">
-          <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-            <i class="bi bi-folder-fill fs-5 me-2"></i>Mission Application
-          </a>
-        </li>
-        <li class="mb-2">
-          <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-            <i class="bi bi-journal-medical fs-5 me-2"></i>Story
-          </a>
-        </li>
-        <li class="mb-2">
-          <a href="#" class="text-decoration-none d-flex align-items-center px-3 py-2 d-block">
-            <i class="bi bi-map-fill fs-5 me-2"></i>Banner Management
-          </a>
-        </li>
-      </ul>
-    </div>
-  *@

@@ -14,14 +14,14 @@
     <div class="container mt-5">
         <form asp-action="Profile" id="form" asp-controller="Home" method="post" enctype="multipart/form-data">
             <div class="row main w-100">
-            @*    
+              
             @if (@Model.user.UserId == 3)
                 {
                     <button type="button" class=" mt-4 pr-1 btn btn-success">
                      <a class="nav-link text-white " href="/Admin/User/Index">Admin Controlles</a>
                     </button>
                 }
-                *@
+                
               @if(@Model.AdminUser.Where(x=>x.Email.Equals(@Model.user.Email)).ToList().Count>0)
                 {
                     <button type="button" class=" mt-4 pr-1 btn btn-success">

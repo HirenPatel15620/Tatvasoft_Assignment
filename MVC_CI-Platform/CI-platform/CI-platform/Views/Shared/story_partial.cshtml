@@ -4,7 +4,7 @@
 @using System.Security.Claims;
 @model CI.Models.ViewModels.Mission
 @{
-    foreach (var item in Model.Stories.Where(c => c.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) || (c.Status == "PUBLISHED")).ToList())
+    foreach (var item in Model.Stories.Where(c => c.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) || (c.Status == "PUBLISHED")||(c.Status != "DELETE")).ToList())
     {
 
         <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
@@ -22,6 +22,10 @@
                     else if (item.Status == "PUBLISHED")
                     {
                         <div class=" appliedicon-badge">Published</div>
+                    }
+                     else if (item.Status == "DELETE")
+                    {
+                        <div class=" closeicon-badge">DELETED</div>
                     }
 
                     @{

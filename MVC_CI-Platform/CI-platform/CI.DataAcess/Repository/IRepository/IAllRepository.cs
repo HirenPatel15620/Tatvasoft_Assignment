@@ -21,5 +21,6 @@ namespace CI.Repository.Repository.IRepository
         public IAdminUser AdminUser { get; }
 
         public IAdminMission AdminMission { get; }
+        public IAdminStory AdminStory { get; }
     }
 }

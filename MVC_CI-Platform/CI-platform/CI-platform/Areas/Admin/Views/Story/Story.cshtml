@@ -1,11 +1,169 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
 @{
     ViewData["Title"] = "Admin_control";
     ViewData["css"] = "Admin.css";
 }
-@model List<Story>
+@model CI.Models.ViewModels.AdminStory
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
+
+
+<div class="c p-3">
+    <div class="my-3 ">
+        <div class="fs-3 d-flex">
+            <div class="border-bottom border-dark pe-3">
+                Story
+            </div>
+        </div>
+        <hr class="m-0 p-0">
+    </div>
+    <div class="py-3 d-flex justify-content-between align-items-center">
+        <input type="text" class="form-control w-25" placeholder="search">
+
+
+    </div>
+    <div class="w-100 h-100">
+        <table class="table border ">
+            <thead class="bg-primary ">
+                <tr class="rounded-3">
+                    <th>Story Title</th>
+                    <th>FullName</th>
+                    <th>Mission Title</th>
+                    <th>Status</th>
+                    <th>View</th>
+                    <th>Action</th>
+                    <th></th>
+
+
+                </tr>
+            </thead>
+
+
+            @{
+
+                foreach (var item in Model.Stories)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.Title.ToString().Substring(0,50)...</td>
+                            <td>@item.User.FirstName @item.User.LastName</td>
+                            <td>@item.Mission.Title.ToString().Substring(0,30)...</td>
+                            @if (@item.Status == "PENDING")
+                            {
+                                <td class="text-warning">Pending</td>
+
+                            }
+                            else if (@item.Status == "DECLINED")
+                            {
+                                <td class="text-danger">Decline</td>
+
+                            }
+                            else
+                            {
+                                <td class="">Delete</td>
+
+                            }
+                            <td class="">
+                                <button class="btn btn-primary mb-1"><a class="text-decoration-none text-white" href="/stories/detail/@item.StoryId" />View</button>
+                            </td>
+
+                            <td>
+  
+                                <button class="btn btn-success mb-1" onclick="StoryRecord(@item.StoryId,1)">Approve</button>
+                                <button class=" btn btn-warning mb-1" onclick="StoryRecord(@item.StoryId,0)">Deny</button>
+                                <button class="btn btn-danger mb-1" onclick="DeleteRecord(@item.StoryId)">Delete</button>
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+                }
+            }
+        </table>
+    </div>
+</div>
+
+
+@*Modal of Delete*@
+@{
+    foreach (var item in Model.Stories)
+    {
+        <div class="modal fade" id="deleter-@item.StoryId" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form asp-action="DeleteStory" asp-area="Admin" asp-controller="story">
+                        <input name="id" id="id" type="hidden" value="@item.StoryId" />
+                        @*
+                            <input name="flag" id="flag" type="hidden" value="" />
+                        *@
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger rounded-pill" type="submit">Delete</button>
+                            <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@{
+    foreach (var item in Model.Stories)
+    {
+
+        <div class="modal fade" id="deleterec-@item.StoryId" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form asp-action="ApproveAndDecline" asp-area="Admin" asp-controller="Story">
+                        <input name="id" id="id" type="hidden" value="@item.StoryId" />
+                        @*
+                            <input name="flag" id="flag" type="hidden" />
+                        *@
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                        </div>
+                        <div class="modal-body ">
+                            <label> Story Title  </label>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Story Title</span>
+                                </div>
+                                <input name="title" id="title" value="@item.Title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                                </div>
+                                <input name="flag" id="flag"  type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                            </div>
+
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-warning rounded-pill" type="submit">Change</button>
+                            <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@*edit story*@
+
+
+
+
+
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>

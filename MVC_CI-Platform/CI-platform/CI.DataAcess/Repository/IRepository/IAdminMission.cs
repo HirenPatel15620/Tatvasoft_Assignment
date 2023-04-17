@@ -11,6 +11,16 @@ namespace CI.Repository.Repository.IRepository
     {
 
         List<Models.Mission> GetAllMission();
+
+        bool DeleteMission(Models.Mission mission);
+        Models.Mission GetMissionById(long id);
+        List<Models.City> GetAllCities();
+        List<Models.Country> GetAllCountry();
+
+
+
+
+
         List<Models.MissionApplication> GetAllMissionApplication();
         MissionApplication GetMissionApplicationById(long id);
         bool DeclineUser(MissionApplication missionapplication);

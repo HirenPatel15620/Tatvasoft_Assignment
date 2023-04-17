@@ -1,76 +1,240 @@
 ﻿@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
 @inject IHttpContextAccessor Accesor
 @{
     ViewData["Title"] = "Admin_control";
     ViewData["css"] = "Admin.css";
 }
-@model List<Mission>
+@model CI.Models.ViewModels.AdminMission
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 
-        <div class="c p-3">
-            <div class="my-3 ">
-                <div class="fs-3 d-flex">
-                    <div class="border-bottom border-dark pe-3">
-                        Mission
-                    </div>
-                </div>
-                <hr class="m-0 p-0">
-            </div>
-            <div class="py-3 d-flex justify-content-between align-items-center">
-                <input type="text" class="form-control w-25" placeholder="search">
-                <input type="button" class="btn-primary" value="+ Add">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".bd-example-modal-xl">Extra large modal</button>
-            </div>
-            <div class="w-100 h-100">
-                <table class="table border ">
-                    <thead class="bg-primary ">
-                        <tr class="rounded-3">
-                            <th>Mission Title</th>
-                            <th>Mission Type</th>
-                            <th>Start Date</th>
-                            <th>End Date</th>
-                            <th>Action</th>
-                            <th></th>
-                           
-                            
-                        </tr>
-                    </thead>
-
-
-                    @{
-                        foreach (var item in Model)
-                        {
-                            <tbody>
-                                <tr>
-                                    <td>@item.Title</td>
-                                    <td>@item.MissionType</td>
-                                    <td>@item.StartDate.ToString().Substring(0,10)</td>
-                                    <td>@item.EndDate.ToString().Substring(0,10)</td>
-                                    <td>
-                                        <button class="remove_style"><img src="/images/edit.png"   style="margin: 3px 3px 3px 3px;"/></button> 
-                                        <button class="remove_style" onclick="DeleteRecord(@item.MissionId)" ><img src="~/images/bin.png"   style="margin: 3px 3px 3px 3px;"/></button>  
-                                    </td>
-                                    
-                                    
-                                </tr>
-                            </tbody>
-                        }
-                    }
-                </table>
+<div class="c p-3">
+    <div class="my-3 ">
+        <div class="fs-3 d-flex">
+            <div class="border-bottom border-dark pe-3">
+                Mission
             </div>
         </div>
+        <hr class="m-0 p-0">
     </div>
+    <div class="py-3 d-flex justify-content-between align-items-center">
+        <input type="text" class="form-control w-25" placeholder="search">
 
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".bd-example-modal-xl">+ ADD</button>
+    </div>
+    <div class="w-100 h-100">
+        <table class="table border ">
+            <thead class="bg-primary ">
+                <tr class="rounded-3">
+                    <th>Mission Title</th>
+                    <th>Mission Type</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Action</th>
+                    <th></th>
+
+
+                </tr>
+            </thead>
+
+
+            @{
+                foreach (var item in Model.Missions)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>@item.MissionType</td>
+                            <td>@item.StartDate.ToString().Substring(0,10)</td>
+                            <td>@item.EndDate.ToString().Substring(0,10)</td>
+                            <td>
+                                <button class="remove_style"><img src="/images/edit.png" style="margin: 3px 3px 3px 3px;" /></button>
+                                <button onclick="MissionDelete(@item.MissionId)" class="btn btn-danger">Delete</button>
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+                }
+            }
+        </table>
+    </div>
 </div>
+
 
 @*Modal of add mission*@
 <div class="modal fade bd-example-modal-xl" tabindex="-1" role="dialog" aria-labelledby="myExtraLargeModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl">
-    <div class="modal-content">
-      
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Create Mission</h1>
+            </div>
+            <form asp-area="Admin" asp-action="AddMission" id="form" asp-controller="Mission" method="post" enctype="multipart/form-data">
+                @*mission title*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Mission Title</span>
+                    </div>
+                    <input asp-for=Title type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                @*mission Description*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Mission Description</span>
+                    </div>
+                    <textarea asp-for=Description type="text" rows="4" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </textarea>
+                </div>
+
+
+                @*mission Organazion*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Mission Organazion Name</span>
+                    </div>
+                    <input asp-for=OrganizationName type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+
+
+                @*mission Organazion Details*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Mission Organazion Details</span>
+                    </div>
+                    <textarea asp-for=OrganizationDetail type="text" rows="4" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+            </textarea>
+                </div>
+
+                @*start and end date & deadline*@
+                <div class="row mb-3">
+                    <div class="col-sm-12 col-lg-3 col-md-6">
+                        <lable>Starting date</lable>
+                        <input asp-for=StartDate id="begin" class="datepicker form-control">
+                    </div>
+
+                    <div class="col-sm-12 col-lg-3 col-md-6">
+                        <lable>End date</lable>
+                        <input asp-for=EndDate id="end" class="datepicker form-control">
+                    </div>
+
+
+                    <div class="col-sm-12 col-lg-3 col-md-12">
+                        <lable>Registration DeadLine</lable>
+                        <input asp-for=Deadline id="end" class="datepicker form-control">
+                    </div>
+                </div>
+
+                @*available seats*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Total seats</span>
+                    </div>
+                    <input asp-for=TotalSeats type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                @*mission Skill*@
+                <div class="row">
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12 ">
+                        <label class="form-label">Skill</label>
+                        <select asp-for=SkillId class="form-select me-3" aria-label="Select Skill">
+                            <option value=0 disabled selected>Select Skill for Mission</option>
+                            @{
+                                foreach (var item in Model.skills)
+                                {
+
+                                    <option value=@item.SkillId id=@item.SkillId>@item.SkillName</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+                    @*mission Theme*@
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                        <label class="form-label">Theme</label>
+                        <select asp-for=MissionThemeId class="form-select me-3" aria-label="Select Theme">
+                            <option value=0 disabled selected>Select Theme for Mission</option>
+                            @{
+                                foreach (var item in Model.themes)
+                                {
+
+                                    <option value=@item.MissionThemeId id=@item.MissionThemeId>@item.Title</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                @*Country*@
+
+                <div class="row">
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                        <label class="form-label">Country</label>
+                        <select asp-for=CountryId class="form-select me-3" aria-label="Select Country">
+                            <option value=0 disabled selected>Select Country for Mission</option>
+                            @{
+                                foreach (var item in Model.Country)
+                                {
+
+                                    <option value=@item.CountryId id=@item.CountryId>@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+
+
+                    @*Cities*@
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                        <label class="form-label">City</label>
+                        <select asp-for=CityId class="form-select me-3" aria-label="Select City" onchange="getcities()">
+                            <option value=0 disabled selected>Select Country for Mission</option>
+                            @{
+                                foreach (var item in Model.Cities)
+                                {
+
+                                    <option value=@item.CityId id=@item.CityId>@item.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                @*availabilities*@
+                <div class="col-lg-6 mt-2 col-md-6 ">
+                    <label class="form-label">Availablity</label><select asp-for=Availability id='avilablity' class="form-select me-3" aria-label="Select Mission">
+                        <option value=0 disabled selected>Select Your Availablity</option>
+                        <option value='Weekly'>Weekly</option>
+                        <option value='Daily'>Daily</option>
+
+                    </select>
+                </div>
+
+
+
+            <div class="modal-footer">
+                <button class="btn btn-outline-danger rounded-pill" type="submit">Save</button>
+                <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+            </div>
+            </form>
+        </div>
     </div>
-  </div>
+</div>
+
+@*delete Modal*@
+<div class="modal fade" id="deleter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-action="DeleteMission" asp-area="Admin" asp-controller="Mission">
+                <input name="id" id="id" type="hidden" />
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-danger rounded-pill" type="submit">Delete</button>
+                    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>

@@ -1,5 +1,6 @@
 ﻿using CI.Repository.Repository.IRepository;
 using CI.Models;
+using CI.Models.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +23,7 @@ namespace CI.Repository.Repository
             Sheet = new Sheet(_db);
             AdminUser = new AdminUser(_db);
             AdminMission = new AdminMission(_db);
+            AdminStory = new AdminStory(_db);
         }
         public IUserAuthentication UserAuthentication { get;private set; }
 
@@ -38,6 +40,7 @@ namespace CI.Repository.Repository
 
         public IAdminMission AdminMission { get; private set; }
 
+        public IAdminStory AdminStory { get; private set;}
         public void save()
         {
             _db.SaveChanges();

@@ -63,3 +63,38 @@
 }
 
 
+/*story*/
+
+.story-image {
+    cursor: pointer;
+}
+
+.story-image {
+    filter: brightness(45%);
+}
+
+.view-detail {
+    left: 30%;
+    bottom: 40%;
+}
+
+.main-image-div {
+    width: 90px;
+    margin: 10px;
+    position: relative;
+}
+
+.main-image {
+    width: 100%;
+    height: 90px;
+}
+
+.close {
+    width: 20px;
+    height: 20px;
+    opacity: 70%;
+    position: absolute;
+    top: 0%;
+    left: 77%;
+    cursor: pointer;
+}
