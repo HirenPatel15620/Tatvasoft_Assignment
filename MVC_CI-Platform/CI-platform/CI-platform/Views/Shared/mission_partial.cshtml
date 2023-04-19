@@ -24,7 +24,7 @@
 
 
                     <img class="group list-group-image w-100 h-100"
-                 src='~/images/@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath'
+                 src='@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath'
                  onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
                  onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
 
@@ -66,12 +66,12 @@
                     </button>
 
 
-
+                     
 
 
                     @*//view details conditions*@
 
-                    @if (@item.Deadline < DateTime.Now || @item.EndDate < DateTime.Now || @item.AvbSeat == 0 ||
+                    @if (@item.Deadline < DateTime.Now || DateTime.Now > @item.StartDate || @item.AvbSeat == 0 ||
             (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0))
                     {
                         <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"

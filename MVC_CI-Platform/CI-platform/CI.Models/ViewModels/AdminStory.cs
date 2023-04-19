@@ -13,5 +13,6 @@ namespace CI.Models.ViewModels
         public Story   story { get; set; }  = new Story();
 
 
+
     }
 }

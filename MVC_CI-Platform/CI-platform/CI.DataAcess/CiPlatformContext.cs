@@ -351,7 +351,7 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.Achieved).HasColumnName("achieved");
             entity.Property(e => e.Availability)
-                .HasMaxLength(5)
+                .HasMaxLength(30)
                 .IsUnicode(false)
                 .HasColumnName("availability");
             entity.Property(e => e.AvbSeat).HasColumnName("avb_seat");
@@ -548,7 +548,7 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.Default)
                 .HasMaxLength(1)
                 .IsUnicode(false)
-                .HasDefaultValueSql("('0')")
+                .HasDefaultValueSql("('1')")
                 .HasColumnName("default");
             entity.Property(e => e.DeletedAt)
                 .HasColumnType("datetime")
@@ -558,11 +558,10 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("media_name");
             entity.Property(e => e.MediaPath)
-                .HasMaxLength(255)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("media_path");
             entity.Property(e => e.MediaType)
-                .HasMaxLength(4)
+                .HasMaxLength(10)
                 .IsUnicode(false)
                 .HasColumnName("media_type");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
@@ -928,6 +927,10 @@ public partial class CiPlatformContext : DbContext
             entity.Property(e => e.ProfileText)
                 .HasColumnType("text")
                 .HasColumnName("profile_text");
+            entity.Property(e => e.Role)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("role");
             entity.Property(e => e.Status)
                 .HasMaxLength(2)
                 .IsUnicode(false)

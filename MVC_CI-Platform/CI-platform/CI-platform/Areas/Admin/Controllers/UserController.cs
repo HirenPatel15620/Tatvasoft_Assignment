@@ -15,16 +15,46 @@ namespace CI_platform.Areas.Admin.Controllers
 
         ///////////////////////////////////////           User                       //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public IActionResult Index()
+        public IActionResult Index(string searchString, int page)
         {
-            var alluser = allRepository.AdminUser.GetAllUser();
-            return View(alluser);
+            //if (searchString == null)
+            //{
+
+            //    var alluser = allRepository.AdminUser.GetAllUser();
+            //    return View(alluser);
+            //}
+
+            int pageSize = 10; // Number of records to display per page
+
+            IEnumerable<CI.Models.User> users;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                users = allRepository.AdminUser.SearchUsers(searchString);
+            }
+            else
+            {
+                users = allRepository.AdminUser.GetUsers();
+            }
+
+            int totalRecords = users.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+            int skip = (page - 1) * pageSize;
+
+            users = users.Skip(skip).Take(pageSize).ToList();
+
+            ViewData["SearchString"] = searchString;
+            ViewData["CurrentPage"] = page;
+
+            ViewData["TotalPages"] = totalPages;
+
+            return View(users);
         }
 
 
 
         [HttpPost]
-        public IActionResult GetEditUser(long id, int flag)
+        public IActionResult GetEditUser(long id, int flag, string firstname, string lastname, string email, string employeeid, string department, string profiletext,string role)
         {
             if (id != 0)
             {
@@ -32,6 +62,14 @@ namespace CI_platform.Areas.Admin.Controllers
                 {
                     var record = allRepository.AdminUser.GetUserByUserId(id);
                     record.Status = "0";
+                    record.FirstName = firstname;
+                    record.LastName = lastname;
+                    record.Email = email;
+                    record.Department = department;
+                    record.ProfileText = profiletext;
+                    record.EmployeeId = employeeid;
+                    record.Role = role;
+
                     allRepository.AdminUser.GetUpdateUser(record);
 
                 }
@@ -39,6 +77,13 @@ namespace CI_platform.Areas.Admin.Controllers
                 {
                     var record = allRepository.AdminUser.GetUserByUserId(id);
                     record.Status = "1";
+                    record.FirstName = firstname;
+                    record.LastName = lastname;
+                    record.Email = email;
+                    record.Department = department;
+                    record.ProfileText = profiletext;
+                    record.EmployeeId = employeeid;
+                    record.Role=role;
                     allRepository.AdminUser.GetUpdateUser(record);
 
                 }
@@ -48,11 +93,39 @@ namespace CI_platform.Areas.Admin.Controllers
 
         /////////////////////////////////////////////////////////////////////////////////   CMS Page /////////////////////////////////////////////////////////////////////////////////////////////////// 
 
-        public IActionResult Cmspage()
+        public IActionResult Cmspage(string searchString, int page)
         {
-            var allcms = allRepository.AdminUser.GetAllCms();
+            
 
-            return View(allcms);
+
+            int pageSize = 10; // Number of records to display per page
+
+            IEnumerable<CI.Models.CmsPage> cmsPages;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                cmsPages = allRepository.AdminUser.Searchcmspages(searchString);
+            }
+            else
+            {
+                cmsPages = allRepository.AdminUser.GetCmsPages();
+            }
+
+            int totalRecords = cmsPages.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+            int skip = (page - 1) * pageSize;
+
+            cmsPages = cmsPages.Skip(skip).Take(pageSize).ToList();
+
+            ViewData["SearchString"] = searchString;
+            ViewData["CurrentPage"] = page;
+
+            ViewData["TotalPages"] = totalPages;
+
+            return View(cmsPages);
+
+
+
         }
         [HttpPost]
         public IActionResult Editcms(long id, string title, string description, string slug, string status)
@@ -93,6 +166,11 @@ namespace CI_platform.Areas.Admin.Controllers
             allRepository.AdminUser.GetDeleteCms(record);
             return RedirectToAction("Cmspage", "User");
         }
+
+
+
+
+
 
     }
 }

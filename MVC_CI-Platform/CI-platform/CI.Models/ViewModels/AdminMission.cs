@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CI.Models.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,15 +11,16 @@ namespace CI.Models.ViewModels
     {
 
         //public List<MissionMedia> MissionMedias { get; set; }
-        //public MissionMedia MissionMedia { get; set; }
-
-        //public Mission Mission { get; set; }
 
 
 
 
+        //public string SearchString { get; set; }
+        //public PaginatedList<User> Users { get; set; }
 
 
+        public long MissionId { get; set; }
+        public string? MissionType { get; set; }
         public string? Availability { get; set; }
         public List<CI.Models.Mission>? Missions { get; set; }
         public List<Country>? Country { get; set; }
@@ -41,9 +43,9 @@ namespace CI.Models.ViewModels
         public DateTime Deadline { get; set; }
 
 
-        public long? CityId { get; set; }
+        public long CityId { get; set; }
 
-        public long? CountryId { get; set; }
+        public long CountryId { get; set; }
         public long MissionThemeId { get; set; }
         public int SkillId { get; set; }
 

@@ -13,70 +13,108 @@
 
 
 
-        <div class="c p-3">
-            <div class="my-3 ">
-                <div class="fs-3 d-flex">
-                    <div class="border-bottom border-dark pe-3">
-                        Mission Theme
-                    </div>
+<div class="c p-3">
+    <div class="my-3 ">
+        <div class="fs-3 d-flex">
+            <div class="border-bottom border-dark pe-3">
+                Mission Theme
+            </div>
+        </div>
+        <hr class="m-0 p-0">
+    </div>
+    <div class="py-3 d-flex justify-content-between align-items-center">
+        <form method="get" asp-area="Admin" asp-controller="Mission" asp-action="MissionTheme">
+            <div class="input-group">
+                <input type="text" class="form-control" name="searchString" value="@ViewData["SearchString"]" placeholder="Search Here">
+                <div class="input-group-append">
+                    <button type="submit" class="ml-2 btn btn-primary">Search</button>
                 </div>
-                <hr class="m-0 p-0">
             </div>
-            <div class="py-3 d-flex justify-content-between align-items-center">
-                <input type="text" class="form-control w-25" placeholder="search">
-                <button class="btn btn-danger" onclick="ThemeGenerate()">
-                    + Add
-                </button>
-            </div>
-            <div class="w-100 h-100">
-                <table class="table border ">
-                    <thead class="bg-primary ">
-                        <tr class="rounded-3">
-                            <th>Mission Skill</th>
-                            <th>Status</th>
-                            <th>Action</th>
+        </form>
+        <button class="btn applyButton" onclick="ThemeGenerate()">
+            + Add
+        </button>
+    </div>
+    <div class="w-100 h-100">
+        <table class="table border ">
+            <thead class=" ">
+                <tr class="rounded-3">
+                    <th>Mission Skill</th>
+                    <th>Status</th>
+                    <th>Action</th>
 
+
+
+                </tr>
+            </thead>
+
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>
+                                @if (@item.Status == 1)
+                                {
+                                    <p class="text-success">Active</p>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">Deactive</p>
+                                }
+                            </td>
+
+                            <td>
+                                <button onclick="ThemeDecline(@item.MissionThemeId)" class="btn btn-success">Edit</button>
+                                @*
+                                    <img  src="~/images/right.png" style="margin: 3px 3px 3px 3px;" />
+                                *@
+                            </td>
 
 
                         </tr>
-                    </thead>
+                    </tbody>
+                }
+            }
+        </table>
 
-
-                    @{
-                        foreach (var item in Model)
+        @*pagination*@
+          @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
+        {
+            <div class="position-absolute bottom-10 end-50 mt-3">
+                <nav>
+                    <ul class="pagination">
+                        @if ((int)ViewData["CurrentPage"] > 1)
                         {
-                            <tbody>
-                                <tr>
-                                    <td>@item.Title</td>
-                                    <td>
-                                        @if (@item.Status == 1)
-                                        {
-                                            <p class="text-success">Active</p>
-                                        }
-                                        else
-                                        {
-                                            <p class="text-danger">Deactive</p>
-                                        }
-                                    </td>
-
-                                    <td>
-                                    <button onclick="ThemeDecline(@item.MissionThemeId)" class="btn btn-success">Edit</button>
-                                    @*    
-                                    <img  src="~/images/right.png" style="margin: 3px 3px 3px 3px;" />
-                                      *@ 
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
+                            <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("MissionTheme", new { page = (int)ViewData["CurrentPage"] - 1, searchString = ViewData["SearchString"] })">Previous</a></li>
                         }
-                    }
-                </table>
+                        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                        {
+                            if (i == (int)ViewData["CurrentPage"])
+                            {
+                                <li class=" m-1 page-item active"><a class="page-link" href="#">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("MissionTheme", new { page = i, searchString = ViewData["SearchString"] })">@i</a></li>
+                            }
+                        }
+                        @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+                        {
+                            <li class="m-1 page-item"><a class="page-link" href="@Url.Action("MissionTheme", new { page = (int)ViewData["CurrentPage"] + 1, searchString = ViewData["SearchString"] })">Next</a></li>
+                        }
+                    </ul>
+                </nav>
             </div>
-        </div>
-    </div>
+        }
 
+
+
+    </div>
 </div>
+
 
 
 
@@ -92,7 +130,7 @@
                         <input name="id" id="id" type="hidden" value="@item.MissionThemeId" />
                         @*
                             <input name="flag" id="flag" type="hidden" />
-                            *@
+                        *@
                         <div class="modal-header border-0">
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
                         </div>

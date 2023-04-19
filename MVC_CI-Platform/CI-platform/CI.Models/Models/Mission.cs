@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 namespace CI.Models;
 
 public partial class Mission
@@ -22,7 +23,7 @@ public partial class Mission
 
     public DateTime? EndDate { get; set; }
 
-    public string MissionType { get; set; } = null!;
+    public string? MissionType { get; set; }
 
     public bool? Status { get; set; }
 
@@ -38,15 +39,15 @@ public partial class Mission
 
     public DateTime? DeletedAt { get; set; }
 
-    public string GoalObject { get; set; } = null!;
+    public string? GoalObject { get; set; }
 
     public int TotalSeats { get; set; }
 
     public DateTime Deadline { get; set; }
 
-    public int Achieved { get; set; }
+    public int? Achieved { get; set; }
 
-    public int AvbSeat { get; set; }
+    public int? AvbSeat { get; set; }
 
     public virtual City City { get; set; } = null!;
 
@@ -64,7 +65,7 @@ public partial class Mission
 
     public virtual ICollection<MissionInvite> MissionInvites { get; } = new List<MissionInvite>();
 
-    public virtual ICollection<MissionMedia> MissionMedia { get; } = new List<MissionMedia>();
+    public virtual ICollection<MissionMedia> MissionMedia { get; set; } = new List<MissionMedia>();
 
     public virtual ICollection<MissionRating> MissionRatings { get; } = new List<MissionRating>();
 
@@ -73,6 +74,4 @@ public partial class Mission
     public virtual ICollection<Story> Stories { get; } = new List<Story>();
 
     public virtual MissionTheme Theme { get; set; } = null!;
-
-    public virtual ICollection<Timesheet> Timesheets { get; } = new List<Timesheet>();
 }

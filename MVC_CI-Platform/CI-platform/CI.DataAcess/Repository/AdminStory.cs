@@ -24,17 +24,25 @@ namespace CI.Repository.Repository
         public void getAllDetails()
         {
             story = _db.Stories.ToList();
-         
+
 
         }
 
-        public CI.Models.ViewModels.AdminStory GetAllStory()
+        public IEnumerable<Models.Story> GetStory()
         {
-            story = story.Where(x=>x.Status!= "PUBLISHED" ).ToList();
-
-            var stori = new CI.Models.ViewModels.AdminStory { Stories = story};
-            return stori;
+            return _db.Stories.Where(x => x.Status != "PUBLISHED").ToList();
         }
+
+        public IEnumerable<Models.Story> SearchStory(string searchString)
+        {
+            return _db.Stories
+                .Where(u => u.Title.Contains(searchString) && u.Status != "PUBLISHED")
+                .ToList();
+        }
+
+
+
+ 
 
         public Models.Story GetStoryById(long id)
         {

@@ -8,10 +8,15 @@ namespace CI.Repository.Repository.IRepository
 {
     public interface IAdminStory
     {
-        CI.Models.ViewModels.AdminStory GetAllStory();
+      
+        IEnumerable<Models.Story> SearchStory(string searchString);
+        IEnumerable<Models.Story> GetStory();
+
         Models.Story GetStoryById(long id);
         bool DeclineStory(Models.Story story);
         bool DeleteStory(Models.Story story);
+
+
 
     }
 }

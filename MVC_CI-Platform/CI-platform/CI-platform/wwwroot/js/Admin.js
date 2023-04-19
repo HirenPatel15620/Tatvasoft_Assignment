@@ -41,10 +41,18 @@ function Decline(id, flag) {
 //delete user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function update(id, flag) {
 
-  
+
     $(`#deleterec-${id}`).modal('show');
     $('#id').val(id);
-    $('#flag').val(flag);
+    $('#profiletext').val(profiletext);
+    $('#department').val(department);
+    $('#employeeid').val(employeeid);
+    $('#email').val(email);
+    $('#lastname').val(lastname);
+    $('#firstname').val(firstname);
+    $('#role').val(role);
+   
+
 
 }
 
@@ -65,7 +73,7 @@ function updatecms(id) {
         url: '/Admin/User/Editcms',
         data: { id: id, title: title, description: description, slug: slug, status: status },
         success: function () {
-            toastr.success("Cms Update")
+            toastr.success("Change Successfull")
             $(`#edit-${id}`).modal('hide');
             setTimeout(function () {
                 location.reload();
@@ -124,7 +132,7 @@ function ThemeDecline(id) {
     $('#flag').val(flag);
     $('#title').val(title);
 
-   
+
 
 }
 
@@ -186,35 +194,50 @@ function DeleteRecord(id) {
 
 
 function MissionDelete(id) {
-    debugger
     $('#deleter').modal('show');
     $('#id').val(id);
 }
+function changelayout() {
+    $('#EditMission').addClass('d-none').removeClass('d-block');
 
-
-
-  //  $(document).ready(function(){
-  //      $('.datepicker').datepicker({
-  //          format: 'yyyy/mm/dd',    // Or whatever format you want.
-  //          startDate: '2015/01/01'  // Or whatever start date you want.
-  //      });
-  //});
-
-
-const getcities = () => {
-    var country = $('.country').find(":selected").val()
-    if (parseInt(country) != 0) {
-        $.ajax({
-            url: '/profile',
-            type: 'POST',
-            data: { country: country },
-            success: function (result) {
-                $('.city').empty().append(result.cities.result)
-                toastr.success("country selected")
-            },
-            error: function () {
-                console.log("Error updating variable");
-            }
-        })
-    }
 }
+
+function EditMission(id) {
+  
+    //$(`#edit-${id}`).modal('show');
+
+    $.ajax({
+        type: 'POST',
+        url: '/Admin/Mission/GetEditMission',
+        data: { id: id },
+        success: function (result) {
+       
+            $('#EditMission').addClass('d-block').removeClass('d-none')
+            $('.particalEditmission').addClass('d-block').removeClass('d-none')
+
+
+
+        },
+        error: function () {
+            alert("Some Error From Cms.");
+        }
+    });
+
+
+            //$('#editMission').html($($.parseHTML(result)).filter("#Editmission")[0].innerHTML);
+            //$(`#editMission`).modal('show');
+
+   // $('#id').val(id);
+}
+
+
+
+
+//  $(document).ready(function(){
+//      $('.datepicker').datepicker({
+//          format: 'yyyy/mm/dd',    // Or whatever format you want.
+//          startDate: '2015/01/01'  // Or whatever start date you want.
+//      });
+//});
+
+

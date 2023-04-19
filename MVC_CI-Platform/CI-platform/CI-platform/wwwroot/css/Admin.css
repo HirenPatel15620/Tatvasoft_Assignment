@@ -63,7 +63,7 @@
 }
 
 
-/*story*/
+/*Mission*/
 
 .story-image {
     cursor: pointer;
@@ -97,4 +97,23 @@
     top: 0%;
     left: 77%;
     cursor: pointer;
+}
+
+
+.applyButton {
+    border: 2px solid #F88634;
+    border-radius: 100px;
+    color: #F88634;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .applyButton:hover {
+        color: #F88634;
+    }
+
+
+
+.height{
+    height:25px;
 }

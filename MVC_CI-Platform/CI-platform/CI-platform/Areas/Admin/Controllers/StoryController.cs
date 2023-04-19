@@ -12,11 +12,36 @@ namespace CI_platform.Areas.Admin.Controllers
         {
             allRepository = _allRepository;
         }
-        public IActionResult Story()
+        public IActionResult Story(string searchString, int page)
         {
-            var story = allRepository.AdminStory.GetAllStory();
+            int pageSize = 10; // Number of records to display per page
 
-            return View(story);
+            IEnumerable<CI.Models.Story> stories;
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                stories = allRepository.AdminStory.SearchStory(searchString);
+            }
+            else
+            {
+                stories = allRepository.AdminStory.GetStory();
+            }
+
+            int totalRecords = stories.Count();
+            int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+            int skip = (page - 1) * pageSize;
+
+            stories = stories.Skip(skip).Take(pageSize).ToList();
+
+            ViewData["SearchString"] = searchString;
+            ViewData["CurrentPage"] = page;
+
+            ViewData["TotalPages"] = totalPages;
+
+            return View(stories);
+            //var story = allRepository.AdminStory.GetAllStory();
+
+            //return View(story);
         }
 
 
@@ -58,12 +83,12 @@ namespace CI_platform.Areas.Admin.Controllers
         {
             if (id != 0)
             {
-                    var record = allRepository.AdminStory.GetStoryById(id);
-                    record.Status = "DELETE";
-                record.DeletedAt=DateTime.Now;
-                    allRepository.AdminStory.DeleteStory(record);
+                var record = allRepository.AdminStory.GetStoryById(id);
+                record.Status = "DELETE";
+                record.DeletedAt = DateTime.Now;
+                allRepository.AdminStory.DeleteStory(record);
 
-                
+
             }
             return RedirectToAction("Story", "Story");
         }

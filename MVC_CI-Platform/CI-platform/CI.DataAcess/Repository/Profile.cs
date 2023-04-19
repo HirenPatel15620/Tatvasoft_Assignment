@@ -88,6 +88,7 @@ namespace CI.Repository.Repository
                 LinkedInUrl = user.LinkedInUrl,
                 WhyIVolunteer = user.WhyIVolunteer,
                 UserId = user.UserId,
+                role = user.Role,
             };
 
 
@@ -129,6 +130,7 @@ namespace CI.Repository.Repository
 
                 if (_db.Users.Any(u => u.EmployeeId == Details.EmployeeId && u.UserId != Details.user.UserId))
                 {
+                 
                     return false;
                 }
 

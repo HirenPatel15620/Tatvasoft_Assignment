@@ -1,5 +1,6 @@
 ﻿using CI.Models;
 using CI.Repository.Repository.IRepository;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace CI.Repository.Repository
         List<CI.Models.MissionTheme> theme;
         List<CI.Models.Country> country;
         List<CI.Models.City> city;
+        List<CI.Models.MissionMedia> medias;
         public AdminMission(CiPlatformContext db)
         {
             _db = db;
@@ -26,52 +28,25 @@ namespace CI.Repository.Repository
             theme= _db.MissionThemes.ToList();
             country = _db.Countries.ToList();
             city= _db.Cities.ToList();
-         
+            medias = _db.MissionMedia.ToList();
+
+
 
         }
+        public bool AddMission(Models.Mission mission)
+        {
+            _db.Missions.Add(mission);
+             _db.SaveChanges();
+            //_db.SaveChanges();
+            return true;
+        }
+        public bool savemedia(Models.MissionMedia missionMedia)
+        {
+            _db.MissionMedia.Add(missionMedia);
+            _db.SaveChanges();
+            return true;
+        }
 
-
-        //public AdminMission AddMission()
-        //{
-
-        //    User? user = _db.Users.FirstOrDefault(c => c.UserId == User_id);
-        //    AdminMission adminMission = new AdminMission()
-        //    {
-
-
-
-
-        //        FirstName = user.FirstName,
-        //        LastName = user.LastName,
-        //        Email = user.Email,
-        //        Availablity = user.Availablity,
-        //        Title = user.Title,
-        //        Manager = user.Manager,
-        //        CountryId = user.CountryId,
-        //        CityId = user.CityId,
-        //        Department = user.Department,
-        //        EmployeeId = user.EmployeeId,
-        //        ProfileText = user.ProfileText,
-        //        LinkedInUrl = user.LinkedInUrl,
-        //        WhyIVolunteer = user.WhyIVolunteer,
-        //        UserId = user.UserId,
-        //    };
-
-
-        //    if (country == 0)
-        //    {
-
-        //        List<Country> countries = _db.Countries.ToList();
-        //        List<Skill> skills = _db.Skills.ToList();
-        //        List<City> cities = _db.Cities.ToList();
-        //        return new ProfileViewModel { Countries = countries, Cities = cities, Skills = skills, user = editUser };
-        //    }
-        //    else
-        //    {
-        //        List<City> cities = _db.Cities.Where(c => c.CountryId == country).ToList();
-        //        return new ProfileViewModel { Cities = cities, user = editUser };
-        //    }
-        //}
 
 
 
@@ -109,12 +84,43 @@ namespace CI.Repository.Repository
 
 
 
+        //public IEnumerable<AdminMission> GetMission()
+        //{
+        //    return AdminMission.ToList();
+        //}
+
+        //public IEnumerable<AdminMission> SearchMission(string searchString)
+        //{
+        //    return AdminMission
+        //        .Where(u => u.Title.Contains(searchString))
+        //        .ToList();
+        //}
+
+
+
+
+
+
+        /// mission application//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         public List<Models.MissionApplication> GetAllMissionApplication()
         {
             //missionapplication = missionapplication.ToList();
             missionapplication = missionapplication.Where(x => x.ApprovalStatus == "PENDING").ToList();
             return missionapplication;
+        }
+
+        public IEnumerable<MissionApplication> GetMissionApplication()
+        {
+            return _db.MissionApplications.Where(x => x.ApprovalStatus == "PENDING").ToList();
+        }
+
+        public IEnumerable<MissionApplication> SearchMissionApplication(string searchString)
+        {
+            return _db.MissionApplications
+           .Include(u => u.Mission)
+           .Where(u => u.Mission.Title.Contains(searchString) && u.ApprovalStatus=="PENDING")
+           .ToList();
         }
 
         public MissionApplication GetMissionApplicationById(long id)
@@ -156,6 +162,18 @@ namespace CI.Repository.Repository
             return true;
         }
 
+        public IEnumerable<Skill> GetSkill()
+        {
+            return _db.Skills.ToList();
+        }
+
+        public IEnumerable<Skill> SearchSkill(string searchString)
+        {
+            return _db.Skills
+                .Where(u => u.SkillName.Contains(searchString))
+                .ToList();
+        }
+
 
         //mission theme//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -165,6 +183,17 @@ namespace CI.Repository.Repository
             theme = theme.ToList();
             return theme;
         }
+        public Models.Mission GetThemeByMissionId(long id)
+        {
+            return _db.Missions.Where(x => x.ThemeId == id).FirstOrDefault();
+        }
+
+        public bool DeclineThemeInMission(Models.Mission mission)
+        {
+            _db.Missions.Update(mission);
+            _db.SaveChanges();
+            return true;
+        }
         public MissionTheme GetThemeById(long id)
         {
             return _db.MissionThemes.Where(x => x.MissionThemeId == id).FirstOrDefault();
@@ -172,6 +201,7 @@ namespace CI.Repository.Repository
         public bool DeclineTheme(MissionTheme theme)
         {
             _db.MissionThemes.Update(theme);
+            
             _db.SaveChanges();
             return true;
         }
@@ -181,6 +211,17 @@ namespace CI.Repository.Repository
             _db.MissionThemes.Add(theme);
             _db.SaveChanges();
             return true;
+        }
+        public IEnumerable<MissionTheme> GetTheme()
+        {
+            return _db.MissionThemes.ToList();
+        }
+
+        public IEnumerable<MissionTheme> SearchTheme(string searchString)
+        {
+            return _db.MissionThemes
+                .Where(u => u.Title.Contains(searchString))
+                .ToList();
         }
 
     }

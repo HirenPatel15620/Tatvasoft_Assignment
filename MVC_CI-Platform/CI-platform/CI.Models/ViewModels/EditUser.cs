@@ -40,5 +40,7 @@ namespace CI.Models.ViewModels
         public string? Manager { get; set; }
 
         public string? Email { get; set; }
+
+        public string? role { get; set; }   
     }
 }

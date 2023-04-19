@@ -8,28 +8,34 @@ using System.Threading.Tasks;
 
 namespace CI.Repository.Repository
 {
-    public class AdminUser : Repository<CI.Models.User>,IAdminUser
+    public class AdminUser : Repository<CI.Models.User>, IAdminUser
     {
 
         private readonly CiPlatformContext _db;
         List<CI.Models.User> users = new List<User>();
-        List<CI.Models.CmsPage> cmss=new List<CmsPage>();
+        List<CI.Models.CmsPage> cmss = new List<CmsPage>();
         List<CI.Models.Mission> missions;
         public AdminUser(CiPlatformContext db) : base(db)
         {
             _db = db;
             users = _db.Users.ToList();
-            cmss=_db.CmsPages.ToList();
+            cmss = _db.CmsPages.ToList();
             missions = _db.Missions.ToList();
 
         }
 
         /// //////////////////////////////////////////////////////////////  User ////////////////////////////////////////////////////////
 
-        public List<Models.User> GetAllUser()
+        public IEnumerable<User> GetUsers()
         {
-            users=users.ToList();
-            return users;
+            return _db.Users.ToList();
+        }
+
+        public IEnumerable<User> SearchUsers(string searchString)
+        {
+            return _db.Users
+                .Where(u => u.FirstName.Contains(searchString) || u.LastName.Contains(searchString) || u.Email.Contains(searchString))
+                .ToList();
         }
 
 
@@ -49,18 +55,24 @@ namespace CI.Repository.Repository
 
 
         ///////////////////////////////////////////////////////    cms page     /////////////////////////////////////////////////////////////////
-
-        public List<Models.CmsPage> GetAllCms()
+        public IEnumerable<CmsPage> GetCmsPages()
         {
-            cmss = cmss.ToList();
-            return cmss;
+            return _db.CmsPages.ToList();
         }
+
+        public IEnumerable<CmsPage> Searchcmspages(string searchString)
+        {
+            return _db.CmsPages
+                .Where(u => u.Title.Contains(searchString))
+                .ToList();
+        }
+
         public CmsPage GetCmsByCmsId(long cmsid)
         {
             return _db.CmsPages.Where(x => x.CmsPageId == cmsid).FirstOrDefault();
         }
 
-        
+
 
         public CmsPage GetCmsrecordByCmsid(long cmsid)
         {
@@ -88,8 +100,6 @@ namespace CI.Repository.Repository
             _db.SaveChanges();
             return true;
         }
-
-        ////////////////////////// //////////////////////////////////////////////
 
 
 

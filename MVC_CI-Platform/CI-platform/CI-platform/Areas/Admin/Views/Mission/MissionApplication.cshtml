@@ -21,11 +21,18 @@
                 <hr class="m-0 p-0">
             </div>
             <div class="py-3 d-flex justify-content-between align-items-center">
-                <input type="text" class="form-control w-25" placeholder="search">
+               <form method="get" asp-area="Admin" asp-controller="Mission" asp-action="MissionApplication">
+            <div class="input-group">
+                <input type="text" class="form-control" name="searchString" value="@ViewData["SearchString"]" placeholder="Search Here">
+                <div class="input-group-append">
+                    <button type="submit" class="ml-2 btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
             </div>
             <div class="w-100 h-100">
                 <table class="table border ">
-                    <thead class="bg-primary ">
+                    <thead class=" ">
                         <tr class="rounded-3">
                             <th>Mission Title</th>
                             <th>Mission ID</th>
@@ -49,8 +56,9 @@
                                     <td>@item.User.FirstName @item.User.LastName</td>
                                     <td>@item.AppliedAt</td>
                                     <td>
-                                       <button onclick="Decline(@item.MissionApplicationId,1)" class="btn btn-success">Approve</button>
-                                       <button onclick="Decline(@item.MissionApplicationId,0)" class="btn btn-danger">Deny</button>
+                             
+                                       <img class="height m-2" onclick="Decline(@item.MissionApplicationId,1)" src="~/images/checked-green.png"/>
+                                       <img class="height m-2" onclick="Decline(@item.MissionApplicationId,0)" src="~/images/cancled-red.png"/>
                                        @*
                                         <img onclick="Decline(@item.MissionApplicationId,1)" src="/images/right.png" style="margin: 3px 3px 3px 3px;" />
                                         <img onclick="Decline(@item.MissionApplicationId,0)" src="/images/cancel.png" style="margin: 3px 3px 3px 3px;" />
@@ -61,6 +69,39 @@
                         }
                     }
                 </table>
+
+                
+         @*pagination*@
+          @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
+        {
+            <div class="position-absolute bottom-10 end-50 mt-3">
+                <nav>
+                    <ul class="pagination">
+                        @if ((int)ViewData["CurrentPage"] > 1)
+                        {
+                            <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("MissionApplication", new { page = (int)ViewData["CurrentPage"] - 1, searchString = ViewData["SearchString"] })">Previous</a></li>
+                        }
+                        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                        {
+                            if (i == (int)ViewData["CurrentPage"])
+                            {
+                                <li class=" m-1 page-item active"><a class="page-link" href="#">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("MissionApplication", new { page = i, searchString = ViewData["SearchString"] })">@i</a></li>
+                            }
+                        }
+                        @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+                        {
+                            <li class="m-1 page-item"><a class="page-link" href="@Url.Action("MissionApplication", new { page = (int)ViewData["CurrentPage"] + 1, searchString = ViewData["SearchString"] })">Next</a></li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        }
+
+
             </div>
         </div>
     

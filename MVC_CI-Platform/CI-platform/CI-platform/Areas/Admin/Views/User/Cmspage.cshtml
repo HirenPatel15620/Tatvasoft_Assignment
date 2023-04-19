@@ -11,66 +11,106 @@
 
 
 
-        <div class="c p-3">
-            <div class="my-3 ">
-                <div class="fs-3 d-flex">
-                    <div class="border-bottom border-dark pe-3">
-                        Cms Page
-                    </div>
-                </div>
-                <hr class="m-0 p-0">
-            </div>
-            <div class="py-3 d-flex justify-content-between align-items-center">
-                <input type="text" class="form-control w-25" placeholder="search">
-                @*  <input type="button" class="btn-primary" value="+ Add">*@
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">+ Add</button>
-
-            </div>
-            <div class="w-100 h-100">
-                <table class="table border ">
-                    <thead class="bg-primary ">
-                        <tr class="rounded-3">
-                            <th>Title</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-
-                    @{
-                        foreach (var item in Model)
-                        {
-                            <tbody>
-                                <tr>
-                                    <td>@item.Title</td>
-                                    <td>
-                                        @if (@item.Status == "1")
-                                        {
-                                            <p class="text-success">Active</p>
-                                        }
-                                        else
-                                        {
-                                            <p class="text-danger">Deactive</p>
-                                        }
-                                    </td>
-                                    <td>
-                                        <button type="button" id="editcms" onclick="editor(@item.CmsPageId)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-@item.CmsPageId">Edit</button>
-                                        <button    id="editcms" onclick="DeleteCms(@item.CmsPageId)" class="btn btn-danger" >Deactive</button>
-                                   @*
-                                        <img  onclick="DeleteRecord(@item.CmsPageId)"><img src="~/images/cancel.png" />
-                                        *@
-                                    </td>
-
-
-                                </tr>
-                            </tbody>
-                        }
-                    }
-              
-                </table>
+<div class="c p-3">
+    <div class="my-3 ">
+        <div class="fs-3 d-flex">
+            <div class="border-bottom border-dark pe-3">
+                Cms Page
             </div>
         </div>
+        <hr class="m-0 p-0">
+    </div>
+    <div class="py-3 d-flex justify-content-between align-items-center">
+        <form method="get" asp-area="Admin" asp-controller="User" asp-action="Cmspage">
+            <div class="input-group">
+                <input type="text" class="form-control" name="searchString" value="@ViewData["SearchString"]" placeholder="Search Here">
+                <div class="input-group-append">
+                    <button type="submit" class="ml-2 btn btn-primary">Search</button>
+                </div>
+            </div>
+        </form>
+        @*  <input type="button" class="btn-primary" value="+ Add">*@
+        <button type="button" class="btn applyButton" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">+ Add</button>
+
+    </div>
+    <div class="w-100 h-100">
+        <table class="table border ">
+            <thead class=" ">
+                <tr class="rounded-3">
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>
+                                @if (@item.Status == "1")
+                                {
+                                    <p class="text-success">Active</p>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">Deactive</p>
+                                }
+                            </td>
+                            <td>
+                                <button type="button" id="editcms" onclick="editor(@item.CmsPageId)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-@item.CmsPageId">Edit</button>
+                                <button id="editcms" onclick="DeleteCms(@item.CmsPageId)" class="btn btn-danger">Deactive</button>
+                                @*
+                                    <img  onclick="DeleteRecord(@item.CmsPageId)"><img src="~/images/cancel.png" />
+                                *@
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+                }
+            }
+
+        </table>
+        @*pagiantion*@
+
+        @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
+        {
+            <div class="position-absolute bottom-10 end-50 mt-3">
+                <nav>
+                    <ul class="pagination">
+                        @if ((int)ViewData["CurrentPage"] > 1)
+                        {
+                            <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Cmspage", new { page = (int)ViewData["CurrentPage"] - 1, searchString = ViewData["SearchString"] })">Previous</a></li>
+                        }
+                        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                        {
+                            if (i == (int)ViewData["CurrentPage"])
+                            {
+                                <li class=" m-1 page-item active"><a class="page-link" href="#">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Cmspage", new { page = i, searchString = ViewData["SearchString"] })">@i</a></li>
+                            }
+                        }
+                        @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+                        {
+                            <li class="m-1 page-item"><a class="page-link" href="@Url.Action("Cmspage", new { page = (int)ViewData["CurrentPage"] + 1, searchString = ViewData["SearchString"] })">Next</a></li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        }
+
+
+
+    </div>
+</div>
 
 
 
@@ -79,7 +119,7 @@
 
 
 @*delete Modal*@
-<div class="modal fade" id="deleter" tabindex="-1" aria-labelledby ="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form asp-action="GetDeleteCms" asp-area="Admin" asp-controller="User">
@@ -118,18 +158,29 @@
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Description</label>
-                                <input rows="4" type="text"  class="form-control discription" value="@item.Description"></input>
-                              
+                                <input rows="4" type="text" class="form-control discription" value="@item.Description" />
+
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Slug</label>
                                 <input class="form-control slug" value="@item.Slug" />
                             </div>
-                            <div class="w-100">
-                                <label class="form-label mt-2">Status</label>
-                                <input type="text"  class="form-control status" value="@item.Status" />
-                          
+                               <div class="input-group mt-4 mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                                </div>
+                                <input type="text" class="form-control status" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@item.Status">
                             </div>
+                            @*
+
+                            <label class="form-label">Role</label><select value="@item.Status" id='status' name="status" class="form-select city me-3" aria-label="Select Mission">
+                                <option disabled selected>Select Role</option>
+                                <option value="1">1 </option>
+                                <option value="0">0 </option>
+
+                            </select>
+                         
+                            *@
                         </div>
                         <div class="modal-footer">
                             <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
@@ -164,18 +215,21 @@
                     </div>
                     <div class="w-100">
                         <label class="form-label mt-2">Description</label>
-                        <input rows="4" type="text" id="message" class="form-control discription" value=""/>
-                       
+                        <input rows="4" type="text" id="message" class="form-control discription" value="" />
+
                     </div>
-                    <div class="w-100">
+                    <div class="w-100 mb-4">
                         <label class="form-label mt-2">Slug</label>
                         <input class="form-control slug" value="" />
                     </div>
-                    <div class="w-100">
-                        <label class="form-label mt-2">Status</label>
-                        <input type="text" id="subject" class="form-control status" value="" />
-                  
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                        </div>
+                        <input id="subject" type="text" class="form-control status" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">

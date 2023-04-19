@@ -9,7 +9,7 @@ toastr.options = {
 
 
 var count = 1
-var co_workers=[]
+var co_workers = []
 const tabs = (id) => {
     let active_mission = document.getElementsByClassName("active-detail")
     active_mission[0].classList.add("detail")
@@ -221,7 +221,7 @@ const apply_for_mission = (user_id, mission_id) => {
 
 
 
-const prev_volunteers = (user_id,mission_id) => {
+const prev_volunteers = (user_id, mission_id) => {
     var one_page_volunteers = 9
     if (count > 1) {
         count--;
@@ -240,13 +240,13 @@ const prev_volunteers = (user_id,mission_id) => {
     }
 }
 const next_volunteers = (max_page, user_id, mission_id) => {
-    var one_page_volunteers=9
+    var one_page_volunteers = 9
     if (count < max_page) {
         count++;
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
             type: 'POST',
-            data: { count: count - 1, request_for: "next_volunteers", mission_id: mission_id,user_id:user_id },
+            data: { count: count - 1, request_for: "next_volunteers", mission_id: mission_id, user_id: user_id },
             success: function (result) {
                 $('.volunteers').empty().append(result.recent_volunteers.result)
                 $('.current_volunteers').html(`${one_page_volunteers * (count - 1) + 1}-${one_page_volunteers * count >= result.total_volunteers ? result.total_volunteers : one_page_volunteers * count} of recent ${result.total_volunteers} volunteers`)

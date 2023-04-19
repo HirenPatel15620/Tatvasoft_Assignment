@@ -10,13 +10,15 @@ namespace CI.Repository.Repository.IRepository
     public interface IAdminUser
     {
         //user page///////////////////////////////////////////////////////////////////
-        List<Models.User> GetAllUser();
+       
         User GetUserByUserId(long userid);
 
         bool GetUpdateUser(User user);
+        IEnumerable<User> GetUsers();
+        IEnumerable<User> SearchUsers(string searchString);
 
         //cms page///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        List<Models.CmsPage> GetAllCms();
+
 
         CmsPage GetCmsByCmsId(long cmsid);
 
@@ -25,7 +27,9 @@ namespace CI.Repository.Repository.IRepository
         bool updatecms(CmsPage cmspage);
         CmsPage GetCmsrecordByCmsid(long id);
         bool savecms(CmsPage cmsPage);
-
+      
+        IEnumerable<CmsPage> GetCmsPages();
+        IEnumerable<CmsPage> Searchcmspages(string searchString);
 
     }
 }
