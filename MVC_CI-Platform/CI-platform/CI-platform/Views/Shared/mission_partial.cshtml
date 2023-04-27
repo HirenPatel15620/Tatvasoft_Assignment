@@ -5,15 +5,22 @@
 @model CI.Models.ViewModels.Mission
 @{
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet" />
-    foreach (var item in Model.Missions)
+    foreach (var item in Model.Missions.Where(x => x.Status is true))
     {
+
+        var a1 = Model.timesheet?.Where(x => x.MissionId == item.MissionId).Sum(x => x.Action);
+        var b1 = Model.goal?.Where(x => x.MissionId == item.MissionId).Select(x => x.GoalValue).FirstOrDefault();
+        var avg = Convert.ToDouble(a1) / Convert.ToDouble(b1) * 100;
+
+
+
         <div class="item card1 col-md-6 col-lg-4 col-sm-6 mt-3">
             <div class="thumbnail card d-flex">
                 <div class="img-event">
 
 
 
-                    @if (DateTime.Now > @item.StartDate || @item.AvbSeat == 0)
+                    @if (DateTime.Now > @item.EndDate || @item.AvbSeat == 0)
                     {
                         <div class=" closeicon-badge">Closed</div>
                     }
@@ -24,9 +31,9 @@
 
 
                     <img class="group list-group-image w-100 h-100"
-                 src='@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath'
-                 onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
-                 onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
+                     src='@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath'
+                     onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
+                     onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
 
 
 
@@ -50,23 +57,26 @@
                         }
                     }
 
-                    @{
 
-                        <button class="stop-img border-0" data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;">
-                            <img class="text-light" src="images/user.png" alt="">
-                        </button>
+                    @if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                    {
+                    <a class="stop-img border-0" href="/volunteering_mission/@item.MissionId">
+                        <img class="text-light" src="images/user.png" alt="">
+                    </a>
 
                     }
 
-                    <button class="stop-img border-0">
-                        <img class="text-light" src="images/user.png" alt="">
-                    </button>
+                    @{
+
+
                     <button class="mission-theme border-0">
-                        <span class="p-2">@item.Theme.Title</span>
+                        <span class="p-2">@item?.Theme?.Title</span>
                     </button>
 
 
-                     
+                    }
+
+
 
 
                     @*//view details conditions*@
@@ -132,6 +142,10 @@
                     <div class="duration-seats-info mt-4">
                         <div class="duration">
                             @{
+                                var gd = Model.goal?.Where(x => x.MissionId == item.MissionId).FirstOrDefault();
+                            }
+
+                            @{
                                 if (@item.MissionType == "GOAL")
                                 {
                                     <p id="duration-txt" style="margin-bottom: 0;">@item.GoalObject</p>
@@ -151,13 +165,6 @@
                                     <img src="images/Seats-left.png" alt="">
                                     <span>
                                         @item.TotalSeats <p>seats left</p>
-                                        @*   @item.AvbSeat <p>seats left</p>
-
-                                            //@{
-                                            //    @item.TotalSeats
-                                            //    -
-                                            //    @item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId)).ToList().Count()
-                                            //}*@
 
                                     </span>
                                 }
@@ -167,33 +174,24 @@
                             @{
                                 if (@item.MissionType == "GOAL")
                                 {
-                                    string? str1 = @item.GoalObject;
-                                    string str2 = string.Empty;
-                                    int goal = 0;
-                                    for (int i = 0; i <= str1.Length - 1; i++)
-                                    {
-                                        if (Char.IsDigit(str1[i]))
-                                            str2 += str1[i];
-                                    }
-                                    if (str2.Length > 0)
-                                    {
-                                        goal = int.Parse(str2);
-                                    }
-                                    double? percent = (@item.Achieved / (double)goal) * 100;
-                                    <img src="images/achieved.png" alt="">
-                                    <div class="w-100">
-                                        <div class="progress" style="width:90%;margin-left:10px;">
-                                            <div class="progress-bar" role="progressbar" style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <p class="text-muted">@item.Achieved achieved</p>
+                                    <div class="px-2">
+                                        <img src="~/images/achieved.png" alt="">
                                     </div>
+                                    <div class="deadline">
+                                        <div class="progress rounded-pill">
+                                            <div class="progress-bar bg-ci-primary" role="progressbar" style="width: @avg%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="fs-7">@a1 Achieved</span>
+                                    </div>
+
                                 }
+
                                 else
                                 {
                                     <img src="images/deadline.png" alt="">
                                     <span>
                                         @item.Deadline.ToString().Substring(0,10)
-                                        @*?*@
+
                                         <p>Deadline</p>
                                     </span>
                                 }
@@ -208,7 +206,7 @@
                                     Closed
                                 </button>
                             }
-                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus=="APPROVE" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
                             {
                                 <button class="alreadyapplyButton btn " disabled>
                                     Already Applied
@@ -229,34 +227,6 @@
 
 
 
-        @*recommand*@
-
-        //        <div class="modal fade" id="recommend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        //    <div class="modal-dialog modal-dialog-scrollable">
-        //        <div class="modal-content">
-        //            <div class="modal-header">
-        //                <h5 class="modal-title" id="staticBackdropLabel">Select Co-Workers Who You Want To Recommend This Mission</h5>
-        //            </div>
-        //            <div class="modal-body">
-        //                @{
-        //                    @foreach (var Model in @Model.All_volunteers)
-        //                    {
-        //                        <div class="d-flex mt-3 bg-white align-items-center">
-        //                            <input class="form-check-input" onclick="add_coworkers('coworker-@Model.UserId')" type="checkbox" value="" id='coworker-@Model.UserId'>
-        //                            <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
-        //                            <span class="ms-2">@Model.FirstName @Model.LastName</span>
-        //                        </div>
-        //                    }
-        //                }
-        //            </div>
-        //            <div class="modal-footer">
-        //                <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
-        //                <button type="button" onclick="recommend(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.Missions)" class="btn applyButton" data-bs-dismiss="modal">Recommend</button>
-        //            </div>
-        //        </div>
-        //    </div>
-        //</div>
-
 
 
 
@@ -266,30 +236,3 @@
 
 
 }
-@*
-    <div class="modal fade" id="recommend" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticbackdroplabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable">
-    <div class="modal-content">
-    <div class="modal-header">
-    <h5 class="modal-title" id="staticbackdroplabel">select co-workers who you want to recommend this mission</h5>
-    </div>
-    <div class="modal-body">
-    @{
-    @foreach (var item in @model.all_volunteers)
-    {
-    <div class="d-flex mt-3 bg-white align-items-center">
-    <input class="form-check-input" onclick="add_coworkers('coworker-@item.userid')" type="checkbox" value="" id='coworker-@item.userid'>
-    <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
-    <span class="ms-2">@item.firstname @item.lastname</span>
-    </div>
-    }
-    }
-    </div>
-    <div class="modal-footer">
-    <button type="button" class="btn applybutton" data-bs-dismiss="modal">close</button>
-    <button type="button" onclick="recommend(@user?.claims.firstordefault(c=>c.type==claimtypes.sid)?.value,@model.missions)" class="btn applybutton" data-bs-dismiss="modal">recommend</button>
-    </div>
-    </div>
-    </div>
-    </div>
-*@

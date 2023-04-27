@@ -117,3 +117,59 @@
 .height{
     height:25px;
 }
+
+
+
+/**/
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #f88634;
+    border-color: #f88634;
+}
+
+
+
+/*search*/
+
+
+.mainLoginInput {
+    height: 40px;
+    padding: 0px;
+    font-size: 15px;
+    margin: 5px 0;
+}
+
+    .mainLoginInput::-webkit-input-placeholder {
+        font-family: FontAwesome;
+        font-weight: normal;
+        overflow: visible;
+        vertical-align: top;
+        display: inline-block !important;
+        padding-left: 5px;
+        padding-top: 2px;
+       
+    }
+
+    .mainLoginInput::-moz-placeholder {
+        font-family: FontAwesome;
+        font-weight: normal;
+        overflow: visible;
+        vertical-align: top;
+        display: inline-block !important;
+        padding-left: 5px;
+        padding-top: 2px;
+      
+    }
+
+    .mainLoginInput:-ms-input-placeholder {
+        font-family: FontAwesome;
+        font-weight: normal;
+        overflow: visible;
+        vertical-align: top;
+        display: inline-block !important;
+        padding-left: 5px;
+        padding-top: 2px;
+   
+    }

@@ -27,6 +27,13 @@
             toastr.success("Volunteer Goal Add Successfull")
         </script>
     }
+    if (@ViewData["Volunteering_Timesheet"] == "timevalid")
+    {
+        <script>
+            toastr.error("Volunteer Time is Unvalid")
+        </script>
+    }
+
 
     //if (@ViewData["DeleteTimesheetRecord"] == "delete")
     //{
@@ -39,7 +46,7 @@
 
 <div class="modal fade" id="timesheetpartial" tabindex="-1" aria-bs-labelledby="exampleModalLabel" aria-bs-hidden="true">
 </div>
-<div class="container-fluid mainbody mt-5">
+<div class="container-fluid mainbody h-100 mt-5">
     <div class="pb-5  mt-md-5 mt-0">
         <span class="fs-1 ">Volunteering Timesheet</span>
 

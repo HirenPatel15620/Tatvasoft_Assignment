@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI.Models\\CI.Models.csproj": {}
+    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj": {}
   },
   "projects": {
-    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI.Models\\CI.Models.csproj": {
+    "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI.Models\\CI.Models.csproj",
+        "projectUniqueName": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj",
         "projectName": "CI.Models",
-        "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI.Models\\CI.Models.csproj",
+        "projectPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj",
         "packagesPath": "C:\\Users\\pca107\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-Platform\\CI.Models\\obj\\",
+        "outputPath": "C:\\Users\\pca107\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
@@ -45,6 +45,10 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "dependencies": {
+            "Microsoft.AspNet.Mvc": {
+              "target": "Package",
+              "version": "[5.2.9, )"
+            },
             "Microsoft.AspNetCore.Http.Features": {
               "target": "Package",
               "version": "[5.0.17, )"

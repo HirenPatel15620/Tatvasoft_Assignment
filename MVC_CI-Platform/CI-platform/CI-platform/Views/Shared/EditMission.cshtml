@@ -8,8 +8,10 @@
 
     <div class="particalEditmission m-5" style="margin:50px;">
 
-        <form asp-area="Admin" class="w-75" asp-action="AddMission" id="form" asp-controller="Mission" method="post" enctype="multipart/form-data">
-            <div style="margin:50px;">
+        <form asp-area="Admin" asp-action="AddMission" id="form" asp-controller="Mission" method="post" enctype="multipart/form-data">
+            <input asp-for=MissionId id="id" name="id" type="hidden" class="form-group form-control mb-4 " aria-label="Default" aria-describedby="inputGroup-sizing-default">
+
+            <div style="margin:40px;">
                 @*mission title*@
                 <div class="mt-2 w-100">
                     <lable>Title</lable>
@@ -20,7 +22,7 @@
                 @*mission Description*@
                 <lable>Description</lable>
                 <textarea asp-for=Description type="text" rows="4" class="form-control  mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                </textarea>
+                        </textarea>
 
                 @*mission Organazion*@
                 <lable>Organazion Name</lable>
@@ -30,7 +32,7 @@
                 @*mission Organazion Details*@
                 <lable>Organazion Details</lable>
                 <textarea asp-for=OrganizationDetail type="text" rows="4" class="form-control mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                                                                                    </textarea>
+                                                                                            </textarea>
 
 
                 @*start and end date & deadline*@
@@ -62,6 +64,7 @@
 
                 @*mission Skill*@
                 <div class="row">
+                @*
                     <div class="col-lg-5 mt-2 col-md-5 col-sm-12 ">
                         <label class="form-label">Skill</label>
                         <select asp-for=SkillId class="form-select me-3" aria-label="Select Skill">
@@ -75,6 +78,19 @@
                             }
                         </select>
                     </div>
+                    *@
+
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                        <label class="form-label">Skills</label>
+                        <select asp-for="SelectedSkills" id="@Model.missionSkills" class="form-select me-3" aria-label="Select Skills" multiple>
+                            <option value="0" disabled selected>Select Skills for Mission</option>
+                            @foreach (var skill in Model.skills.Where(x => x.Status == 1))
+                            {
+                                <option value="@skill.SkillId">@skill.SkillName</option>
+                            }
+                        </select>
+                    </div>
+
 
                     @*mission Theme*@
                     <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
@@ -134,36 +150,59 @@
                     </select>
                 </div>
                 @*mission type*@
-                <div class="col-lg-6 mt-2 col-md-6 mb-4 ">
+                @*
+                    <div class="col-lg-6 mt-2 col-md-6 mb-4 ">
                     <label class="form-label">Mission Type</label><select asp-for=MissionType id='avilablity' class="form-select me-3" aria-label="Select Mission">
-                        <option value=0 disabled selected>Select Your MissionType</option>
-                        <option value='GOAL'>GOAL</option>
-                        <option value='TIME'>TIME</option>
+                    <option value=0 disabled selected>Select Your MissionType</option>
+                    <option value='GOAL'>GOAL</option>
+                    <option value='TIME'>TIME</option>
 
                     </select>
+                    </div>
+                *@
+                <div class="form-group col-12 col-md-6 mb-3">
+                    <label asp-for="MissionType" class="form-label text-muted">Mission Type</label>
+                    <select asp-for="MissionType" class="form-control">
+                        <option value="">Select Mission Type</option>
+                        <option value="TIME">Time</option>
+                        <option value="GOAL">Goal</option>
+                    </select>
+                    <span asp-validation-for="MissionType" class="text-ci-danger fs-7"></span>
                 </div>
+                <div class="form-group col-12 col-md-6 mb-3 goal-item d-none">
+                    <label asp-for="GoalValue" class="form-label text-muted">Goal Action</label>
+                    <input asp-for="GoalValue" class="form-control" placeholder="Enter Goal Action" />
+                    <span asp-validation-for="GoalValue" class="text-ci-danger fs-7"></span>
+                </div>
+                <div class="form-group col-12 col-md-6 mb-3 goal-item d-none">
+                    <label asp-for="GoalObjectiveText" class="form-label text-muted">Goal Objective Text</label>
+                    <input asp-for="GoalObjectiveText" class="form-control" placeholder="Enter Goal Objective Text" />
+                    <span asp-validation-for="GoalObjectiveText" class="text-ci-danger fs-7"></span>
+                </div>
+                @*
+                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 
-                @*upload images*@
-                @*              <div class="images w-100 mt-4 ">
-                    <label class="form-label">Upload Your Photos</label>
-                    <div class="w-100 border rounded d-flex flex-column align-items-center justify-content-center" style="height:100px;border-style:dashed;">
-                    <img src="~/images/add.png" style="cursor:pointer;position:relative; top:20px;" />
-                    <input type="file" accept="image/*" onchange="loadimages()" id="images" style="opacity:0;cursor:pointer;" multiple />
-                    <p style="margin-block:0px;cursor:pointer;"> Upload Pictures Here</p>
-                    </div>
-                    <span class="text-danger d-none" id="image">At Least Select One Image</span>
-                    <div asp-for=MissionMedias class="gallary mt-4 d-flex form-control flex-wrap">
-                    </div>
-                    </div>*@
-
-                @*experience*@
+                    @*experience*@
                 <div class="form-group">
                     <label>Images</label>
 
                     <input type="file" name="files" multiple />
                 </div>
+
+                <div>
+
+                    @{
+                        foreach (var Model in Model.Missionmedia)
+                        {
+
+                            <img style="width:100px; height:100px" src="@Model.MediaPath" />
+
+                        }
+                    }
+                </div>
                 @*asp-for=MissionMedias*@
+
 
 
 
@@ -171,7 +210,19 @@
                     <button class="btn btn-outline-danger rounded-pill" type="submit">Save</button>
                     <button type="reset" class="btn rounded-pill btn-outline-secondary" onclick="changelayout()">Cancle</button>
                 </div>
+
             </div>
         </form>
     </div>
+
 }
+
+<script>
+      $("#MissionType").change((e)=>{
+        if(e.target.value === "GOAL")
+        $(".goal-item").removeClass("d-none");
+        else
+        $(".goal-item").addClass("d-none");
+    });
+
+</script>

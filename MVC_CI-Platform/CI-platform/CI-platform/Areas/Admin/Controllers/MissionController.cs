@@ -4,6 +4,7 @@ using CI.Models.ViewModels;
 using CI.Models;
 using System.Security.Claims;
 
+
 namespace CI_platform.Areas.Admin.Controllers
 {
     [Area("Admin")]
@@ -15,64 +16,71 @@ namespace CI_platform.Areas.Admin.Controllers
         {
             allRepository = _allRepository;
         }
-
-        public IActionResult Mission()
+        public IActionResult Mission(string searchString, int? pageNumber)
         {
-            //string searchString, int page
 
-            AdminMission adminMission = new AdminMission();
-            adminMission.Missions = allRepository.AdminMission.GetAllMission();
+
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
+            const int pageSize = 10;
+
+            // Get all Mission
+            CI.Models.ViewModels.AdminMission adminMission = allRepository.AdminMission.GetAllMissions();
+
             adminMission.skills = allRepository.AdminMission.GetAllSkil();
             adminMission.themes = allRepository.AdminMission.GetAllTheme();
+            adminMission.Missionmedia = allRepository.AdminMission.GetAllMedia();
             adminMission.Country = allRepository.AdminMission.GetAllCountry();
-            //if (country != 0)
-            //{
-            //    ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country, user_id);
-            //    var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
-            //    return Json(new { cities = cities });
-            //}
             adminMission.Cities = allRepository.AdminMission.GetAllCities();
+
+            // Search for Mission if search parameter is provided
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                adminMission.Missions = adminMission.Missions.Where(b => b.Title.ToLower().Contains(searchString)).ToList();
+            }
+
+            // Paginate the Mission using the requested page number and page size
+            adminMission.TotalPages = (int)Math.Ceiling(adminMission.Missions.Count / (double)pageSize);
+            adminMission.PageNumber = pageNumber ?? 1;
+            adminMission.Missions = adminMission.Missions.Skip((adminMission.PageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            adminMission.SearchString = searchString;
+
             return View(adminMission);
-
-            //int pageSize = 10; // Number of records to display per page
-
-            //IEnumerable<AdminMission> missions;
-
-            //if (!string.IsNullOrEmpty(searchString))
-            //{
-            //    missions = allRepository.AdminMission.SearchMission(searchString);
-            //}
-            //else
-            //{
-            //    missions = allRepository.AdminMission.GetMission();
-            //}
-
-            //int totalRecords = missions.Count();
-            //int totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
-            //int skip = (page - 1) * pageSize;
-
-            //missions = missions.Skip(skip).Take(pageSize).ToList();
-
-            //ViewData["SearchString"] = searchString;
-            //ViewData["CurrentPage"] = page;
-
-            //ViewData["TotalPages"] = totalPages;
-
-            //return View(missions);
-
         }
 
 
 
+
         [HttpPost]
-        public async Task<IActionResult> AddMission(long id, AdminMission model, List<IFormFile> files)
+        public async Task<IActionResult> AddMission(long id, AdminMission model, List<IFormFile> files, List<IFormFile> fileInput)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
+            if (model.MissionType == "TIME")
+            {
+                ModelState.Remove("GoalValue");
+                ModelState.Remove("GoalObjectiveText");
+            }
+
+
+
             var data = allRepository.AdminMission.GetMissionById(id);
             if (data == null)
             {
                 if (ModelState.IsValid)
                 {
                     CI.Models.Mission mission = new CI.Models.Mission();
+
+
+
+
                     mission.Availability = model.Availability;
                     mission.Description = model.Description;
                     mission.CityId = model.CityId;
@@ -86,6 +94,28 @@ namespace CI_platform.Areas.Admin.Controllers
                     mission.Title = model.Title;
                     mission.TotalSeats = model.TotalSeats;
                     mission.MissionType = model.MissionType;
+                    mission.MissionId = model.MissionId;
+                    mission.GoalObject = model.GoalObjectiveText;
+                    if (model.MissionType == "GOAL")
+                    {
+                        GoalMission goalMission = new GoalMission();
+                        goalMission.GoalValue = model.GoalValue;
+                        goalMission.GoalObjectiveText = model.GoalObjectiveText;
+                        mission.GoalMissions.Add(goalMission);
+                    }
+                    if (model.SelectedSkills != null)
+                    {
+                        foreach (var skillId in model.SelectedSkills)
+                        {
+                            MissionSkill skill = new MissionSkill
+                            {
+                                SkillId = skillId
+                            };
+                            mission.MissionSkills.Add(skill);
+                        }
+
+                    }
+
                     allRepository.AdminMission.AddMission(mission);
 
                     long missionid = mission.MissionId;
@@ -109,7 +139,95 @@ namespace CI_platform.Areas.Admin.Controllers
                             allRepository.AdminMission.savemedia(missionMedia);
                         }
                     }
+
+
+
+                    if (fileInput is not null)
+                    {
+                        foreach (var document in mission.MissionDocuments)
+                        {
+                            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", document.DocumentPath);
+                            if (System.IO.File.Exists(path))
+                            {
+                                System.IO.File.Delete(path);
+                            }
+
+                        }
+                        int d_count = 1;
+                        foreach (var document in fileInput)
+                        {
+                            FileInfo fileInfo = new FileInfo(document.FileName);
+                            string filename = $"mission{mission.MissionId}-document-{d_count}" + fileInfo.Extension;
+                            string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", filename);
+
+
+                            MissionDocument doc = new MissionDocument();
+                            {
+                                doc.MissionId = mission.MissionId;
+                                doc.DocumentPath = filename;
+                                doc.DocumentName = document.FileName;
+                            }
+                            allRepository.AdminMission.AddDoc(doc);
+
+                            using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                            {
+                                document.CopyTo(fileStream);
+                            }
+                            d_count++;
+                        }
+                    }
+
+
+
+
                 }
+
+                return RedirectToAction("Mission", "Mission");
+
+            }
+
+            if (data != null)
+            {
+                data.MissionType = model.MissionType;
+                data.MissionId = id;
+                data.OrganizationName = model.OrganizationName;
+                data.OrganizationDetail = model.OrganizationDetail;
+                data.StartDate = model.StartDate;
+                data.EndDate = model.EndDate;
+                data.Description = model.Description;
+                data.Title = model.Title;
+                data.Deadline = model.Deadline;
+                data.TotalSeats = model.TotalSeats;
+                data.CountryId = model.CountryId;
+                data.CityId = model.CityId;
+                data.Availability = model.Availability;
+                data.ThemeId = model.MissionThemeId;
+                if (model.SelectedSkills != null)
+                {
+                    foreach (var skillId in model.SelectedSkills)
+                    {
+
+                        if (!data.MissionSkills.Any(ms => ms.SkillId == skillId))
+                        {
+                            MissionSkill skill = new MissionSkill
+                            {
+                                SkillId = skillId
+                            };
+                            data.MissionSkills.Add(skill);
+                        }
+                    }
+
+                }
+
+                if (model.MissionType == "GOAL")
+                {
+                    GoalMission goalMission = allRepository.AdminMission.getGoalMissionByMissionId(id);
+                    goalMission.GoalValue = model.GoalValue;
+                    goalMission.GoalObjectiveText = model.GoalObjectiveText;
+
+                    allRepository.AdminMission.UpdateGoalMission(goalMission);
+                }
+                allRepository.AdminMission.UpdateMission(data);
 
                 return RedirectToAction("Mission", "Mission");
 
@@ -124,13 +242,22 @@ namespace CI_platform.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult GetEditMission(long id)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
 
             var data = allRepository.AdminMission.GetMissionById(id);
             if (data != null)
             {
                 AdminMission adminMission = new AdminMission();
                 {
-
+                    if (adminMission.MissionType == "TIME")
+                    {
+                        ModelState.Remove("GoalValue");
+                        ModelState.Remove("GoalObjectiveText");
+                    }
                     adminMission.MissionId = id;
                     adminMission.Availability = data.Availability;
                     adminMission.CityId = data.CityId;
@@ -145,8 +272,15 @@ namespace CI_platform.Areas.Admin.Controllers
                     adminMission.OrganizationName = data.OrganizationName;
                     adminMission.OrganizationDetail = data.OrganizationDetail;
                     adminMission.MissionThemeId = data.ThemeId;
-                    adminMission.SkillId = data.MissionSkills.ToList().Count();
+                    adminMission.Missionmedia = data.MissionMedia.Where(x => x.MissionId == id).ToList();
+                    adminMission.missionSkills = data.MissionSkills.ToList();
 
+                    if (adminMission.MissionType == "GOAL")
+                    {
+                        GoalMission goalMission = data.GoalMissions.FirstOrDefault(x => x.MissionId == id);
+                        adminMission.GoalValue = goalMission.GoalValue;
+                        adminMission.GoalObjectiveText = goalMission.GoalObjectiveText;
+                    }
 
                 }
                 adminMission.Missions = allRepository.AdminMission.GetAllMission();
@@ -184,6 +318,11 @@ namespace CI_platform.Areas.Admin.Controllers
 
         public IActionResult MissionTheme(string searchString, int page)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
             int pageSize = 10; // Number of records to display per page
 
             IEnumerable<MissionTheme> missionThemes;
@@ -209,50 +348,69 @@ namespace CI_platform.Areas.Admin.Controllers
             ViewData["TotalPages"] = totalPages;
 
             return View(missionThemes);
-            //var missiontheme = allRepository.AdminMission.GetAllTheme();
-            //return View(missiontheme);
+
 
 
         }
         [HttpPost]
         public IActionResult ThemeDecline(long id, int flag, string title)
         {
-            if (id != 0)
+            if (HttpContext.Session.GetString("role") is null)
             {
-                if (flag == 0)
+                return RedirectToAction("Home", "Home");
+            }
+
+            if (string.IsNullOrWhiteSpace(title))
+            {
+                ViewData["ThemeDecline"] = "ThemeEmpty";
+
+            }
+            else if (id == 0 && allRepository.AdminMission.ThemeExists(title))
+            {
+                ViewData["ThemeDecline"] = "ThemeExit";
+
+            }
+            else
+            {
+                if (id != 0)
                 {
-                    var record = allRepository.AdminMission.GetThemeById(id);
-                    record.Status = 0;
-                    record.Title = title;
-                    allRepository.AdminMission.DeclineTheme(record);
+                    if (flag == 0)
+                    {
 
-                    //var missionrecord=allRepository.AdminMission.GetThemeByMissionId(id);
-                    //missionrecord.ThemeId = null;
-                    //allRepository.AdminMission.DeclineThemeInMission(missionrecord);
+                        var record = allRepository.AdminMission.GetThemeById(id);
+                        allRepository.AdminMission.GetThemeByMissionId(id);
+                        record.Status = 0;
+                        record.Title = title;
+                        allRepository.AdminMission.DeclineTheme(record);
 
+                    }
+
+                    if (flag == 1)
+                    {
+
+                        var record = allRepository.AdminMission.GetThemeById(id);
+                        record.Status = 1;
+                        record.Title = title;
+                        allRepository.AdminMission.DeclineTheme(record);
+
+                    }
                 }
-                if (flag == 1)
+                else
                 {
-                    var record = allRepository.AdminMission.GetThemeById(id);
-                    record.Status = 1;
-                    record.Title = title;
-                    allRepository.AdminMission.DeclineTheme(record);
-
+                    CI.Models.MissionTheme missiontheme = new CI.Models.MissionTheme()
+                    {
+                        Title = title,
+                        Status = 1,
+                        CreatedAt = DateTime.Now,
+                    };
+                    allRepository.AdminMission.AddTheme(missiontheme);
                 }
             }
-            if (id == 0)
-            {
-                CI.Models.MissionTheme missiontheme = new CI.Models.MissionTheme()
-                {
-                    Title = title,
-                    Status = 1,
-                    CreatedAt = DateTime.Now,
-                };
-                allRepository.AdminMission.AddTheme(missiontheme);
-            }
+
+
+
             return RedirectToAction("MissionTheme", "Mission");
         }
-
 
 
 
@@ -261,6 +419,11 @@ namespace CI_platform.Areas.Admin.Controllers
 
         public IActionResult MissionSkill(string searchString, int page)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
 
             int pageSize = 10; // Number of records to display per page
 
@@ -288,42 +451,63 @@ namespace CI_platform.Areas.Admin.Controllers
 
             return View(missionSkills);
 
-            //var missionskill = allRepository.AdminMission.GetAllSkil();
-            //return View(missionskill);
+
         }
 
         [HttpPost]
         public IActionResult SkillDecline(long id, int flag, string skillname)
         {
-            if (id != 0)
+            if (HttpContext.Session.GetString("role") is null)
             {
-                if (flag == 0)
+                return RedirectToAction("Home", "Home");
+            }
+
+            if (string.IsNullOrWhiteSpace(skillname))
+            {
+                ViewData["SkillDecline"] = "SkillEmpty";
+            }
+            else if (id == 0 && allRepository.AdminMission.SkillExists(skillname))
+            {
+                ViewData["SkillDecline"] = "SkillExit";
+            }
+            else
+            {
+                if (id != 0)
                 {
-                    var record = allRepository.AdminMission.GetSkillById(id);
-                    record.SkillName = skillname;
-                    record.Status = 0;
-                    allRepository.AdminMission.DeclineSkill(record);
+                    if (flag == 0)
+                    {
+
+                        var record = allRepository.AdminMission.GetSkillById(id);
+                        record.SkillName = skillname;
+                        record.Status = 0;
+                        allRepository.AdminMission.DeclineSkill(record);
+                        allRepository.AdminMission.GetMissionSkills(id);
+                    }
+                    if (flag == 1)
+                    {
+                        var record = allRepository.AdminMission.GetSkillById(id);
+                        record.SkillName = skillname;
+                        record.Status = 1;
+                        allRepository.AdminMission.DeclineSkill(record);
+
+                    }
 
                 }
-                if (flag == 1)
+                else
                 {
-                    var record = allRepository.AdminMission.GetSkillById(id);
-                    record.SkillName = skillname;
-                    record.Status = 1;
-                    allRepository.AdminMission.DeclineSkill(record);
+                    CI.Models.Skill skill = new CI.Models.Skill()
+                    {
+                        SkillName = skillname,
+                        Status = 1,
+                        CreatedAt = DateTime.Now,
+                    };
 
+                    allRepository.AdminMission.AddSkill(skill);
                 }
             }
-            if (id == 0)
-            {
-                CI.Models.Skill skill = new CI.Models.Skill()
-                {
-                    SkillName = skillname,
-                    Status = 1,
-                    CreatedAt = DateTime.Now,
-                };
-                allRepository.AdminMission.AddSkill(skill);
-            }
+
+
+
             return RedirectToAction("MissionSkill", "Mission");
         }
 
@@ -337,7 +521,11 @@ namespace CI_platform.Areas.Admin.Controllers
 
         public IActionResult MissionApplication(string searchString, int page)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
 
+            }
             int pageSize = 10; // Number of records to display per page
 
             IEnumerable<MissionApplication> missionApplications;
@@ -366,12 +554,15 @@ namespace CI_platform.Areas.Admin.Controllers
 
 
 
-            //var missionapplication = allRepository.AdminMission.GetAllMissionApplication();
-            //return View(missionapplication);
         }
         [HttpPost]
         public IActionResult Decline(long id, int flag)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
             if (id != 0)
             {
                 if (flag == 0)

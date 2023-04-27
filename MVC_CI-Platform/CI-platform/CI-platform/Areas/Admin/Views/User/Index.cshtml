@@ -9,18 +9,11 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
-@*@using (Html.BeginForm("searchUser", "Users", FormMethod.Get))
-    {
-    <div class="form-group">
-    @Html.Label("Search")
-    @Html.TextBox("searchString", ViewData["SearchString"] as string, new { @class = "form-control" })
-    </div>
-    <button type="submit" class="btn btn-primary">Search</button>
 
-    }
-    action="@Url.Action("searchUser")"
-*@
+<style>
 
+
+</style>
 
 <div class="c p-3">
     <div class="my-3 ">
@@ -34,13 +27,14 @@
     <div class="py-3 d-flex justify-content-between align-items-center">
 
         <form method="get" asp-area="Admin" asp-controller="User" asp-action="Index">
-            <div class="input-group">
-                <input type="text" class="form-control" name="searchString" value="@ViewData["SearchString"]" placeholder="Search Here">
+            <div class="input-group">   
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]" placeholder="&#61442; Search Here">
                 <div class="input-group-append">
-                    <button type="submit" class="ml-2 btn btn-primary">Search</button>
+       
                 </div>
             </div>
         </form>
+        <button type="button" class="btn applyButton" onclick="update(0,1)">+ Add</button>
     </div>
     <div class="w-100 h-100">
         <table class="table border ">
@@ -83,10 +77,10 @@
                             </td>
 
                             <td>
-                                <button onclick="update(@item.UserId,1)" class="btn btn-danger">Edit</button>
+                              
+                                    <img onclick="update(@item.UserId,1)" src="/images/edit.png" style="margin: 3px 3px 3px 3px;" />
                                 @*
                                     <button onclick="update(@item.UserId,0)" class="btn btn-danger">Deactive</button>
-                                    <img onclick="update(@item.UserId,1)" src="/images/right.png" style="margin: 3px 3px 3px 3px;" />
 
                                     <img onclick="update(@item.UserId,0)" src="/images/cancel.png" style="margin: 3px 3px 3px 3px;" />
                                 *@
@@ -167,21 +161,22 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">First Name </span>
                                 </div>
-                                <input value="@item.FirstName " name="firstname" id="firstname"  type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+
+                                <input type="text" value="@item.FirstName" name="firstname" id="firstname" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Last Name </span>
                                 </div>
-                                <input name="lastname" id="lastname" value=" @item.LastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input name="lastname" id="lastname" value=" @item.LastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Email ID </span>
                                 </div>
-                                <input name="email" id="email" value="@item.Email" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input name="email" id="email" value="@item.Email" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
                             @*
                                 <div class="input-group mb-3">
@@ -195,44 +190,37 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Employee Id</span>
                                 </div>
-                                <input name="employeeid" id="employeeid" value=" @item.EmployeeId" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input name="employeeid" id="employeeid" value=" @item.EmployeeId" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Department </span>
                                 </div>
-                                <input name="department" id="department" value=" @item.Department" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input name="department" id="department" value=" @item.Department" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Profile Text </span>
                                 </div>
-                                <input name="profiletext" id="profiletext" value=" @item.ProfileText" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input name="profiletext" id="profiletext" value=" @item.ProfileText" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                <span class="text-danger d-block"></span>
                             </div>
 
 
-
-
-
-
-
-
-
-                             <label class="form-label">Status</label><select value="@item." id='flag'name="flag"  class="form-select city me-3" aria-label="Select Mission">
+                            <label class="form-label">Status</label><select value="@item.Status" id='flag' name="flag" class="form-select city me-3" aria-label="Select Mission" required>
                                 <option disabled selected>Select status</option>
-   
-                                        <option value="1">Active </option>
-                                        <option value="0">Deactive </option>
-                                                                
+
+                                <option value="1">Active </option>
+                                <option value="0">Deactive </option>
+
                             </select>
 
-
-                             <label class="form-label">Role</label><select value="@item.Role" id='role' name="role"  class="form-select city me-3" aria-label="Select Mission">
+                            <label class="form-label">Role</label><select value="@item.Role" id='role' name="role" class="form-select city me-3" aria-label="Select Mission" required>
                                 <option disabled selected>Select Role</option>
-   
-                                        <option value="admin">Admin </option>
-                                        <option value="superadmin">SuperAdmin </option>
-                                                                
+
+                                <option value="admin">Admin </option>
+                                <option value="superadmin">SuperAdmin </option>
+
                             </select>
 
                         </div>
@@ -248,86 +236,129 @@
     }
 }
 
+@*add*@
 
-
-
-
-
-@*Approve and decline modal *@
-@*<div class="modal fade" id="deleterec" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="deleterec-0" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-    <form asp-action="GetEditUser" asp-area="Admin" asp-controller="User">
-    <input name="id" id="id" type="hidden" value="" />
-    <input name="flag" id="flag" type="hidden" value="" />
-    <div class="modal-header border-0">
-    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+        <div class="modal-content">
+            <form asp-action="GetEditUser" asp-area="Admin" asp-controller="User">
+                <input name="id" id="id" type="hidden" value="0" />
+                @*
+                    <input name="flag" id="flag" type="hidden" />
+                *@
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                </div>
+                <div class="modal-body ">
+                 
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">First Name </span>
+                        </div>
+
+                        <input type="text" name="firstname" id="firstname" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Last Name </span>
+                        </div>
+                        <input name="lastname" id="lastname" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Email ID </span>
+                        </div>
+                        <input name="email" id="email" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Password </span>
+                        </div>
+                        <input name="password" id="password" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Phone </span>
+                        </div>
+                        <input name="Phone" id="Phone"  type="text" placeholder="countrycode-number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                        <span class="text-danger d-block"></span>
+                    </div>
+               
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Employee Id</span>
+                        </div>
+                        <input name="employeeid" id="employeeid" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Department </span>
+                        </div>
+                        <input name="department" id="department" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Profile Text </span>
+                        </div>
+                        <input name="profiletext" id="profiletext" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+
+
+
+
+
+
+
+
+
+                    <label class="form-label">Status</label><select id='flag' name="flag" class="form-select city me-3" aria-label="Select Mission" required>
+                        <option disabled selected>Select status</option>
+
+                        <option value="1">Active </option>
+                        <option value="0">Deactive </option>
+
+                    </select>
+
+
+                    <label class="form-label">Role</label><select id='role' name="role" class="form-select city me-3" aria-label="Select Mission" required>
+                        <option disabled selected>Select Role</option>
+
+                        <option value="admin">Admin </option>
+                        <option value="superadmin">SuperAdmin </option>
+
+                    </select>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-outline-warning rounded-pill" type="submit">Change</button>
+                    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <div class="modal-footer">
-    <button class="btn btn-outline-warning rounded-pill" onclick="showthis()" type="submit">Change</button>
-    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
-    </div>
-    </form>
-    </div>
-    </div>
-    </div>
-*@
+</div>
 
 
 
 
-@*<div>
-    <ul class="pagination">
-    @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] > 1)
-    {
-    <li class="page-item">
-    <a class="page-link" href="@Url.Action("Index", "User", new { page = (int)ViewData["CurrentPage"] - 1 })">Previous</a>
-    </li>
-    }
-
-    @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
-    {
-    <li class="page-item @(i == (int)ViewData["CurrentPage"] ? "active" : "")">
-    <a class="page-link" href="@Url.Action("Index", "User", new { page = i })">@i</a>
-    </li>
-    }
-
-    @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
-    {
-    <li class="page-item">
-    <a class="page-link" href="@Url.Action("Index", "User", new { page = (int)ViewData["CurrentPage"] + 1 })">Next</a>
-    </li>
-    }
-    </ul>
-    </div>
-*@
 
 
 
-@*<div class="pagination">
-    @if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] > 1)
-    {
-    <a href="@Url.Action("Index", new { page = (int)ViewData["CurrentPage"] - 1, searchString = ViewData["SearchString"] })">&laquo; Previous</a>
-    }
 
-    @if (ViewData["TotalPages"] != null)
-    {
-    for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
-    {
-    if (ViewData["CurrentPage"] != null && (int)ViewData["CurrentPage"] == i)
-    {
-    <span>@i</span>
-    }
-    else
-    {
-    <a href="@Url.Action("Index", new { page = i, searchString = ViewData["SearchString"] })">@i</a>
-    }
-    }
-    }
 
-    @if (ViewData["CurrentPage"] != null && ViewData["TotalPages"] != null && (int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
-    {
-    <a href="@Url.Action("Index", new { page = (int)ViewData["CurrentPage"] + 1, searchString = ViewData["SearchString"] })">Next &raquo;</a>
-    }
-    </div>
-*@
+
+
+
+
+<script src="~/js/Admin.js" asp-append-version="true"></script>
+
+
+
+

@@ -23,34 +23,52 @@ namespace CI_platform.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 await HttpContext.SignOutAsync("AuthCookie");
+                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                 return RedirectToAction("Login");
             }
             else
             {
+                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                 return RedirectToAction("Login");
             }
         }
-        public IActionResult Login()
+        public IActionResult Login(string? returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
+
+                if (returnUrl is not null)
+                {
+                    return new RedirectResult(returnUrl);
+                }
                 return RedirectToAction("home", "home");
             }
             else
             {
+                if (returnUrl is not null)
+                {
+                    TempData["returnUrl"] = returnUrl;
+                }
+                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                 return View();
             }
         }
+
+
+
+
+
         [HttpPost]
         public async Task<IActionResult> Login(Login login)
         {
             if (ModelState.IsValid)
             {
                 User check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(login.Email));
-                
+
                 if (check == null)
                 {
                     ViewData["login"] = "register";
+                    ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                     return View();
                 }
                 else
@@ -60,7 +78,12 @@ namespace CI_platform.Controllers
                     ViewData["login"] = "mainpage";
                     if (verify is true)
                     {
-                        
+                        if (check.Role is not null)
+                        {
+                            HttpContext.Session.SetString("role", check?.Role);
+
+                        }
+
                         if (check.Avatar is not null)
                         {
 
@@ -73,9 +96,25 @@ namespace CI_platform.Controllers
                             var identity = new ClaimsIdentity(claims, "AuthCookie");
                             var Principle = new ClaimsPrincipal(identity);
                             HttpContext.Session.SetString("Avatar", check.Avatar);
+
+                            HttpContext.Session.SetString("city", check?.CityId.ToString());
                             await HttpContext.SignInAsync("AuthCookie", Principle);
+                            if (check.Role is not null)
+                            {
+                                HttpContext.Session.SetString("role", check?.Role);
+                                return RedirectToAction("Index", "User", new { area = "Admin" });
+                            }
+                            if (TempData.ContainsKey("returnUrl"))
+                            {
+                                var url = TempData["returnUrl"] as string;
+                                return new RedirectResult(url);
+                            }
+
+
+
                             return RedirectToAction("home", "home");
                         }
+
                         else
                         {
                             var claims = new List<Claim>
@@ -93,14 +132,18 @@ namespace CI_platform.Controllers
                         }
 
                     }
+
+
                     else
                     {
                         ViewData["login"] = "password";
+                        ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                         return View();
                     }
 
                 }
             }
+            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
             return View();
         }
 
@@ -113,6 +156,7 @@ namespace CI_platform.Controllers
             }
             else
             {
+                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                 return View();
             }
         }
@@ -154,9 +198,11 @@ namespace CI_platform.Controllers
                 else
                 {
                     ViewData["register"] = "warning";
+                    ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                     return View();
                 }
             }
+            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
             return View();
 
 
@@ -167,8 +213,10 @@ namespace CI_platform.Controllers
             if (TempData.Peek("email") is not null)
             {
                 ViewData["ResetPassword"] = "EmailSent";
+                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                 return View();
             }
+            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
             return View();
         }
         [HttpPost]
@@ -181,6 +229,14 @@ namespace CI_platform.Controllers
                 {
                     string email = TempData.Peek("email").ToString();
                     PasswordReset data = db.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(email));
+
+                    if (data is null)
+                    {
+                        ViewData["ResetPassword"] = "token";
+                        return View();
+
+                    }
+
                     if (data.Token == pass.Token)
                     {
                         string passtoken = BCrypt.Net.BCrypt.HashPassword(pass.Password);
@@ -188,35 +244,41 @@ namespace CI_platform.Controllers
                         if (myuser == null)
                         {
                             ViewData["ResetPassword"] = "false";
+                            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                             return View();
                         }
                         else
                         {
                             db.save();
+                            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                             return RedirectToAction("Login");
                         }
                     }
                     else
                     {
                         ViewData["ResetPassword"] = "false";
+                        ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                         return View();
                     }
                 }
                 else
                 {
                     ViewData["ResetPassword"] = "false";
+                    ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                     return View();
                 }
             }
             else
             {
                 ViewData["ResetPassword"] = "false";
+                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                 return View();
             }
         }
         [Route("ForgotPassword")]
         public IActionResult ForgotPassword()
         {
+            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
             return View();
         }
         [HttpPost]
@@ -229,6 +291,7 @@ namespace CI_platform.Controllers
                 User myuser = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
                 if (myuser == null)
                 {
+                    ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
                     return View();
                 }
                 else
@@ -278,6 +341,7 @@ namespace CI_platform.Controllers
 
                 }
             }
+            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
             return View();
         }
     }

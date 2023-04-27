@@ -105,6 +105,46 @@ const apply_for_mission = (user_id, mission_id) => {
         }
     })
 }
+//already
+
+
+function addciti(name, type) {
+    var city;
+    if (type == 'mobile') {
+        city = document.getElementsByClassName(name)[0]
+    }
+    else {
+        city = document.getElementById(name)
+    }
+    if (city.checked) {
+        if (!cities.includes(name)) {
+            cities.push(name)
+            var badge = "<div class='border rounded-pill mt-3'>"
+                + "<span class='p-2'>" + cities[city_count] + "</span>"
+                + "<img src='images/cancel.png' class='p-2' alt='not found' />"
+                + "</div>";
+            var $mybadge = $(badge)
+            $mybadge.attr('id', `badge-${name.replace(/\s/g, '')}`)
+            $mybadge.find('img').attr('onclick', `remove_badges("badge-${name}","city")`)
+            badge = $mybadge
+            $('.all-choices').append(badge)
+            if ($('.all-choices').find('div').length > 1 && $('.clear-all').length == 0) {
+                $myclear = $(clearall)
+                $myclear.attr('onclick', 'clear_all()')
+                clearall = $myclear
+                $('#clear-all').append(clearall)
+            }
+            city_count++;
+        }
+    }
+    else {
+        if (cities.includes(name)) {
+            cities.splice(cities.indexOf(name), 1)
+            $('.all-choices').find(`#badge-${name.replace(/\s/g, '')}`).remove()
+            city_count--;
+        }
+    }
+}
 
 
 //filters by cities
@@ -151,6 +191,8 @@ function addcities(name, type) {
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
             loadmissions(result.mission.result, result.length)
+            setpages();
+
         },
         error: function () {
             console.log("Error updating variable");
@@ -204,6 +246,8 @@ const addcountries = (name, type) => {
         success: function (result) {
             loadmissions(result.mission.result, result.length)
             loadcities(result.city.result);
+            setpages();
+
         },
         error: function () {
             console.log("Error updating variable");
@@ -255,6 +299,8 @@ const addthemes = (name,type) => {
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success:  function (result) {
             loadmissions(result.mission.result, result.length)
+            setpages();
+
         },
         error: function () {
             console.log("Error updating variable");
@@ -306,6 +352,8 @@ const addskills = (name,type) => {
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success:  function (result) {
             loadmissions(result.mission.result, result.length)
+            setpages();
+
         },
         error: function () {
             console.log("Error updating variable");
@@ -332,9 +380,13 @@ const loadmissions = (missions, length) => {
         $('.missions').empty().append(missions)
         if (view == "list") {
             listview()
+            setpages();
+
         }
         else {
             gridview()
+            setpages();
+
         }
     }
 }
@@ -353,6 +405,8 @@ const search_missions = () => {
             data: { key: key, sort_by: selected.toLowerCase()},
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
+                setpages();
+
             },
             error: function () {
                 console.log("Error updating variable");
@@ -365,7 +419,9 @@ const search_missions = () => {
             type: 'POST',
             data: { countries: countries, cities: cities, themes: themes, skills: skills },
             success: function (result) {
-                loadmissions(result.mission.result,result.length)
+                loadmissions(result.mission.result, result.length)
+                setpages();
+
             },
             error: function () {
                 console.log("Error updating variable");
@@ -388,7 +444,9 @@ const sort_by = (user_id) => {
             type: 'POST',
             data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), user_id: user_id },
             success: function (result) {
-                loadmissions(result.mission.result,result.length)
+                loadmissions(result.mission.result, result.length)
+                setpages();
+
             },
             error: function () {
                 console.log("Error updating variable");
@@ -399,37 +457,28 @@ const sort_by = (user_id) => {
 
 
 
-//clear all
-//const clear_all = () => {
-//    var selected = $('#sort').find(':selected').text();
-//    countries = []
-//    cities = []
-//    themes = []
-//    skills=[]
-//    //$.ajax({
-//    //    url: '/home',
-//    //    type: 'POST',
-//    //    data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), page_index: pageindex },
-//    //    success: function (result) {
-//    //        loadmissions(result.mission.result, result.length)
-//    //    },
-//    //    error: function () {
-//    //        console.log("Error updating variable");
-//    //    }
-//    //})
-//    $('.all-choices').empty()
-//    $('#clear-all').empty()
-//}
 
-const searchdiv = document.getElementById("searchdiv");
-const allchoicediv = document.getElementById("allchoicediv");
-const clearalldiv = document.getElementById("clearalldiv");
+const clear_all = () => {
+    var selected = $('#sort').find(':selected').text();
+    countries = []
+    cities = []
+    themes = []
+    skills=[]
+    $.ajax({
+        url: '/home',
+        type: 'POST',
+        data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
+        success: function (result) {
+            loadmissions(result.mission.result, result.length)
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+    $('.all-choices').empty()
+    $('#clear-all').empty()
+}
 
-searchdiv.addEventListener("DOMNodeRemoved", function (event) {
-    if (event.target === allchoicediv) {
-        searchdiv.removeChild(clearalldiv);
-    }
-});
 
 
 
@@ -499,6 +548,7 @@ const remove_badges = (id, badge_type) => {
         success: function (result) {
             loadmissions(result.mission.result, result.length)
             toastr.success("remove badge")
+            setpages();
 
         },
         error: function () {
@@ -512,6 +562,13 @@ const remove_badges = (id, badge_type) => {
 
 
 //recommand
+
+
+function recommendmodal() {
+    $('#recommendd').modal('show');
+}
+
+
 const add_coworkers = (id) => {
     id = parseInt(id.slice(9))
     if (!co_workers.includes(id)) {
@@ -523,7 +580,7 @@ const add_coworkers = (id) => {
 }
 
 
-const recommend = (user_id, mission_id) => {
+function recommend (user_id, mission_id) {
     debugger
     if (co_workers.length > 0) {
         $.ajax({
@@ -556,7 +613,7 @@ var endpageindex;
 
 function setpages() {
     let page_add = $("#pagination");
-
+    var cards = $(".card1");
     var pages = Math.ceil(cards.length / perpagecard);
     if (pages < 2) {
         $(page_add).parent().hide();
@@ -578,6 +635,7 @@ function pagination(page, totalpages) {
     currentindex = page;
 
     var pages = totalpages;
+    var cards = $(".card1");
     var startpage = (currentindex - 1) * perpagecard;
     var endpage = startpage + perpagecard;
     for (let i = 0; i < cards.length; i++) {
@@ -700,134 +758,5 @@ $(document).ready(function () {
 
 
 
-//const pagination = (page_index) => {
-//    var selected = $('#sort').find(':selected').text();
-//    pageindex = page_index - 1;
-//    $('.pagination li span').each(function (i, item) {
-//            item.classList.remove('page-active')
-//    })
-//    $(`#page-${page_index}`).addClass('page-active')
-//    $.ajax({
-//        url: '/home',
-//        type: 'POST',
-//        data: { page_index: page_index - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-//        success: function (result) {
-//            loadmissions(result.mission.result, result.length)
-//        },
-//        error: function (e) {
-//            console.log(e);
-//        }
-//    })
-//}
-//const prev = () => {
-//    var selected = $('#sort').find(':selected').text();
-//    var current_page;
-//    $('.pagination li span').each(function (i, item) {
-//        if (item.classList.contains('page-active')) {
-//            current_page = i - 1;
-//            if (current_page !== 1) {
-//                $('.pagination li span').eq(i - 1).addClass('page-active')
-//                item.classList.remove('page-active')
-//            }
-//        }
-//    })
-//    if (current_page !== 1) {
-//        pageindex = current_page - 2
-//        $.ajax({
-//        url: '/home',
-//            type: 'POST',
-//            data: { page_index: current_page - 2, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase()},
-//        success: function (result) {
-//            loadmissions(result.mission.result, result.length)
-//        },
-//        error: function (e) {
-//            console.log(e);
-//        }
-//    })
-//    }
-//}
-//const next = (max_page) => {
-//    var selected = $('#sort').find(':selected').text();
-//    var current_page;
-//    $('.pagination li span').each(function (i, item) {
-//        if (item.classList.contains('page-active')) {
-//            current_page = i - 1;
-//            if (current_page !== max_page) {
-//                $('.pagination li span').eq(i + 1).addClass('page-active')
-//                item.classList.remove('page-active')
-//                return false
-//            }
-//        }
-//    })
-//    if (current_page !== max_page) {
-//        pageindex = current_page
-//        $.ajax({
-//            url: '/home',
-//            type: 'POST',
-//            data: { page_index: current_page, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-//            success: function (result) {
-//                loadmissions(result.mission.result, result.length)
-//            },
-//            error: function (e) {
-//                console.log(e);
-//            }
-//        })
-//    }
-//}
 
-//const first_page = () => {
-//    var selected = $('#sort').find(':selected').text();
-//    var current_page;
-//    $('.pagination li span').each(function (i, item) {
-//        if (item.classList.contains('page-active')) {
-//            current_page = i - 1;
-//            if (current_page !== 1) {
-//                $('.pagination li span').eq(2).addClass('page-active')
-//                item.classList.remove('page-active')
-//            }
-//        }
-//    })
-//    if (current_page !== 1) {
-//        pageindex = 0
-//        $.ajax({
-//            url: '/home',
-//            type: 'POST',
-//            data: { page_index: 0, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-//            success: function (result) {
-//                loadmissions(result.mission.result, result.length)
-//            },
-//            error: function (e) {
-//                console.log(e);
-//            }
-//        })
-//    }
-//}
-//const last_page = (max_page) => {
-//    var selected = $('#sort').find(':selected').text();
-//    var current_page;
-//    $('.pagination li span').each(function (i, item) {
-//        if (item.classList.contains('page-active')) {
-//            current_page = i - 1;
-//            if (current_page !== max_page) {
-//                $('.pagination li span').eq(max_page+1).addClass('page-active')
-//                item.classList.remove('page-active')
-//                return false
-//            }
-//        }
-//    })
-//    if (current_page !== max_page) {
-//        pageindex = max_page-1
-//        $.ajax({
-//            url: '/home',
-//            type: 'POST',
-//            data: { page_index: max_page - 1, countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-//            success: function (result) {
-//                loadmissions(result.mission.result, result.length)
-//            },
-//            error: function (e) {
-//                console.log(e);
-//            }
-//        })
-//    }
-//}
    

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+
 namespace CI.Models;
 
 public partial class GoalMission

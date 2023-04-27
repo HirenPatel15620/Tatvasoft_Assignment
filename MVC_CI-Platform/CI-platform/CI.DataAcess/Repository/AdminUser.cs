@@ -50,6 +50,12 @@ namespace CI.Repository.Repository
             _db.SaveChanges();
             return true;
         }
+        public bool AddUser(User user)
+        {
+            _db.Users.Update(user);
+            _db.SaveChanges();
+            return true;
+        }
 
 
 

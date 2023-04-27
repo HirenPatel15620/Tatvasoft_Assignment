@@ -7,7 +7,7 @@ public partial class MissionSkill
 {
     public long MissionSkillId { get; set; }
 
-    public int SkillId { get; set; }
+    public int? SkillId { get; set; }
 
     public long MissionId { get; set; }
 
@@ -19,5 +19,5 @@ public partial class MissionSkill
 
     public virtual Mission Mission { get; set; } = null!;
 
-    public virtual Skill Skill { get; set; } = null!;
+    public virtual Skill? Skill { get; set; }
 }

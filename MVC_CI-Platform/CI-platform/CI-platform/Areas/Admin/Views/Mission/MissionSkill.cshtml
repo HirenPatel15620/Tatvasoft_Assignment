@@ -9,7 +9,22 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+@{
+    if (@ViewData["SkillDecline"] == "SkillExit")
+    {
 
+        <script>
+            toastr.error("Skill Already Available")
+        </script>
+    }
+      if (@ViewData["SkillDecline"] == "SkillEmpty")
+    {
+
+        <script>
+            toastr.error("Please Enter value")
+        </script>
+    }
+}
 <div class="c p-3">
     <div class="my-3 ">
         <div class="fs-3 d-flex">
@@ -22,9 +37,8 @@
     <div class="py-3 d-flex justify-content-between align-items-center">
         <form method="get" asp-area="Admin" asp-controller="Mission" asp-action="MissionSkill">
             <div class="input-group">
-                <input type="text" class="form-control" name="searchString" value="@ViewData["SearchString"]" placeholder="Search Here">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]"  placeholder="&#61442; Search Here">
                 <div class="input-group-append">
-                    <button type="submit" class="ml-2 btn btn-primary">Search</button>
                 </div>
             </div>
         </form>
@@ -66,9 +80,9 @@
                             </td>
 
                             <td>
-                                <button onclick="SkillDecline(@item.SkillId)" class="btn btn-success">Edit</button>
+                                <img onclick="SkillDecline(@item.SkillId)" src="~/images/edit.png" style="margin: 3px 3px 3px 3px;" />
                                 @*
-                                    <img onclick="SkillDecline(@item.SkillId,1)" src="~/images/right.png" style="margin: 3px 3px 3px 3px;" />
+                                    <button onclick="SkillDecline(@item.SkillId)" class="btn btn-success">Edit</button>
                                     <img onclick="SkillDecline(@item.SkillId,0)" src="~/images/bin.png" style="margin: 3px 3px 3px 3px;" />
                                 *@
                             </td>
@@ -80,8 +94,8 @@
             }
         </table>
 
-         @*pagination*@
-          @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
+        @*pagination*@
+        @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
         {
             <div class="position-absolute bottom-10 end-50 mt-3">
                 <nav>
@@ -138,15 +152,24 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Theme Name</span>
                                 </div>
-                                <input name="skillname" id="skillname" value="@item.SkillName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input name="skillname" id="skillname" value="@item.SkillName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
-                            <div class="input-group mb-3">
+                            @*
+                                <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                                <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
                                 </div>
                                 <input name="flag" id="flag" value="@item.Status" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                            </div>
+                                </div>
+                            *@
+                            <div class="w-100">
+                                <label class="form-label">Status</label><select value="@item.Status" id='flag' name="flag" class="status form-select city me-3" aria-label="Select Mission" required>
+                                    <option disabled selected>Select Role</option>
+                                    <option value="1">Active </option>
+                                    <option value="0">Deactive </option>
 
+                                </select>
+                            </div>
 
                         </div>
 
@@ -161,7 +184,7 @@
     }
 }
 
-
+<script src="~/js/Admin.js" asp-append-version="true"></script>
 
 
 
@@ -177,7 +200,7 @@
                 </div>
                 <div class="modal-body ">
                     <label> Skill Add  </label>
-                    <input name="skillname" id="skillname" type="text" />
+                    <input name="skillname" id="skillname" type="text" required />
                 </div>
 
                 <div class="modal-footer">

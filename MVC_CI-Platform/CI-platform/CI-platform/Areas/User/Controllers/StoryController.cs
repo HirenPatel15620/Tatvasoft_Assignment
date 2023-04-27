@@ -17,25 +17,44 @@ namespace CI_platform.Controllers
 
 
 
+
         [Route("stories")]
-        public IActionResult StoryListing()
+        public IActionResult StoryListing(string searchString, int? pageNumber)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+
+
+          
+            const int pageSize = 6;
+
+            // Get all stories
             CI.Models.ViewModels.Mission stories = allRepository.Story.GetStories(user_id);
+
+         
+
+            // Search for story if search parameter is provided
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                stories.Stories = stories.Stories.Where(b => b.Title.ToLower().Contains(searchString)).ToList();
+            }
+
+            // Paginate the Mission using the requested page number and page size
+            stories.TotalPages = (int)Math.Ceiling(stories.Stories.Count / (double)pageSize);
+            stories.PageNumber = pageNumber ?? 1;
+            stories.Stories = stories.Stories.Skip((stories.PageNumber - 1) * pageSize).Take(pageSize).ToList();
+
+            stories.SearchString = searchString;
+
             return View(stories);
         }
+
+
 
         [HttpPost]
         [Route("stories")]
         public JsonResult StoryListing(int page_index, string key)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            if (key is not null)
-            {
-                CI.Models.ViewModels.Mission GetSearchStory = allRepository.Story.GetSearchStory(key);
-                var filtered_story = this.RenderViewAsync("story_partial", GetSearchStory, true);
-                return Json(new { Stories = filtered_story, success = true });
-            }
 
 
             CI.Models.ViewModels.Mission stories = allRepository.Story.GetFileredStories(page_index, user_id);
@@ -83,6 +102,8 @@ namespace CI_platform.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            
+
                 CI.Models.ViewModels.StoryViewModel story = allRepository.Story.GetStory(user_id, id);
                 if (story is not null)
                 {
@@ -97,7 +118,7 @@ namespace CI_platform.Controllers
             }
             else
             {
-                return RedirectToAction("login", "userAuthentication");
+                return RedirectToAction("login", "userAuthentication", new { ReturnUrl = $"stories/detail/{id}" });
             }
         }
 

@@ -12,6 +12,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 @*mission details with images*@
 <div class=" container mt-4">
+
+
     <div class="row">
         <div class="images col-lg-6 col-md-6 col-sm-12">
             <div class="carousel slide" data-bs-interval="false" id="sub-images">
@@ -22,12 +24,12 @@
                         {
                             if (count == 0)
                             {
-                                <img class="w-100 carousel-item active main-image" src='~/images/@item.MediaPath' alt="" />
+                                <img class="w-100 carousel-item active main-image" src='@item.MediaPath' alt="" />
                                 count = count + 1;
                             }
                             else
                             {
-                                <img class="w-100 carousel-item main-image" src='~/images/@item.MediaPath' alt="" />
+                                <img class="w-100 carousel-item main-image" src='@item.MediaPath' alt="" />
                             }
                         }
                     }
@@ -49,14 +51,14 @@
                                                 {
                                                     @for (int j = 0; j < sub_count; j++)
                                                     {
-                                                        <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                        <img src='@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
                                                     }
                                                 }
                                                 else
                                                 {
                                                     @for (int j = 0; j < @Model?.mission?.MissionMedia.Count; j++)
                                                     {
-                                                        <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                        <img src='@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
                                                     }
                                                 }
                                             </div>
@@ -71,14 +73,14 @@
                                                 {
                                                     @for (int j = check; j < sub_count + check; j++)
                                                     {
-                                                        <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                        <img src='@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
                                                     }
                                                 }
                                                 else
                                                 {
                                                     @for (int j = check; j < @Model?.mission?.MissionMedia.Count; j++)
                                                     {
-                                                        <img src='~/images/@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
+                                                        <img src='@Model?.mission?.MissionMedia.ElementAt(j).MediaPath' data-bs-target="#sub-images" data-bs-slide-to=@j class="other-image" alt="" />
                                                     }
                                                 }
                                             </div>
@@ -114,7 +116,8 @@
                         @{
                             if (@Model?.mission?.MissionType == "GOAL")
                             {
-                                <p id="duration-txt" style="margin-bottom: 0;">@Model?.mission?.GoalObject</p>
+                            //<p id="duration-txt" style="margin-bottom: 0;">@Model?.mission?.GoalObject</p>
+                                <p id="duration-txt" style="margin-bottom: 0;">@Model?.goal?.Where(x=>x.MissionId==Model.mission.MissionId).Select(x=>x.GoalObjectiveText).FirstOrDefault() </p>
                             }
                             else
                             {
@@ -127,33 +130,36 @@
                     <div class="Seats d-flex align-items-center">
                         <img src="~/images/Seats-left.png" alt="">
                         <span>
-                            @Model?.mission?.AvbSeat <p>seats left</p>
+                            @Model?.mission?.TotalSeats <p>seats left</p>
                         </span>
                     </div>
                     <div class="deadline d-flex align-items-center">
                         @{
+
+
+                           
+
+                            var a1 = Model.timesheet?.Where(x => x.MissionId == Model.mission.MissionId).Sum(x => x.Action);
+                            var b1 = Model.goal?.Where(x => x.MissionId == Model.mission.MissionId).Select(x => x.GoalValue).FirstOrDefault();
+                            var avg = Convert.ToDouble(a1) / Convert.ToDouble(b1) * 100;
+
                             if (@Model?.mission?.MissionType == "GOAL")
                             {
-                                string? str1 = @Model?.mission?.GoalObject;
-                                string str2 = string.Empty;
-                                int goal = 0;
-                                for (int i = 0; i <= str1.Length - 1; i++)
+
+                                if (Model.goal != null)
                                 {
-                                    if (Char.IsDigit(str1[i]))
-                                        str2 += str1[i];
-                                }
-                                if (str2.Length > 0)
-                                {
-                                    goal = int.Parse(str2);
-                                }
-                                double? percent = (@Model?.mission?.Achieved / (double)goal) * 100;
-                                <img src="~/images/achieved.png" alt="">
-                                <div class="w-100">
-                                    <div class="progress" style="width:90%;margin-left:10px;">
-                                        <div class="progress-bar" role="progressbar" style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    <div class="px-2 w-25 text-end">
+                                        <img src="~/images/achieved.png" alt="">
                                     </div>
-                                    <p class="text-muted">@Model?.mission?.Achieved achieved</p>
-                                </div>
+                                    <div class="w-75">
+                                        <div class="progress w-75">
+                                            <div class="progress-bar bg-ci-primary" role="progressbar" style="width: @avg%"
+                                         aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                        </div>
+                                        <span class="fs-7">@a1 Achieved</span>
+                                    </div>
+                                }
+
                             }
                             else
                             {
@@ -239,7 +245,7 @@
                         </div>
                         <div class="ms-2 mb-1">
                             <p class="text-muted" style="margin-block:0;">Theme</p>
-                            <p style="margin-block:0;">@Model?.mission?.Theme.Title</p>
+                            <p style="margin-block:0;">@Model?.mission?.Theme?.Title</p>
                         </div>
                     </div>
                     <div class=" d-flex w-25 flex-column justify-content-between border rounded mission-info">
@@ -304,12 +310,7 @@
             <div class="text-muted tab mt-2" id="introduction">
                 <h4>Introduction</h4>
                 <p>@Model?.mission?.Description</p>
-                <h4>Challenge</h4>
-                <p>Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters</p>
-                <p>
-                    Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters
-                    Paragraphs are medium-sized units of writing, longer than sentences, but shorter than sections, chapters.Paragraphs are medium-sized units of writing, but shorter than sections, chapters
-                </p>
+               
                 <h4>Documents</h4>
                 <div class="d-flex document flex-wrap">
                     @{
@@ -351,7 +352,7 @@
                         foreach (var item in @Model?.mission?.Comments)
                         {
                             <div class="d-flex mt-3 bg-white align-items-center">
-                                <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
+                                <img class="rounded-circle usercomment-image ms-2" src="@item.User.Avatar" alt="" />
                                 <div class="d-flex flex-column ms-2">
                                     <span>@item.User.FirstName @item.User.LastName</span>
                                     <span>@item.CreatedAt.ToString().Substring(0,10)</span>
@@ -374,7 +375,7 @@
                         <span class="ms-5">
                             @foreach (var item in @Model?.mission?.MissionSkills)
                             {
-                                <span>@item.Skill.SkillName,</span>
+                                <span>@item?.Skill?.SkillName,</span>
                             }
                         </span>
                     </div>
@@ -433,13 +434,13 @@
                             }
 
                             <img class="group list-group-image w-100 h-100"
-                         src='~/images/@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath' onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
+                             src='@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath' onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
                             <div class="location-img">
                                 <img class="text-light" src="~/images/pin.png" alt="">
                                 <span class="text-light">@item.City.Name</span>
                             </div>
-                     
-                            
+
+
                             @{
                                 if (@item.FavoriteMissions.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
                                 {
@@ -457,7 +458,7 @@
                             }
 
 
-                                                        <button data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;" class="stop-img border-0">
+                            <button data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;" class="stop-img border-0">
                                 <img src="~/images/add1.png" class="p-1" alt="" />
                                 <span class="p-1" style="white-space:nowrap;"> </span>
                             </button>
@@ -466,11 +467,11 @@
 
 
                             @*
-                            <button class="stop-img border-0">
+                                <button class="stop-img border-0">
                                 <img class="text-light" src="~/images/user.png" alt="">
-                            </button>*@
+                                </button>*@
                             <button class="mission-theme border-0">
-                                <span class="p-2">@item.Theme.Title</span>
+                                <span class="p-2">@item?.Theme?.Title</span>
                             </button>
                             <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
                                 <a href='/volunteering_mission/@item.MissionId'>
@@ -490,11 +491,26 @@
                             <div class="d-flex list-view justify-content-between">
                                 <span class="organization">@item.OrganizationName</span>
                                 <div class="rating">
-                                    <img src="~/images/selected-star.png" alt="">
-                                    <img src="~/images/selected-star.png" alt="">
-                                    <img src="~/images/selected-star.png" alt="">
-                                    <img src="~/images/star.png" alt="">
-                                    <img src="~/images/star.png" alt="">
+                                    @{
+                                        double avg_rating = 0;
+                                        int total = @item.MissionRatings.Count;
+                                        foreach (var rating in @item.MissionRatings)
+                                        {
+                                            avg_rating = avg_rating + rating.Rating;
+                                        }
+                                        avg_rating = avg_rating / total;
+                                        for (var i = 1; i <= 5; i++)
+                                        {
+                                            if (i <= @avg_rating)
+                                            {
+                                                <img style="height:30px" src="~/images/selected-star.png" alt="" />
+                                            }
+                                            else
+                                            {
+                                                <img style="height:30px" src="~/images/star-empty.png" alt="" />
+                                            }
+                                        }
+                                    }
                                 </div>
                             </div>
                             <div class="duration-seats-info mt-4">
@@ -617,7 +633,7 @@
 @*toastr*@
 
 @*
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 *@

@@ -119,8 +119,7 @@ public partial class CiPlatformContext : DbContext
                 .HasColumnType("datetime")
                 .HasColumnName("deleted_at");
             entity.Property(e => e.Image)
-                .HasMaxLength(512)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("image");
             entity.Property(e => e.SortOrder).HasColumnName("sort_order");
             entity.Property(e => e.Text)
@@ -422,7 +421,6 @@ public partial class CiPlatformContext : DbContext
 
             entity.HasOne(d => d.Theme).WithMany(p => p.Missions)
                 .HasForeignKey(d => d.ThemeId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__mission__theme_i__778AC167");
         });
 
@@ -484,12 +482,10 @@ public partial class CiPlatformContext : DbContext
                 .IsUnicode(false)
                 .HasColumnName("document_name");
             entity.Property(e => e.DocumentPath)
-                .HasMaxLength(255)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("document_path");
             entity.Property(e => e.DocumentType)
-                .HasMaxLength(255)
-                .IsUnicode(false)
+                .HasColumnType("text")
                 .HasColumnName("document_type");
             entity.Property(e => e.MissionId).HasColumnName("mission_id");
             entity.Property(e => e.UpdatedAt)
@@ -634,7 +630,6 @@ public partial class CiPlatformContext : DbContext
 
             entity.HasOne(d => d.Skill).WithMany(p => p.MissionSkills)
                 .HasForeignKey(d => d.SkillId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__mission_s__skill__2EDAF651");
         });
 

@@ -19,5 +19,10 @@ namespace CI.Models.ViewModels
         public double? Avg_ratings { get; set; }
         public int? Rating_count { get; set; }
         public bool Applied_or_not { get; set; }
+
+        public List<GoalMission>? goal { get; set; }
+        public List<Timesheet>? timesheet { get; set; }
+
+        //public List<MissionDocument>? document { get; set;}
     }
 }

@@ -3,6 +3,7 @@ using CI.Models;
 using System.Net;
 using System.Net.Mail;
 
+
 namespace CI.Repository.Repository
 {
     public class Mission : Repository<CI.Models.Mission>, IMission
@@ -11,6 +12,8 @@ namespace CI.Repository.Repository
         List<Country> countries = new List<Country>();
         List<City> cities = new List<City>();
         List<Comment> comments = new List<Comment>();
+        List<Timesheet> timesheets = new List<Timesheet>();
+        List<GoalMission> goalMissions = new List<GoalMission>();
         List<FavoriteMission> favoriteMissions = new List<FavoriteMission>();
         List<MissionApplication> missionApplications = new List<MissionApplication>();
         List<MissionDocument> mission_documents = new List<MissionDocument>();
@@ -22,6 +25,9 @@ namespace CI.Repository.Repository
         List<MissionTheme> theme = new List<MissionTheme>();
         List<Skill> skills = new List<Skill>();
         List<User> users = new List<User>();
+        List<MissionDocument> document = new List<MissionDocument>();
+
+
         public Mission(CiPlatformContext db) : base(db)
         {
             _db = db;
@@ -42,23 +48,47 @@ namespace CI.Repository.Repository
             mission_documents = _db.MissionDocuments.ToList();
             already_recommended_users = _db.MissionInvites.ToList();
             image = _db.MissionMedia.ToList();
-            missionskills = _db.MissionSkills.ToList();
-            theme = _db.MissionThemes.ToList();
+            missionskills = _db.MissionSkills.Where(x => x.SkillId != null).ToList();
+            theme = _db.MissionThemes.Where(x => x.Status == 1).ToList();
             ratings = _db.MissionRatings.ToList();
-            skills = _db.Skills.ToList();
+            skills = _db.Skills.Where(x=>x.Status==1).ToList();
             users = _db.Users.ToList();
+            timesheets = _db.Timesheets.ToList();
+            goalMissions = _db.GoalMissions.ToList();
+            document = _db.MissionDocuments.ToList();
+
+
+
 
         }
 
         //get first 9 mission in landing page
         public Models.ViewModels.Mission GetAllMission()
         {
+
+
             int total_missions = missions.Count;
             missions = missions.ToList();
 
+            List<User> all_volunteers = new List<User>();
+            List<User> already_recommended = new List<User>();
 
-            var Missions = new CI.Models.ViewModels.Mission { Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions };
+
+
+            var Missions = new CI.Models.ViewModels.Mission { goal = goalMissions, timesheet = timesheets, Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions, All_volunteers = all_volunteers };
             return Missions;
+        }
+
+
+        public CI.Models.ViewModels.Mission GetMissionsByCityId(long id)
+        {
+            int total_missions = missions.Count;
+            missions = missions.Where(x => x.CityId == id).ToList();
+            List<User> all_volunteers = new List<User>();
+
+            var Missions = new CI.Models.ViewModels.Mission { goal = goalMissions, timesheet = timesheets, Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions, All_volunteers = all_volunteers };
+            return Missions;
+
         }
 
         //get filter missions
@@ -70,21 +100,10 @@ namespace CI.Repository.Repository
             List<User> already_recommended = new List<User>();
             List<CI.Models.Mission> mission = new List<CI.Models.Mission>();
 
-            //get missions as per page
-            //if (page_index != 0)
-            //{
-            //    missions = missions.Skip(9 * page_index).Take(9).ToList();
-            //}
-            //else
-            //{
-            missions = missions.ToList();
-            //missions = missions.Take(9).ToList();
-            //}
 
-            if (missions.Count > 9)
-            {
-                missions = missions.Take(9).ToList();
-            }
+            missions = missions.ToList();
+
+
 
             //get cities as per country
             if (Countries.Count > 0)
@@ -113,10 +132,10 @@ namespace CI.Repository.Repository
             {
 
                 mission = (from m in missions
-                           where Cities.Contains(m.City.Name) || Themes.Contains(m.Theme.Title)
+                           where Cities.Contains(m.City.Name) || Themes.Contains(m.Theme?.Title)
                            select m).ToList();
                 var skill_missions = (from s in missionskills
-                                      where Skills.Contains(s.Skill.SkillName) && missions.Contains(s.Mission)
+                                      where Skills.Contains(s.Skill?.SkillName) && missions.Contains(s.Mission)
                                       select s.Mission).ToList();
                 foreach (var skill_mission in skill_missions)
                 {
@@ -131,10 +150,10 @@ namespace CI.Repository.Repository
             else if (Countries.Count > 0 || Themes.Count > 0 || Skills.Count > 0)
             {
                 mission = (from m in missions
-                           where Countries.Contains(m.Country.Name) || Cities.Contains(m.City.Name) || Themes.Contains(m.Theme.Title)
+                           where Countries.Contains(m.Country.Name) || Cities.Contains(m.City.Name) || Themes.Contains(m.Theme?.Title)
                            select m).ToList();
                 var skill_missions = (from s in missionskills
-                                      where Skills.Contains(s.Skill.SkillName) && missions.Contains(s.Mission)
+                                      where Skills.Contains(s.Skill?.SkillName) && missions.Contains(s.Mission)
                                       select s.Mission).ToList();
                 foreach (var skill_mission in skill_missions)
                 {
@@ -217,6 +236,15 @@ namespace CI.Repository.Repository
                     Cities = city
                 };
             }
+            if (mission.Count > 9)
+            {
+                //missions = missions.Where(x => x.Status is true).Take(9).ToList();
+                missions = missions.Take(9).ToList();
+
+
+                return Missions;
+            }
+
             return Missions;
         }
 
@@ -225,14 +253,9 @@ namespace CI.Repository.Repository
         {
 
 
-            //get search missions as per page
-            //if (page_index != 0)
-            //{
-            //    missions = missions.Skip(9 * page_index).Take(9).ToList();
-            //}
-            //else
-            //{
+
             missions = missions.ToList();
+
             //}
             var mission = (from m in missions
                            where m.Title.ToLower().Contains(key) || m.Description.ToLower().Contains(key)
@@ -260,6 +283,10 @@ namespace CI.Repository.Repository
         //get mission 
         CI.Models.ViewModels.Volunteer_Mission IMission.Mission(long id, long user_id)
         {
+
+
+
+
             Models.Mission? mission = _db.Missions.Find(id);
             if (mission is not null)
             {
@@ -357,7 +384,10 @@ namespace CI.Repository.Repository
                         }
                     }
                 }
-                return new CI.Models.ViewModels.Volunteer_Mission { mission = mission, related_mission = related_mission, Recent_volunteers = myusers.Take(9).ToList(), Total_volunteers = myusers.Count, Favorite_mission = favouritemission.Count, Rating = rating, All_volunteers = all_volunteers, Avg_ratings = avg_ratings, Rating_count = rating_count, Applied_or_not = applied_or_not };
+                var goalMissions = _db.GoalMissions.Where(x => x.MissionId == id).ToList();
+
+
+                return new CI.Models.ViewModels.Volunteer_Mission { goal = goalMissions, timesheet = timesheets, mission = mission, related_mission = related_mission, Recent_volunteers = myusers.Take(9).ToList(), Total_volunteers = myusers.Count, Favorite_mission = favouritemission.Count, Rating = rating, All_volunteers = all_volunteers, Avg_ratings = avg_ratings, Rating_count = rating_count, Applied_or_not = applied_or_not };
             }
             else
             {
@@ -417,7 +447,7 @@ namespace CI.Repository.Repository
                         MissionId = mission_id
                     });
 
-                    
+
                     Save();
                     //for seat decreament
                     var missionseats = _db.Missions.SingleOrDefault(e => e.MissionId == mission_id);
@@ -430,8 +460,8 @@ namespace CI.Repository.Repository
                         missionseats.TotalSeats--;
                     }
                     //finish seat decrement
-                    
-                    
+
+
                     return true;
                 }
                 else
@@ -523,7 +553,7 @@ namespace CI.Repository.Repository
                 var receiverEmail = new MailAddress(email, "Receiver");
                 var password = "vlpzyhibrvpaewte";
                 var sub = "Recommendation";
-                var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44334/volunteering_mission/{mission_id}";
+                var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44336/volunteering_mission/{mission_id}";
                 var smtp = new SmtpClient
                 {
                     Host = "smtp.gmail.com",

@@ -8,6 +8,11 @@ namespace CI.Models.ViewModels
 {
     public class Mission
     {
+        public string? SearchString { get; set; }
+        public int PageNumber { get; set; }
+        public int TotalPages { get; set; }
+
+        public long? MissionId { get; set; }
         public int? total_missions { get; set; }
         public List<Story>? Stories { get; set; }
         public List<CI.Models.Mission>? Missions { get; set; }
@@ -20,6 +25,11 @@ namespace CI.Models.ViewModels
        public List<User>? All_volunteers { get; set; }
 
         public int? Availableseats { get; set; }
+        public List<Timesheet>? timesheet { get; set; }
+        public List<GoalMission>? goal { get; set; }
+     
+
+
 
     }
 }

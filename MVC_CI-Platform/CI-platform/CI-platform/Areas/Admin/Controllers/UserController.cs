@@ -17,12 +17,12 @@ namespace CI_platform.Areas.Admin.Controllers
 
         public IActionResult Index(string searchString, int page)
         {
-            //if (searchString == null)
-            //{
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
 
-            //    var alluser = allRepository.AdminUser.GetAllUser();
-            //    return View(alluser);
-            //}
+            }
+        
 
             int pageSize = 10; // Number of records to display per page
 
@@ -54,14 +54,18 @@ namespace CI_platform.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public IActionResult GetEditUser(long id, int flag, string firstname, string lastname, string email, string employeeid, string department, string profiletext,string role)
+        public IActionResult GetEditUser(long id, int flag, string firstname, string lastname, string email, string employeeid, string department, string profiletext,string role,string password,string Phone)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
             if (id != 0)
             {
-                if (flag == 0)
-                {
+                
                     var record = allRepository.AdminUser.GetUserByUserId(id);
-                    record.Status = "0";
+                    record.Status = flag.ToString();
                     record.FirstName = firstname;
                     record.LastName = lastname;
                     record.Email = email;
@@ -71,22 +75,27 @@ namespace CI_platform.Areas.Admin.Controllers
                     record.Role = role;
 
                     allRepository.AdminUser.GetUpdateUser(record);
+                
+            }
 
-                }
-                if (flag == 1)
+            if (id == 0)
+            {
+                    string secpass = BCrypt.Net.BCrypt.HashPassword(password);
+                CI.Models.User user = new CI.Models.User();
                 {
-                    var record = allRepository.AdminUser.GetUserByUserId(id);
-                    record.Status = "1";
-                    record.FirstName = firstname;
-                    record.LastName = lastname;
-                    record.Email = email;
-                    record.Department = department;
-                    record.ProfileText = profiletext;
-                    record.EmployeeId = employeeid;
-                    record.Role=role;
-                    allRepository.AdminUser.GetUpdateUser(record);
-
+                    user.FirstName = firstname;
+                    user.LastName = lastname;
+                    user.Email = email;
+                    user.Department = department;
+                    user.ProfileText = profiletext;
+                    user.EmployeeId = employeeid;
+                    user.PhoneNumber = Phone;
+                    user.Role = role;
+                    user.Password=secpass;
+                    user.Status = flag.ToString();
                 }
+                allRepository.AdminUser.AddUser(user);
+
             }
             return RedirectToAction("Index", "User");
         }
@@ -95,7 +104,11 @@ namespace CI_platform.Areas.Admin.Controllers
 
         public IActionResult Cmspage(string searchString, int page)
         {
-            
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
 
 
             int pageSize = 10; // Number of records to display per page
@@ -130,6 +143,11 @@ namespace CI_platform.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult Editcms(long id, string title, string description, string slug, string status)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
             if (id == 0)
             {
                 CI.Models.CmsPage cmsPage = new CI.Models.CmsPage();
@@ -149,7 +167,7 @@ namespace CI_platform.Areas.Admin.Controllers
                 record.Title = title;
                 record.Description = description;
                 record.Slug = slug;
-                record.Status = "1";
+                record.Status = status;
                 record.UpdatedAt = DateTime.Now;
                 allRepository.AdminUser.updatecms(record);
                 return Json(new { success = true });
@@ -160,6 +178,11 @@ namespace CI_platform.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult GetDeleteCms(long cmsid)
         {
+            if (HttpContext.Session.GetString("role") is null)
+            {
+                return RedirectToAction("Home", "Home");
+
+            }
             var record = allRepository.AdminUser.GetCmsByCmsId(cmsid);
             record.CmsPageId = cmsid;
             record.Status = "0";

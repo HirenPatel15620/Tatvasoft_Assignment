@@ -15,23 +15,30 @@ namespace CI.Repository.Repository.IRepository
         //IEnumerable<AdminMission> SearchMission(string searchString);
         //IEnumerable<AdminMission> GetMission();
 
-
+        //List<Models.Mission> GetData(string searchTerm);
         List<Models.Mission> GetAllMission();
+        Models.ViewModels.AdminMission GetAllMissions();
 
         bool DeleteMission(Models.Mission mission);
         Models.Mission GetMissionById(long id);
         List<Models.City> GetAllCities();
+        List<Models.MissionMedia> GetAllMedia();
         List<Models.Country> GetAllCountry();
 
         bool AddMission(Models.Mission mission);
 
         bool savemedia(Models.MissionMedia missionMedia);
+        bool savedocumet(Models.MissionDocument missionDocument);
 
+        bool AddDoc(Models.MissionDocument missionDocument);
 
+        GoalMission getGoalMissionByMissionId(long missionId);
+        void UpdateGoalMission(GoalMission goalMission);
+        void UpdateMission(Models.Mission mission);
 
         ////mission application///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-      
+
         MissionApplication GetMissionApplicationById(long id);
         bool DeclineUser(MissionApplication missionapplication);
         IEnumerable<MissionApplication> SearchMissionApplication(string searchString);
@@ -40,23 +47,24 @@ namespace CI.Repository.Repository.IRepository
 
         ////skill//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
+        bool SkillExists(string skillname);
         List<Models.Skill> GetAllSkil();
         Skill GetSkillById(long id);
         bool DeclineSkill(Skill skill);
         bool AddSkill(Skill skill);
+        void GetMissionSkills(long id);
 
         IEnumerable<Skill> GetSkill();
         IEnumerable<Skill> SearchSkill(string searchString);
 
 
         ///theme////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        bool ThemeExists(string title);
         List<Models.MissionTheme> GetAllTheme();
         MissionTheme GetThemeById(long id);
         bool DeclineTheme(MissionTheme theme);
         bool AddTheme(MissionTheme theme);
-        Models.Mission GetThemeByMissionId(long id);
+        void GetThemeByMissionId(long id);
         bool DeclineThemeInMission(Models.Mission mission);
 
         IEnumerable<MissionTheme> GetTheme();

@@ -2591,6 +2591,7 @@
       },
       "CI.Models/1.0.0": {
         "dependencies": {
+          "Microsoft.AspNet.Mvc": "5.2.9",
           "Microsoft.AspNetCore.Http.Features": "5.0.17"
         },
         "runtime": {

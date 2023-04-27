@@ -19,44 +19,51 @@ var count = 0
 $(function () {
     $("#datepicker").datepicker();
 });
+
 CKEDITOR.replace('editor', {
     maxLength: 40000,
-
+    toolbar: [
+        { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+        { name: 'clipboard', items: ['RemoveFormat'] }
+    ]
 });
 
 //images 
 
 
 function loadimages() {
+  
     var image = document.getElementById('images').files
     var images_count = $('.gallary').find('.main-image').length
-    if (images_count + image.length <= 20 && image.length<=20) {
-        if (images_count == 1) {
-            
-            var fr = new FileReader()
-            const div = document.createElement('div')
-            const img = document.createElement('img')
-            const close_div = document.createElement('div')
-            close_div.className = "bg-black close d-flex justify-content-center align-items-center"
-            const close_img = document.createElement('img')
-            close_img.src = "/images/cancel.png"
-            div.id = `image-${count}`
-            div.className = "main-image-div"
-            fr.readAsDataURL(image[0])
-            fr.onload = () => {
-                img.src = fr.result
+    if (images_count + image.length <= 20 && image.length <= 20) {
+        if (image.length == 1) {
+            if (image[0].size < 4194304) {
+                let fr = new FileReader()
+                const div = document.createElement('div')
+                const img = document.createElement('img')
+                const close_div = document.createElement('div')
+                close_div.className = "bg-black close d-flex justify-content-center align-items-center"
+                const close_img = document.createElement('img')
+                close_img.src = "/images/cancel.png"
+                div.id = `image-${count}`
+                div.className = "main-image-div"
+                fr.readAsDataURL(image[0])
+                fr.onload = () => {
+                    img.src = fr.result
+                }
+                img.className = "main-image"
+                $('.gallary').append(div)
+                $(`#image-${count}`).append(img)
+                close_div.append(close_img)
+                close_div.onclick = function () { this.parentNode.remove() }
+                $(`#image-${count}`).append(close_div)
+                count++
             }
-            img.className = "main-image"
-            $('.gallary').append(div)
-            $(`#image-${count}`).append(img)
-            close_div.append(close_img)
-            close_div.onclick = function () { this.parentNode.remove() }
-            $(`#image-${count}`).append(close_div)
-            count++
         }
         else {
-            
+
             for (var i = 0; i < image.length; i++) {
+
                 let fr = new FileReader()
                 fr.onload = () => {
                     const div = document.createElement('div')
@@ -76,7 +83,7 @@ function loadimages() {
                     $(`#image-${count}`).append(close_div)
                     count++
                 }
-                 fr.readAsDataURL(image[i])
+                fr.readAsDataURL(image[i])
             }
         }
     }
@@ -96,7 +103,7 @@ function getdetails(type) {
             data: { mission_id: mission, title: title, published_date: date.toString(), mystory: mystory, media: media, type: type },
             success: function (result) {
                 if (type == "DRAFT") {
-                toastr.success("story save successful")
+                    toastr.success("story save successful")
                 }
                 if (type == "PENDING") {
                     toastr.success("story approve request send")

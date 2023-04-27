@@ -7,7 +7,7 @@ public partial class Mission
 {
     public long MissionId { get; set; }
 
-    public long ThemeId { get; set; }
+    public long? ThemeId { get; set; }
 
     public long CityId { get; set; }
 
@@ -73,5 +73,5 @@ public partial class Mission
 
     public virtual ICollection<Story> Stories { get; } = new List<Story>();
 
-    public virtual MissionTheme Theme { get; set; } = null!;
+    public virtual MissionTheme? Theme { get; set; }
 }

@@ -22,9 +22,9 @@
     <div class="py-3 d-flex justify-content-between align-items-center">
         <form method="get" asp-area="Admin" asp-controller="Story" asp-action="Story">
             <div class="input-group">
-                <input type="text" class="form-control" name="searchString" value="@ViewData["SearchString"]" placeholder="Search Here">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]"  placeholder="&#61442; Search Here">
                 <div class="input-group-append">
-                    <button type="submit" class="ml-2 btn btn-primary">Search</button>
+                 
                 </div>
             </div>
         </form>
@@ -174,15 +174,24 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Story Title</span>
                                 </div>
-                                <input name="title" id="title" value="@item.Title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input name="title" id="title" value="@item.Title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
+                            @*
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
                                 </div>
                                 <input name="flag" id="flag" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
+                            *@  
+                            <div class="w-100">
+                                <label class="form-label">Status</label><select value="@item.Status" id='flag' name="flag" class="status form-select city me-3" aria-label="Select Mission">
+                                    <option disabled selected>Select Role</option>
+                                    <option value="1">Active </option>
+                                    <option value="0">Deactive </option>
 
+                                </select>
+                            </div>
 
                         </div>
 
@@ -206,3 +215,4 @@
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+ <script src="~/js/Admin.js" asp-append-version="true"></script>

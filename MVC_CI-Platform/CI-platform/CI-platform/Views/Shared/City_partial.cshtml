@@ -2,6 +2,8 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @model CI.Models.ViewModels.Mission
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
 @{
     if (Model.Cities is null)
     {
@@ -9,12 +11,29 @@
         {
             foreach (var city in item.Cities)
             {
+
+
+
+
+                if (city.CityId == long.Parse(Context.Session.GetString("city")))
+                {
+                    <span class="dropdown-item">
+                    <input class="form-check-input" checked type="checkbox" onchange="addcities('@city.Name')" value="" id="@city.Name">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        @city.Name
+                    </label>
+                    </span>
+                }
+                else
+                {
                 <span class="dropdown-item">
                     <input class="form-check-input" type="checkbox" onchange="addcities('@city.Name')" value="" id="@city.Name">
                     <label class="form-check-label" for="flexCheckDefault">
                         @city.Name
                     </label>
                 </span>
+                    
+                }
             }
         }
     }

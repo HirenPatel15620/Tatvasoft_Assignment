@@ -45,6 +45,17 @@ namespace CI.Repository.Repository
             _db.MissionMedia.Add(missionMedia);
             _db.SaveChanges();
             return true;
+        } 
+        public bool savedocumet(Models.MissionDocument missionDocument)
+        {
+            _db.MissionDocuments.Add(missionDocument);
+            _db.SaveChanges();
+            return true;
+        } public bool AddDoc(Models.MissionDocument missionDocument)
+        {
+            _db.MissionDocuments.Add(missionDocument);
+            _db.SaveChanges();
+            return true;
         }
 
 
@@ -63,10 +74,24 @@ namespace CI.Repository.Repository
             return city;
         }
 
+        public List<Models.MissionMedia> GetAllMedia()
+        {
+            medias=medias.ToList();
+            return medias;
+        }
+
         public List<Models.Mission> GetAllMission()
         {
-            missions = missions.ToList();
+            missions = missions.Where(x=>x.Status is true).ToList();
             return missions;
+        }
+
+        public Models.ViewModels.AdminMission GetAllMissions()
+        {
+            missions = missions.Where(x => x.Status is true).ToList();
+            Models.Mission mymission = new Models.Mission();
+
+            return new Models.ViewModels.AdminMission { Missions = missions };
         }
 
         public bool DeleteMission(Models.Mission mission)
@@ -83,36 +108,30 @@ namespace CI.Repository.Repository
         }
 
 
+        public GoalMission getGoalMissionByMissionId(long missionId)
+        {
+            return _db.GoalMissions.Where(x => x.MissionId == missionId).FirstOrDefault();
+        }
+        public void UpdateGoalMission(GoalMission goalMission)
+        {
+            _db.GoalMissions.Update(goalMission);
+            _db.SaveChanges();
+        }
 
-        //public IEnumerable<AdminMission> GetMission()
-        //{
-        //    return AdminMission.ToList();
-        //}
-
-        //public IEnumerable<AdminMission> SearchMission(string searchString)
-        //{
-        //    return AdminMission
-        //        .Where(u => u.Title.Contains(searchString))
-        //        .ToList();
-        //}
-
-
-
-
+        public void UpdateMission(Models.Mission mission)
+        {
+            _db.Missions.Update(mission);
+            _db.SaveChanges();
+        }
 
 
         /// mission application//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        public List<Models.MissionApplication> GetAllMissionApplication()
-        {
-            //missionapplication = missionapplication.ToList();
-            missionapplication = missionapplication.Where(x => x.ApprovalStatus == "PENDING").ToList();
-            return missionapplication;
-        }
+     
 
         public IEnumerable<MissionApplication> GetMissionApplication()
         {
-            return _db.MissionApplications.Where(x => x.ApprovalStatus == "PENDING").ToList();
+            return _db.MissionApplications.Where(x => x.ApprovalStatus == "PENDING" && x.Mission.Status == true).ToList();
         }
 
         public IEnumerable<MissionApplication> SearchMissionApplication(string searchString)
@@ -137,7 +156,10 @@ namespace CI.Repository.Repository
 
 
         //mission skill////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        public bool SkillExists(string skillname)
+        {
+            return _db.Skills.Any(s => s.SkillName == skillname);
+        }
         public List<Models.Skill> GetAllSkil()
         {
             skill = skill.ToList();
@@ -167,6 +189,20 @@ namespace CI.Repository.Repository
             return _db.Skills.ToList();
         }
 
+        public void GetMissionSkills(long id)
+        {
+            var records = _db.MissionSkills.Where(x => x.SkillId == id).ToList();
+            foreach (var record in records)
+            {
+                record.SkillId = null;
+            }
+
+
+            _db.SaveChanges();
+
+        }
+
+
         public IEnumerable<Skill> SearchSkill(string searchString)
         {
             return _db.Skills
@@ -176,16 +212,27 @@ namespace CI.Repository.Repository
 
 
         //mission theme//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        public bool ThemeExists(string title)
+        {
+            return _db.MissionThemes.Any(t => t.Title == title);
+        }
 
         public List<Models.MissionTheme> GetAllTheme()
         {
             theme = theme.ToList();
             return theme;
         }
-        public Models.Mission GetThemeByMissionId(long id)
+        public void GetThemeByMissionId(long id)
         {
-            return _db.Missions.Where(x => x.ThemeId == id).FirstOrDefault();
+            var records= _db.Missions.Where(x => x.ThemeId == id).ToList();
+            foreach (var record in records)
+            {
+                record.ThemeId = null;
+            }
+
+            
+            _db.SaveChanges();
+            
         }
 
         public bool DeclineThemeInMission(Models.Mission mission)
@@ -201,7 +248,6 @@ namespace CI.Repository.Repository
         public bool DeclineTheme(MissionTheme theme)
         {
             _db.MissionThemes.Update(theme);
-            
             _db.SaveChanges();
             return true;
         }

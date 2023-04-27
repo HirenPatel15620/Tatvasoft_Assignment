@@ -23,9 +23,9 @@
     <div class="py-3 d-flex justify-content-between align-items-center">
         <form method="get" asp-area="Admin" asp-controller="User" asp-action="Cmspage">
             <div class="input-group">
-                <input type="text" class="form-control" name="searchString" value="@ViewData["SearchString"]" placeholder="Search Here">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]"  placeholder="&#61442; Search Here">
                 <div class="input-group-append">
-                    <button type="submit" class="ml-2 btn btn-primary">Search</button>
+                  
                 </div>
             </div>
         </form>
@@ -62,11 +62,12 @@
                                 }
                             </td>
                             <td>
+                                @*
                                 <button type="button" id="editcms" onclick="editor(@item.CmsPageId)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-@item.CmsPageId">Edit</button>
                                 <button id="editcms" onclick="DeleteCms(@item.CmsPageId)" class="btn btn-danger">Deactive</button>
-                                @*
-                                    <img  onclick="DeleteRecord(@item.CmsPageId)"><img src="~/images/cancel.png" />
                                 *@
+                                    <img  id="editcms" onclick="editor(@item.CmsPageId)" class=" m-2 p-2" data-bs-toggle="modal" data-bs-target="#edit-@item.CmsPageId" src="~/images/edit.png">
+                                     <img  id="editcms" onclick="DeleteCms(@item.CmsPageId)" class=" m-1 p-1" src="~/images/bin.png">
                             </td>
 
 
@@ -153,34 +154,35 @@
                         <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
                             <div class="w-100">
                                 <label class="form-label mt-2">Title</label>
-                                <input class="form-control title" value="@item.Title" />
+                                <input class="form-control title" value="@item.Title" required />
 
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Description</label>
-                                <input rows="4" type="text" class="form-control discription" value="@item.Description" />
-
+                                <textarea rows="4" type="text" class="form-control discription" value="@item.CmsPageId" required>@item.Description
+                                </textarea>
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Slug</label>
-                                <input class="form-control slug" value="@item.Slug" />
-                            </div>
-                               <div class="input-group mt-4 mb-3">
-                                <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
-                                </div>
-                                <input type="text" class="form-control status" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@item.Status">
+                                <input class="form-control slug" value="@item.Slug" required />
                             </div>
                             @*
-
-                            <label class="form-label">Role</label><select value="@item.Status" id='status' name="status" class="form-select city me-3" aria-label="Select Mission">
-                                <option disabled selected>Select Role</option>
-                                <option value="1">1 </option>
-                                <option value="0">0 </option>
-
-                            </select>
-                         
+                                <div class="input-group mt-4 mb-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                                </div>
+                                <input type="text" class="form-control status" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@item.Status">
+                                </div>
                             *@
+                            <div class="w-100">
+                                <label class="form-label">Status</label><select asp-for=@item.Status value="@item.Status" id='status' name="status" class="status form-select city me-3" aria-label="Select Mission" required>
+                                    <option disabled selected>Select Role</option>
+                                    <option value="1">Active </option>
+                                    <option value="0">Deactive </option>
+
+                                </select>
+                            </div>
+
                         </div>
                         <div class="modal-footer">
                             <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
@@ -210,26 +212,33 @@
                 <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
                     <div class="w-100">
                         <label class="form-label mt-2">Title</label>
-                        <input class="form-control title" value="" />
+                        <input class="form-control title" value=""  required/>
 
                     </div>
                     <div class="w-100">
                         <label class="form-label mt-2">Description</label>
-                        <input rows="4" type="text" id="message" class="form-control discription" value="" />
-
+                        <textarea rows="4" type="text" id="message" class="form-control discription" value="" required >
+                        </textarea>
                     </div>
                     <div class="w-100 mb-4">
                         <label class="form-label mt-2">Slug</label>
-                        <input class="form-control slug" value="" />
+                        <input class="form-control slug" value="" required/>
                     </div>
 
-                    <div class="input-group mb-3">
+                  @*  <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
                         </div>
                         <input id="subject" type="text" class="form-control status" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                    </div>
+                    </div>*@
+                    <div class="w-100">
+                        <label class="form-label">Status</label><select id='subject' class="status form-select city me-3" aria-label="Select Mission">
+                            <option disabled selected>Select Role</option>
+                            <option value="1">Active </option>
+                            <option value="0">Deactive </option>
 
+                        </select>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
@@ -245,6 +254,4 @@
 </div>
 
 
-<script>
-
-</script>
+ <script src="~/js/Admin.js" asp-append-version="true"></script>

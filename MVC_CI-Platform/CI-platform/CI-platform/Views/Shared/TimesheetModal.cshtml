@@ -37,7 +37,7 @@
                         </div>
                         <div class="col-12 col-sm-6">
                             <label asp-for="hour">Hours</label>
-                            <input asp-for="hour" type="number" id="name" class="form-control" placeholder="Enter Spent Minutes" required>
+                            <input asp-for="hour" type="number" id="name" class="form-control" placeholder="Enter Spent Minutes" max="23" min="0" required>
                             <span asp-validation-for="hour" class="text-danger"></span>
                         </div>
                         <div class="col-12 col-sm-6">

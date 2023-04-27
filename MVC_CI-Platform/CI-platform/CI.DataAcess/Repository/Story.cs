@@ -229,7 +229,7 @@ namespace CI.Repository.Repository
                        where s.Status == "PUBLISHED" || s.UserId == user_id
                        orderby s.Status ascending
                        select s).ToList();
-            return new CI.Models.ViewModels.Mission { Stories= stories.Take(3).ToList(),total_missions=stories.Count} ;
+            return new CI.Models.ViewModels.Mission { Stories= stories.ToList(),total_missions=stories.Count} ;
         }
 
 
@@ -312,7 +312,7 @@ namespace CI.Repository.Repository
                 var receiverEmail = new MailAddress(email, "Receiver");
                 var password = "vlpzyhibrvpaewte";
                 var sub = "Recommendation";
-                var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44334/stories/detail/{story_id}";
+                var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44336/stories/detail/{story_id}";
                 var smtp = new SmtpClient
                 {
                     Host = "smtp.gmail.com",

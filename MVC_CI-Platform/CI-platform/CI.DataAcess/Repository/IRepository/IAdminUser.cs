@@ -14,6 +14,7 @@ namespace CI.Repository.Repository.IRepository
         User GetUserByUserId(long userid);
 
         bool GetUpdateUser(User user);
+        bool AddUser(User user);
         IEnumerable<User> GetUsers();
         IEnumerable<User> SearchUsers(string searchString);
 

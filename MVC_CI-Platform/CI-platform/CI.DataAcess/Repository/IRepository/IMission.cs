@@ -9,6 +9,7 @@ namespace CI.Repository.Repository.IRepository
     {
         void Save();
         Models.ViewModels.Mission GetAllMission();
+        CI.Models.ViewModels.Mission GetMissionsByCityId(long id);
         Models.ViewModels.Mission GetFilteredMissions(List<string> countries,List<string>cities, List<string> themes, List<string> skills,string sort_by,long user_id);
         Models.ViewModels.Mission GetSearchMissions(string key);
         CI.Models.ViewModels.Volunteer_Mission Mission(long id,long user_id);

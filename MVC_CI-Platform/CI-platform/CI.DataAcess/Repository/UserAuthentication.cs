@@ -19,6 +19,7 @@ namespace CI.Repository.Repository
 
         public User ResetPassword(string password,string email)
         {
+            PasswordReset passwordReset=_db.PasswordResets.FirstOrDefault(r => r.Email == email);
             User user = _db.Users.FirstOrDefault(c=>c.Email.Equals(email));
             if (user == null)
             {
@@ -26,8 +27,17 @@ namespace CI.Repository.Repository
             }
             else
             {
+                
                 user.Password = password;
                 user.UpdatedAt = DateTime.Now;
+
+                if (passwordReset != null)
+                {
+                    _db.PasswordResets.Remove(passwordReset);
+                }
+
+                _db.SaveChanges();
+
                 return user;
             }
         }

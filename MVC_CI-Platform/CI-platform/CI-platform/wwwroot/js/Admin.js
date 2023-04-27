@@ -1,6 +1,5 @@
 ﻿
-
-//common//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 $(".sidebar ul li").on('click', function () {
 
@@ -38,22 +37,10 @@ function Decline(id, flag) {
 
 
 
-//delete user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//Update user//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function update(id, flag) {
-
-
+    debugger
     $(`#deleterec-${id}`).modal('show');
-    $('#id').val(id);
-    $('#profiletext').val(profiletext);
-    $('#department').val(department);
-    $('#employeeid').val(employeeid);
-    $('#email').val(email);
-    $('#lastname').val(lastname);
-    $('#firstname').val(firstname);
-    $('#role').val(role);
-   
-
-
 }
 
 
@@ -129,8 +116,8 @@ function ThemeDecline(id) {
     debugger
     $(`#deleterec-${id}`).modal('show');
     $('#id').val(id);
-    $('#flag').val(flag);
-    $('#title').val(title);
+    //$('#flag').val(flag);
+    //$('#title').val(title);
 
 
 
@@ -149,11 +136,11 @@ function ThemeGenerate() {
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 function SkillDecline(id, flag) {
-
+    debugger
     $(`#deleterec-${id}`).modal('show');
     $('#id').val(id);
     $('#flag').val(flag);
-    $('#skillname').val(skillname);
+    //$('#skillname').val(skillname);
 
 
 }
@@ -161,12 +148,34 @@ function SkillDecline(id, flag) {
 
 
 function SkillGenerate() {
-    debugger
+
     $('#addrec').modal('show');
-    $('#skillname').val(skillname);
+    //$('#skillname').val(skillname);
+
+}
+///banner//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+function BannerRecord(id) {
+
+    $(`#deleterec-${id}`).modal('show');
+    $('#id').val(id);
+    
+}
+
+
+
+function DeleteBanner(id) {
+debugger
+    $('#id').val(id);
+    $(`#deleter-${id}`).modal('show');
 
 }
 
+
+function AddBanner() {
+
+    $('#addbanner').modal('show');
+ 
+}
 
 ////story///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -194,7 +203,8 @@ function DeleteRecord(id) {
 
 
 function MissionDelete(id) {
-    $('#deleter').modal('show');
+   
+    $(`#deleter-${id}`).modal('show');
     $('#id').val(id);
 }
 function changelayout() {
@@ -204,14 +214,14 @@ function changelayout() {
 
 function EditMission(id) {
   
-    //$(`#edit-${id}`).modal('show');
+ 
 
     $.ajax({
         type: 'POST',
         url: '/Admin/Mission/GetEditMission',
         data: { id: id },
         success: function (result) {
-       
+            $('#EditMission').empty().append(result)
             $('#EditMission').addClass('d-block').removeClass('d-none')
             $('.particalEditmission').addClass('d-block').removeClass('d-none')
 
@@ -224,20 +234,22 @@ function EditMission(id) {
     });
 
 
-            //$('#editMission').html($($.parseHTML(result)).filter("#Editmission")[0].innerHTML);
-            //$(`#editMission`).modal('show');
 
-   // $('#id').val(id);
+
+         $("#MissionType").change((e)=>{
+        if(e.target.value === "GOAL")
+        $(".goal-item").removeClass("d-none");
+        else
+        $(".goal-item").addClass("d-none");
+    });
+
+
+
+            
 }
 
 
 
 
-//  $(document).ready(function(){
-//      $('.datepicker').datepicker({
-//          format: 'yyyy/mm/dd',    // Or whatever format you want.
-//          startDate: '2015/01/01'  // Or whatever start date you want.
-//      });
-//});
 
 

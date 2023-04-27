@@ -25,11 +25,24 @@ namespace CI_platform.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                //return RedirectToAction("Profile", "home");
                 ViewData["home"] = "true";
-                CI.Models.ViewModels.Mission missions = allRepository.Mission.GetAllMission();
-                return View(missions);
+                CI.Models.ViewModels.Mission missions;
 
+                // Check if city ID is present in session
+                string cityId = HttpContext.Session.GetString("city");
+                if (!string.IsNullOrEmpty(cityId))
+                {
+                    long cityIdLong = long.Parse(cityId);
+                    // Retrieve missions based on city ID
+                    missions = allRepository.Mission.GetMissionsByCityId(cityIdLong);
+                }
+                else
+                {
+                    // Retrieve all missions if city ID is not present
+                    missions = allRepository.Mission.GetAllMission();
+                }
+
+                return View(missions);
             }
             else
             {
@@ -38,8 +51,9 @@ namespace CI_platform.Controllers
         }
         [HttpPost]
         [Route("Home")]
-        public JsonResult home(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string request_for, string sort_by, int page_index,
-            long user_id, long mission_id, List<long> co_workers)
+        public JsonResult home(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index,
+            long user_id, long mission_id)
+
         {
             if (key is not null)
             {
@@ -55,11 +69,7 @@ namespace CI_platform.Controllers
 
 
             }
-            else if (request_for == "recommend")
-            {
-                bool successworker = allRepository.Mission.Recommend(user_id, mission_id, co_workers);
-                return Json(new { successworker });
-            }
+
             else if (page_index != 0)
             {
                 CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by, user_id);
@@ -87,6 +97,7 @@ namespace CI_platform.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 CI.Models.ViewModels.Volunteer_Mission mission = allRepository.Mission.Mission(id, long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value));
+
                 if (mission is not null)
                 {
                     return View(mission);
@@ -99,7 +110,7 @@ namespace CI_platform.Controllers
             }
             else
             {
-                return RedirectToAction("login", "userAuthentication");
+                return RedirectToAction("login", "userAuthentication", new {ReturnUrl = $"volunteering_mission/{id}" });
             }
         }
         [HttpPost]
@@ -145,7 +156,7 @@ namespace CI_platform.Controllers
         [Route("User/Home/Privacy")]
         public IActionResult Privacy()
         {
-            var cms=allRepository.Sheet.GetALLPolicies();
+            var cms = allRepository.Sheet.GetALLPolicies();
 
             if (User.Identity.IsAuthenticated)
             {
@@ -162,7 +173,7 @@ namespace CI_platform.Controllers
         public IActionResult Profile()
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-           
+
             CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0, user_id);
             return View(details);
         }
@@ -172,7 +183,7 @@ namespace CI_platform.Controllers
         public IActionResult Profile(ProfileViewModel model, int country, string? oldpassword, string? newpassword)
         {
             long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
-            ProfileViewModel detail = allRepository.Profile.Get_Initial_Details(0,user_id);
+            ProfileViewModel detail = allRepository.Profile.Get_Initial_Details(0, user_id);
 
             if (oldpassword is not null && newpassword is not null)
             {
@@ -185,7 +196,7 @@ namespace CI_platform.Controllers
                 {
                     if (country != 0)
                     {
-                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country,user_id);
+                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country, user_id);
                         var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
                         return Json(new { cities = cities });
                     }
@@ -194,7 +205,7 @@ namespace CI_platform.Controllers
 
                     }
                     {
-                     
+
                         bool success = allRepository.Profile.Update_Details(model, user_id);
                         return RedirectToAction("login", "userAuthentication");
                     }
@@ -204,13 +215,13 @@ namespace CI_platform.Controllers
                 {
                     if (country != 0)
                     {
-                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country,user_id);
+                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country, user_id);
                         var cities = this.RenderViewAsync("ProfileCity_partial", details, true);
                         return Json(new { cities = cities });
                     }
                     else
                     {
-                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0,user_id);
+                        ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0, user_id);
                         return View(details);
                     }
                 }
@@ -284,7 +295,16 @@ namespace CI_platform.Controllers
                 {
                     var hour = vMVolunteering.hour;
                     var minute = vMVolunteering.minute;
-                    record.Time = TimeSpan.Parse(hour + ":" + minute);
+                    if (hour < 24 && minute < 59)
+                    {
+                        record.Time = TimeSpan.Parse(hour + ":" + minute);
+
+                    }
+                    else
+                    {
+                        ViewData["Volunteering_Timesheet"] = "timevalid";
+
+                    }
                 }
                 else
                 {

@@ -10,9 +10,9 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
- <div class="d-none" id="EditMission"  role="dialog" >
-     <partial name="EditMission"/>
-     </div>
+<div class="d-none" id="EditMission" role="dialog">
+    <partial name="EditMission" />
+</div>
 
 <div class="c p-3">
     <div class="my-3 ">
@@ -26,12 +26,12 @@
     <div class="py-3 d-flex justify-content-between align-items-center">
         <form method="get" asp-area="Admin" asp-controller="Mission" asp-action="Mission">
             <div class="input-group">
-                <input type="text" class="form-control" name="searchString" value="@ViewData["SearchString"]" placeholder="Search Here">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["search"]" placeholder="&#61442; Search Here">
                 <div class="input-group-append">
-                    <button type="submit" class="ml-2 btn btn-primary">Search</button>
                 </div>
             </div>
         </form>
+
 
         <button type="button" class="btn applyButton" data-bs-toggle="modal" data-bs-target=".bd-example-modal-xl">+ ADD</button>
     </div>
@@ -61,8 +61,13 @@
                             <td>@item.StartDate.ToString().Substring(0,10)</td>
                             <td>@item.EndDate.ToString().Substring(0,10)</td>
                             <td>
-                                <button type="button" class="btn btn-primary" onclick="EditMission(@item.MissionId)">Edit</button>
-                                <button onclick="MissionDelete(@item.MissionId)" class="btn btn-danger">Delete</button>
+                                @*
+                                    <button type="button" class="btn btn-primary" >Edit</button>
+                                    <button onclick="MissionDelete(@item.MissionId)" class="btn btn-danger">Delete</button>
+                                *@
+                                <img onclick="EditMission(@item.MissionId)" class=" m-1 p-1" src="~/images/edit.png" />
+                                <img onclick="MissionDelete(@item.MissionId)" class=" m-1 p-1" src="~/images/bin.png">
+
                             </td>
 
 
@@ -74,34 +79,79 @@
 
         @*pagiantion*@
 
-        @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
-        {
-            <div class="position-absolute bottom-10 end-50 mt-3">
-                <nav>
-                    <ul class="pagination">
-                        @if ((int)ViewData["CurrentPage"] > 1)
-                        {
-                            <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Mission", new { page = (int)ViewData["CurrentPage"] - 1, searchString = ViewData["SearchString"] })">Previous</a></li>
-                        }
-                        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
-                        {
-                            if (i == (int)ViewData["CurrentPage"])
-                            {
-                                <li class=" m-1 page-item active"><a class="page-link" href="#">@i</a></li>
-                            }
-                            else
-                            {
-                                <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Mission", new { page = i, searchString = ViewData["SearchString"] })">@i</a></li>
-                            }
-                        }
-                        @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
-                        {
-                            <li class="m-1 page-item"><a class="page-link" href="@Url.Action("Mission", new { page = (int)ViewData["CurrentPage"] + 1, searchString = ViewData["SearchString"] })">Next</a></li>
-                        }
-                    </ul>
-                </nav>
-            </div>
-        }
+        @*        <nav>
+            <ul class="pagination justify-content-center mt-3">
+            <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+            <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="1" asp-route-search="@ViewData["search"]">First</a>
+            </li>
+            @for (int i = 1; i <= Model.TotalPages; i++)
+            {
+            <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+            <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="@i" asp-route-search="@ViewData["search"]">@i</a>
+            </li>
+            }
+            <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+            <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="@Model.TotalPages" asp-route-search="@ViewData["search"]">Last</a>
+            </li>
+            </ul>
+            </nav>*@
+
+
+
+
+        <nav>
+            <ul class="pagination justify-content-center mt-3">
+                <li class="page-item @(Model.PageNumber == 1 ? "disabled" : "")">
+                    <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="1" asp-route-search="@ViewData["search"]">First</a>
+                </li>
+
+                @if (Model.TotalPages > 3)
+                {
+                    <li class="page-item @(Model.PageNumber <= 3 ? "active" : "")">
+                        <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="1" asp-route-search="@ViewData["search"]">1</a>
+                    </li>
+                    @if (Model.PageNumber > 4)
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link m-1">...</a>
+                        </li>
+                    }
+                    @for (int i = Math.Max(2, Model.PageNumber - 1); i <= Math.Min(Model.TotalPages - 1, Model.PageNumber + 1); i++)
+                    {
+                        <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                            <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="@i" asp-route-search="@ViewData["search"]">@i</a>
+                        </li>
+                    }
+                    @if (Model.PageNumber < Model.TotalPages - 3)
+                    {
+                        <li class="page-item disabled">
+                            <a class="page-link m-1">...</a>
+                        </li>
+                    }
+                    <li class="page-item @(Model.PageNumber >= Model.TotalPages - 2 ? "active" : "")">
+                        <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="@Model.TotalPages" asp-route-search="@ViewData["search"]">@Model.TotalPages</a>
+                    </li>
+                }
+                else
+                {
+                    @for (int i = 1; i <= Model.TotalPages; i++)
+                    {
+                        <li class="page-item @(Model.PageNumber == i ? "active" : "")">
+                            <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="@i" asp-route-search="@ViewData["search"]">@i</a>
+                        </li>
+                    }
+                }
+
+                <li class="page-item @(Model.PageNumber == Model.TotalPages ? "disabled" : "")">
+                    <a class="page-link m-1" asp-action="Mission" asp-route-pageNumber="@Model.TotalPages" asp-route-search="@ViewData["search"]">Last</a>
+                </li>
+            </ul>
+        </nav>
+
+
+
+
+
     </div>
 </div>
 
@@ -119,45 +169,46 @@
                     </div>
                     <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
                         <form asp-area="Admin" asp-action="AddMission" id="form" asp-controller="Mission" method="post" enctype="multipart/form-data">
+                            <input asp-for=MissionId type="hidden" class="form-group form-control mb-4 " aria-label="Default" aria-describedby="inputGroup-sizing-default">
 
                             @*mission title*@
                             <div class="mt-2 w-100">
                                 <lable>Title</lable>
-                                <input asp-for=Title type="text" class="form-group form-control mb-4 " aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input asp-for=Title type="text" class="form-group form-control mb-4 " aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
 
                             @*mission Description*@
                             <lable>Description</lable>
 
-                            <textarea asp-for=Description type="text" rows="4" class="form-control  mb-4" id="@item.MissionId" aria-label="Default" aria-describedby="inputGroup-sizing-default">@item.Description</textarea>
+                            <textarea asp-for=Description type="text" rows="4" class="form-control  mb-4" id="@item.MissionId" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>@item.Description</textarea>
 
                             @*mission Organazion*@
                             <lable>Organazion Name</lable>
-                            <input asp-for=OrganizationName type="text" class="form-control mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            <input asp-for=OrganizationName type="text" class="form-control mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
 
 
                             @*mission Organazion Details*@
                             <lable>Organazion Details</lable>
-                            <textarea asp-for=OrganizationDetail type="text" rows="4" class="form-control mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-                                                                   </textarea>
+                            <textarea asp-for=OrganizationDetail type="text" rows="4" class="form-control mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                                                                                                           </textarea>
 
 
                             @*start and end date & deadline*@
                             <div class="row mb-5">
                                 <div class="col-sm-12 col-lg-4 col-md-6">
                                     <lable>Starting date</lable>
-                                    <input asp-for=StartDate class=" form-control">
+                                    <input asp-for=StartDate class=" form-control" required>
                                 </div>
 
                                 <div class="col-sm-12 col-lg-4 col-md-6">
                                     <lable>End date</lable>
-                                    <input asp-for=EndDate class=" form-control">
+                                    <input asp-for=EndDate class=" form-control" required>
                                 </div>
 
 
                                 <div class="col-sm-12 col-lg-4 col-md-12">
                                     <lable>Registration DeadLine</lable>
-                                    <input asp-for=Deadline class=" form-control">
+                                    <input asp-for=Deadline class=" form-control" required>
                                 </div>
                             </div>
 
@@ -166,17 +217,18 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Total seats</span>
                                 </div>
-                                <input asp-for=TotalSeats type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <input asp-for=TotalSeats type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
 
                             @*mission Skill*@
                             <div class="row">
+                            @*
                                 <div class="col-lg-5 mt-2 col-md-5 col-sm-12 ">
                                     <label class="form-label">Skill</label>
-                                    <select asp-for=SkillId id="@item.MissionId" class="form-select me-3" aria-label="Select Skill">
+                                    <select asp-for=SkillId id="@item.MissionSkills" class="form-select me-3" aria-label="Select Skill">
                                         <option value=0 disabled selected>Select Skill for Mission</option>
                                         @{
-                                            foreach (var Model in Model.skills)
+                                            foreach (var Model in Model.skills.Where(x=>x.Status==1))
                                             {
 
                                                 <option value=@Model.SkillId id=@Model.SkillId>@Model.SkillName</option>
@@ -184,11 +236,23 @@
                                         }
                                     </select>
                                 </div>
+                                *@
+                                <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                                    <label class="form-label">Skills</label>
+                                    <select asp-for="SelectedSkills" id="@item.MissionSkills" class="form-select me-3" aria-label="Select Skills" multiple>
+                                        <option value="0" disabled selected>Select Skills for Mission</option>
+                                        @foreach (var skill in Model.skills.Where(x=>x.Status==1))
+                                        {
+                                            <option value="@skill.SkillId">@skill.SkillName</option>
+                                        }
+                                    </select>
+                                </div>
+
 
                                 @*mission Theme*@
                                 <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
                                     <label class="form-label">Theme</label>
-                                    <select asp-for=MissionThemeId id=@item.Theme class="form-select me-3" aria-label="Select Theme">
+                                    <select asp-for=MissionThemeId id=@item.Theme class="form-select me-3" aria-label="Select Theme" required>
                                         <option value=0 disabled selected>Select Theme for Mission</option>
                                         @{
                                             foreach (var Model in Model.themes)
@@ -205,7 +269,7 @@
                             <div class="row">
                                 <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
                                     <label class="form-label">Country</label>
-                                    <select asp-for=CountryId class="form-select me-3" aria-label="Select Country" onchange="getcities()">
+                                    <select asp-for=CountryId class="form-select me-3" aria-label="Select Country" onchange="getcities()" required>
                                         <option value=0 disabled selected>Select Country for Mission</option>
                                         @{
                                             foreach (var Model in Model.Country)
@@ -221,7 +285,7 @@
                                 @*Cities*@
                                 <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
                                     <label class="form-label">City</label>
-                                    <select asp-for=CityId class="form-select me-3" aria-label="Select City">
+                                    <select asp-for=CityId class="form-select me-3" aria-label="Select City" required>
                                         <option value=0 disabled selected>Select Country for Mission</option>
                                         @{
                                             foreach (var Model in Model.Cities)
@@ -235,46 +299,51 @@
                             </div>
                             @*availabilities*@
                             <div class="col-lg-6 mt-2 col-md-6 mb-4 ">
-                                <label class="form-label">Availablity</label><select asp-for=Availability id='avilablity' class="form-select me-3" aria-label="Select Mission">
+                                <label class="form-label">Availablity</label><select asp-for=Availability id='avilablity' class="form-select me-3" aria-label="Select Mission" required>
                                     <option value=0 disabled selected>Select Your Availablity</option>
                                     <option value='Weekly'>Weekly</option>
                                     <option value='Daily'>Daily</option>
 
                                 </select>
                             </div>
-                            @*mission type*@
-                            <div class="col-lg-6 mt-2 col-md-6 mb-4 ">
-                                <label class="form-label">Mission Type</label><select asp-for=MissionType id='avilablity' class="form-select me-3" aria-label="Select Mission">
-                                    <option value=0 disabled selected>Select Your MissionType</option>
-                                    <option value='GOAL'>GOAL</option>
-                                    <option value='TIME'>TIME</option>
 
+
+                            <div class="form-group col-12 col-md-6 mb-3">
+                                <label asp-for="MissionType" class="form-label text-muted">Mission Type</label>
+                                <select asp-for="MissionType" class="form-control" required>
+                                    <option value="" disabled>Select Mission Type</option>
+                                    <option value="TIME">Time</option>
+                                    <option value="GOAL">Goal</option>
                                 </select>
+
+                            </div>
+
+                            <div class="col-lg-6 mt-2 col-md-6 mb-4 goal-item  ">
+                                <label asp-for="GoalValue" class="form-label text-muted">Goal Action</label>
+                                <input asp-for="GoalValue" class="form-control" placeholder="Enter Goal Mission Action " />
+                                <span asp-validation-for="GoalValue" class="text-ci-danger fs-7"></span>
+                            </div>
+                            <div class="form-group col-12 col-md-6 mb-3 goal-item ">
+                                <label asp-for="GoalObjectiveText" class="form-label text-muted">Goal Objective Text</label>
+                                <input asp-for="GoalObjectiveText" class="form-control" placeholder="Enter Goal Mission Objective Text" />
+                                <span asp-validation-for="GoalObjectiveText" class="text-ci-danger fs-7"></span>
                             </div>
 
 
-                            @*upload images*@
-                            @*              <div class="images w-100 mt-4 ">
-                                <label class="form-label">Upload Your Photos</label>
-                                <div class="w-100 border rounded d-flex flex-column align-items-center justify-content-center" style="height:100px;border-style:dashed;">
-                                <img src="~/images/add.png" style="cursor:pointer;position:relative; top:20px;" />
-                                <input type="file" accept="image/*" onchange="loadimages()" id="images" style="opacity:0;cursor:pointer;" multiple />
-                                <p style="margin-block:0px;cursor:pointer;"> Upload Pictures Here</p>
-                                </div>
-                                <span class="text-danger d-none" id="image">At Least Select One Image</span>
-                                <div asp-for=MissionMedias class="gallary mt-4 d-flex form-control flex-wrap">
-                                </div>
-                                </div>*@
+
 
                             @*experience*@
-                            <div class="form-group">
+                            <div class="form-group mb-4">
                                 <label>Images</label>
 
-                                <input type="file" name="files" multiple />
+                                <input type="file" name="files" multiple required />
                             </div>
-                            @*asp-for=MissionMedias*@
 
-
+                            @**@
+                            <div class="form-group mb-3">
+                                <label for="fileInput">Document Upload:</label>
+                                <input type="file" class="form-control-file" id="fileInput" name="fileInput" required>
+                            </div>
 
                             <div class="modal-footer">
                                 <button class="btn btn-outline-danger rounded-pill" type="submit">Save</button>
@@ -291,22 +360,52 @@
 
 
 @*delete Modal*@
-<div class="modal fade" id="deleter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form asp-action="DeleteMission" asp-area="Admin" asp-controller="Mission">
-                <input name="id" id="id" type="hidden" />
-                <div class="modal-header border-0">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
+
+@{
+
+    foreach (var item in Model.Missions)
+    {
+        <div class="modal fade" id="deleter-@item.MissionId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form asp-action="DeleteMission" asp-area="Admin" asp-controller="Mission">
+                        <input name="id" id="id" type="hidden" value=@item.MissionId />
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-danger rounded-pill" type="submit">Delete</button>
+                            <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="modal-footer">
-                    <button class="btn btn-outline-danger rounded-pill" type="submit">Delete</button>
-                    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
-                </div>
-            </form>
+            </div>
         </div>
-    </div>
-</div>
+    }
+}
 
 
-@**@
+
+
+
+
+<script>
+    $(document).ready(function() {
+      // Hide the goal dropdowns by default
+      $(".goal-item").hide();
+      console.log("hii");
+
+      // Show the goal dropdowns when the "goal" option is selected
+      $("#MissionType").on("change", function() {
+        if ($(this).val() === "GOAL") {
+          $(".goal-item").show();
+        } else {
+          $(".goal-item").hide();
+        }
+      });
+    });
+
+</script>
+
+<script src="~/js/Admin.js" asp-append-version="true"></script>
+

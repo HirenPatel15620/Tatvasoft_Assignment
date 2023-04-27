@@ -74,7 +74,7 @@
                                                 {
                                                     @for (int j = 0; j < @Model?.story?.StoryMedia.Count; j++)
                                                     {
-                                                         if (j == 0)
+                                                        if (j == 0)
                                                         {
                                                             if (@Model?.story?.StoryMedia.ElementAt(j).Path.Length > 300)
                                                             {
@@ -154,11 +154,27 @@
                 @Model.story.User.WhyIVolunteer
             </p>
             <div class="row justify-content-between ms-3">
-                <div data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;" class=" mt-3 col-lg-6 col-md-12 col-sm-6 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
-                    <img src="~/images/add1.png" class="p-1" alt="" />
-                    <span class="p-1" style="white-space:nowrap;">Recommend To a Co-Worker</span>
-                </div>
-                <a href="/volunteering_mission/@Model.story.MissionId" class="applyButton mt-3 btn col-lg-5 col-md-12 col-sm-5">Open Mission<img class="ms-2" src="~/images/right-arrow.png" alt="" /></a>
+                @if (@Model.story.Status == "PUBLISHED")
+                {
+                    <div data-bs-toggle="modal" data-bs-target="#recommend" style="cursor:pointer;" class=" mt-3 col-lg-6 col-md-12 col-sm-6 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                        <img src="~/images/add1.png" class="p-1" alt="" />
+
+                        <span class="p-1" style="white-space:nowrap;">Recommend To a Co-Worker</span>
+
+                    </div>
+                }
+                @if(@Model.story.Mission.Status is true && @Model.story.Status == "PUBLISHED")
+                {
+                    
+                    <a href="/volunteering_mission/@Model.story.MissionId" class="applyButton mt-3 btn col-lg-5 col-md-12 col-sm-5">Open Mission<img class="ms-2" src="~/images/right-arrow.png" alt="" /></a>
+
+                }
+                else
+                {
+                    
+
+                   
+                }
             </div>
 
         </div>

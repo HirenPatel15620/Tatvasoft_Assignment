@@ -31,7 +31,10 @@ var count = 0
 const editor = (StoryId) => {
     CKEDITOR.replace(`editor-${StoryId}`, {
         maxLength: 40000,
-       
+        toolbar: [
+            { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike'] },
+            { name: 'clipboard', items: ['RemoveFormat'] }
+        ]
     });
 }
 
@@ -81,10 +84,11 @@ const SearchStories = () => {
         $.ajax({
             url: '/stories',
             type: 'POST',
-
             data: { key: key },
             success: function (result) {
                 $(".stories").empty().append(result.stories.result)
+                setpages();
+
             },
             error: function () {
                 console.log("error updating variable");
@@ -98,6 +102,8 @@ const SearchStories = () => {
             data: {  },
             success: function (result) {
                 Stories(result.stories.result, result.length)
+                setpages();
+
             },
             error: function () {
                 console.log("Error updating variable");
@@ -105,6 +111,11 @@ const SearchStories = () => {
         })
     }
 }
+
+
+
+
+
 
 
 

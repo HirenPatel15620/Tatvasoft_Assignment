@@ -1,5 +1,6 @@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor Accesor
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,6 +54,17 @@
             <div class="container w-100 d-flex justify-content-between header">
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
                 <div class="d-flex pages">
+
+                     @{
+            if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
+            {
+                <a class="nav-link text-muted" href="/Admin/User/Index">
+                    Admin 
+                </a>
+            }
+        }
+               
+
                     <a class="nav-link text-muted" href="/Home">Home</a>
                     @*<span class="nav-link text-muted explore" asp-area="">Explore <img src="~/images/drop-down.png" alt="not load" /></span>*@
                     <a class="nav-link text-muted" href="/stories">Stories</a>
@@ -67,26 +79,7 @@
 
                 </div>
                 <div class="d-flex">
-                    @* <div class="dropdown d-flex">
-                        <span class="position-relative notification-badge dropdown-toggle"  data-bs-toggle="dropdown" id="notification" role="button" aria-haspopup="true" aria-expanded="false">
-                        <span class="badge">7</span>
-                        <img src="~/images/bell.png" alt="not load" />
-                        </span>
-                        <div class="dropdown-menu" aria-labelledby="notification">
-                        <div class="dropdown-header d-flex justify-content-between border-bottom">
-                        <img src="~/images/settings.png" alt="not-load" />
-                        <strong>Notifications</strong>
-                        <span>Clear All</span>
-                        </div>
-                        <div class="dropdown-item d-flex border-bottom">
-                        <div class="d-flex">
-                        <img src="~/images/user1.png" alt="not-load" />
-                        <span class="dropdown-item-text text-muted">john doe: recomended this mission - <span class="text-black">Grow Trees</span> </span>
-                        </div>
-                        <div class="mission-badge"></div>
-                        </div>
-                        </div>
-                        </div>*@
+                    
                     <div class="dropdown d-flex align-items-center"style="right: 36px;">
                         <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                         <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
@@ -105,12 +98,8 @@
         @RenderBody()
     </main>
 
-    @*<footer class=" footer text-muted">
-        <div class="container">
-        &copy; 2023 - CI_platform - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
-        </div>
-        </footer>*@
-    <footer class="bg-dark text-center text-white">
+   
+    <footer class=" footer bg-dark text-center text-white">
         <!-- Grid container -->
         <div class="container p-4 pb-0">
         </div>
@@ -122,6 +111,9 @@
         </div>
         <!-- Copyright -->
     </footer>
+
+
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
