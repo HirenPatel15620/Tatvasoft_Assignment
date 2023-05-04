@@ -153,23 +153,42 @@ namespace CI_platform.Areas.Admin.Controllers
             var record = allRepository.AdminStory.GetBannerById(id);
             if (record != null)
             {
-
-                foreach (var file in files)
+                if (ModelState.IsValid)
                 {
-                    if (file.Length > 0)
-                    {
-                        using var stream = new MemoryStream();
-                        await file.CopyToAsync(stream);
-                        record.BannerId = id;
-                        record.Image = "data:image/png;base64," + Convert.ToBase64String(stream.ToArray());
 
+
+
+                    foreach (var file in files)
+                    {
+                        if (file.Length > 0)
+                        {
+                            using var stream = new MemoryStream();
+                            await file.CopyToAsync(stream);
+                            record.BannerId = id;
+                            record.Image = "data:image/png;base64," + Convert.ToBase64String(stream.ToArray());
+
+
+                        }
+                    }
+
+                    if(Text  is null)
+                    {
+                        ViewData["EditBanner"] = "text";
 
                     }
+                    if (SortOrder == null)
+                    {
+                        ViewData["EditBanner"] = "SortOrder";
+
+                    }
+
+
+                    record.BannerId = id;
+                    record.Text = Text;
+                    record.SortOrder = SortOrder;
+
+                    allRepository.AdminStory.editbanner(record);
                 }
-                record.BannerId = id;
-                record.Text = Text;
-                record.SortOrder = SortOrder;
-                allRepository.AdminStory.editbanner(record);
             }
             return RedirectToAction("Banner", "Story");
 
@@ -201,29 +220,35 @@ namespace CI_platform.Areas.Admin.Controllers
                 return RedirectToAction("Home", "Home");
 
             }
-            if (model.banner.Text is not null)
+
+            if (ModelState.IsValid)
             {
-                foreach (var file in files)
+
+
+
+                if (model.banner.Text is not null)
                 {
-                    if (file.Length > 0)
+                    foreach (var file in files)
                     {
-                        using var stream = new MemoryStream();
-                        await file.CopyToAsync(stream);
-
-                        Banner banner = model.banner;
+                        if (file.Length > 0)
                         {
-                            //  banner.BannerId = model.BannerId;
-                            banner.Text = model.banner.Text;
-                            banner.SortOrder = model.banner.SortOrder;
-                            banner.Image = "data:image/png;base64," + Convert.ToBase64String(stream.ToArray());
+                            using var stream = new MemoryStream();
+                            await file.CopyToAsync(stream);
+
+                            Banner banner = model.banner;
+                            {
+                                //  banner.BannerId = model.BannerId;
+                                banner.Text = model.banner.Text;
+                                banner.SortOrder = model.banner.SortOrder;
+                                banner.Image = "data:image/png;base64," + Convert.ToBase64String(stream.ToArray());
+                            }
+
+                            allRepository.AdminStory.AddBanner(banner);
                         }
-
-                        allRepository.AdminStory.AddBanner(banner);
                     }
+
                 }
-
-                return RedirectToAction("Banner", "Story");
-
+                    return RedirectToAction("Banner", "Story");
             }
             else
             {

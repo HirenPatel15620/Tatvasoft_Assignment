@@ -19,6 +19,7 @@ namespace CI.Repository.Repository
         List<CI.Models.Country> country;
         List<CI.Models.City> city;
         List<CI.Models.MissionMedia> medias;
+        List<CI.Models.MissionDocument> document;
         public AdminMission(CiPlatformContext db)
         {
             _db = db;
@@ -29,6 +30,7 @@ namespace CI.Repository.Repository
             country = _db.Countries.ToList();
             city= _db.Cities.ToList();
             medias = _db.MissionMedia.ToList();
+            document = _db.MissionDocuments.ToList();
 
 
 
@@ -51,14 +53,20 @@ namespace CI.Repository.Repository
             _db.MissionDocuments.Add(missionDocument);
             _db.SaveChanges();
             return true;
-        } public bool AddDoc(Models.MissionDocument missionDocument)
+        } 
+        public bool AddDoc(Models.MissionDocument missionDocument)
         {
             _db.MissionDocuments.Add(missionDocument);
             _db.SaveChanges();
             return true;
         }
 
+        public Models.ViewModels.AdminMission GetCityById(long id)
+        {
+            List<City> records = _db.Cities.Where(c => c.CountryId == id).ToList();
+            return new Models.ViewModels.AdminMission { Cities = records };
 
+        }
 
 
 
@@ -78,6 +86,11 @@ namespace CI.Repository.Repository
         {
             medias=medias.ToList();
             return medias;
+        }   
+        public List<Models.MissionDocument> GetAllDocumet()
+        {
+            document=document.ToList();
+            return document;
         }
 
         public List<Models.Mission> GetAllMission()
@@ -100,10 +113,33 @@ namespace CI.Repository.Repository
             _db.SaveChanges();
             return true;
         }
+      
 
         public Models.Mission GetMissionById(long id)
         {
             return _db.Missions.Where(x => x.MissionId == id).FirstOrDefault();
+
+        }  
+        public Models.MissionDocument GetDocumentById(long id)
+        {
+            return _db.MissionDocuments.Where(x => x.MissionDocumentId == id).FirstOrDefault();
+
+        } 
+        public void DeleteDocument(MissionDocument missionDocument)
+        {
+            _db.MissionDocuments.Remove(missionDocument);
+            _db.SaveChanges();
+
+        } 
+        public Models.MissionMedia GetMediaById(long id)
+        {
+            return _db.MissionMedia.Where(x => x.MissionMediaId == id).FirstOrDefault();
+
+        }  
+        public void DeleteMedia(MissionMedia missionmeida)
+        {
+            _db.MissionMedia.Remove(missionmeida);
+            _db.SaveChanges();
 
         }
 

@@ -12,10 +12,10 @@ namespace CI_platform.Controllers
     [Area("User")]
     public class UserAuthenticationController : Controller
     {
-        private readonly IAllRepository db;
-        public UserAuthenticationController(IAllRepository _db)
+        private readonly IAllRepository allRepository;
+        public UserAuthenticationController(IAllRepository _allRepository)
         {
-            db = _db;
+            allRepository = _allRepository;
         }
         [Route("Logout")]
         public async Task<IActionResult> Logout()
@@ -23,12 +23,13 @@ namespace CI_platform.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 await HttpContext.SignOutAsync("AuthCookie");
-                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
+                HttpContext.Session.Clear();
                 return RedirectToAction("Login");
             }
             else
             {
-                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                 return RedirectToAction("Login");
             }
         }
@@ -49,7 +50,7 @@ namespace CI_platform.Controllers
                 {
                     TempData["returnUrl"] = returnUrl;
                 }
-                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                 return View();
             }
         }
@@ -63,12 +64,12 @@ namespace CI_platform.Controllers
         {
             if (ModelState.IsValid)
             {
-                User check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(login.Email));
+                User check = allRepository.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(login.Email) && c.Status=="1") ;
 
                 if (check == null)
                 {
                     ViewData["login"] = "register";
-                    ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                    ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                     return View();
                 }
                 else
@@ -137,13 +138,13 @@ namespace CI_platform.Controllers
                     else
                     {
                         ViewData["login"] = "password";
-                        ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                        ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                         return View();
                     }
 
                 }
             }
-            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+            ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
             return View();
         }
 
@@ -156,7 +157,7 @@ namespace CI_platform.Controllers
             }
             else
             {
-                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                 return View();
             }
         }
@@ -167,7 +168,7 @@ namespace CI_platform.Controllers
         {
             if (ModelState.IsValid)
             {
-                var check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+                var check = allRepository.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
                 if (check == null)
                 {
                     string secpass = BCrypt.Net.BCrypt.HashPassword(user.Password);
@@ -181,9 +182,9 @@ namespace CI_platform.Controllers
                         newuser.CreatedAt = DateTime.Now;
 
                     }
-                    db.UserAuthentication.Add(newuser);
-                    db.save();
-                    check = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+                    allRepository.UserAuthentication.Add(newuser);
+                    allRepository.save();
+                    check = allRepository.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
                     var claims = new List<Claim>
                             {
                                   new Claim(ClaimTypes.Name, $"{check.FirstName} {check.LastName}"),
@@ -193,30 +194,68 @@ namespace CI_platform.Controllers
                     var identity = new ClaimsIdentity(claims, "AuthCookie");
                     var Principle = new ClaimsPrincipal(identity);
                     await HttpContext.SignInAsync("AuthCookie", Principle);
-                    return RedirectToAction("home", "Home");
+                    return RedirectToAction("Profile", "Home");
                 }
                 else
                 {
                     ViewData["register"] = "warning";
-                    ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                    ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                     return View();
                 }
             }
-            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+            ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
             return View();
 
 
         }
         [Route("ResetPassword")]
-        public IActionResult ResetPassword()
+        public IActionResult ResetPassword(string token,string Email)
         {
             if (TempData.Peek("email") is not null)
             {
+
                 ViewData["ResetPassword"] = "EmailSent";
-                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                 return View();
             }
-            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+
+            var check = allRepository.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(Email));
+            if (check is not null)
+            {
+
+                var mail = allRepository.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(Email));
+                string email = mail.Email;
+                string Token = mail.Token;
+                //PasswordReset data = db.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(email));
+
+                if (Token != null)
+                {
+                    var date1 = DateTime.Now;
+                    var date2 = date1.AddHours(-4);
+                    if (mail.Token == token && mail.CreatedAt > date2 && mail.CreatedAt < date1)
+                    {
+                        ViewBag.email = mail.Email;
+                        ViewBag.token = token;
+                        ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
+                        return View();
+                    }
+                    if(mail.CreatedAt < date2 )
+                    {
+                        ViewData["ResetPassword"] = "LinkExpire";
+                        ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
+                        return View();
+
+                    }
+                }
+            }
+            if (check is null)
+            {
+                ViewData["ResetPassword"] = "Link";
+                ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
+                return View();
+            }
+
+            ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
             return View();
         }
         [HttpPost]
@@ -225,10 +264,12 @@ namespace CI_platform.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (TempData.Peek("email") is not null)
+                if (pass.Email is not null)
                 {
-                    string email = TempData.Peek("email").ToString();
-                    PasswordReset data = db.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(email));
+                    string email = pass.Email;
+                    PasswordReset data = allRepository.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(email));
+                    string Token = data.Token;
+
 
                     if (data is null)
                     {
@@ -240,45 +281,45 @@ namespace CI_platform.Controllers
                     if (data.Token == pass.Token)
                     {
                         string passtoken = BCrypt.Net.BCrypt.HashPassword(pass.Password);
-                        User myuser = db.UserAuthentication.ResetPassword(passtoken, email);
+                        User myuser = allRepository.UserAuthentication.ResetPassword(passtoken, email);
                         if (myuser == null)
                         {
                             ViewData["ResetPassword"] = "false";
-                            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                            ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                             return View();
                         }
                         else
                         {
-                            db.save();
-                            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                            allRepository.save();
+                            ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                             return RedirectToAction("Login");
                         }
                     }
                     else
                     {
                         ViewData["ResetPassword"] = "false";
-                        ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                        ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                         return View();
                     }
                 }
                 else
                 {
                     ViewData["ResetPassword"] = "false";
-                    ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                    ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                     return View();
                 }
             }
             else
             {
                 ViewData["ResetPassword"] = "false";
-                ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                 return View();
             }
         }
         [Route("ForgotPassword")]
         public IActionResult ForgotPassword()
         {
-            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+            ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
             return View();
         }
         [HttpPost]
@@ -286,23 +327,31 @@ namespace CI_platform.Controllers
         public IActionResult ForgotPassword(ForgotPassword user)
 
         {
+
+
             if (ModelState.IsValid)
             {
-                User myuser = db.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+                User myuser = allRepository.UserAuthentication.GetFirstOrDefault(c => c.Email.Equals(user.Email.ToLower()));
+
+
                 if (myuser == null)
                 {
-                    ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+                    ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
                     return View();
                 }
                 else
                 {
                     string token = BCrypt.Net.BCrypt.HashString(user.Email.ToLower().ToString());
                     TempData["email"] = user.Email;
+                    var link = Url.Action("ResetPassword", "UserAuthentication", new { email = user.Email, token = token });
                     var senderEmail = new MailAddress("tatvasoft51@gmail.com", "CI-Platform");
                     var receiverEmail = new MailAddress(user.Email, "Receiver");
                     var password = "vlpzyhibrvpaewte";
                     var sub = "Reset Your Password";
-                    var body = "Your Reset Password Token : " + token;
+                    //var body = "Your Reset Password Token : " + link;
+                    var mailBody = "<h1>Reset Password Link:</h1><br> <a href='https://localhost:7180" + link + "'> <b style='color:red;'>Click Here to Forgot Password</b>  </a>";
+                   
+                    //var body = "Your Reset Password Token : " + token;
                     var smtp = new SmtpClient
                     {
                         Host = "smtp.gmail.com",
@@ -315,7 +364,8 @@ namespace CI_platform.Controllers
                     using (var mess = new MailMessage(senderEmail, receiverEmail)
                     {
                         Subject = sub,
-                        Body = body
+                        Body = mailBody,
+                        IsBodyHtml = true
                     })
                     {
                         smtp.Send(mess);
@@ -325,23 +375,23 @@ namespace CI_platform.Controllers
                         Email = user.Email,
                         Token = token
                     };
-                    PasswordReset data = db.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(user.Email));
+                    PasswordReset data = allRepository.ResetPassword.GetFirstOrDefault(c => c.Email.Equals(user.Email));
                     if (data is null)
                     {
-                        db.ResetPassword.Add(passwordReset);
-                        db.save();
+                        allRepository.ResetPassword.Add(passwordReset);
+                        allRepository.save();
                     }
                     else
                     {
-                        db.ResetPassword.DeleteData(data);
-                        db.ResetPassword.Add(passwordReset);
-                        db.save();
+                        allRepository.ResetPassword.DeleteData(data);
+                        allRepository.ResetPassword.Add(passwordReset);
+                        allRepository.save();
                     }
                     return RedirectToAction("ResetPassword");
 
                 }
             }
-            ViewBag.banner = db.AdminStory.GetAllBanners().BannerList;
+            ViewBag.banner = allRepository.AdminStory.GetAllBanners().BannerList;
             return View();
         }
     }

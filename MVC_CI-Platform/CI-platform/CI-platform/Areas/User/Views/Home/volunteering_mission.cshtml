@@ -129,15 +129,18 @@
                 <div class="d-flex justify-content-between border-bottom mt-3">
                     <div class="Seats d-flex align-items-center">
                         <img src="~/images/Seats-left.png" alt="">
+                        @{
+                            var tot = Model?.missionApplications?.Where(x => x.MissionId == Model.mission.MissionId && x.ApprovalStatus == "APPROVE").Count();
+                        }
                         <span>
-                            @Model?.mission?.TotalSeats <p>seats left</p>
+                            @(Model?.mission?.TotalSeats - tot) <p>seats left</p>
                         </span>
                     </div>
                     <div class="deadline d-flex align-items-center">
                         @{
 
 
-                           
+
 
                             var a1 = Model.timesheet?.Where(x => x.MissionId == Model.mission.MissionId).Sum(x => x.Action);
                             var b1 = Model.goal?.Where(x => x.MissionId == Model.mission.MissionId).Select(x => x.GoalValue).FirstOrDefault();
@@ -310,7 +313,7 @@
             <div class="text-muted tab mt-2" id="introduction">
                 <h4>Introduction</h4>
                 <p>@Model?.mission?.Description</p>
-               
+
                 <h4>Documents</h4>
                 <div class="d-flex document flex-wrap">
                     @{
@@ -420,6 +423,7 @@
         @{
             foreach (var item in @Model.related_mission)
             {
+
                 <div class="item col-md-6 col-lg-4 col-sm-6 mt-3">
                     <div class="thumbnail card d-flex">
                         <div class="img-event">
@@ -445,13 +449,13 @@
                                 if (@item.FavoriteMissions.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
                                 {
 
-                                    <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                                    <button onclick="add_to_favourited(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
                                         <img class="text-light heart-@item.MissionId" style="height:24px;" src="~/images/red-heart.png" alt="">
                                     </button>
                                 }
                                 else
                                 {
-                                    <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                                    <button onclick="add_to_favourited(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
                                         <img class="text-light heart-@item.MissionId" src="~/images/heart.png" alt="">
                                     </button>
                                 }
@@ -531,34 +535,36 @@
                                 <div class="Seats d-flex align-items-center">
                                     <img src="~/images/Seats-left.png" alt="">
                                     <span>
-                                        @item.AvbSeat <p>seats left</p>
+                                        @item.TotalSeats <p>seats left</p>
                                     </span>
                                 </div>
                                 <div class="deadline d-flex align-items-center">
                                     @{
                                         if (@item.MissionType == "GOAL")
                                         {
-                                            string? str1 = @item.GoalObject;
-                                            string str2 = string.Empty;
-                                            int goal = 0;
-                                            for (int i = 0; i <= str1.Length - 1; i++)
+
+
+                                            var a2 = Model.timesheet?.Where(x => x.MissionId == Model.mission.MissionId).Sum(x => x.Action);
+                                            var b2 = Model.goal?.Where(x => x.MissionId == Model.mission.MissionId).Select(x => x.GoalValue).FirstOrDefault();
+                                            var avg2 = Convert.ToDouble(a2) / Convert.ToDouble(b2) * 100;
+
+                                            if (Model.goal != null)
                                             {
-                                                if (Char.IsDigit(str1[i]))
-                                                    str2 += str1[i];
-                                            }
-                                            if (str2.Length > 0)
-                                            {
-                                                goal = int.Parse(str2);
-                                            }
-                                            double? percent = (@item.Achieved / (double)goal) * 100;
-                                            <img src="~/images/achieved.png" alt="">
-                                            <div class="w-100">
-                                                <div class="progress" style="width:90%;margin-left:10px;">
-                                                    <div class="progress-bar" role="progressbar" style="width:@percent%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <div class="px-2 w-25 text-end">
+                                                    <img src="~/images/achieved.png" alt="">
                                                 </div>
-                                                <p class="text-muted">@item.Achieved achieved</p>
-                                            </div>
+                                                <div class="w-75">
+                                                    <div class="progress w-75">
+                                                        <div class="progress-bar bg-ci-primary" role="progressbar" style="width: @avg2%"
+                                                 aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                    <span class="fs-7">@a2 Achieved</span>
+                                                </div>
+                                            }
+
                                         }
+
+
                                         else
                                         {
                                             <img src="images/deadline.png" alt="">
@@ -614,19 +620,43 @@
                     {
                         <div class="d-flex mt-3 bg-white align-items-center">
                             <input class="form-check-input" onclick="add_coworkers('coworker-@item.UserId')" type="checkbox" value="" id='coworker-@item.UserId'>
-                            <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
+                            @if (@item.Avatar is null)
+                            {
+                                <img class="rounded-circle usercomment-image ms-2" src="~/images/organization.png" />
+                            }
+                            else
+                            {
+
+                                <img class="rounded-circle usercomment-image ms-2" src="@item.Avatar" alt="" />
+                            }
                             <span class="ms-2">@item.FirstName @item.LastName</span>
                         </div>
                     }
                 }
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="uncheckAll()" class="btn applyButton" data-bs-dismiss="modal">Close</button>
                 <button type="button" onclick="recommend(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.mission?.MissionId)" class="btn applyButton" data-bs-dismiss="modal">Recommend</button>
             </div>
         </div>
     </div>
 </div>
+
+
+
+<script>
+
+    function uncheckAll() {
+
+        var checkboxes = document.querySelectorAll('input[type=checkbox]');
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].checked = false;
+        }
+    }
+
+</script>
+
+
 
 <script src="~/js/Volunteer_mission.js"></script>
 

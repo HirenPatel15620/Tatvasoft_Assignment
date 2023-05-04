@@ -63,6 +63,20 @@
                 toastr.success(" Email Sent To Your EmailId")
             </script>
         }
+        else if (@ViewData["ResetPassword"] == "Link")
+        {
+
+            <script>
+                toastr.error("you already use this link")
+            </script>
+        } 
+        else if (@ViewData["ResetPassword"] == "LinkExpire")
+        {
+
+            <script>
+                toastr.error("Your link is expired")
+            </script>
+        }
         else if (@ViewData["ResetPassword"] == "token")
         {
 
@@ -104,7 +118,7 @@
                                 <div class="carousel-item @(cnt==0?"active":"") h-100">
                                     <img src="@i.Image" class="w-100 d-block h-100" alt="First slide">
                                     <div class="carousel-caption d-block">
-                                        <h1>@i.Text</h1>
+                                       
                                         <p class="fs-6">
                                             @i.Text
                                         </p>

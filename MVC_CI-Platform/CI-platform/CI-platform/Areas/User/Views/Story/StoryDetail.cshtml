@@ -206,14 +206,23 @@
                     {
                         <div class="d-flex mt-3 bg-white align-items-center">
                             <input class="form-check-input" onclick="add_coworkers('coworker-@item.UserId')" type="checkbox" value="" id='coworker-@item.UserId'>
-                            <img class="rounded-circle usercomment-image ms-2" src="~/images/volunteer1.png" alt="" />
+                        @if(@item.Avatar is null)
+                        {
+                            <img src="~/images/organization.png"/>
+                        }
+                        else{
+
+                            <img class="rounded-circle usercomment-image ms-2" src="@item.Avatar" alt="" />
+                        }
                             <span class="ms-2">@item.FirstName @item.LastName</span>
                         </div>
                     }
                 }
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
+                
+                <button type="button" class="btn applyButton" data-bs-dismiss="modal" onclick="uncheckAll()">Close</button>
+
                 <button type="button" onclick="recommend_to_coworkers(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@Model?.story.StoryId)" class="btn applyButton" data-bs-dismiss="modal">Recommend</button>
             </div>
         </div>
@@ -223,7 +232,15 @@
 
 <script src="~/js/StoryDetail.js"></script>
 
+<script>
 
+function uncheckAll() {
+  var checkboxes = document.querySelectorAll('input[type=checkbox]');
+  for (var i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].checked = false;
+  }
+}
+</script>
 
 
 

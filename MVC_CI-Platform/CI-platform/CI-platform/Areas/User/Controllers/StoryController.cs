@@ -25,7 +25,7 @@ namespace CI_platform.Controllers
 
 
           
-            const int pageSize = 6;
+            const int pageSize = 3;
 
             // Get all stories
             CI.Models.ViewModels.Mission stories = allRepository.Story.GetStories(user_id);

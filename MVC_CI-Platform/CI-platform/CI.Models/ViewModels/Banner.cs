@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,5 +15,7 @@ namespace CI.Models.ViewModels
         public string SearchString { get; set; }
         public int PageNumber { get; set; }
         public int TotalPages { get; set; }
+      
+
     }
 }

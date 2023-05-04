@@ -17,7 +17,26 @@
 
 </head>
 <body>
-
+      @{
+            if (@ViewData["EditBanner"] == "SortOrder")
+        {
+            <script>
+                toastr.error("Select SortOrder")
+            </script>
+        }
+           if (@ViewData["EditBanner"] == "Text")
+        {
+            <script>
+                toastr.error("Enter Text value")
+            </script>
+        } 
+        if (@ViewData["GetEditUser"] == "userExit")
+        {
+            <script>
+                toastr.error("User Already Available")
+            </script>
+        }
+        }
 
     <main role="main" class="pb-3">
         <div class="container-fluid m-0 p-0 d-flex">
@@ -31,7 +50,7 @@
                 @{
                     if (Context.Request.Path.Equals("/Admin/User/Index"))
                     {
-                        <a href="/Admin/User/Index" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
+                        <a href="/Admin/User/Index" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
 
                             <img class="ms-2" src="~/images/user-orange.png" />
                             <span class="ms-3" style="color:orange">User</span>
@@ -39,7 +58,7 @@
                     }
                     else
                     {
-                        <a href="/Admin/User/Index" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
+                        <a href="/Admin/User/Index" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none; height:40px">
 
                             <img class="ms-2" src="~/images/user-white.png" />
 
@@ -49,7 +68,7 @@
 
                     if (Context.Request.Path.Equals("/Admin/User/Cmspage"))
                     {
-                        <a href="/Admin/User/Cmspage" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
+                        <a href="/Admin/User/Cmspage" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
 
                             <img class="ms-2" src="~/images/cms-orange.png" />
                             <span class="ms-3" style="color:orange">Cms Page</span>
@@ -57,7 +76,7 @@
                     }
                     else
                     {
-                        <a href="/Admin/User/Cmspage" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
+                        <a href="/Admin/User/Cmspage" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
 
                             <img class="ms-2" src="~/images/cms-white.png" />
                             <span class="ms-3" style="color:white">Cms Page</span>
@@ -65,7 +84,7 @@
                     }
                     if (Context.Request.Path.Equals("/Admin/Mission/Mission"))
                     {
-                        <a href="/Admin/Mission/Mission" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
+                        <a href="/Admin/Mission/Mission" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
 
                                                         <img class="ms-2" src="~/images/mission-orange.png" />
 
@@ -74,7 +93,7 @@
                     }
                     else
                     {
-                        <a href="/Admin/Mission/Mission" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
+                        <a href="/Admin/Mission/Mission" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
 
                                                        <img class="ms-2" src="~/images/mission-white.png" />
 
@@ -83,7 +102,7 @@
                     }
                     if (Context.Request.Path.Equals("/Admin/Mission/MissionApplication"))
                     {
-                        <a href="/Admin/Mission/MissionApplication" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
+                        <a href="/Admin/Mission/MissionApplication" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
 
                                                  <img class="ms-2" src="~/images/ma-orange.png" />
 
@@ -92,7 +111,7 @@
                     }
                     else
                     {
-                        <a href="/Admin/Mission/MissionApplication" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
+                        <a href="/Admin/Mission/MissionApplication" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
 
                                                       <img class="ms-2" src="~/images/ma-white.png" />
 
@@ -101,14 +120,14 @@
                     }
                     if (Context.Request.Path.Equals("/Admin/Mission/MissionSkill"))
                     {
-                        <a href="/Admin/Mission/MissionSkill" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
+                        <a href="/Admin/Mission/MissionSkill" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
                             <img class="ms-2" src="~/images/skill-orange.png" />
                             <span class="ms-3" style="color:orange">Mission Skill</span>
                         </a>
                     }
                     else
                     {
-                        <a href="/Admin/Mission/MissionSkill" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
+                        <a href="/Admin/Mission/MissionSkill" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
 
                             <img class="ms-2" src="~/images/skill-white.png" />
 
@@ -117,7 +136,7 @@
                     }
                     if (Context.Request.Path.Equals("/Admin/Mission/MissionTheme"))
                     {
-                        <a href="/Admin/Mission/MissionTheme" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
+                        <a href="/Admin/Mission/MissionTheme" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
 
                             <img class="ms-2" src="~/images/theme-orange.png" />
 
@@ -126,7 +145,7 @@
                     }
                     else
                     {
-                        <a href="/Admin/Mission/MissionTheme" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
+                        <a href="/Admin/Mission/MissionTheme" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
 
                             <img class="ms-2" src="~/images/theme-white.png" />
 
@@ -135,7 +154,7 @@
                     }
                     if (Context.Request.Path.Equals("/Admin/Story/Story"))
                     {
-                        <a href="/Admin/Story/Story" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
+                        <a href="/Admin/Story/Story" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
 
                             <img class="ms-2" src="~/images/story-orange.png" />
 
@@ -144,7 +163,7 @@
                     }
                     else
                     {
-                        <a href="/Admin/Story/Story" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
+                        <a href="/Admin/Story/Story" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
                             <img class="ms-2" src="~/images/story-white.png" />
 
 
@@ -153,7 +172,7 @@
                     }
                     if (Context.Request.Path.Equals("/Admin/Story/Banner"))
                     {
-                        <a href="/Admin/Story/Banner" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;">
+                        <a href="/Admin/Story/Banner" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
                             <img class="ms-2" src="~/images/banner-orange.png" />
 
                             <span class="ms-3" style="color:orange">Banner</span>
@@ -161,7 +180,7 @@
                     }
                     else
                     {
-                        <a href="/Admin/Story/Banner" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;">
+                        <a href="/Admin/Story/Banner" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
                             <img class="ms-2" src="~/images/banner-white.png" />
 
                             <span class="ms-3" style="color:white">Banner</span>
@@ -190,7 +209,7 @@
                                 <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
                                     <a class="dropdown-item" href="/profile">Profile</a>
-                                    <a class="dropdown-item" href="/volunteering_timesheet">Volunteering Timesheet</a>
+                                    <a class="dropdown-item" href="/Home">Home</a>
                                     <a class="dropdown-item" href="/logout">LogOut</a>
                                 </div>
                             </div>

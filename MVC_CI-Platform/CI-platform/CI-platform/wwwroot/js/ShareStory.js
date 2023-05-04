@@ -32,7 +32,6 @@ CKEDITOR.replace('editor', {
 
 
 function loadimages() {
-  
     var image = document.getElementById('images').files
     var images_count = $('.gallary').find('.main-image').length
     if (images_count + image.length <= 20 && image.length <= 20) {
@@ -119,6 +118,7 @@ function getdetails(type) {
 
 //validation 
 function validate() {
+    media=[]
     mission = parseInt($('.form-select').find(':selected').val())
     title = $('.title').val()
     date = convertDate($('#datepicker').datepicker().val())

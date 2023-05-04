@@ -22,9 +22,8 @@
     <div class="py-3 d-flex justify-content-between align-items-center">
         <form method="get" asp-area="Admin" asp-controller="Story" asp-action="Story">
             <div class="input-group">
-                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]"  placeholder="&#61442; Search Here">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]" placeholder="&#61442; Search Here">
                 <div class="input-group-append">
-                 
                 </div>
             </div>
         </form>
@@ -57,28 +56,30 @@
                             <td>@item.Title.ToString().Substring(0,50)...</td>
                             <td>@item.User.FirstName @item.User.LastName</td>
                             <td>@item.Mission.Title.ToString().Substring(0,30)...</td>
-                            @if (@item.Status == "PENDING")
-                            {
-                                <td class="text-warning">Pending</td>
+                            <td>
+                                @if (@item.Status == "PENDING")
+                                {
+                                    <p class="text-warning">Pending</p>
 
-                            }
-                            else if (@item.Status == "DECLINED")
-                            {
-                                <td class="text-danger">Decline</td>
+                                }
+                                else if (@item.Status == "DECLINED")
+                                {
+                                    <p class="text-danger">Decline</p>
 
-                            }
-                            else
-                            {
-                                <td class="">Delete</td>
+                                }
+                                else
+                                {
+                                    <p class="">Delete</p>
 
-                            }
+                                }
+                            </td>
                             <td class="">
                                 <button class="btn applyButton mb-1"><a class="text-decoration-none text-warning" href="/stories/detail/@item.StoryId" />View</button>
                             </td>
 
                             <td>
 
-                                
+
                                 <img class="height m-2" onclick="StoryRecord(@item.StoryId,1)" src="~/images/checked-green.png" />
                                 <img class="height m-2" onclick="StoryRecord(@item.StoryId,0)" src="~/images/cancled-red.png" />
                                 <img class="height m-2" onclick="DeleteRecord(@item.StoryId)" src="~/images/bin.png" />
@@ -177,13 +178,13 @@
                                 <input name="title" id="title" value="@item.Title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                             </div>
                             @*
-                            <div class="input-group mb-3">
+                                <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                                <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
                                 </div>
                                 <input name="flag" id="flag" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
-                            </div>
-                            *@  
+                                </div>
+                            *@
                             <div class="w-100">
                                 <label class="form-label">Status</label><select value="@item.Status" id='flag' name="flag" class="status form-select city me-3" aria-label="Select Mission">
                                     <option disabled selected>Select Role</option>
@@ -215,4 +216,4 @@
 <script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
- <script src="~/js/Admin.js" asp-append-version="true"></script>
+<script src="~/js/Admin.js" asp-append-version="true"></script>

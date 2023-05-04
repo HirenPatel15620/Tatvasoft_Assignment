@@ -155,16 +155,22 @@
                             <div class="w-100">
                                 <label class="form-label mt-2">Title</label>
                                 <input class="form-control title" value="@item.Title" required />
+                                                    <span class="d-none text-danger tit">Please enter title</span>
+
 
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Description</label>
-                                <textarea rows="4" type="text" class="form-control discription" value="@item.CmsPageId" required>@item.Description
+                                <textarea rows="4" type="text" class="form-control discription"  required>@item.Description
                                 </textarea>
+                                                    <span class="d-none text-danger des">Please enter description</span>
+
                             </div>
                             <div class="w-100">
                                 <label class="form-label mt-2">Slug</label>
                                 <input class="form-control slug" value="@item.Slug" required />
+                                                    <span class="d-none text-danger slu">Please enter slug</span>
+
                             </div>
                             @*
                                 <div class="input-group mt-4 mb-3">
@@ -185,7 +191,7 @@
 
                         </div>
                         <div class="modal-footer">
-                            <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                            <div data-bs-dismiss="modal" onclick="removevalidation()" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
                                 <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
 
                             </div>
@@ -213,16 +219,22 @@
                     <div class="w-100">
                         <label class="form-label mt-2">Title</label>
                         <input class="form-control title" value=""  required/>
+                    <span class="d-none text-danger tit">Please enter title</span>
+
 
                     </div>
                     <div class="w-100">
                         <label class="form-label mt-2">Description</label>
                         <textarea rows="4" type="text" id="message" class="form-control discription" value="" required >
                         </textarea>
+                    <span class="d-none text-danger des">Please enter description</span>
+
                     </div>
                     <div class="w-100 mb-4">
                         <label class="form-label mt-2">Slug</label>
                         <input class="form-control slug" value="" required/>
+                    <span class="d-none text-danger slu">Please enter slug</span>
+
                     </div>
 
                   @*  <div class="input-group mb-3">
@@ -238,10 +250,12 @@
                             <option value="0">Deactive </option>
 
                         </select>
+                    <span class="d-none text-danger sta">Please select status</span>
+
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <div data-bs-dismiss="modal" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                    <div data-bs-dismiss="modal" onclick="removevalidation()" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
                         <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
 
                     </div>

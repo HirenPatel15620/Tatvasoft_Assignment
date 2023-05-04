@@ -24,9 +24,8 @@
     <div class="py-3 d-flex justify-content-between align-items-center">
         <form method="get" asp-area="Admin" asp-controller="Story" asp-action="Banner">
             <div class="input-group">
-                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["search"]"  placeholder="&#61442; Search Here">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["search"]" placeholder="&#61442; Search Here">
                 <div class="input-group-append">
-                   
                 </div>
             </div>
         </form>
@@ -43,6 +42,7 @@
                     <th>Text</th>
                     <th>Order</th>
                     <th>Actions</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
@@ -50,12 +50,14 @@
                 {
                     <tr>
                         <td class="w-25">
-                            <img class="" src="@item.Image" alt="Not Found" id="@item.Image-@item.Image" />
+                            <img class="h-25 w-75" src="@item.Image" alt="Not Found" id="@item.Image-@item.Image" />
                         </td>
                         <td>@item.Text</td>
                         <td>@item.SortOrder</td>
                         <td>
                             <img class="height m-2" onclick="BannerRecord(@item.BannerId)" src="~/images/edit.png" />
+                        </td>
+                        <td>
                             <img class="height m-2" onclick="DeleteBanner(@item.BannerId)" src="~/images/bin.png" />
                         </td>
                     </tr>
@@ -110,7 +112,7 @@
                                         <input class="form-control title" asp-for=@item.Text    type="text" placeholder="Enter Story Title" />
                                         <input class="form-control title" asp-for="@item.Text" name="banner-@item.BannerId-text" type="text" placeholder="Enter Story Title" />
                                     *@
-                                    <input class="form-control title" asp-for=@item.Text name="Text" id="Text" type="text" placeholder="Enter Story Title" required/>
+                                    <input class="form-control title" asp-for=@item.Text name="Text" id="Text" type="text" placeholder="Enter Story Title" />
                                     <span asp-validation-for=banner.Text class="text-danger d-block"></span>
 
                                 </div>
@@ -122,25 +124,29 @@
                                         @*
                                             <input class="form-control video" type="number" asp-for=@item.SortOrder  placeholder="Please select number" />
                                         *@
-                                        <input class="form-control video" asp-for=@item.SortOrder name="SortOrder" id="SortOrder" type="number" placeholder="Please select number" required />
+                                        <input class="form-control video" asp-for=@item.SortOrder name="SortOrder" id="SortOrder" type="number" placeholder="Please select number" />
                                         <span asp-validation-for=banner.SortOrder class="text-danger d-block"></span>
 
                                     </div>
 
 
                                     @**@
-                                    <div class="form-group mt-3">
+                                    <div class="form-group my-3">
                                         <label>Images</label>
                                         <input type="file" name="files" multiple />
                                     </div>
                                 </div>
 
+                                <div class="w-50 h-50">
+                                
+                                 <img class="h-25 w-75" src="@item.Image" alt="Not Found" id="@item.Image-@item.Image" />
+                                 </div>
 
                             </div>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn applyButton" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn applyButton">Submit</button>
+                            <button type="submit" id="Validation()" class="btn applyButton">Submit</button>
 
                         </div>
                     </form>
@@ -166,7 +172,7 @@
                     <div class="page-1">
                         <div class=" mt-2">
                             <label class="form-label">My Banner Text</label>
-                            <input class="form-control title" asp-for=banner.Text type="text" placeholder="Enter Banner Text"  required/>
+                            <input class="form-control title" asp-for=banner.Text type="text" placeholder="Enter Banner Text" />
                             <span asp-validation-for=banner.Text class="text-danger d-block"></span>
                         </div>
 
@@ -174,7 +180,7 @@
                         <div class="page-1 ">
                             <div class="video-url w-100 mt-4">
                                 <label class="form-label">Enter Order</label>
-                                <input class="form-control video" type="number" asp-for=banner.SortOrder placeholder="Please select number" required />
+                                <input class="form-control video" type="number" asp-for=banner.SortOrder placeholder="Please select number" />
                                 <span asp-validation-for=banner.SortOrder class="text-danger d-block"></span>
 
                             </div>
@@ -183,7 +189,7 @@
                             @**@
                             <div class="form-group mt-3">
                                 <label>Images</label>
-                                <input type="file" name="files" multiple  required/>
+                                <input type="file" name="files" />
                             </div>
                         </div>
 
@@ -239,3 +245,9 @@
 <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
 
 <script src="~/js/Admin.js"></script>
+
+@section scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }

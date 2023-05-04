@@ -22,16 +22,23 @@ namespace CI.Repository.Repository.IRepository
         bool DeleteMission(Models.Mission mission);
         Models.Mission GetMissionById(long id);
         List<Models.City> GetAllCities();
-        List<Models.MissionMedia> GetAllMedia();
-        List<Models.Country> GetAllCountry();
+        void DeleteDocument(MissionDocument missionDocument);
+  
+        void DeleteMedia(MissionMedia missionmeida);
+        Models.MissionMedia GetMediaById(long id);
 
+
+        List<Models.MissionMedia> GetAllMedia();
+        List<Models.MissionDocument> GetAllDocumet();
+        List<Models.Country> GetAllCountry();
+        Models.ViewModels.AdminMission GetCityById(long id);
         bool AddMission(Models.Mission mission);
 
         bool savemedia(Models.MissionMedia missionMedia);
         bool savedocumet(Models.MissionDocument missionDocument);
 
         bool AddDoc(Models.MissionDocument missionDocument);
-
+        Models.MissionDocument GetDocumentById(long id);
         GoalMission getGoalMissionByMissionId(long missionId);
         void UpdateGoalMission(GoalMission goalMission);
         void UpdateMission(Models.Mission mission);

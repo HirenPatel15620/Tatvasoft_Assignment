@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CI.Models;
 
 public partial class User
 {
     public long UserId { get; set; }
-
+    [Required(ErrorMessage = "FirstName can't be null")]
     public string? FirstName { get; set; }
+    [Required(ErrorMessage = "FirstName can't be null")]
 
     public string? LastName { get; set; }
+    [Required(ErrorMessage = "FirstName can't be null")]
 
     public string Email { get; set; } = null!;
 

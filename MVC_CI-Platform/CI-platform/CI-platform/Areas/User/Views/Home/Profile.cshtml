@@ -16,12 +16,7 @@
             <div class="row main w-100">
              
           
-           @if (@Model.user.role == "admin")
-                {
-                    <button type="button" class=" mt-4 pr-1 btn btn-success">
-                     <a class="nav-link text-white " href="/Admin/User/Index">Admin Controlles</a>
-                    </button>
-                }
+       
              
 
                 <br><br><br>
@@ -46,7 +41,11 @@
                             <label class="form-label">SurName</label><input asp-for=user.LastName placeholder="Enter Your SurName" type="text" class="form-control" id='last-name' />
                             <span asp-validation-for=user.LastName class="text-danger d-block"></span>
                         </div>
-                        <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Employee ID</label><input asp-for=user.EmployeeId placeholder="Enter Your Employee ID" type="text" class="form-control" id='e_id' /></div>
+                        <div class="col-lg-6 col-md-6 mt-2">
+                        <label class="form-label">Employee ID</label>
+                        <input asp-for=user.EmployeeId placeholder="Enter Your Employee ID" type="text" class="form-control" id='e_id' />
+                            <span asp-validation-for=user.EmployeeId class="text-danger d-block"></span>
+                        </div>
                         <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Manager</label><input asp-for=user.Manager placeholder="Enter Your Manager Details" type="text" class="form-control" id='m_details' /></div>
                         <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Title</label><input asp-for=user.Title placeholder="Enter Your Title" type="text" class="form-control" id='title' /></div>
                         <div class="col-lg-6 col-md-6 mt-2"><label class="form-label">Department</label><input asp-for=user.Department placeholder="Enter Your Department" type="text" class="form-control" id='department' /></div>

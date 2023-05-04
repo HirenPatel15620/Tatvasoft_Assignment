@@ -312,7 +312,9 @@ namespace CI.Repository.Repository
                 var receiverEmail = new MailAddress(email, "Receiver");
                 var password = "vlpzyhibrvpaewte";
                 var sub = "Recommendation";
-                var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44336/stories/detail/{story_id}";
+                var body = "<h1>Recommend Story By:" + from_user?.FirstName + " " + from_user?.LastName + "</h1><br>" + $"<a href='https://localhost:7180/stories/detail/{story_id}" + "'>" + "<b style='color:red;'>Click Here to go Story Details</b>  </a>";
+
+                //var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44336/stories/detail/{story_id}";
                 var smtp = new SmtpClient
                 {
                     Host = "smtp.gmail.com",
@@ -325,7 +327,8 @@ namespace CI.Repository.Repository
                 using (var mess = new MailMessage(senderEmail, receiverEmail)
                 {
                     Subject = sub,
-                    Body = body
+                    Body = body,
+                    IsBodyHtml = true
                 })
                 {
                     smtp.Send(mess);

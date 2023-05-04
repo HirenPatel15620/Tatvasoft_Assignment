@@ -35,6 +35,7 @@ namespace CI_platform.Areas.Admin.Controllers
             adminMission.Missionmedia = allRepository.AdminMission.GetAllMedia();
             adminMission.Country = allRepository.AdminMission.GetAllCountry();
             adminMission.Cities = allRepository.AdminMission.GetAllCities();
+            adminMission.missionDocuments = allRepository.AdminMission.GetAllDocumet();
 
             // Search for Mission if search parameter is provided
             if (!string.IsNullOrEmpty(searchString))
@@ -52,7 +53,7 @@ namespace CI_platform.Areas.Admin.Controllers
             return View(adminMission);
         }
 
-
+     
 
 
         [HttpPost]
@@ -72,55 +73,159 @@ namespace CI_platform.Areas.Admin.Controllers
 
 
             var data = allRepository.AdminMission.GetMissionById(id);
-            if (data == null)
+           
+
+
+                if (data == null)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        CI.Models.Mission mission = new CI.Models.Mission();
+
+
+
+
+                        mission.Availability = model.Availability;
+                        mission.Description = model.Description;
+                        mission.CityId = model.CityId;
+                        mission.EndDate = model.EndDate;
+                        mission.StartDate = model.StartDate;
+                        mission.Deadline = model.Deadline;
+                        mission.ThemeId = model.MissionThemeId;
+                        mission.CountryId = model.CountryId;
+                        mission.OrganizationDetail = model.OrganizationDetail;
+                        mission.OrganizationName = model.OrganizationName;
+                        mission.Title = model.Title;
+                        mission.TotalSeats = model.TotalSeats;
+                        mission.MissionType = model.MissionType;
+                        mission.MissionId = model.MissionId;
+                        mission.GoalObject = model.GoalObjectiveText;
+
+                        if (model.MissionType == "GOAL")
+                        {
+                            GoalMission goalMission = new GoalMission();
+                            goalMission.GoalValue = model.GoalValue;
+                            goalMission.GoalObjectiveText = model.GoalObjectiveText;
+                            mission.GoalMissions.Add(goalMission);
+                        }
+                        if (model.SelectedSkills != null)
+                        {
+                            foreach (var skillId in model.SelectedSkills)
+                            {
+                                MissionSkill skill = new MissionSkill
+                                {
+                                    SkillId = skillId
+                                };
+                                mission.MissionSkills.Add(skill);
+                            }
+
+                        }
+
+                        allRepository.AdminMission.AddMission(mission);
+
+                        long missionid = mission.MissionId;
+
+                        mission.MissionMedia = new List<MissionMedia>();
+
+                        foreach (var file in files)
+                        {
+                            if (file.Length > 0)
+                            {
+                                using var stream = new MemoryStream();
+                                await file.CopyToAsync(stream);
+
+                                MissionMedia missionMedia = new MissionMedia();
+                                {
+                                    missionMedia.MissionId = missionid;
+                                    missionMedia.MediaType = "image";
+                                    missionMedia.MediaPath = "data:image/png;base64," + Convert.ToBase64String(stream.ToArray());
+                                }
+
+                                allRepository.AdminMission.savemedia(missionMedia);
+                            }
+                        }
+
+
+
+                        if (fileInput is not null)
+                        {
+                            foreach (var document in mission.MissionDocuments)
+                            {
+                                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", document.DocumentPath);
+                                if (System.IO.File.Exists(path))
+                                {
+                                    System.IO.File.Delete(path);
+                                }
+
+                            }
+                            int d_count = 1;
+                            foreach (var document in fileInput)
+                            {
+                                FileInfo fileInfo = new FileInfo(document.FileName);
+                                string filename = $"mission{mission.MissionId}-document-{d_count}" + fileInfo.Extension;
+                                string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", filename);
+
+
+                                MissionDocument doc = new MissionDocument();
+                                {
+                                    doc.MissionId = mission.MissionId;
+                                    doc.DocumentPath = filename;
+                                    doc.DocumentName = document.FileName;
+                                }
+                                allRepository.AdminMission.AddDoc(doc);
+
+                                using (Stream fileStream = new FileStream(rootpath, FileMode.Create))
+                                {
+                                    document.CopyTo(fileStream);
+                                }
+                                d_count++;
+                            }
+                        }
+
+
+
+
+                    }
+                
+                return RedirectToAction("Mission", "Mission");
+
+            }
+
+            if (model.MissionId != null)
             {
                 if (ModelState.IsValid)
                 {
-                    CI.Models.Mission mission = new CI.Models.Mission();
 
-
-
-
-                    mission.Availability = model.Availability;
-                    mission.Description = model.Description;
-                    mission.CityId = model.CityId;
-                    mission.EndDate = model.EndDate;
-                    mission.StartDate = model.StartDate;
-                    mission.Deadline = model.Deadline;
-                    mission.ThemeId = model.MissionThemeId;
-                    mission.CountryId = model.CountryId;
-                    mission.OrganizationDetail = model.OrganizationDetail;
-                    mission.OrganizationName = model.OrganizationName;
-                    mission.Title = model.Title;
-                    mission.TotalSeats = model.TotalSeats;
-                    mission.MissionType = model.MissionType;
-                    mission.MissionId = model.MissionId;
-                    mission.GoalObject = model.GoalObjectiveText;
-                    if (model.MissionType == "GOAL")
-                    {
-                        GoalMission goalMission = new GoalMission();
-                        goalMission.GoalValue = model.GoalValue;
-                        goalMission.GoalObjectiveText = model.GoalObjectiveText;
-                        mission.GoalMissions.Add(goalMission);
-                    }
+                    data.MissionType = model.MissionType;
+                    data.MissionId = id;
+                    data.OrganizationName = model.OrganizationName;
+                    data.OrganizationDetail = model.OrganizationDetail;
+                    data.StartDate = model.StartDate;
+                    data.EndDate = model.EndDate;
+                    data.Description = model.Description;
+                    data.Title = model.Title;
+                    data.Deadline = model.Deadline;
+                    data.TotalSeats = model.TotalSeats;
+                    data.CountryId = model.CountryId;
+                    data.CityId = model.CityId;
+                    data.Availability = model.Availability;
+                    data.ThemeId = model.MissionThemeId;
                     if (model.SelectedSkills != null)
                     {
                         foreach (var skillId in model.SelectedSkills)
                         {
-                            MissionSkill skill = new MissionSkill
+
+                            if (!data.MissionSkills.Any(ms => ms.SkillId == skillId))
                             {
-                                SkillId = skillId
-                            };
-                            mission.MissionSkills.Add(skill);
+                                MissionSkill skill = new MissionSkill
+                                {
+                                    SkillId = skillId
+                                };
+                                data.MissionSkills.Add(skill);
+                            }
                         }
 
                     }
-
-                    allRepository.AdminMission.AddMission(mission);
-
-                    long missionid = mission.MissionId;
-
-                    mission.MissionMedia = new List<MissionMedia>();
 
                     foreach (var file in files)
                     {
@@ -131,7 +236,7 @@ namespace CI_platform.Areas.Admin.Controllers
 
                             MissionMedia missionMedia = new MissionMedia();
                             {
-                                missionMedia.MissionId = missionid;
+                                missionMedia.MissionId = id;
                                 missionMedia.MediaType = "image";
                                 missionMedia.MediaPath = "data:image/png;base64," + Convert.ToBase64String(stream.ToArray());
                             }
@@ -140,30 +245,28 @@ namespace CI_platform.Areas.Admin.Controllers
                         }
                     }
 
-
-
                     if (fileInput is not null)
                     {
-                        foreach (var document in mission.MissionDocuments)
-                        {
-                            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", document.DocumentPath);
-                            if (System.IO.File.Exists(path))
-                            {
-                                System.IO.File.Delete(path);
-                            }
+                        //foreach (var document in model.missionDocuments)
+                        //{
+                        //    string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", document.DocumentPath);
+                        //    if (System.IO.File.Exists(path))
+                        //    {
+                        //        System.IO.File.Delete(path);
+                        //    }
 
-                        }
+                        //}
                         int d_count = 1;
                         foreach (var document in fileInput)
                         {
                             FileInfo fileInfo = new FileInfo(document.FileName);
-                            string filename = $"mission{mission.MissionId}-document-{d_count}" + fileInfo.Extension;
+                            string filename = $"mission{id}-document-{d_count}" + fileInfo.Extension;
                             string rootpath = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "documents", filename);
 
 
                             MissionDocument doc = new MissionDocument();
                             {
-                                doc.MissionId = mission.MissionId;
+                                doc.MissionId = id;
                                 doc.DocumentPath = filename;
                                 doc.DocumentName = document.FileName;
                             }
@@ -178,59 +281,37 @@ namespace CI_platform.Areas.Admin.Controllers
                     }
 
 
-
-
-                }
-
-                return RedirectToAction("Mission", "Mission");
-
-            }
-
-            if (data != null)
-            {
-                data.MissionType = model.MissionType;
-                data.MissionId = id;
-                data.OrganizationName = model.OrganizationName;
-                data.OrganizationDetail = model.OrganizationDetail;
-                data.StartDate = model.StartDate;
-                data.EndDate = model.EndDate;
-                data.Description = model.Description;
-                data.Title = model.Title;
-                data.Deadline = model.Deadline;
-                data.TotalSeats = model.TotalSeats;
-                data.CountryId = model.CountryId;
-                data.CityId = model.CityId;
-                data.Availability = model.Availability;
-                data.ThemeId = model.MissionThemeId;
-                if (model.SelectedSkills != null)
-                {
-                    foreach (var skillId in model.SelectedSkills)
+                    if (model.MissionType == "GOAL")
                     {
+                        GoalMission goalMission = allRepository.AdminMission.getGoalMissionByMissionId(id);
+                        goalMission.GoalValue = model.GoalValue;
+                        goalMission.GoalObjectiveText = model.GoalObjectiveText;
 
-                        if (!data.MissionSkills.Any(ms => ms.SkillId == skillId))
-                        {
-                            MissionSkill skill = new MissionSkill
-                            {
-                                SkillId = skillId
-                            };
-                            data.MissionSkills.Add(skill);
-                        }
+                        allRepository.AdminMission.UpdateGoalMission(goalMission);
                     }
+                    allRepository.AdminMission.UpdateMission(data);
 
+                    return RedirectToAction("Mission", "Mission");
                 }
-
-                if (model.MissionType == "GOAL")
+                else
                 {
-                    GoalMission goalMission = allRepository.AdminMission.getGoalMissionByMissionId(id);
-                    goalMission.GoalValue = model.GoalValue;
-                    goalMission.GoalObjectiveText = model.GoalObjectiveText;
+                    //model.Missions = allRepository.AdminMission.GetAllMission();
+                    model.MissionId = id;
+                    model.skills = allRepository.AdminMission.GetAllSkil();
+                    model.themes = allRepository.AdminMission.GetAllTheme();
+                    model.Country = allRepository.AdminMission.GetAllCountry();
+                    model.Cities = allRepository.AdminMission.GetAllCities();
+                    //model.Missionmedia=allRepository.AdminMission.GetAllMedia();
+                    model.Missionmedia = data.MissionMedia.Where(x => x.MissionId == id).ToList();
+                    model.missionDocuments = data.MissionDocuments.Where(x => x.MissionId == id).ToList();
 
-                    allRepository.AdminMission.UpdateGoalMission(goalMission);
+                    ViewData["Title"] = "Edit Mission";
+
+                    return View("EditMission", model);
+
+
+
                 }
-                allRepository.AdminMission.UpdateMission(data);
-
-                return RedirectToAction("Mission", "Mission");
-
             }
             else
             {
@@ -273,7 +354,10 @@ namespace CI_platform.Areas.Admin.Controllers
                     adminMission.OrganizationDetail = data.OrganizationDetail;
                     adminMission.MissionThemeId = data.ThemeId;
                     adminMission.Missionmedia = data.MissionMedia.Where(x => x.MissionId == id).ToList();
+                    adminMission.missionDocuments = data.MissionDocuments.Where(x => x.MissionId == id).ToList();
                     adminMission.missionSkills = data.MissionSkills.ToList();
+                    adminMission.SelectedSkills = data.MissionSkills.Where(x => x.MissionId == id && x.SkillId != null).Select(x => x.SkillId.Value).ToArray();
+
 
                     if (adminMission.MissionType == "GOAL")
                     {
@@ -288,8 +372,11 @@ namespace CI_platform.Areas.Admin.Controllers
                 adminMission.themes = allRepository.AdminMission.GetAllTheme();
                 adminMission.Country = allRepository.AdminMission.GetAllCountry();
                 adminMission.Cities = allRepository.AdminMission.GetAllCities();
+                ViewData["Title"] = "Edit Mission";
 
+                //return View("EditMission", null, adminMission);
                 return PartialView("EditMission", adminMission);
+
                 //return true;
             }
             else
@@ -312,6 +399,28 @@ namespace CI_platform.Areas.Admin.Controllers
             return RedirectToAction("Mission", "Mission");
         }
 
+        public IActionResult Declinedocument(long id)
+        {
+            if (id != 0)
+            {
+                var record = allRepository.AdminMission.GetDocumentById(id);
+                allRepository.AdminMission.DeleteDocument(record);
+
+                return RedirectToAction("Mission", "Mission");
+            }
+            return View(null);
+        }
+        public IActionResult Declinemedia(long id)
+        {
+            if (id != 0)
+            {
+                var record = allRepository.AdminMission.GetMediaById(id);
+                allRepository.AdminMission.DeleteMedia(record);
+
+                return RedirectToAction("Mission", "Mission");
+            }
+            return View(null);
+        }
 
 
         //theme//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

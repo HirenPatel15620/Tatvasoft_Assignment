@@ -21,7 +21,7 @@ namespace CI.Repository.Repository
         {
             PasswordReset passwordReset=_db.PasswordResets.FirstOrDefault(r => r.Email == email);
             User user = _db.Users.FirstOrDefault(c=>c.Email.Equals(email));
-            if (user == null)
+            if (user == null && user.Status == "0")
             {
                 return null;
             }

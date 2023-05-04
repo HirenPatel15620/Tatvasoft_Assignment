@@ -39,6 +39,8 @@ const view_detail_onmouseout = (id, img) => {
     let item = document.getElementById(id);
     item.style.display = "none";
 }
+
+
 const add_comments = (user_id, mission_id) => {
     var comment = document.getElementById('usercomment').value
     var length = $('.user-comments').find('.usercomment-image').length
@@ -59,10 +61,14 @@ const add_comments = (user_id, mission_id) => {
         alert("comment lenth must be between 3 to 600");
     }
 }
+
+
 const load_comments = (comments) => {
     $('.user-comments').append(comments);
     $('#usercomment').val("")
 }
+
+
 const add_to_favourite = (user_id, mission_id) => {
     $.ajax({
         url: `/volunteering_mission/${mission_id}`,
@@ -70,12 +76,18 @@ const add_to_favourite = (user_id, mission_id) => {
         data: { request_for: "add_to_favourite", mission_id: mission_id, user_id: user_id },
         success: function (result) {
             if (result.success) {
+                
                 //alert("add to favourite");
                 $('.heart').removeAttr('src').attr('src', '/images/red-heart.png')
+           
+
+
                 toastr.success("add to favourite");
             }
             else {
                 $('.heart').removeAttr('src').attr('src', '/images/heart1.png')
+        
+
                 toastr.error("Remove from favourite");
             }
         },
@@ -84,6 +96,43 @@ const add_to_favourite = (user_id, mission_id) => {
         }
     })
 }
+
+
+//related mission
+const add_to_favourited = (user_id, mission_id) => {
+    $.ajax({
+        url: `/volunteering_mission/${mission_id}`,
+        type: 'POST',
+        data: { request_for: "add_to_favourite", mission_id: mission_id, user_id: user_id },
+        success: function (result) {
+            if (result.success) {
+
+                //alert("add to favourite");
+
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/red-heart.png')
+                $(`.heart-${mission_id}`).css('height', 24)
+
+
+                toastr.success("add to favourite");
+            }
+            else {
+             
+                $(`.heart-${mission_id}`).removeAttr('src').attr('src', '/images/heart1.png')
+                $(`.heart-${mission_id}`).css('height', 20)
+
+                toastr.error("Remove from favourite");
+            }
+        },
+        error: function () {
+            console.log("Error updating variable");
+        }
+    })
+}
+
+
+
+
+
 const rating = (rating, user_id, mission_id) => {
     if (rating == 1) {
         $('.rating').find('img').each(function (i, item) {
@@ -96,6 +145,9 @@ const rating = (rating, user_id, mission_id) => {
                         type: 'POST',
                         data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: rating },
                         success: function (result) {
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1000);
                         },
                         error: function () {
                             console.log("Error updating variable");
@@ -110,6 +162,7 @@ const rating = (rating, user_id, mission_id) => {
                         type: 'POST',
                         data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: 0 },
                         success: function (result) {
+
                         },
                         error: function () {
                             console.log("Error updating variable");
@@ -145,6 +198,9 @@ const rating = (rating, user_id, mission_id) => {
             type: 'POST',
             data: { request_for: "rating", mission_id: mission_id, user_id: user_id, rating: rating },
             success: function (result) {
+                setTimeout(function () {
+                    location.reload();
+                }, 1000);
             },
             error: function () {
                 console.log("Error updating variable");
@@ -257,3 +313,4 @@ const next_volunteers = (max_page, user_id, mission_id) => {
         })
     }
 }
+

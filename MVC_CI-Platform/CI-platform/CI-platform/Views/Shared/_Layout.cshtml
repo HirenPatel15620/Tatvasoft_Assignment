@@ -15,26 +15,56 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-<script>
-    toastr.options = {
-    "closeButton": true,
-    "debug": false,"newestOnTop": false,"progressBar": true,"positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "300","hideDuration": "1000","timeOut": "2000",
-    "extendedTimeOut": "1000","showEasing": "swing","hideEasing": "swing","showMethod": "slideDown","hideMethod": "slideUp"
-}
+    <script>
+            toastr.options = {
+            "closeButton": true,
+            "debug": false,"newestOnTop": false,"progressBar": true,"positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "300","hideDuration": "1000","timeOut": "2000",
+            "extendedTimeOut": "1000","showEasing": "swing","hideEasing": "swing","showMethod": "slideDown","hideMethod": "slideUp"
+        }
 
-</script>
-    
+    </script>
+
 </head>
 <body onload="setpages();">
     @{
-            if (@ViewData["home"] == "true")
+        if (@ViewData["home"] == "true")
         {
             <script>
                 toastr.success("Authentication Successfull")
             </script>
         }
-
+        if (@ViewData["Volunteering_Timesheet"] == "edit")
+        {
+            <script>
+                toastr.success("edit Successfull")
+            </script>
         }
+        if (@ViewData["Volunteering_Timesheet"] == "time")
+        {
+            <script>
+                toastr.success("Volunteer Hour Add Successfull")
+            </script>
+        }
+        if (@ViewData["Volunteering_Timesheet"] == "goal")
+        {
+            <script>
+                toastr.success("Volunteer Goal Add Successfull")
+            </script>
+        }
+        if (@ViewData["Volunteering_Timesheet"] == "timevalid")
+        {
+            <script>
+                toastr.error(" Please Enter Valid Time")
+            </script>
+        }
+        if (@ViewData["Profile"] == "profileError")
+        {
+            <script>
+                toastr.error(" Employee Id is Already used")
+            </script>
+        }
+
+    }
 
     <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
         <div class="offcanvas-header">
@@ -48,22 +78,22 @@
     </div>
     <header>
 
-        
+
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom">
             @* <img src="~/images/logo.png" class="logo" alt="not found" />*@
             <div class="container w-100 d-flex justify-content-between header">
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
                 <div class="d-flex pages">
 
-                     @{
-            if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
-            {
-                <a class="nav-link text-muted" href="/Admin/User/Index">
-                    Admin 
-                </a>
-            }
-        }
-               
+                    @{
+                        if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
+                        {
+                            <a class="nav-link text-muted" href="/Admin/User/Index">
+                                Admin
+                            </a>
+                        }
+                    }
+
 
                     <a class="nav-link text-muted" href="/Home">Home</a>
                     @*<span class="nav-link text-muted explore" asp-area="">Explore <img src="~/images/drop-down.png" alt="not load" /></span>*@
@@ -79,8 +109,8 @@
 
                 </div>
                 <div class="d-flex">
-                    
-                    <div class="dropdown d-flex align-items-center"style="right: 36px;">
+
+                    <div class="dropdown d-flex align-items-center" style="right: 36px;">
                         <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
                         <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
                         <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
@@ -98,7 +128,7 @@
         @RenderBody()
     </main>
 
-   
+
     <footer class=" footer bg-dark text-center text-white">
         <!-- Grid container -->
         <div class="container p-4 pb-0">

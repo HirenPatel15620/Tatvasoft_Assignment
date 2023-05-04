@@ -52,6 +52,11 @@ namespace CI.Repository.Repository
         }
         public bool AddUser(User user)
         {
+
+            if (_db.Users.Any(u => u.Email == user.Email))
+            {
+                return false;
+            }
             _db.Users.Update(user);
             _db.SaveChanges();
             return true;

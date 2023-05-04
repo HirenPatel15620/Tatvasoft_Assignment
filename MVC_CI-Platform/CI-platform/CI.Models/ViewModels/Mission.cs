@@ -28,6 +28,7 @@ namespace CI.Models.ViewModels
         public List<Timesheet>? timesheet { get; set; }
         public List<GoalMission>? goal { get; set; }
      
+        public List<MissionApplication>? missionApplications { get; set; }
 
 
 

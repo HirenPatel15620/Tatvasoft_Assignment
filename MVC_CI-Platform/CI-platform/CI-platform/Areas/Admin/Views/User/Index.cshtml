@@ -5,6 +5,7 @@
     ViewData["css"] = "Admin.css";
 }
 @model IEnumerable<User>
+
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -27,10 +28,9 @@
     <div class="py-3 d-flex justify-content-between align-items-center">
 
         <form method="get" asp-area="Admin" asp-controller="User" asp-action="Index">
-            <div class="input-group">   
+            <div class="input-group">
                 <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]" placeholder="&#61442; Search Here">
                 <div class="input-group-append">
-       
                 </div>
             </div>
         </form>
@@ -65,6 +65,7 @@
                             <td>@item.Email</td>
                             <td>@item.EmployeeId</td>
                             <td>@item.Department</td>
+
                             <td>
                                 @if (@item.Status == "1")
                                 {
@@ -77,8 +78,8 @@
                             </td>
 
                             <td>
-                              
-                                    <img onclick="update(@item.UserId,1)" src="/images/edit.png" style="margin: 3px 3px 3px 3px;" />
+
+                                <img onclick="update(@item.UserId,1)" src="/images/edit.png" style="margin: 3px 3px 3px 3px;" />
                                 @*
                                     <button onclick="update(@item.UserId,0)" class="btn btn-danger">Deactive</button>
 
@@ -155,29 +156,36 @@
                             <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
                         </div>
                         <div class="modal-body ">
-                            <label> User Name  </label>
+                            <div class="profile-photo justify-content-center position-relative align-items-center text-center mb-3">
+                        <img style="cursor:pointer;" class="justify-content-center position-relative align-items-center w-25 h-25 rounded-circle" id="old-profile-image" src="@item.Avatar" alt="" />
+                    </div>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">First Name </span>
                                 </div>
 
-                                <input type="text" value="@item.FirstName" name="firstname" id="firstname" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                <input type="text" value="@item.FirstName" name="firstname" id="firstname" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <span asp-validation-for=@item.FirstName class="d-block text-danger"></span>
                             </div>
+                                <span class="d-none text-danger first">Please enter Firstname</span>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Last Name </span>
                                 </div>
-                                <input name="lastname" id="lastname" value=" @item.LastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                <input name="lastname" id="lastname" value="@item.LastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <span asp-validation-for=@item.LastName class="d-block text-danger"></span>
                             </div>
+                                <span class="d-none text-danger last">Please enter Lastname</span>
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Email ID </span>
                                 </div>
-                                <input name="email" id="email" value="@item.Email" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                <input disabled name="email" id="email" value="@item.Email" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
+                                <span class="d-none text-danger email">Please enter Email</span>
                             @*
                                 <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -190,24 +198,29 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Employee Id</span>
                                 </div>
-                                <input name="employeeid" id="employeeid" value=" @item.EmployeeId" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                <input name="employeeid" id="employeeid" value="@item.EmployeeId" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
+                                <span class="d-none text-danger emp">Employee Id Maximum Lenght is 16</span>
+
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Department </span>
                                 </div>
-                                <input name="department" id="department" value=" @item.Department" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                <input name="department" id="department" value="@item.Department" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
+                                <span class="d-none text-danger department">Please enter Department</span>
+
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="inputGroup-sizing-default">Profile Text </span>
                                 </div>
-                                <input name="profiletext" id="profiletext" value=" @item.ProfileText" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
-                                <span class="text-danger d-block"></span>
+                                <input name="profiletext" id="profiletext" value="@item.ProfileText" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
                             </div>
+                                <span class="d-none text-danger profile">Please enter Profile text</span>
 
 
-                            <label class="form-label">Status</label><select value="@item.Status" id='flag' name="flag" class="form-select city me-3" aria-label="Select Mission" required>
+
+                            <label class="form-label">Status</label><select  asp-for=@item.Status id='flag' name="flag" class="flags form-select city me-3" aria-label="Select Mission">
                                 <option disabled selected>Select status</option>
 
                                 <option value="1">Active </option>
@@ -215,7 +228,8 @@
 
                             </select>
 
-                            <label class="form-label">Role</label><select value="@item.Role" id='role' name="role" class="form-select city me-3" aria-label="Select Mission" required>
+
+                            <label class="form-label">Role</label><select asp-for=@item.Role value="@item.Role" id='role' name="role" class="roles form-select city me-3" aria-label="Select Mission">
                                 <option disabled selected>Select Role</option>
 
                                 <option value="admin">Admin </option>
@@ -226,8 +240,8 @@
                         </div>
 
                         <div class="modal-footer">
-                            <button class="btn btn-outline-warning rounded-pill" type="submit">Change</button>
-                            <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                            <button onclick="userchange(@item.UserId)" class="btn btn-outline-warning rounded-pill" type="button">Change</button>
+                            <button type="reset" class="btn rounded-pill btn-outline-secondary" onclick="removevalidationforuser()" data-bs-dismiss="modal">Cancle</button>
                         </div>
                     </form>
                 </div>
@@ -250,7 +264,7 @@
                     <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
                 </div>
                 <div class="modal-body ">
-                 
+
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -259,6 +273,7 @@
 
                         <input type="text" name="firstname" id="firstname" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                     </div>
+                    <span class="d-none text-danger first">Please enter Firstname</span>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -266,6 +281,7 @@
                         </div>
                         <input name="lastname" id="lastname" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                     </div>
+                    <span class="d-none text-danger last">Please enter Lastname</span>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -273,6 +289,7 @@
                         </div>
                         <input name="email" id="email" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                     </div>
+                    <span class="d-none text-danger email">Please enter EmailId</span>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -280,15 +297,16 @@
                         </div>
                         <input name="password" id="password" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                     </div>
+                    <span class="d-none text-danger password">Please enter Password</span>
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Phone </span>
                         </div>
-                        <input name="Phone" id="Phone"  type="text" placeholder="countrycode-number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
-                        <span class="text-danger d-block"></span>
+                        <input name="Phone" id="Phone" type="text" placeholder="countrycode-number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                     </div>
-               
+                    <span class="d-none text-danger phone">Please enter Phone</span>
+
 
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
@@ -296,25 +314,24 @@
                         </div>
                         <input name="employeeid" id="employeeid" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                     </div>
+                        <span class="d-none text-danger emp">Please enter Employee Id (Max.Lengh is 16)</span>
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Department </span>
                         </div>
                         <input name="department" id="department" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                     </div>
+                        <span class="d-none text-danger department">Please enter Department</span>
+
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">Profile Text </span>
+
                         </div>
                         <input name="profiletext" id="profiletext" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
                     </div>
-
-
-
-
-
-
-
+                        <span class="d-none text-danger profile">Please enter Profile</span>
 
 
                     <label class="form-label">Status</label><select id='flag' name="flag" class="form-select city me-3" aria-label="Select Mission" required>
@@ -322,11 +339,12 @@
 
                         <option value="1">Active </option>
                         <option value="0">Deactive </option>
+                        <span class="d-none text-danger status">Please enter title</span>
 
                     </select>
 
 
-                    <label class="form-label">Role</label><select id='role' name="role" class="form-select city me-3" aria-label="Select Mission" required>
+                    <label class="form-label">Role</label><select id='role' name="role" class=" form-select city me-3" aria-label="Select Mission" required>
                         <option disabled selected>Select Role</option>
 
                         <option value="admin">Admin </option>
@@ -337,8 +355,8 @@
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-outline-warning rounded-pill" type="submit">Change</button>
-                    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                    <button class="btn btn-outline-warning rounded-pill" onclick="usermake(0)" type="button">Change</button>
+                    <button type="reset" class="btn rounded-pill btn-outline-secondary" onclick="removevalidationforuser()" data-bs-dismiss="modal">Cancle</button>
                 </div>
             </form>
         </div>

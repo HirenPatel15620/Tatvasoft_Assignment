@@ -110,7 +110,7 @@ namespace CI_platform.Controllers
             }
             else
             {
-                return RedirectToAction("login", "userAuthentication", new {ReturnUrl = $"volunteering_mission/{id}" });
+                return RedirectToAction("login", "userAuthentication", new { ReturnUrl = $"volunteering_mission/{id}" });
             }
         }
         [HttpPost]
@@ -158,14 +158,10 @@ namespace CI_platform.Controllers
         {
             var cms = allRepository.Sheet.GetALLPolicies();
 
-            if (User.Identity.IsAuthenticated)
-            {
-                return View(cms);
-            }
-            else
-            {
-                return RedirectToAction("login", "userAuthentication");
-            }
+
+            return View(cms);
+
+
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -207,6 +203,14 @@ namespace CI_platform.Controllers
                     {
 
                         bool success = allRepository.Profile.Update_Details(model, user_id);
+
+                        if (success is false)
+                        {
+                            ViewData["Profile"] = "profileError";
+                            ProfileViewModel details = allRepository.Profile.Get_Initial_Details(country, user_id);
+                            return View(details);
+                        }
+
                         return RedirectToAction("login", "userAuthentication");
                     }
 
@@ -273,7 +277,18 @@ namespace CI_platform.Controllers
                 {
                     var hour = vMVolunteering.hour;
                     var minute = vMVolunteering.minute;
-                    timesheet.Time = TimeSpan.Parse(hour + ":" + minute);
+                    if (hour < 24 && minute < 59)
+                    {
+                        timesheet.Time = TimeSpan.Parse(hour + ":" + minute);
+
+                    }
+                    else
+                    {
+                        ViewData["Volunteering_Timesheet"] = "timevalid";
+
+                    }
+
+                    //timesheet.Time = TimeSpan.Parse(hour + ":" + minute);
                     ViewData["Volunteering_Timesheet"] = "time";
                 }
                 else
@@ -311,6 +326,7 @@ namespace CI_platform.Controllers
                     record.Action = vMVolunteering.timesheet.Action;
                 }
                 allRepository.Sheet.UpdateTimeSheetRecord(record);
+                ViewData["Volunteering_Timesheet"] = "edit";
             }
             vMVolunteering.timesheets = allRepository.Sheet.GetAllTimeSheetRecordsByUser(userid);
             vMVolunteering.missionApplicatoinsByTime = allRepository.Sheet.GetTimetypeMissionsByUserId(userid);
@@ -342,7 +358,7 @@ namespace CI_platform.Controllers
                     timesheet.timesheet.Action = allRepository.Sheet.GetTimesheetrecordByTimesheetId(id).Action;
                 }
             }
-            ViewData["GetEditData"] = "edit";
+
 
             timesheet.missionApplicatoinsByTime = allRepository.Sheet.GetTimetypeMissionsByUserId(userid);
             timesheet.missionApplicatoinsByGoal = allRepository.Sheet.GetGoaltypeMissionsByUserId(userid);

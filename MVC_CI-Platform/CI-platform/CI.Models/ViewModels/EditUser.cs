@@ -21,7 +21,7 @@ namespace CI.Models.ViewModels
 
         public string? WhyIVolunteer { get; set; }
 
-        
+        [MaxLength(16, ErrorMessage = "Maximum Lenght is 16 ")]
         public string? EmployeeId { get; set; }
 
         public string? Department { get; set; }

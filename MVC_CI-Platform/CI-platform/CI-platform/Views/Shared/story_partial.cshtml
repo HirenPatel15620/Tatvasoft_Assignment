@@ -4,7 +4,7 @@
 @using System.Security.Claims;
 @model CI.Models.ViewModels.Mission
 @{
-    foreach (var item in Model.Stories.Where(c => c.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) || (c.Status == "PUBLISHED")||(c.Status != "DELETE")||(c.Status != "DECLINED")).ToList())
+    foreach (var item in Model.Stories.Where(c => c.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) || (c.Status == "PUBLISHED") || (c.Status != "DELETE") || (c.Status != "DECLINED")).ToList())
     {
 
         <div class="card1 item col-md-6 col-lg-4 col-sm-6 mt-3">
@@ -23,11 +23,11 @@
                     {
                         <div class=" appliedicon-badge">Published</div>
                     }
-                     else if (item.Status == "DELETE")
+                    else if (item.Status == "DELETE")
                     {
                         <div class=" closeicon-badge">DELETED</div>
                     }
-                      else if (item.Status == "DECLINED")
+                    else if (item.Status == "DECLINED")
                     {
                         <div class=" closeicon-badge">DELETED</div>
                     }
@@ -44,13 +44,13 @@
                          src=@item.StoryMedia.ElementAt(1).Path id="image-@item.StoryId" alt="" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" />
                         }
                     }
-                
-                        <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
-                            <a href="/stories/detail/@item.StoryId" class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
-                                View Details<img class="ms-2" src="images/right-arrow.png" alt="">
-                            </a>
-                        </div>
-                    
+
+                    <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
+                        <a href="/stories/detail/@item.StoryId" class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
+                            View Details<img class="ms-2" src="images/right-arrow.png" alt="">
+                        </a>
+                    </div>
+
                     <button class="mission-theme border-0">
                         <span class="p-2">@item.Mission.Theme?.Title</span>
                     </button>
@@ -69,20 +69,19 @@
                     </span>
                     <div class="d-flex list-view justify-content-between mt-3 align-items-center">
                         <div class="w-100">
-                            @if (@item.User.Avatar is null)
+                            @if (item.User.Avatar == null) // Removed unnecessary @ symbol before item
                             {
-                                <img class=" h-25 rounded-circle" src="/images/organization.png" alt="" />
+                                <img class="h-25 rounded-circle" src="/images/organization.png" alt="" />
                             }
                             else
                             {
                                 <img class="rounded-circle" src="@item.User.Avatar" alt="" style="width:13%;" />
+                                // Added width style to both images
                             }
                             <span class="ms-2">@item.User.FirstName @item.User.LastName</span>
-                            <span class="pl-5">
-                            @item.PublishedAt?.ToString().Substring(0,10)
-                            </span>
-
+                            <span class="pl-5">@item.PublishedAt?.ToString("yyyy-MM-dd")</span>
                         </div>
+
                         @{
                             if ((@item.Status == "DRAFT" || @item.Status == "PENDING") && @item.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value))
                             {

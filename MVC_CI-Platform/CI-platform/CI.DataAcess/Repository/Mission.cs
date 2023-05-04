@@ -43,7 +43,7 @@ namespace CI.Repository.Repository
             countries = _db.Countries.ToList();
             comments = _db.Comments.ToList();
             favoriteMissions = _db.FavoriteMissions.ToList();
-            missions = _db.Missions.ToList();
+            missions = _db.Missions.Where(x=>x.Status == true).ToList();
             missionApplications = _db.MissionApplications.ToList();
             mission_documents = _db.MissionDocuments.ToList();
             already_recommended_users = _db.MissionInvites.ToList();
@@ -51,7 +51,7 @@ namespace CI.Repository.Repository
             missionskills = _db.MissionSkills.Where(x => x.SkillId != null).ToList();
             theme = _db.MissionThemes.Where(x => x.Status == 1).ToList();
             ratings = _db.MissionRatings.ToList();
-            skills = _db.Skills.Where(x=>x.Status==1).ToList();
+            skills = _db.Skills.Where(x => x.Status == 1).ToList();
             users = _db.Users.ToList();
             timesheets = _db.Timesheets.ToList();
             goalMissions = _db.GoalMissions.ToList();
@@ -67,7 +67,7 @@ namespace CI.Repository.Repository
         {
 
 
-            int total_missions = missions.Count;
+            int total_missions = missions.Where(x => x.Status is true).Count();
             missions = missions.ToList();
 
             List<User> all_volunteers = new List<User>();
@@ -75,18 +75,18 @@ namespace CI.Repository.Repository
 
 
 
-            var Missions = new CI.Models.ViewModels.Mission { goal = goalMissions, timesheet = timesheets, Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions, All_volunteers = all_volunteers };
+            var Missions = new CI.Models.ViewModels.Mission { missionApplications = missionApplications,goal = goalMissions, timesheet = timesheets, Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions, All_volunteers = all_volunteers };
             return Missions;
         }
 
 
         public CI.Models.ViewModels.Mission GetMissionsByCityId(long id)
         {
-            int total_missions = missions.Count;
-            missions = missions.Where(x => x.CityId == id).ToList();
+            int total_missions = missions.Where(x => x.Status is true).Count();
+            missions = missions.Where(x => x.CityId == id && x.Status is true).ToList();
             List<User> all_volunteers = new List<User>();
 
-            var Missions = new CI.Models.ViewModels.Mission { goal = goalMissions, timesheet = timesheets, Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions, All_volunteers = all_volunteers };
+            var Missions = new CI.Models.ViewModels.Mission { missionApplications = missionApplications, goal = goalMissions, timesheet = timesheets, Missions = missions, Country = countries, themes = theme, skills = skills, total_missions = total_missions, All_volunteers = all_volunteers };
             return Missions;
 
         }
@@ -101,7 +101,7 @@ namespace CI.Repository.Repository
             List<CI.Models.Mission> mission = new List<CI.Models.Mission>();
 
 
-            missions = missions.ToList();
+            missions = missions.Where(x => x.Status is true).ToList();
 
 
 
@@ -132,18 +132,18 @@ namespace CI.Repository.Repository
             {
 
                 mission = (from m in missions
-                           where Cities.Contains(m.City.Name) || Themes.Contains(m.Theme?.Title)
+                           where Cities.Contains(m.City.Name) || Themes.Contains(m.Theme?.Title) || Skills.Contains(m.Theme?.Title)
                            select m).ToList();
-                var skill_missions = (from s in missionskills
-                                      where Skills.Contains(s.Skill?.SkillName) && missions.Contains(s.Mission)
-                                      select s.Mission).ToList();
-                foreach (var skill_mission in skill_missions)
-                {
-                    if (!mission.Contains(skill_mission))
-                    {
-                        mission.Add(skill_mission);
-                    }
-                }
+                //var skill_missions = (from s in missionskills
+                //                      where Skills.Contains(s.Skill?.SkillName) && missions.Contains(s.Mission)
+                //                      select s.Mission).ToList();
+                //foreach (var skill_mission in skill_missions)
+                //{
+                //    if (!mission.Contains(skill_mission))
+                //    {
+                //        mission.Add(skill_mission);
+                //    }
+                //}
             }
 
             //filter as per country,theme and skills if city not selected
@@ -185,7 +185,7 @@ namespace CI.Repository.Repository
                 Missions = new Models.ViewModels.Mission
                 {
                     Missions = (from m in mission
-                                orderby m.AvbSeat ascending
+                                orderby m.TotalSeats ascending
                                 select m).ToList(),
                     Country = countries,
                     Cities = city
@@ -196,7 +196,7 @@ namespace CI.Repository.Repository
                 Missions = new Models.ViewModels.Mission
                 {
                     Missions = (from m in mission
-                                orderby m.AvbSeat descending
+                                orderby m.TotalSeats descending
                                 select m).ToList(),
                     Country = countries,
                     Cities = city
@@ -254,7 +254,7 @@ namespace CI.Repository.Repository
 
 
 
-            missions = missions.ToList();
+            missions = missions.Where(x => x.Status is true).ToList();
 
             //}
             var mission = (from m in missions
@@ -325,7 +325,7 @@ namespace CI.Repository.Repository
 
                 //check that user applied or not
                 List<MissionApplication> applied = (from ma in missionApplications
-                                                    where ma.MissionId.Equals(mission?.MissionId) && ma.UserId.Equals(user_id)
+                                                    where ma.MissionId.Equals(mission?.MissionId) && ma.UserId.Equals(user_id) && ma.ApprovalStatus == "APPROVE"
                                                     select ma).ToList();
                 if (applied.Count > 0)
                 {
@@ -335,7 +335,7 @@ namespace CI.Repository.Repository
 
                 //get recent volunteers
                 List<User> myusers = (from ma in missionApplications
-                                      where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id)
+                                      where ma.MissionId.Equals(mission?.MissionId) && !ma.UserId.Equals(user_id) && ma.ApprovalStatus=="APPROVE"
                                       select ma.User).ToList();
 
 
@@ -372,7 +372,7 @@ namespace CI.Repository.Repository
 
                 //now get all remaining users for recomendation
                 users = (from u in users
-                         where !myusers.Contains(u) && user_id != u.UserId
+                         where !myusers.Contains(u) && user_id != u.UserId 
                          select u).ToList();
                 if (users.Count > 0)
                 {
@@ -387,7 +387,7 @@ namespace CI.Repository.Repository
                 var goalMissions = _db.GoalMissions.Where(x => x.MissionId == id).ToList();
 
 
-                return new CI.Models.ViewModels.Volunteer_Mission { goal = goalMissions, timesheet = timesheets, mission = mission, related_mission = related_mission, Recent_volunteers = myusers.Take(9).ToList(), Total_volunteers = myusers.Count, Favorite_mission = favouritemission.Count, Rating = rating, All_volunteers = all_volunteers, Avg_ratings = avg_ratings, Rating_count = rating_count, Applied_or_not = applied_or_not };
+                return new CI.Models.ViewModels.Volunteer_Mission { missionApplications = missionApplications, goal = goalMissions, timesheet = timesheets, mission = mission, related_mission = related_mission, Recent_volunteers = myusers.Take(9).ToList(), Total_volunteers = myusers.Count, Favorite_mission = favouritemission.Count, Rating = rating, All_volunteers = all_volunteers, Avg_ratings = avg_ratings, Rating_count = rating_count, Applied_or_not = applied_or_not };
             }
             else
             {
@@ -450,15 +450,15 @@ namespace CI.Repository.Repository
 
                     Save();
                     //for seat decreament
-                    var missionseats = _db.Missions.SingleOrDefault(e => e.MissionId == mission_id);
-                    if (missionseats == null)
-                    {
-                        return false;
-                    }
-                    else
-                    {
-                        missionseats.TotalSeats--;
-                    }
+                    //var missionseats = _db.Missions.SingleOrDefault(e => e.MissionId == mission_id);
+                    //if (missionseats == null)
+                    //{
+                    //    return false;
+                    //}
+                    //else
+                    //{
+                    //    missionseats.TotalSeats--;
+                    //}
                     //finish seat decrement
 
 
@@ -553,7 +553,8 @@ namespace CI.Repository.Repository
                 var receiverEmail = new MailAddress(email, "Receiver");
                 var password = "vlpzyhibrvpaewte";
                 var sub = "Recommendation";
-                var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44336/volunteering_mission/{mission_id}";
+                var body = "<h1>Recommend Mission By:" + from_user?.FirstName + " " + from_user?.LastName + "</h1><br>" + $"<a href='https://localhost:7180/volunteering_mission/{mission_id}" + "'>" + "<b style='color:red;'>Click Here to go mission Details</b>  </a>";
+                //var body = "Recommend By " + from_user?.FirstName + " " + from_user?.LastName + "\n" + $"https://localhost:44336/volunteering_mission/{mission_id}";
                 var smtp = new SmtpClient
                 {
                     Host = "smtp.gmail.com",
@@ -566,7 +567,8 @@ namespace CI.Repository.Repository
                 using (var mess = new MailMessage(senderEmail, receiverEmail)
                 {
                     Subject = sub,
-                    Body = body
+                    Body = body,
+                    IsBodyHtml = true
                 })
                 {
                     smtp.Send(mess);

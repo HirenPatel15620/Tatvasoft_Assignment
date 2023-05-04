@@ -20,19 +20,24 @@
             <label class="form-label">Select Mission</label>
             <select class="form-select me-3" aria-label="Select Mission">
                 <option value=0 disabled selected>Select Your Mission</option>
-                @{
-                    foreach (var item in Model)
+                @foreach (var item in Model)
+                {
+                    var missionStories = item.Stories.Where(c => c.MissionId.Equals(item.MissionId)
+                    && c.Status != "DELETE"
+                    && c.Status != "PUBLISHED"
+                    && c.UserId.Equals(long.Parse(User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value)))
+                    .ToList();
+                    var approvedMissionApplications = item.MissionApplications.Where(x => x.ApprovalStatus == "APPROVE").ToList();
+                    if (missionStories.Count > 0 && approvedMissionApplications.Count > 0)
                     {
-                        @if (@item.Stories.Where(c => c.MissionId.Equals(@item.MissionId) && c.Status!="DELETE" && c.Status!="PUBLISHED" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
-                        {
-                            <option value=@item.MissionId id=@item.MissionId disabled>@item.Title.ToString().Substring(0,35)...(Already Used)</option>
-                        }
-                        else
-                        {
-                            <option value=@item.MissionId id=@item.MissionId >@item.Title.ToString().Substring(0,50)...</option>
-                        }
+                        <option value="@item.MissionId" id="@item.MissionId" disabled>@(item.Title.ToString().Substring(0, 35))...(Already Used)</option>
+                    }
+                    else
+                    {
+                        <option value="@item.MissionId" id="@item.MissionId">@item.Title.ToString().Substring(0, 50)...</option>
                     }
                 }
+
             </select>
             <span class="text-danger d-none" id="mission">Mission Must Be Selected</span>
         </div>
@@ -51,31 +56,30 @@
     </div>
 
     @*ckeditor*@
-     <div class="ck-editor w-100 mt-3">
-         <label  class="form-label">My Story</label>
-         <textarea class="form-control" rows=8 id="editor"></textarea>
-              <span class="text-danger d-none" id="mystory">Story Is Need To Between 70 to 40000 word </span>
+    <div class="ck-editor w-100 mt-3">
+        <label class="form-label">My Story</label>
+        <textarea class="form-control" rows=8 id="editor"></textarea>
+        <span class="text-danger d-none" id="mystory">Story Is Need To Between 70 to 40000 word </span>
     </div>
 
-  
-@*    <div class="video-url w-100 mt-4">
+
+    @*    <div class="video-url w-100 mt-4">
         <label class="form-label">Enter Youtube Video URL</label>
         <input class="form-control video" type="url" placeholder="Enter Your URL" />
-    </div>*@
+        </div>*@
     <div class="video-url w-100 mt-4">
-    <label class="form-label">Enter Youtube Video URL</label>
-    <input class="form-control video" type="url" placeholder="Enter Your URL" 
-           pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$" 
-         
-           title="Please enter a valid YouTube video link" />
-</div>
+        <label class="form-label">Enter Youtube Video URL</label>
+        <input class="form-control video" type="url" placeholder="Enter Your URL"
+               pattern="^(https?\:\/\/)?(www\.)?(youtube\.com|youtu\.?be)\/.+$"
+               title="Please enter a valid YouTube video link" />
+    </div>
 
     @*upload images*@
     <div class="images w-100 mt-4 ">
         <label class="form-label">Upload Your Photos <span class="text-danger">(Max.Limit :- 20)</span> </label>
         <div class="w-100 border rounded d-flex flex-column align-items-center justify-content-center" style="height:100px;border-style:dashed;">
             <img src="~/images/add.png" style="cursor:pointer;position:relative; top:20px;" />
-            <input type="file" accept="image/*" onchange="loadimages()" id="images" style="opacity:0;cursor:pointer;" multiple/>
+            <input type="file" accept="image/*" onchange="loadimages()" id="images" style="opacity:0;cursor:pointer;" multiple />
             <p style="margin-block:0px;cursor:pointer;"> Upload Pictures Here</p>
         </div>
         <span class="text-danger d-none" id="image">At Least Select One Image</span>
@@ -90,7 +94,7 @@
         @*<a  href="/stories/preview" target="_blank" class="applyButton btn">Preview</a>*@
         <div>
             <button onclick="getdetails()" class="applyButton btn">Save</button> <button onclick="getdetails('PENDING')" class="applyButton btn">Submit</button>
-         
+
         </div>
     </div>
 </div>

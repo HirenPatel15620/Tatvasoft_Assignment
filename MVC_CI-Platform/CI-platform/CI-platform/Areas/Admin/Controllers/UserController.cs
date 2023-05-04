@@ -22,7 +22,7 @@ namespace CI_platform.Areas.Admin.Controllers
                 return RedirectToAction("Home", "Home");
 
             }
-        
+
 
             int pageSize = 10; // Number of records to display per page
 
@@ -54,7 +54,7 @@ namespace CI_platform.Areas.Admin.Controllers
 
 
         [HttpPost]
-        public IActionResult GetEditUser(long id, int flag, string firstname, string lastname, string email, string employeeid, string department, string profiletext,string role,string password,string Phone)
+        public IActionResult GetEditUser(CI.Models.User users, long id, string password, string Phone)
         {
             if (HttpContext.Session.GetString("role") is null)
             {
@@ -63,40 +63,62 @@ namespace CI_platform.Areas.Admin.Controllers
             }
             if (id != 0)
             {
-                
-                    var record = allRepository.AdminUser.GetUserByUserId(id);
-                    record.Status = flag.ToString();
-                    record.FirstName = firstname;
-                    record.LastName = lastname;
-                    record.Email = email;
-                    record.Department = department;
-                    record.ProfileText = profiletext;
-                    record.EmployeeId = employeeid;
-                    record.Role = role;
+              
+                var record = allRepository.AdminUser.GetUserByUserId(id);
+                record.Status = users.Status.ToString();
+                record.FirstName = users.FirstName;
+                record.LastName = users.LastName;
+               // record.Email = users.Email;
+                record.Department = users.Department;
+                record.ProfileText = users.ProfileText;
+                record.EmployeeId = users.EmployeeId;
+                record.Role = users.Role;
 
-                    allRepository.AdminUser.GetUpdateUser(record);
+                allRepository.AdminUser.GetUpdateUser(record);
+
+
                 
+
+                return Json(new { success = true });
+
+
             }
 
             if (id == 0)
             {
-                    string secpass = BCrypt.Net.BCrypt.HashPassword(password);
+
+                string secpass = BCrypt.Net.BCrypt.HashPassword(password);
+
+
+
+
                 CI.Models.User user = new CI.Models.User();
                 {
-                    user.FirstName = firstname;
-                    user.LastName = lastname;
-                    user.Email = email;
-                    user.Department = department;
-                    user.ProfileText = profiletext;
-                    user.EmployeeId = employeeid;
+
+
+                    user.FirstName = users.FirstName;
+                    user.LastName = users.LastName;
+                    user.Email = users.Email;
+                    user.Department = users.Department;
+                    user.ProfileText = users.ProfileText;
+                    user.EmployeeId = users.EmployeeId;
                     user.PhoneNumber = Phone;
-                    user.Role = role;
-                    user.Password=secpass;
-                    user.Status = flag.ToString();
+                    user.Role = users.Role;
+                    user.Password = secpass;
+                    user.Status = users.Status.ToString();
                 }
-                allRepository.AdminUser.AddUser(user);
+               bool success= allRepository.AdminUser.AddUser(user);
+
+                if(success is false)
+                {
+                    ViewData["GetEditUser"] = "userExit";
+                    return RedirectToAction("Index", "User");
+                }
+
+                return Json(new { success = true });
 
             }
+
             return RedirectToAction("Index", "User");
         }
 

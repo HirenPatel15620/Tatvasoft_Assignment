@@ -1,7 +1,7 @@
 ﻿toastr.options = {
     "closeButton": true,
     "debug": false, "newestOnTop": false, "progressBar": true, "positionClass": "toast-top-right", "preventDuplicates": false, "onclick": null, "showDuration": "300", "hideDuration": "1000",
-    "timeOut": "2000","extendedTimeOut": "1000", "showEasing": "swing", "hideEasing": "swing", "showMethod": "slideDown", "hideMethod": "slideUp"
+    "timeOut": "2000", "extendedTimeOut": "1000", "showEasing": "swing", "hideEasing": "swing", "showMethod": "slideDown", "hideMethod": "slideUp"
 }
 
 
@@ -12,16 +12,17 @@ let cards = document.getElementsByClassName("thumbnail")
 let img_event = document.getElementsByClassName('img-event')
 let list = document.getElementById("list")
 let grid = document.getElementById("grid")
+//let cities = [document.getElementsByClassName("user-city")[0].innerHTML.trim()]
 let cities = []
 let countries = []
 let themes = []
 let skills = []
-let country_count = 0
+let country_count = 0;
 let city_count = 0;
 let theme_count = 0;
 let skill_count = 0;
 let pageindex = 0;
-var view="grid"
+var view = "grid"
 
 
 
@@ -48,7 +49,7 @@ const view_detail_onmouseout = (id, img) => {
 
 
 //list and grid view
-function listview() { 
+function listview() {
     for (var i = 0; i < items.length; i++) {
         items[i].classList.remove("col-lg-4")
         items[i].classList.add("col-lg-12")
@@ -64,7 +65,7 @@ function listview() {
     grid.classList.remove("view")
     list.classList.add("view")
     list.style.marginLeft = 20 + "px";
-    view="list"
+    view = "list"
 }
 function gridview() {
     for (var i = 0; i < items.length; i++) {
@@ -82,7 +83,7 @@ function gridview() {
     grid.classList.add("view")
     list.classList.remove("view")
     list.style.marginLeft = 0 + "px";
-    view="grid"
+    view = "grid"
 }
 
 
@@ -97,7 +98,7 @@ const apply_for_mission = (user_id, mission_id) => {
             if (result.success) {
                 $('.apply-button').empty().append('<button  class="applyButton btn" disabled>Applied<img src="images/right-arrow.png" alt="">' + '</button >')
                 toastr.success("successfully Applied");
-                
+
             }
         },
         error: function () {
@@ -205,10 +206,10 @@ const addcountries = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var country;
     if (type == 'mobile') {
-         country = document.getElementsByClassName(name)[0]
+        country = document.getElementsByClassName(name)[0]
     }
     else {
-         country = document.getElementById(name)
+        country = document.getElementById(name)
     }
     if (country.checked) {
         if (!countries.includes(name)) {
@@ -236,7 +237,7 @@ const addcountries = (name, type) => {
             countries.splice(countries.indexOf(name), 1)
             $('.all-choices').find(`#badge-${name.replace(/\s/g, '')}`).remove()
             country_count--;
-            
+
         }
     }
     $.ajax({
@@ -256,7 +257,7 @@ const addcountries = (name, type) => {
 }
 
 //filters by themes
-const addthemes = (name,type) => {
+const addthemes = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var theme;
     if (type == 'mobile') {
@@ -297,7 +298,7 @@ const addthemes = (name,type) => {
         url: '/home',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-        success:  function (result) {
+        success: function (result) {
             loadmissions(result.mission.result, result.length)
             setpages();
 
@@ -305,11 +306,11 @@ const addthemes = (name,type) => {
         error: function () {
             console.log("Error updating variable");
         }
-        })
+    })
 }
 
 //filters by skills
-const addskills = (name,type) => {
+const addskills = (name, type) => {
     var selected = $('#sort').find(':selected').text();
     var skill;
     if (type == 'mobile') {
@@ -350,7 +351,7 @@ const addskills = (name,type) => {
         url: '/home',
         type: 'POST',
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
-        success:  function (result) {
+        success: function (result) {
             loadmissions(result.mission.result, result.length)
             setpages();
 
@@ -395,14 +396,13 @@ const loadmissions = (missions, length) => {
 const search_missions = () => {
     var selected = $('#sort').find(':selected').text();
     var key = document.getElementById('floatingSearch').value
-    if (key.length > 3)
-    {
+    if (key.length > 3) {
         key = key.toLowerCase();
         $.ajax({
             url: '/home',
             type: 'POST',
-            
-            data: { key: key, sort_by: selected.toLowerCase()},
+
+            data: { key: key, sort_by: selected.toLowerCase() },
             success: function (result) {
                 loadmissions(result.mission.result, result.length)
                 setpages();
@@ -463,7 +463,7 @@ const clear_all = () => {
     countries = []
     cities = []
     themes = []
-    skills=[]
+    skills = []
     $.ajax({
         url: '/home',
         type: 'POST',
@@ -513,10 +513,11 @@ const add_to_favourite = (user_id, mission_id) => {
 
 //remove badges
 const remove_badges = (id, badge_type) => {
+    
     var selected = $('#sort').find(':selected').text();
     $(`#${id.slice(6)}`).prop('checked', false);
     $('.all-choices').find(`#${id.replace(/\s/g, '')}`).remove()
-   
+
     if (badge_type == "city") {
         if (cities.includes(id.slice(6))) {
             cities.splice(cities.indexOf(id.slice(6)), 1)
@@ -547,7 +548,8 @@ const remove_badges = (id, badge_type) => {
         data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase() },
         success: function (result) {
             loadmissions(result.mission.result, result.length)
-            toastr.success("remove badge")
+            toastr.error(`Removed ${badge_type} badge`);
+
             setpages();
 
         },
@@ -556,7 +558,7 @@ const remove_badges = (id, badge_type) => {
         }
     })
 
-    
+
 }
 
 
@@ -580,11 +582,11 @@ const add_coworkers = (id) => {
 }
 
 
-function recommend (user_id, mission_id) {
+function recommend(user_id, mission_id) {
     debugger
     if (co_workers.length > 0) {
         $.ajax({
-            type: 'POST', 
+            type: 'POST',
             url: `/User/Home/volunteering_mission`,
             data: { co_workers: co_workers, user_id: user_id, mission_id: mission_id, request_for: "recommend" },
             successworker: function (result) {
@@ -739,24 +741,3 @@ $(document).ready(function () {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-   

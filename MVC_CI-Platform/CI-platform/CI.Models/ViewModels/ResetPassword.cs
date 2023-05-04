@@ -19,5 +19,7 @@ namespace CI.Models.ViewModels
         public string ConfirmPassword { get; set; } = null!;
         [Required]
         public string? Token { get; set; }
+
+        public string? Email { get; set; }
     }
 }

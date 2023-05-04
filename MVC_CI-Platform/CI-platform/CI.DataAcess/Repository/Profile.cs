@@ -128,9 +128,9 @@ namespace CI.Repository.Repository
 
 
 
-                if (_db.Users.Any(u => u.EmployeeId == Details.EmployeeId && u.UserId != Details.user.UserId))
+                if (_db.Users.Any(u => u.EmployeeId == Details.user.EmployeeId && u.UserId != User_id && u.EmployeeId != null))
                 {
-                 
+                    
                     return false;
                 }
 

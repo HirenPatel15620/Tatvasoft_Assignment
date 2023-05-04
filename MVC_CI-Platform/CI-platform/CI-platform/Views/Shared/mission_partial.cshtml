@@ -11,6 +11,7 @@
         var a1 = Model.timesheet?.Where(x => x.MissionId == item.MissionId).Sum(x => x.Action);
         var b1 = Model.goal?.Where(x => x.MissionId == item.MissionId).Select(x => x.GoalValue).FirstOrDefault();
         var avg = Convert.ToDouble(a1) / Convert.ToDouble(b1) * 100;
+        var tot = Model?.missionApplications?.Where(x => x.MissionId == item.MissionId && x.ApprovalStatus=="APPROVE").Count();
 
 
 
@@ -20,11 +21,11 @@
 
 
 
-                    @if (DateTime.Now > @item.EndDate || @item.AvbSeat == 0)
+                    @if (DateTime.Now > @item.EndDate || DateTime.Now > @item.Deadline || @item.AvbSeat == 0)
                     {
                         <div class=" closeicon-badge">Closed</div>
                     }
-                    else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                    else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value)) && c.ApprovalStatus == "APPROVE").ToList().Count > 0)
                     {
                         <div class=" appliedicon-badge">Applied</div>
                     }
@@ -58,20 +59,20 @@
                     }
 
 
-                    @if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                    @if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus=="APPROVE" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
                     {
-                    <a class="stop-img border-0" href="/volunteering_mission/@item.MissionId">
-                        <img class="text-light" src="images/user.png" alt="">
-                    </a>
+                        <a class="stop-img border-0" href="/volunteering_mission/@item.MissionId">
+                            <img class="text-light" src="images/user.png" alt="">
+                        </a>
 
                     }
 
                     @{
 
 
-                    <button class="mission-theme border-0">
-                        <span class="p-2">@item?.Theme?.Title</span>
-                    </button>
+                        <button class="mission-theme border-0">
+                            <span class="p-2">@item?.Theme?.Title</span>
+                        </button>
 
 
                     }
@@ -82,7 +83,7 @@
                     @*//view details conditions*@
 
                     @if (@item.Deadline < DateTime.Now || DateTime.Now > @item.StartDate || @item.AvbSeat == 0 ||
-            (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0))
+            (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus=="APPROVE" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0))
                     {
                         <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
                      onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" id=@item.MissionId>
@@ -160,11 +161,12 @@
                     <div class="d-flex justify-content-between border-bottom mt-3">
                         <div class="Seats d-flex align-items-center">
                             @{
-                                if (@item.AvbSeat != 0)
+                                if (@item.TotalSeats != 0)
                                 {
                                     <img src="images/Seats-left.png" alt="">
                                     <span>
-                                        @item.TotalSeats <p>seats left</p>
+                                    @(item.TotalSeats - tot)    
+                                    <p>seats left</p>
 
                                     </span>
                                 }
@@ -206,7 +208,7 @@
                                     Closed
                                 </button>
                             }
-                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus=="APPROVE" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus == "APPROVE" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
                             {
                                 <button class="alreadyapplyButton btn " disabled>
                                     Already Applied
@@ -222,17 +224,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
-
-
-
-
-
-
-
-
     }
-
-
 }

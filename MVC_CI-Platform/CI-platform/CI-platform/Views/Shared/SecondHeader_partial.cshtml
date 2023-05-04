@@ -106,6 +106,13 @@
                     @{
                         foreach (var item in Model.Country)
                         {
+                           @* if (Context.Session.GetString("city") is not null)
+                            {
+                                if (item.CountryId == long.Parse(Context.Session.GetString("city")))
+                                {
+                                    
+                                }
+                            }*@
                             <span class="dropdown-item">
                                 <input class="form-check-input" type="checkbox" value="" onchange="addcountries('@item.Name')" id="@item.Name">
                                 <label class="form-check-label" for="flexCheckDefault">
@@ -171,17 +178,79 @@
 @*badges*@
 <div class='d-flex flex-wrap container' id="searchdiv">
     <div class=" all-choices text-muted d-flex flex-wrap" id="allchoicediv">
-      @*  @if (Context.Session.GetString("city") is not null)
-        {
 
-        <div class='border rounded-pill mt-3'>
-            <span class='p-2'> @Model.?Cities.FirstOrDefault(x=>x.CityId==long.Parse(Context.Session.GetString("city")))</span>
-            <img src='images/cancel.png' class='p-2' alt='not found' />
-        </div>
-        }*@
+        @{
+            if (Context.Session.GetString("city") is not null)
+            {
+                foreach (var item in Model.Country)
+                {
+                    foreach (var city in item.Cities)
+                    {
+                        if (city.CityId == long.Parse(Context.Session.GetString("city")))
+                        {
+                            <div class="border rounded-pill mt-3 " id="badge-@city.Name">
+                                <span class="p-2">@city.Name</span>
+                                <img src="images/cancel.png" class="p-2" alt="not found" onclick="remove_badges(&quot;badge-@city.Name&quot;,&quot;city&quot;)">
+                            </div>
+                        }
+                    }
+                }
+            }
+        }
 
     </div>
     <div id='clear-all' id="clearalldiv" value="Reload Page" onClick="window.location.reload(true)" class="text-muted mt-3" style="cursor:pointer;">
-        <button class=' btn-danger ms-1 clear-all' id='clearalldiv'>Remove Applied Filters</button>
+        <button class=' btn-danger ms-1 clear-all' id='clearalldiv'>Get Default Filters</button>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+    <div class='d-flex flex-wrap container'>
+    <div class="all-choices text-muted d-flex flex-wrap">
+
+    @{
+    if (Context.Session.GetString("city") is not null)
+    {
+    foreach (var item in Model.Country)
+    {
+    foreach (var city in item.Cities)
+    {
+    if (city.CityId == long.Parse(Context.Session.GetString("city")))
+    {
+
+
+    <div class="border rounded-pill mt-3" id="badge-@city.Name">
+    <span class="p-2">@city.Name</span>
+    <img src="images/cancel.png" class="p-2" alt="not found" onclick="remove_badges(&quot;badge-@city.Name&quot;,&quot;city&quot;)">
+    </div>
+    }
+    }
+    }
+    }
+    }
+    </div>
+    <div id='clear-all' value="Reload Page" onClick="window.location.reload(true)" class="text-muted mt-3" style="cursor:pointer;">
+    <button class=' btn-danger ms-1 clear-all' id='clearalldiv'>Remove Applied Filters</button>
+    </div>
+    </div>
+*@
