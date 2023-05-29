@@ -1,0 +1,650 @@
+﻿@using CI_Platform.Entities.ViewModels
+@{
+    Layout = "Header";
+}
+@model UserProfileModel
+<style>
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    
+    li {
+        text-align: center;
+    }
+    .dropdown-item {
+    text-align: start !important ;
+}
+    .modal-header,
+    .modal-footer {
+        border: none;
+    }
+    #skillText:disabled {
+        background-color: white;
+        
+    }
+</style>
+
+<body>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="container col-lg-3 col-10 border text-center p-3 mb-3" style="height: 340px;">
+                <input type="file" id="userProfile" accept="image/*" style="display:none" onchange="validUserImage();"/>
+                <div id="userProfileDiv">
+                    @if (Model.userProfile.Avatar == null || Model.userProfile.Avatar == "")
+                    {
+                        <img src="~/media/user1.png" class="img-fluid rounded-circle userPicture" onclick="addUserProfilePicture()" alt="Profile">
+                    }
+                    else
+                    {
+                        <img src="~/media/@Model.userProfile.Avatar" class="img-fluid rounded-circle userPicture" onclick="addUserProfilePicture()">
+                    }
+                    
+                </div>
+                <div id="FLname" class="pt-2"><b>@Model.userProfile.FirstName @Model.userProfile.LastName </b></div>
+                <div><a  style="text-decoration:none; cursor:pointer;" data-bs-toggle="modal" data-bs-target="#exampleModal">Change Password</a></div>
+                <div class="mt-4" id="img_error"></div>
+            </div>
+            <div class="col-lg-9 ps-lg-5 mt-lg-0 mt-sm-4 mt-5">
+                <div class="tabs">
+                    <ul class="">
+                        <li class="active">
+                            <h5>Basic Information</h5>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-group row mt-3">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="username">Name*</label>
+                        <input type="text" class="form-control" id="fname" placeholder="Enter your name" value="@Model.userProfile.FirstName">
+                        <span id="fname_error"></span>
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12 ">
+                        <label for="Surname ">Surname*</label> 
+                        <input type="text" class="form-control" id="lname" placeholder="Enter your surname" value="@Model.userProfile.LastName"/>
+                        <span id="lname_error"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row mt-3">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="Employee">Employee ID</label>
+                        <input type="text" class="form-control" id="eid" placeholder="Enter your employee id" value="@Model.userProfile.EmployeeId">
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12 ">
+                        <label for="Manager">Manager</label>
+                        <div class="input-group date ">
+                            <input type="text" class="form-control"  placeholder="Enter your manager details" />
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group row mt-3">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="Title">Title</label>
+                        <input type="text" class="form-control" id="title" placeholder="Enter your employee id" value="@Model.userProfile.Title">
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12 ">
+                        <label for="Department">Department</label>
+                        <div class="input-group date ">
+                            <input type="text" class="form-control" id="dept" placeholder="Enter your manager details" value="@Model.userProfile.Department"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <label for="Profile">My Profile*</label>
+                    <textarea class="form-control" id="profileText" rows="3" placeholder="Enter your comments...">@Model.userProfile.ProfileText</textarea>
+                    <span id="profile_error"></span>
+                </div>
+                <div class="mt-3">
+                    <label for="Volunteer">Why I Volunteer?</label>
+                    <textarea class="form-control" id="whyIvol" rows="5" placeholder="Enter your comments...">@Model.userProfile.WhyIVolunteer</textarea>
+                </div>
+                <div class="mt-3 tabs">
+                    <ul class="">
+                        <li class="active">
+                            <h5>Address Information</h5>
+                        </li>
+                </div>
+                <div class="form-group row mt-3">
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="Employee">City</label>
+                        <div class="input-group">
+                            <select class="form-select" id="cityId">
+                                <option selected disabled>Select your city</option>
+                                @foreach (var item in Model.cityList)
+                                {   
+                                    <option value="@item.Value" selected="@item.Selected">@item.Text</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-6 col-sm-12 ">
+                        <label for="Manager">Country*</label>
+                        <div class="input-group">
+                            <select class="form-select" onchange="CitybyCountry();" id="countryname">
+                                <option selected disabled>Select your country</option>
+                                @foreach (var item in Model.countryList)
+                                {   
+                                    <option value="@item.Value" selected="@item.Selected" >@item.Text</option>
+                                }
+                            </select>
+                        </div>
+                        <span id="country_error"></span>
+                    </div>
+                </div>
+                <div class="mt-3 tabs">
+                    <ul class="">
+                        <li class="active">
+                            <h5>Professional Information</h5>
+                        </li>
+                </div>
+
+                <div class="form-group row mt-3">
+                    <div class="col-lg-6 col-sm-12 ">
+                        <label for="Manager">Availablity</label>
+                        <div class="input-group date ">
+                            <select id="availablity" class="form-select">
+                                <option selected disabled >Select your availablity</option>
+                                <option value="1" selected="@(Model.userProfile.Status==1?true:false)">Active</option>
+                                <option value="0" selected="@(Model.userProfile.Status==0?true:false)">In-Active</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-12">
+                        <label for="Employee">LinkedIn</label>
+                        <input type="text" class="form-control" placeholder="Enter linkedIn URL" id="linkedin" value="@Model.userProfile.LinkedInUrl">
+                    </div>
+                </div>
+
+                <div class="mt-3 tabs">
+                    <ul class="">
+                        <li class="active">
+                            <h5>My Skills</h5>
+                        </li>
+                </div>
+                <div class="mt-3">
+                    <textarea class="form-control" id="skillText" rows="5" disabled >@String.Join("\n",Model.skillList.Where(s=>s.Selected==true).Select(s=>s.Text))</textarea>
+                </div>
+                <br>
+                <button type="button" class="btnn cancle-btnn" data-bs-toggle="modal" data-bs-target="#exampleModal1">Add Skill</button>
+                <br><br>
+                
+                <div class="text-end"> <button type="button" class="mt-3 orangeButton" onclick="SaveUserProfile();">Save </button></div>
+                <br><br><br>
+
+                @*modal for add skill*@
+                <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header b-0">
+                                <h5 class="modal-title mx-2" id="exampleModalLabel" style="color:#414141;">Add your Skills</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row justify-content-center">
+                                    <div class="col-5 border selected p-0" id="selected">
+                                        <ul style="cursor:pointer;">
+                                            @foreach (var item in Model.skillList)
+                                            {
+                                                if(item.Selected == false)
+                                                {
+                                                    <li value="@item.Value" >@item.Text</li>
+                                                }
+                                            }
+                                            
+                                        </ul>
+                                    </div>
+                                    <div class="col-1 justify-content-center my-auto">
+                                        <div class="text-center" style="cursor:pointer;" id="left">&lt;</div>
+
+                                        <div class="text-center" style="cursor:pointer;" id="right">&gt;</div>
+                                    </div>
+
+                                    <div class="col-5 border selected-skills" id="selected-skills">
+                                        <ul style="cursor:pointer;">
+                                            @foreach (var item in Model.skillList)
+                                            {
+                                                if(item.Selected == true)
+                                                {
+                                                    <li value="@item.Value" >@item.Text</li>
+                                                }
+                                            }
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer d-flex justify-content-start">
+
+                                <button type="button" class="btnn cancle-btnn" data-bs-dismiss="modal">cancel</button>
+                                <button type="button" class="orangeButton" id="saveSkills" data-bs-dismiss="modal">save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*modal for change password*@
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header b-0">
+                                <h5 class="modal-title mx-2" id="exampleModalLabel" style="color:#414141;">Change Password</h5>
+                                <button type="button" class="closebox btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row justify-content-center">
+                                    <div class="fs-5 fw-bold text-center" id="email_msg"></div>
+                                    <div class="col-10">
+                                        <input type="password" id="oldpass" class="form-control" placeholder="Enter old password" />
+                                        <span id="OMessage"></span>
+                                        <input type="password" id="password" class="form-control mt-3" placeholder="Enter new password" onkeyup="password_verification();"/>
+                                        <span id="NMessage"></span>
+                                        <div id="password_error" style="color:red;"></div>
+                                        <input type="password" id="cpassword" class="form-control mt-3" placeholder="Enter confrim password" onkeyup="verifyPassword();"/>
+                                        <span id="Message"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer d-flex justify-content-start">
+
+                                <button type="button" class="closebox btnn cancle-btnn" data-bs-dismiss="modal">cancel</button>
+                                <button type="button" style="width:20vh;" id="submit" onclick="ChangePassword();" class="orangeButton">Change Password</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*modal for contact us*@
+                <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header b-0">
+                                <h5 class="modal-title mx-2" id="exampleModalLabel" style="color:#414141;">Contact Us</h5>
+                                <button type="button" class="closebox btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row justify-content-center">
+                                    <div class="fs-5 fw-bold text-center" id="email_msg"></div>
+                                    <div class="col-11">
+                                        <label for="name">Name*</label>
+                                        <input type="text" id="name" class="form-control" readonly value="@Model.userProfile.FirstName @Model.userProfile.LastName" />
+                                        
+
+                                        <label class="mt-3" for="email">Email Address*</label>
+                                        <input type="text" id="email" class="form-control" readonly  value="@Model.userProfile.Email"/>
+                                        
+
+                                        <label class="mt-3" for="subject">Subject*</label>
+                                        <input type="text" id="subject" class="form-control" placeholder="Enter your Subject" onkeyup="verifyPassword();"/>
+                                        <div id="subjectMessage"></div>
+
+                                        <label class="mt-3" for="msg">Message*</label>
+                                        <textarea class="form-control" id="issuemsg" rows="3" placeholder="Enter your Message"></textarea>
+                                        <span id="contactMessage"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="modal-footer d-flex justify-content-end">
+
+                                <button type="button" class="closebox btnn cancle-btnn" data-bs-dismiss="modal">cancel</button>
+                                <button type="button" class="orangeButton" onclick="Contact_US(@Model.userProfile.UserId)">Save</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+     <!------------------------------------------------------------------ privacy policy  ------------------------------------------------------------------>
+        <br><br><br>
+        <hr style="margin: 0rem; border-top: 3px solid #ccc; background-color: #ccc;">
+        <br>
+
+        <div class="container d-flex">
+            <a href="~/User/Privacy" class="grey me-5">
+                <p>Privacy Policy</p>
+            </a>
+            <a href="#" data-bs-toggle="modal" data-bs-target="#exampleModal2" class="grey">
+                <p>Contact us</p>
+            </a>
+        </div>
+        <br><br>
+
+
+
+</body>
+
+<!-- Javascript -->
+
+<script>
+    // --------------------------------------   Add user skill   ----------------------------------------------------------
+    $('#selected ul').on('click', 'li', function() {
+        if (!$(this).hasClass('selected')) {
+            $(this).addClass('selected');
+            $(this).css('background-color', '#bebebe');
+
+        } else {
+            $(this).removeClass('selected');
+            $(this).css('background-color', 'white');
+        }
+    });
+
+    $("#right").click(function() {
+        var nameList = $('#selected ul li');
+
+        for (let i = 0; i < nameList.length; i++) {
+            if (nameList.eq(i).hasClass('selected')) {
+                $('#selected-skills ul').append(`<li value="${nameList.eq(i).val()}">` + nameList.eq(i).html() + `</li>`);
+                nameList.eq(i).remove();
+
+            }
+        }
+    });
+
+    $('#selected-skills ul').on('click', 'li', function() {
+        if (!$(this).hasClass('selected')) {
+            $(this).addClass('selected');
+            $(this).css('background-color', '#bebebe');
+
+        } else {
+            $(this).removeClass('selected');
+            $(this).css('background-color', 'white');
+        }
+    });
+
+    $("#left").click(function() {
+        var sidenameList = $('#selected-skills ul li');
+
+        for (let i = 0; i < sidenameList.length; i++) {
+            if (sidenameList.eq(i).hasClass('selected')) {
+                $('#selected ul').append(`<li value="${sidenameList.eq(i).val()}">` + sidenameList.eq(i).html() + `</li>`);
+                sidenameList.eq(i).remove();
+            }
+        }
+    });
+
+    var Listing = [];
+    $('#saveSkills').on('click', function() {
+        $('#skillText').html('');
+        var addedSkills = $('#selected-skills ul li');
+
+        for (let i = 0; i < addedSkills.length; i++) {
+            Listing.push(addedSkills.eq(i).html());
+        }
+        for (let i = 0; i < Listing.length; i++) {
+            var TextBox = $('#skillText');
+            TextBox.append(Listing[i] + '\n');
+        }
+        Listing.splice(0, Listing.length);
+    });
+
+
+    // --------------------------------------   city list by their country   ----------------------------------------------------------
+
+function CitybyCountry() {
+    var country = $("#countryname").val();
+    console.log(country);
+    $.ajax({
+        type: "POST",
+        url: '/User/GetCityListbyCountry',
+        data: {
+            'countryid': country
+        },
+        success: function (data) {
+            // Update the HTML page with the response
+
+            $('#cityId').empty();
+            // Iterate through each city object in the result array
+            data.cityList.forEach(function (item) {
+                // Append a new option element with the forCity value to the #cityId select dropdown
+                $('#cityId').append($('<option>', {
+                    value: item.value,
+                    text: item.text
+                }));
+            });
+        },
+        error: function (e) {
+            alert('Error');
+        },
+    });
+}
+
+
+    // --------------------------------------   change password   ----------------------------------------------------------
+
+function ChangePassword(){
+    var oldpass = $("#oldpass").val();
+    var newpass = $("#password").val();
+    var cnewpass = $("#cpassword").val();
+    let isValid = true;
+    if(cnewpass.trim() == ""){
+        $("#Message").css('color', 'red').html("Enter Confirm Password");
+        isValid = false;
+    }
+    else{$("#Message").html("");}
+    if(oldpass.trim() == ""){
+            $("#OMessage").css('color', 'red').html("Enter Old Password");
+            isValid = false;
+    }
+    else{$("#OMessage").html("");}
+    if(newpass.trim() == ""){
+            $("#NMessage").css('color', 'red').html("Enter New Password");
+            isValid = false;
+    }
+    else{$("#NMessage").html("");}
+    if(isValid == false){
+        return;
+    }
+    $.ajax({
+            type: "POST",
+            url: '/User/ChangeUserPassword',
+            data: {
+                'oldpass': oldpass,
+                'newpass': newpass
+            },
+            success: function (data) {
+                if(data == true){
+                       toastr.success('Password Change Successfully', '', {
+                        "closeButton": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": true,
+                        "showDuration": "1000",
+                        "hideDuration": "300",
+                        "timeOut": "1500",
+                        "extendedTimeOut": "0",
+                    });
+                }
+                else{
+                    toastr.error('Invalid Old Password', '', {
+                        "closeButton": true,
+                        "positionClass": "toast-top-center",
+                        "preventDuplicates": true,
+                        "showDuration": "1000",
+                        "hideDuration": "300",
+                        "timeOut": "1500",
+                        "extendedTimeOut": "0",
+                    });
+                }
+            },
+            error: function (e) {
+                alert('Error');
+            },
+        });
+}
+    // --------------------------------------   Save or update user profile   ----------------------------------------------------------
+
+function SaveUserProfile(){
+    var fname = $("#fname").val();
+    var lname = $("#lname").val();
+    var Eid = $("#eid").val();
+    var title = $("#title").val();
+    var dept = $("#dept").val();
+    var profile = $("#profileText").val();
+    var whyIvol = $("#whyIvol").val();
+    var city = $("#cityId").val();
+    var country = $("#countryname").val();
+    var availability = $("#availablity").val();
+    var linkedin = $("#linkedin").val();
+    var skillIdList = $("#selected-skills ul li").map(function(){
+        return parseInt($(this).val());
+        }).get();
+    let isValid = true;
+    
+    if(fname.trim() == ""){
+        $("#fname_error").css('color', 'red').html("Name Is Required");
+        isValid = false;
+    }
+    else{$("#fname_error").html("");}
+    if(lname.trim() == ""){
+            $("#lname_error").css('color', 'red').html("Surname Is Required");
+            isValid = false;
+    }
+    else{$("#lname_error").html("");}
+    if(profile.trim() == ""){
+                $("#profile_error").css('color', 'red').html("ProfileText Is Required");
+                isValid = false;
+    }
+    else{$("#profile_error").html("");}
+    if(country == null){
+                $("#country_error").css('color', 'red').html("Country Is Required");
+                isValid = false;
+    }
+    else{$("#country_error").html("");}
+    if(isValid == false){
+        return;
+    }
+    var formData = new FormData();
+    formData.append('FirstName', fname);
+    formData.append('LastName', lname);
+    formData.append('EmployeeId', Eid);
+    formData.append('WhyIVolunteer', whyIvol);
+    formData.append('Department', dept);
+    formData.append('CityId', city);
+    formData.append('CountryId', country);
+    formData.append('ProfileText', profile);
+    formData.append('LinkedInUrl', linkedin);
+    formData.append('Title', title);
+    formData.append('Status' , availability);
+    $.each(skillIdList,function(index,skill){
+    formData.append('SkillIds', skill);
+    });
+    formData.append('Avatar', avtar);
+    $.ajax({
+            type: "POST",
+            url: '/User/UserProfileUpdate',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+               if(data == true){
+                   $('#updateprofile').load(location.href + ' #updateprofile>*');
+                   $('#FLname').load(location.href + ' #FLname>*');
+                    toastr.success('Profile Edit Successfully', '', {
+                        
+                    });
+                    avtar = null;
+               }
+                
+            },
+            error: function (e) {
+                alert('Error');
+            },
+        });
+
+}
+
+
+    // --------------------------------------   user profile picture   ----------------------------------------------------------
+
+    function addUserProfilePicture(){
+        $("#userProfile").click();
+        var pic = $("#userProfile").val();
+       
+    }
+    var  avtar = null;
+    function validUserImage(){
+        
+        var files = event.target.files;
+        if(files.length !=0){
+            const fileInput = document.getElementById('userProfile');
+        const file = fileInput.files[0];
+        console.log(file);
+        // Check if file is a PNG or JPG image
+        if (!file.name.endsWith('.png')  && !file.name.endsWith('.jpg')) {
+        $("#img_error").css('color', 'red').html("*File should be PNG or JPG image");
+        return; // Exit the function
+        }
+        console.log("valid");
+        var reader = new FileReader();
+        reader.onload = function (event) {
+        $("#userProfileDiv").html(`<img src="${event.target.result}" class="img-fluid rounded-circle userPicture" onclick="addUserProfilePicture()" alt="">`);
+        }
+        reader.readAsDataURL(files[0]);
+        avtar = file;
+        }
+        else{
+        $("#userProfileDiv").html(`<img src="/media/user1.png" class="img-fluid rounded-circle userPicture" onclick="addUserProfilePicture()" alt="">`);
+        }
+       
+    }
+
+    // --------------------------------------    contact us    ----------------------------------------------------------
+
+
+    function Contact_US(userid){
+
+        var subject = $("#subject").val();
+        var msg = $("#issuemsg").val();
+
+        let isValid = true;
+        if(subject.trim() == ""){
+            $("#subjectMessage").css('color', 'red').html("Enter Subject");
+            isValid = false;
+        }
+        else{$("#subjectMessage").html("");}
+        if(msg.trim() == ""){
+                $("#contactMessage").css('color', 'red').html("Enter Message");
+                isValid = false;
+        }
+        else{$("#contactMessage").html("");}
+       
+        if(isValid == false){
+            return;
+        }
+        
+
+         $.ajax({
+            url: "/User/ContactUs",
+            type: "POST",
+            data: {
+
+                'UserId': userid,
+                'Subject': subject,
+                'Message': msg
+               
+            },
+            success: function (data) {
+                 toastr.success('Thanks For Contact Us', '', {
+                        "toastClass": "toast-info",
+                        "timeOut": "2000"
+                });
+                $('#exampleModal2').modal('hide');
+                $('#exampleModal2').load(location.href + ' #exampleModal2  >*');
+            },
+            error: function () {
+                alert("hi error");
+            }
+        });
+
+
+    }
+</script>
+

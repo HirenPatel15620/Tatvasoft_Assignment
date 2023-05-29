@@ -1,0 +1,29 @@
+﻿@using CI_Platform.Entities.Models
+
+@model List<CmsPage>
+
+        <div class="table-responsive mt-4">
+                <table id="cmstable" class="table mb-5">
+                    <thead class="bkgclr border">
+                        <tr>
+                            <th scope="col" class="w-75"> Title </th>
+                            <th scope="col">Status</th>
+                            <th scope="col" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Title</td>
+                                @if (@item.Status == 1) {<td class="status">Active </td>}
+                                else {<td class="deactive">In-Active </td>}
+                                <td class="text-center">
+                                    <a class="viewCMS" onclick="EditCMSbyAdmin(@item.CmsPageId)"><img class="imghover me-2" src="~/images/editing.png" alt=""></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle1" onclick="deletecms(@item.CmsPageId);"><img class="imghover" src="~/images/bin.png" alt=""></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+          </div>

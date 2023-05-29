@@ -1,0 +1,38 @@
+﻿@using CI_Platform.Entities.Models
+@using CI_Platform.Entities.ViewModels
+@model List<MissionApplicationAdminModel> 
+
+
+
+            <div class="table-responsive mt-4">
+                <table id="missionAppTable" class="table mb-5">
+                    <thead class="bkgclr border">
+                        <tr>
+                            <th scope="col" style="width: 723px;">Mission Title</th>
+                            <th scope="col" style="width: 160px;">Mission ID</th>
+                            <th scope="col" style="width: 116px;">User ID</th>
+                            <th scope="col" style="width: 211px;">User Name</th>
+                            <th scope="col" style="width: 195px;">Applied Date</th>
+                            <th scope="col" class="text-center" style="width: 126px;">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.MissionTitle</td>
+                                <td>@item.missionApplication.MissionId</td>
+                                <td>@item.missionApplication.UserId</td>
+                                <td>@item.UserName</td>
+                                <td>@item.missionApplication.AppliedAt.ToString("dd/MM/yyyy").Replace("-", "/")</td>
+                                <td class="text-center">
+                                    <a class="imghover" onclick="ApprovedMissionApplication(@item.missionApplication.MissionApplicationId)"><i class="fa-regular fa-circle-check fa-lg me-2 my-auto" style="color: #3dd704;"></i></a>
+                                    <a class="imghover" onclick="RejectedMissionApplication(@item.missionApplication.MissionApplicationId)"><i class="fa-sharp fa-regular fa-lg fa-circle-xmark me-2 my-auto" style="color: #ff0000;"></i></a>
+                                </td>
+                            </tr>
+                        }
+                        
+                    </tbody>
+                </table>
+            </div>
+        

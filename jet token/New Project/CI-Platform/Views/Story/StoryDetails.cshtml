@@ -1,0 +1,207 @@
+﻿@using CI_Platform.Entities.ViewModels
+ @{
+        Layout  = "Header";
+  }
+@model StoryListingPageModel
+ 
+<body onload="show();">
+
+    <!-- container -->
+
+    <div class="container-fluid">
+
+        <br>
+
+        <!-- body container  -->
+        <div class="container p-0 mt-3">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 col-sm-12">
+
+                    <!-- image slider  -->
+
+                    <div class="container p-0">
+                        @foreach (var item in @Model.storyMedium)
+                        {
+                            @if (item.Type == "video")
+                            {
+                                <div class="mydiv d-none" id="@item.StoryMediaId">
+                                    <iframe style="width: 100%;" height="500" src="@item.Path"></iframe>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="mydiv d-none" id="@item.StoryMediaId">
+                                    <img src="~/media/@item.Path"  style="width: 100%;" height="500" alt="">
+                                </div>
+                            }
+                        }
+
+
+                        <div class="container mt-2" id="img-list">
+                            <div class="row " style="position: relative;">
+                                @foreach (var item in @Model.storyMedium)
+                                {
+                                    @if (item.Type == "video")
+                                    {
+                                        <div class="col mx-1 p-0 myimg d-none">
+                                            <img src="https://img.youtube.com/vi/@(item.Path.Substring(@item.Path.LastIndexOf("/")+1))/default.jpg" height="120" style="width: 100%;"  onclick="select(@item.StoryMediaId)">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col mx-1 p-0 myimg d-none">
+                                            <img src="~/media/@item.Path" height="120" style="width: 100%;" alt="" onclick="select(@item.StoryMediaId)">
+                                        </div>
+                                    }
+                                }
+
+                                <a class="prev" onclick="prev()"></a>
+                                <a class="next" onclick="next()"></a>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <!-- mission related content  -->
+                <div class="col-lg-6 col-md-12 col-sm-12 ps-lg-4 mt-4">
+                    <div class="d-flex justify-content-between">
+                        
+                            <div class="text-center">
+                                @if (Model.Avtar == null || Model.Avtar == "")
+                                {
+                                    <img src="~/media/user1.png" class="vol-img img-fluid m-2" alt="">
+                                }
+                                else{
+                                    <img src="~/media/@Model.Avtar" class="vol-img img-fluid m-2" alt="">
+                                }
+                                <div class="vol-name text-black">@Model.Username</div>
+                            </div>
+                        
+                        <div>
+                            @if(@Model.story.Status == 2)
+                            {
+                                <button type="button" class="btn rounded-pill border btn-light mt-5">
+                                    <img class="me-2" src="~/images/eye.png" alt="">
+                                     @Model.story.Views Views
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    <br>
+
+                    <p>
+                        @Model.whyIvol
+                    </p>
+                    <br>
+
+
+
+
+                    <!-- buttons  -->
+                    <div class="row d-flex justify-content-between ">
+                        @if (Model.story.Status == 2)
+                        {
+                            <button id="recommendbtn" data-bs-toggle="modal" data-bs-target="#exampleModal" class="btnn recomend-cowerker ms-1 col-sm-5 col-10 ms-3 mb-1 text-center">
+                                <div class="icon me-2"></div>Recommend to a Co-Worker
+                            </button>
+                        
+                            <a id="openmission" class="btnn open-mission ms-1 col-sm-5 col-10 ms-3 mb-1" asp-action="Volunteer" asp-controller="Platform" asp-route-id="@Model.story.MissionId">
+                                Open Mission 
+                            </a>
+                        }
+                    </div>
+                    <br>
+
+                   <!---------------------------------- open pop-pop screen when clicked on button  ---------------------------------->
+                        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                               <div class="fs-5 fw-bold text-center" id="email_msg"></div> 
+                              <div class="modal-header">                                 
+                                <h5 class="modal-title" style="color:#F88634" id="exampleModalLabel">Recommend to a Co-Worker</h5>
+                                <button type="button" class="closebox btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="p-0 modal-body">
+                                <div class="text-center" id="dropdown">
+                                  
+                                  <div id="checkedbox" style="height: 120px; overflow-y: scroll;">
+                                      @foreach(var item in @ViewBag.user){
+                                          <a class="dropdown-item">
+                                             <b>@item.Text</b> <input type="checkbox" value="@item.Value">
+                                          </a>
+                                      }
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button id="close-button-1" type="button" class="closebox orangeButton" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="closebox orangeButton" onclick="SendMailForStory(@Model.story.StoryId)">Send Mail</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                </div>
+            </div><br><br>
+
+            <!-- mission-organigation-comments tabs  -->
+
+            <div class="row">
+
+                <div class="col-12">
+
+
+                    <div class="tabs">
+                        <ul class="">
+                            <li class="myactive">
+                                <b>@Model.story.Title</b>
+                            </li>
+                        </ul>
+                        <!-- tab-1 information  -->
+                        <div id="tab1" class="tab-content" style="display: block;">
+                            <br>
+                            <p>
+                                @Html.Raw(@Model.story.Description)
+                            </p>
+
+                            
+                            <br>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        
+
+        <!-- privacy policy  -->
+
+                         @{
+
+                            Html.RenderPartial("Footer");
+                   
+                         }
+
+
+
+
+    </div>
+
+
+    <script>
+        $(".mydiv").eq(0).removeClass("d-none");
+    </script>
+
+
+</body>
+

@@ -1,0 +1,204 @@
+html,body{
+    height: 100vh;
+}
+.row,.carousel-inner img{
+    width: 100%;
+    height: 100vh;
+}
+.login{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.login-details{
+    color: #414141;
+    position: relative;
+    width: 80%;
+    margin:0px auto 0px auto;
+    font-size: 17px; 
+}
+.login-details button{
+    width: 100%;
+    border: solid 2px #F88634;
+    border-radius: 24px;  
+    opacity: 1;
+    color: #F88634;
+}
+.login-details button{
+    font-size:17px;
+}
+.login-details button:hover{
+    background-color: #F88634;
+    color: rgb(255, 254, 254);
+}
+.l-password,.tologin a{
+    text-decoration: none;
+    color: #414141;
+}
+.tologin{
+    color: #414141;
+    text-align: center;
+}
+.privacy{
+    position: relative;
+    top: 20%;
+    text-decoration: none;
+    color: #414141;
+    font-size:17px;
+}
+
+@media screen and (max-width:992px) and (min-width:768px){
+
+    .login{
+        width:100%
+    }
+}
+
+@media screen and (max-width:768px) and (min-width:577px){
+    .carousel-inner img{
+        height: 70vh;
+    }
+    .login{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .col-sm-7{
+        display: flex;
+        align-items: center;
+    }
+    .carousel-caption h5{
+        font-size: 20px;
+    }
+    .carousel-caption p{
+        font-size: 10px;
+    }
+    .login-details label,p,span,.l-password{
+        font-size: 13px;
+    }
+    ::placeholder{
+        font-size: small;
+    }
+    .login-details button{
+        font-size: small;
+    }
+    .privacy{
+        top: 8%;
+    }
+    .images img{
+        height: 100vh;
+    }
+}
+@media screen and (max-width:576px){
+    .row
+    {--bs-gutter-x: 0px;}
+    .description{
+        display: none;
+    }
+    .col-md-8{
+        display: flex;
+        align-items: center;
+    }
+    .carousel-inner img{
+        width: 100%;
+        height: 100%;
+    }
+    .login{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+    }
+    .login-details{
+        width: 70%;
+        margin-left:auto;
+    }
+    .login-details label,p,span,.l-password{
+        font-size: 11px;
+        margin: 0px auto;
+    }
+    .login-details input{
+        width: 100%;
+        height: 30px;
+    }
+    .login-details button{
+        width: 100%;
+        height: 30px;
+        font-size: 11px;
+    }
+    .privacy{
+        top: 5%;
+        font-size: small;
+    }
+    .tologin a{
+        font-size: small;
+    }
+    .carousel-caption h5{
+        font-size: 10px;
+    }
+    .carousel-caption p{
+        font-size: 5px;
+    }
+    .r-privacy{
+        font-size: small;
+    }
+    ::placeholder{
+        font-size: x-small;
+    }
+}
+
+/*add*/
+.carousel-caption h1, .carousel-caption p {
+    color: #ffffff;
+    text-align: left;
+}
+
+.row-res {
+    height: 100vh;
+}
+
+.carousel-item {
+    box-shadow: 0px -300px 70px rgba(0,0,0,0.4) inset !important;
+}
+
+    .carousel-item img {
+        position: relative !important;
+        z-index: -2 !important;
+    }
+
+.carousel-indicators li {
+    width: 8px !important;
+    height: 8px !important;
+    border-radius: 50%;
+}
+
+.privacy {
+    height: 95% !important;
+}
+
+@media screen and (max-width:992px) {
+    .row-res {
+        height: auto;
+    }
+}
+
+@media screen and (max-width:650px) {
+    .carousel-caption h1 {
+        font-size: 22px;
+    }
+
+
+    .carousel-caption p {
+        font-size: 12px !important;
+        margin-bottom: -25px !important;
+    }
+}
+
+@media screen and (max-height:710px) {
+    .reg-responsive {
+        overflow-y: scroll;
+    }
+
+        .reg-responsive form {
+            height: 100% !important;
+        }
+}

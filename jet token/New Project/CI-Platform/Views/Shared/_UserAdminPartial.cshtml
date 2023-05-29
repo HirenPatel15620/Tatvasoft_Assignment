@@ -1,0 +1,48 @@
+﻿@using CI_Platform.Entities.Models
+@using CI_Platform.Entities.ViewModels
+@model List<User>
+
+
+    <!----------------------------------------------------    User    ---------------------------------------------------->
+            
+
+                        <div class="table-responsive mt-4" >
+                            <table id="usertable" class="table mb-5">
+                                <thead class="bkgclr border">
+                                    <tr>
+                                        <th scope="col">First Name</th>
+                                        <th scope="col">Last Name</th>
+                                        <th scope="col">Email</th>
+                                        <th scope="col">Employee Id</th>
+                                        <th scope="col">Department</th>
+                                        <th scope="col">Status</th>
+                                        <th scope="col" class="text-center">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="border">
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.FirstName</td>
+                                            <td>@item.LastName</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.EmployeeId</td>
+                                            <td>@item.Department</td>
+                                            @if (@item.Status == 1) {<td class="status">Active </td>}
+                                            else {<td class="deactive">In-Active </td>}
+                                            <td class="text-center">
+                                                <a onclick="EditUserbyAdmin(@item.UserId); CountryList();"><img class="useredit imghover me-2" src="~/images/editing.png" alt=""></a>
+                                                <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="Delete(@item.UserId , 1);"><img class="imghover" src="~/images/bin.png" alt=""></a>
+                                            </td>
+                                        </tr>
+                                    }
+                        
+                                </tbody>
+                            </table>
+                        </div>
+            
+
+
+
+
+ 

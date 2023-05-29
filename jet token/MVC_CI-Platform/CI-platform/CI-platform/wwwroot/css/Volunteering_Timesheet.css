@@ -1,0 +1,28 @@
+﻿
+
+
+
+/*.Add_btn {
+    border-radius: 20px;
+    border: 2px solid #F88634;
+    padding-inline: 8px;
+    color: #F88634;
+}*/
+
+.remove_style {
+    border: none;
+    padding: 0;
+    background: none;
+}
+
+.applyButton {
+    border: 2px solid #F88634;
+    border-radius: 100px;
+    color: #F88634;
+    padding-left: 8px;
+    padding-right: 14px;
+}
+
+    .applyButton:hover {
+        color: #F88634;
+   

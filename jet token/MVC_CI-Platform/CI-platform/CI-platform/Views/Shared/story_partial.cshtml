@@ -1,0 +1,96 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using System.Security.Claims;
+@model CI.Models.ViewModels.Mission
+@{
+    foreach (var item in Model.Stories.Where(c => c.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value) || (c.Status == "PUBLISHED") || (c.Status != "DELETE") || (c.Status != "DECLINED")).ToList())
+    {
+
+        <div class="card1 item col-md-6 col-lg-4 col-sm-6 mt-3">
+            <div class="thumbnail card d-flex">
+                <div class="img-event">
+
+                    @if (item.Status == "DRAFT")
+                    {
+                        <div class=" closeicon-badge">Draft</div>
+                    }
+                    else if (item.Status == "PENDING")
+                    {
+                        <div class=" pendingicon-badge">Pending</div>
+                    }
+                    else if (item.Status == "PUBLISHED")
+                    {
+                        <div class=" appliedicon-badge">Published</div>
+                    }
+                    else if (item.Status == "DELETE")
+                    {
+                        <div class=" closeicon-badge">DELETED</div>
+                    }
+                    else if (item.Status == "DECLINED")
+                    {
+                        <div class=" closeicon-badge">DELETED</div>
+                    }
+
+                    @{
+                        if (item.StoryMedia.ElementAt(0).Path.Length > 500)
+                        {
+                            <img class="group  list-group-image w-100 h-100"
+                         src=@item.StoryMedia.ElementAt(0).Path id="image-@item.StoryId" alt="" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" />
+                        }
+                        else
+                        {
+                            <img class="group  list-group-image w-100 h-100"
+                         src=@item.StoryMedia.ElementAt(1).Path id="image-@item.StoryId" alt="" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" />
+                        }
+                    }
+
+                    <div class="view-detail position-absolute" style="display:none;" onmouseover="view_detail_onmouseover('div-@item.StoryId','image-@item.StoryId')" onmouseout="view_detail_onmouseout('div-@item.StoryId','image-@item.StoryId')" id="div-@item.StoryId">
+                        <a href="/stories/detail/@item.StoryId" class="applyButton  btn d-flex  justify-content-around align-items-center" style="border: 2px solid white; color: white;">
+                            View Details<img class="ms-2" src="images/right-arrow.png" alt="">
+                        </a>
+                    </div>
+
+                    <button class="mission-theme border-0">
+                        <span class="p-2">@item.Mission.Theme?.Title</span>
+                    </button>
+                </div>
+                <div class="caption card-body">
+                    <h4 class="group card-title inner list-group-item-heading">
+                        @item.Title.ToString().Substring(0,50)....
+                    </h4>
+                    <span class="group inner list-group-item-text">
+                        @{
+                            string content = System.Text.RegularExpressions.Regex.Replace(@item.Description, "<.*?>", string.Empty);
+                            <span>
+                                @content.ToString().Substring(0,30)....
+                            </span>
+                        }
+                    </span>
+                    <div class="d-flex list-view justify-content-between mt-3 align-items-center">
+                        <div class="w-100">
+                            @if (item.User.Avatar == null) // Removed unnecessary @ symbol before item
+                            {
+                                <img class="h-25 rounded-circle" src="/images/organization.png" alt="" />
+                            }
+                            else
+                            {
+                                <img class="rounded-circle" src="@item.User.Avatar" alt="" style="width:13%;" />
+                                // Added width style to both images
+                            }
+                            <span class="ms-2">@item.User.FirstName @item.User.LastName</span>
+                            <span class="pl-5">@item.PublishedAt?.ToString("yyyy-MM-dd")</span>
+                        </div>
+
+                        @{
+                            if ((@item.Status == "DRAFT" || @item.Status == "PENDING") && @item.UserId == long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value))
+                            {
+                                <button data-bs-toggle="modal" id="edit-story" onclick="editor(@item.StoryId,@item.PublishedAt.ToString().Substring(0,10))" data-bs-target="#edit-@item.StoryId" class="applyButton btn">Edit</button>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

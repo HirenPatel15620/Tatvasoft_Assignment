@@ -372,6 +372,7 @@ const loadcities = (cities) => {
 //load filtered missions
 const loadmissions = (missions, length) => {
     if (length === 0) {
+        $('.explore').find('b').empty().append(`${length} Missions`)
         $('.no-mission-found').removeClass("d-none").addClass("d-flex flex-column");
         $('.missions').empty();
     }
@@ -437,6 +438,7 @@ key.addEventListener("keydown", function (e) {
 
 //sort missions
 const sort_by = (user_id) => {
+  debugger
     var selected = $('#sort').find(':selected').text();
     if (selected != "Sort By") {
         $.ajax({
@@ -455,7 +457,25 @@ const sort_by = (user_id) => {
     }
 }
 
+const explore_by = (user_id) => {
+   
+    var selected = $('#explore').find(':selected').text();
+    if (selected != "Sort By") {
+        $.ajax({
+            url: '/home',
+            type: 'POST',
+            data: { countries: countries, cities: cities, themes: themes, skills: skills, sort_by: selected.toLowerCase(), user_id: user_id },
+            success: function (result) {
+                loadmissions(result.mission.result, result.length)
+                setpages();
 
+            },
+            error: function () {
+                console.log("Error updating variable");
+            }
+        })
+    }
+}
 
 
 const clear_all = () => {

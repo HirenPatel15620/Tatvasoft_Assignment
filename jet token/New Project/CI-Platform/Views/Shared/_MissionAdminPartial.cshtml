@@ -1,0 +1,36 @@
+﻿@using CI_Platform.Entities.Models
+@using CI_Platform.Entities.ViewModels
+@model List<Mission>
+
+
+
+            <div class="table-responsive mt-4" >
+                <table id="missiontable" class="table mb-5">
+                    <thead class="bkgclr border">
+                        <tr>
+                            <th scope="col" class="w-50">Mission Title</th>
+                            <th scope="col">Mission Type</th>
+                            <th scope="col">Start Date</th>
+                            <th scope="col">End Date</th>
+                            <th scope="col" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Title</td>
+                                @if (@item.MissionType == 1) {<td>Goal</td>}
+                                else {<td>Time</td>}
+                                <td>@item.StartDate?.ToString("dd/MM/yyyy").Replace("-", "/")</td>
+                                <td>@item.EndDate?.ToString("dd/MM/yyyy").Replace("-", "/")</td>
+                                <td class="text-center">
+                                    <a class="viewMission" onclick="EditMissionbyAdmin(@item.MissionId);"><img class="imghover me-2" src="~/images/editing.png" alt=""></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="Delete(@item.MissionId , 5);"><img class"imghover" src="~/images/bin.png" alt=""></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+   

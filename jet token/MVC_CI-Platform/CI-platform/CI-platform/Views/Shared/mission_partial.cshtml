@@ -1,0 +1,242 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using System.Security.Claims;
+@model CI.Models.ViewModels.Mission
+@{
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" rel="stylesheet" />
+    foreach (var item in Model.Missions.Where(x => x.Status is true))
+    {
+
+        var a1 = Model.timesheet?.Where(x => x.MissionId == item.MissionId).Sum(x => x.Action);
+        var b1 = Model.goal?.Where(x => x.MissionId == item.MissionId).Select(x => x.GoalValue).FirstOrDefault();
+        var avg = Convert.ToDouble(a1) / Convert.ToDouble(b1) * 100;
+        var tot = Model?.missionApplications?.Where(x => x.MissionId == item.MissionId && x.ApprovalStatus == "APPROVE").Count();
+
+
+
+        <div class="item card1 col-md-6 col-lg-4 col-sm-6 mt-3">
+            <div class="thumbnail card d-flex">
+                <div class="img-event">
+
+
+
+                    @if (DateTime.Now > @item.EndDate || DateTime.Now > @item.Deadline || @item.AvbSeat == 0)
+                    {
+                        <div class=" closeicon-badge">Closed</div>
+                    }
+                    else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value)) && c.ApprovalStatus == "APPROVE").ToList().Count > 0)
+                    {
+                        <div class=" appliedicon-badge">Applied</div>
+                    }
+
+
+                    <img class="group list-group-image w-100 h-100"
+                     src='@item.MissionMedia.ElementAt(0).MediaPath' alt="" id='@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath'
+                     onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
+                     onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')" />
+
+
+
+                    <div class="location-img">
+                        <img class="text-light" src="images/pin.png" alt="">
+                        <span class="text-light">@item.City.Name</span>
+                    </div>
+                    @{
+                        if (@item.FavoriteMissions.Where(c => c.MissionId.Equals(@item.MissionId) && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                        {
+
+                            <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                                <img class="text-light heart-@item.MissionId" style="height:24px;" src="images/red-heart.png" alt="">
+                            </button>
+                        }
+                        else
+                        {
+                            <button onclick="add_to_favourite(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="like-img border-0">
+                                <img class="text-light heart-@item.MissionId" src="images/heart.png" alt="">
+                            </button>
+                        }
+                    }
+
+
+                    @if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus == "APPROVE" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                    {
+                        <a class="stop-img border-0" href="/volunteering_mission/@item.MissionId">
+                            <img class="text-light" src="images/user.png" alt="">
+                        </a>
+
+                    }
+
+                    @{
+
+
+                        <button class="mission-theme border-0">
+                            <span class="p-2">@item?.Theme?.Title</span>
+                        </button>
+
+
+                    }
+
+
+
+
+                    @*//view details conditions*@
+
+                    @if (@item.Deadline < DateTime.Now || DateTime.Now > @item.StartDate || @item.AvbSeat == 0 ||
+            (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus == "APPROVE" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0))
+                    {
+                     
+                        <div class="view-detail position-absolute" style="display: none; left: 50%; top: 50%; transform: translate(-50%, -50%);"
+                     onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
+                     onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
+                     id=@item.MissionId>
+                            <a href='/volunteering_mission/@item.MissionId' class="applyButton btn d-flex justify-content-around align-items-center" style="border: 2px solid white; color: white;">
+                                View Details <img class="ms-2" src="images/right-arrow.png" alt="">
+                            </a>
+                        </div>
+                    }
+
+
+                    else
+                    {
+                 
+                           <div class="view-detail position-absolute" style="display: none; left: 50%; top: 50%; transform: translate(-50%, -50%);"
+                     onmouseover="view_detail_onmouseover(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
+                     onmouseout="view_detail_onmouseout(@item.MissionId,'@item.MissionMedia.ElementAt(0).MissionMediaId-@item.MissionMedia.ElementAt(0).MediaPath')"
+                     id=@item.MissionId>
+                     @*href='/volunteering_mission/@item.MissionId'*@
+                            <a  class="applyButton btn d-flex justify-content-around align-items-center" style="border: 2px solid white; color: white;">
+                                Apply First 
+                            </a>
+                        </div>
+                    }
+                </div>
+
+
+
+                <div class="caption card-body">
+                    <h4 class="group card-title inner list-group-item-heading">
+                        @item.Title?.Substring(0,50)...
+                    </h4>
+                    <p class="group inner list-group-item-text">
+                        @item.Description?.Substring(0,100).....
+                    </p>
+                    <div class="d-flex list-view justify-content-between">
+                        <span class="organization">@item.OrganizationName</span>
+                        <div class="rating">
+                            @{
+                                double avg_rating = 0;
+                                int total = @item.MissionRatings.Count;
+                                foreach (var rating in @item.MissionRatings)
+                                {
+                                    avg_rating = avg_rating + rating.Rating;
+                                }
+                                avg_rating = avg_rating / total;
+                                for (var i = 1; i <= 5; i++)
+                                {
+                                    if (i <= @avg_rating)
+                                    {
+                                        <img style="height:30px" src="~/images/selected-star.png" alt="" />
+                                    }
+                                    else
+                                    {
+                                        <img style="height:30px" src="~/images/star-empty.png" alt="" />
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="duration-seats-info mt-4">
+                        <div class="duration">
+                            @{
+                                var gd = Model.goal?.Where(x => x.MissionId == item.MissionId).FirstOrDefault();
+                            }
+
+                            @{
+                                if (@item.MissionType == "GOAL")
+                                {
+                                    <p id="duration-txt" style="margin-bottom: 0;">@item.GoalObject</p>
+                                }
+                                else
+                                {
+                                    <p id="duration-txt" style="margin-bottom: 0;">From @item.StartDate?.ToString().Substring(0,10) To @item.EndDate?.ToString().Substring(0,10)</p>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between border-bottom mt-3">
+                        <div class="Seats d-flex align-items-center">
+                            @{
+                                if (@item.TotalSeats != 0)
+                                {
+                                    <img src="images/Seats-left.png" alt="">
+                                    <span>
+                                        @(item.TotalSeats - tot)
+                                        <p>seats left</p>
+
+                                    </span>
+                                }
+                            }
+                        </div>
+                        <div class="deadline d-flex align-items-center">
+                            @{
+                                if (@item.MissionType == "GOAL")
+                                {
+                                    <div class="px-2">
+                                        <img src="~/images/achieved.png" alt="">
+                                    </div>
+                                    <div class="deadline">
+                                        <div class="progress rounded-pill">
+
+                                            <div class="progress-bar progress-bar-striped progress-bar-animated  bg-ci-primary" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width: @avg%"></div>
+                                        </div>
+                                        <span class="fs-7">@a1 Achieved</span>
+                                    </div>
+
+                                }
+
+                                else
+                                {
+                                    <img src="images/deadline.png" alt="">
+                                    <span>
+                                        @item.Deadline.ToString().Substring(0,10)
+
+                                        <p>Deadline</p>
+                                    </span>
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center mt-4">
+                        <a>
+                            @if (DateTime.Now > @item.StartDate || @item.TotalSeats - tot == 0)
+                            {
+                                <button class="closeButton btn" disabled>
+                                    Closed
+                                </button>
+                            }
+                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus == "APPROVE" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                            {
+                                <button class="alreadyapplyButton btn " disabled>
+                                    Already Applied
+                                </button>
+                            }
+                            else if (@item.MissionApplications.Where(c => c.MissionId.Equals(@item.MissionId) && c.ApprovalStatus == "PENDING" && c.UserId.Equals(long.Parse(@User?.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid)?.Value))).ToList().Count > 0)
+                            {
+                                <button class="applyButton  btn " disabled>
+                                    Request sended
+                                </button>
+                            }
+                            else
+                            {
+                                <button onclick="apply_for_mission(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value,@item.MissionId)" class="applyButton app-@item.MissionId btn">
+                                    Apply Now<img src="images/right-arrow.png" alt="">
+                                </button>
+                            }
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

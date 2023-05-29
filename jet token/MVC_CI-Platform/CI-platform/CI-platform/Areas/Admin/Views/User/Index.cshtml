@@ -1,0 +1,382 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+@{
+    ViewData["Title"] = "Admin_control";
+    ViewData["css"] = "Admin.css";
+}
+@model IEnumerable<User>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<style>
+
+
+</style>
+
+<div class="c p-3">
+    <div class="my-3 ">
+        <div class="fs-3 d-flex">
+            <div class="border-bottom border-dark pe-3">
+                User
+            </div>
+        </div>
+        <hr class="m-0 p-0">
+    </div>
+    <div class="py-3 d-flex justify-content-between align-items-center">
+
+        <form method="get" asp-area="Admin" asp-controller="User" asp-action="Index">
+            <div class="input-group">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]" placeholder="&#61442; Search Here">
+                <div class="input-group-append">
+                </div>
+            </div>
+        </form>
+        <button type="button" class="btn applyButton" onclick="update(0,1)">+ Add</button>
+    </div>
+    <div class="w-100 h-100">
+        <table class="table border ">
+            <thead class="bg-white ">
+                <tr class="rounded-3">
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>Email</th>
+                    <th>Employee Id</th>
+                    <th>Department</th>
+                    <th>Status</th>
+                    <th>Action</th>
+
+
+
+                </tr>
+            </thead>
+
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tbody>
+
+                        <tr>
+                            <td>@item.FirstName</td>
+                            <td>@item.LastName</td>
+                            <td>@item.Email</td>
+                            <td>@item.EmployeeId</td>
+                            <td>@item.Department</td>
+
+                            <td>
+                                @if (@item.Status == "1")
+                                {
+                                    <p class="text-success">Active</p>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">Deactive</p>
+                                }
+                            </td>
+
+                            <td>
+
+                                <img onclick="update(@item.UserId,1)" src="/images/edit.png" style="margin: 3px 3px 3px 3px;" />
+                                @*
+                                    <button onclick="update(@item.UserId,0)" class="btn btn-danger">Deactive</button>
+
+                                    <img onclick="update(@item.UserId,0)" src="/images/cancel.png" style="margin: 3px 3px 3px 3px;" />
+                                *@
+                            </td>
+
+                        </tr>
+                    </tbody>
+                }
+            }
+        </table>
+
+
+        @*pagination*@
+
+
+
+        @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
+        {
+            <div class="position-absolute bottom-10 end-50 mt-3">
+                <nav>
+                    <ul class="pagination">
+                        @if ((int)ViewData["CurrentPage"] > 1)
+                        {
+                            <li class=" m-1 page-item "><a class="page-link " href="@Url.Action("Index", new { page = (int)ViewData["CurrentPage"] - 1, searchString = ViewData["SearchString"] })">Previous</a></li>
+                        }
+                        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                        {
+                            if (i == (int)ViewData["CurrentPage"])
+                            {
+                                <li class=" m-1 page-item active"><a class="page-link" href="#">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Index", new { page = i, searchString = ViewData["SearchString"] })">@i</a></li>
+                            }
+                        }
+                        @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+                        {
+                            <li class="m-1 page-item"><a class="page-link" href="@Url.Action("Index", new { page = (int)ViewData["CurrentPage"] + 1, searchString = ViewData["SearchString"] })">Next</a></li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        }
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+@*edit*@
+@{
+    foreach (var item in Model)
+    {
+
+        <div class="modal fade" id="deleterec-@item.UserId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form asp-action="GetEditUser" asp-area="Admin" asp-controller="User">
+                        <input name="id" id="id" type="hidden" value="@item.UserId" />
+                        @*
+                            <input name="flag" id="flag" type="hidden" />
+                        *@
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                        </div>
+                        <div class="modal-body ">
+                            <div class="profile-photo justify-content-center position-relative align-items-center text-center mb-3">
+                        <img style="cursor:pointer;" class="justify-content-center position-relative align-items-center w-25 h-25 rounded-circle" id="old-profile-image" src="@item.Avatar" alt="" />
+                    </div>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">First Name </span>
+                                </div>
+
+                                <input type="text" value="@item.FirstName" name="firstname" id="firstname" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <span asp-validation-for=@item.FirstName class="d-block text-danger"></span>
+                            </div>
+                                <span class="d-none text-danger first">Please enter Firstname</span>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Last Name </span>
+                                </div>
+                                <input name="lastname" id="lastname" value="@item.LastName" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                <span asp-validation-for=@item.LastName class="d-block text-danger"></span>
+                            </div>
+                                <span class="d-none text-danger last">Please enter Lastname</span>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Email ID </span>
+                                </div>
+                                <input disabled name="email" id="email" value="@item.Email" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                                <span class="d-none text-danger email">Please enter Email</span>
+                            @*
+                                <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">User Name </span>
+                                </div>
+                                <input value=" @item.Password" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                </div>
+                            *@
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Employee Id</span>
+                                </div>
+                                <input name="employeeid" id="employeeid" value="@item.EmployeeId" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                                <span class="d-none text-danger emp">Employee Id Maximum Lenght is 16</span>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Department </span>
+                                </div>
+                                <input name="department" id="department" value="@item.Department" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                                <span class="d-none text-danger department">Please enter Department</span>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Profile Text </span>
+                                </div>
+                                <input name="profiletext" id="profiletext" value="@item.ProfileText" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                            </div>
+                                <span class="d-none text-danger profile">Please enter Profile text</span>
+
+
+
+                            <label class="form-label">Status</label><select  asp-for=@item.Status id='flag' name="flag" class="flags form-select city me-3" aria-label="Select Mission">
+                                <option disabled selected>Select status</option>
+
+                                <option value="1">Active </option>
+                                <option value="0">Deactive </option>
+
+                            </select>
+
+
+                            <label class="form-label">Role</label><select asp-for=@item.Role value="@item.Role" id='role' name="role" class="roles form-select city me-3" aria-label="Select Mission">
+                                <option disabled selected>Select Role</option>
+
+                                <option value="admin">Admin </option>
+                                <option value="superadmin">SuperAdmin </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button onclick="userchange(@item.UserId)" class="btn btn-outline-warning rounded-pill" type="button">Change</button>
+                            <button type="reset" class="btn rounded-pill btn-outline-secondary" onclick="removevalidationforuser()" data-bs-dismiss="modal">Cancle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@*add*@
+
+<div class="modal fade" id="deleterec-0" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-action="GetEditUser" asp-area="Admin" asp-controller="User">
+                <input name="id" id="id" type="hidden" value="0" />
+                @*
+                    <input name="flag" id="flag" type="hidden" />
+                *@
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                </div>
+                <div class="modal-body ">
+
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">First Name </span>
+                        </div>
+
+                        <input type="text" name="firstname" id="firstname" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                    <span class="d-none text-danger first">Please enter Firstname</span>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Last Name </span>
+                        </div>
+                        <input name="lastname" id="lastname" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                    <span class="d-none text-danger last">Please enter Lastname</span>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Email ID </span>
+                        </div>
+                        <input name="email" id="email" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                    <span class="d-none text-danger email">Please enter EmailId</span>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Password </span>
+                        </div>
+                        <input name="password" id="password" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                    <span class="d-none text-danger password">Please enter Password</span>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Phone </span>
+                        </div>
+                        <input name="Phone" id="Phone" type="text" placeholder="countrycode-number" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                    <span class="d-none text-danger phone">Please enter Phone</span>
+
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Employee Id</span>
+                        </div>
+                        <input name="employeeid" id="employeeid" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                        <span class="d-none text-danger emp">Please enter Employee Id (Max.Lengh is 16)</span>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Department </span>
+                        </div>
+                        <input name="department" id="department" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                        <span class="d-none text-danger department">Please enter Department</span>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Profile Text </span>
+
+                        </div>
+                        <input name="profiletext" id="profiletext" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                    </div>
+                        <span class="d-none text-danger profile">Please enter Profile</span>
+
+
+                    <label class="form-label">Status</label><select id='flag' name="flag" class="form-select city me-3" aria-label="Select Mission" required>
+                        <option disabled selected>Select status</option>
+
+                        <option value="1">Active </option>
+                        <option value="0">Deactive </option>
+                        <span class="d-none text-danger status">Please enter title</span>
+
+                    </select>
+
+
+                    <label class="form-label">Role</label><select id='role' name="role" class=" form-select city me-3" aria-label="Select Mission" required>
+                        <option disabled selected>Select Role</option>
+
+                        <option value="admin">Admin </option>
+                        <option value="superadmin">SuperAdmin </option>
+
+                    </select>
+
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-outline-warning rounded-pill" onclick="usermake(0)" type="button">Change</button>
+                    <button type="reset" class="btn rounded-pill btn-outline-secondary" onclick="removevalidationforuser()" data-bs-dismiss="modal">Cancle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="~/js/Admin.js" asp-append-version="true"></script>
+
+
+
+

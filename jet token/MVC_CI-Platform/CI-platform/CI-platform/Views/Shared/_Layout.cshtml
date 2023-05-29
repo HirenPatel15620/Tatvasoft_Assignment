@@ -1,0 +1,225 @@
+@using Microsoft.AspNetCore.Http
+@using System.Security.Claims
+@inject IHttpContextAccessor Accesor
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CI_platform</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
+    <link rel="stylesheet" href="~/CI_platform.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-datepicker.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script>
+            toastr.options = {
+            "closeButton": true,
+            "debug": false,"newestOnTop": false,"progressBar": true,"positionClass": "toast-top-right","preventDuplicates": false,"onclick": null,"showDuration": "300","hideDuration": "1000","timeOut": "2000",
+            "extendedTimeOut": "1000","showEasing": "swing","hideEasing": "swing","showMethod": "slideDown","hideMethod": "slideUp"
+        }
+
+    </script>
+
+</head>
+<body onload="setpages();">
+    @{
+        if (@ViewData["home"] == "true")
+        {
+            <script>
+                toastr.success("Authentication Successfull")
+            </script>
+        }
+        if (@ViewData["Volunteering_Timesheet"] == "edit")
+        {
+            <script>
+                toastr.success("edit Successfull")
+            </script>
+        }
+        if (@ViewData["Volunteering_Timesheet"] == "time")
+        {
+            <script>
+                toastr.success("Volunteer Hour Add Successfull")
+            </script>
+        }
+        if (@ViewData["Volunteering_Timesheet"] == "goal")
+        {
+            <script>
+                toastr.success("Volunteer Goal Add Successfull")
+            </script>
+        }
+        if (@ViewData["Volunteering_Timesheet"] == "timevalid")
+        {
+            <script>
+                toastr.error(" Please Enter Valid Time")
+            </script>
+        }
+        if (@ViewData["Profile"] == "profileError")
+        {
+            <script>
+                toastr.error(" Employee Id is Already used")
+            </script>
+        }
+
+    }
+
+    <div class="offcanvas offcanvas-start" data-bs-scroll="true" tabindex="-1" id="sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel"></h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <a class="nav-link text-muted" asp-area="" asp-controller="Story" asp-action="storylisting">Stories</a>
+            <a class="nav-link text-muted mt-3" asp-area="" asp-controller="Home" asp-action="Privacy">Policy</a>
+        </div>
+    </div>
+    <header>
+
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom">
+            @* <img src="~/images/logo.png" class="logo" alt="not found" />*@
+            <div class="container w-100 d-flex justify-content-between header">
+                <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
+                <div class="d-flex pages ">
+
+                    @{
+                        if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
+                        {
+                            <a class="nav-link text-muted" href="/Admin/User/Index">
+                                Admin
+                            </a>
+                        }
+                    }
+
+
+                    <a class="nav-link text-muted" href="/Home">Home</a>
+                    @*<span class="nav-link text-muted explore" asp-area="">Explore <img src="~/images/drop-down.png" alt="not load" /></span>*@
+                    <a class="nav-link text-muted" href="/stories">Stories</a>
+                    @*<a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">News</a>*@
+                    <a class="nav-link text-muted" href="/Privacy">Policy </a>
+                    @{
+
+
+                        if (Context.Request.Path.Equals("/Home"))
+                        {
+                            <select class=" nav-link text-muted form-select me-3" onchange="explore_by(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value)" aria-label="explore By" id="explore">
+                                <option disabled selected>Explore</option>
+                                <option value="Theme">Theme</option>
+                                <option value="Ranked">Ranked</option>
+                                <option value="Top Favourite">Top Favourite</option>
+                                <option value="Random">Random</option>
+                            </select>
+                        }
+                        else
+                        {
+
+                        }
+                    }
+                </div>
+
+
+                @{
+                    var identity = User.Identity as ClaimsIdentity;
+                    var uid = identity?.FindFirst(ClaimTypes.Sid)?.Value;
+                    var unm = identity?.FindFirst(ClaimTypes.Name)?.Value;
+                    var usnm = identity?.FindFirst(ClaimTypes.Surname)?.Value;
+                    var notification = ViewBag.notification;
+                }
+                @{
+
+
+                    if (Context.Request.Path.Equals("/Home"))
+                    {
+                        <input class="uid" value="@uid" id="usrid" type="hidden"> 
+
+                        <div class="position-relative">
+                            <div>
+                                <button class="remove_style" type="button" id="notification-btn">
+                                    <div class="position-relative">
+                                        <div>
+                                            <span class="notification-count" id="notificationcount">@notification</span>
+
+                                        </div>
+                                        <img src="~/images/bell.png" />
+                                    </div>
+                                </button>
+                            </div>
+                            <div class="notification-div d-none" id="notification">
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+
+                    }
+                }
+
+
+                <div class="d-flex">
+
+                    <div class="dropdown d-flex align-items-center" style="right: 36px;">
+                        <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                        <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
+                        <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
+                            <a class="dropdown-item" href="/profile">Profile</a>
+                            <a class="dropdown-item" href="/volunteering_timesheet">Volunteering Timesheet</a>
+                            <a class="dropdown-item" href="/logout">LogOut</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
+    </header>
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
+
+
+
+    <div class="modal notification-modal fade" id="notification" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    </div>
+
+
+
+
+
+
+
+    <footer class=" footer bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            &copy; 2023 - CI_platform -
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap-datepicker.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+
+
+
+
+
+
+</body>
+</html>
+

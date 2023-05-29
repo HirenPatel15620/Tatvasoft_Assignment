@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+@model List<CmsPage>
+
+@{
+
+
+    <h1 class="p-4"> Privacy and Cookies Policy </h1>
+    <hr>
+    <div class="row container" style="padding: 0;margin: 0;">
+        <div class="col-4">
+            <div style="position: sticky; top: 20px;">
+                <nav id="navbar-example3" class=" h-100 flex-column align-items-stretch pe-4 border-end">
+                    <nav class=" nav nav-pills flex-column">
+
+                        @{
+                            foreach (var item in Model)
+                            {
+                                <a class="nav-link" href="#@item.CmsPageId" value=@item.CmsPageId>@item.Title</a>
+                                <hr/>
+
+                            }
+                        }
+
+
+                    </nav>
+                </nav>
+            </div>
+        </div>
+
+        <div class="col-8">
+            <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-smooth-scroll="true" class="scrollspy-example-2" tabindex="0">
+
+                @{
+                    foreach (var item in Model)
+                    {
+                        <div id="@item.CmsPageId">
+                            <h4>@item.Title</h4>
+                            <p>@item.Description</p>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <hr>
+
+
+                    }
+                }
+            </div>
+        </div>
+    </div>
+}
+

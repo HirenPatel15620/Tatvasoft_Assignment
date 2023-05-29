@@ -1,0 +1,68 @@
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.deps.json
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.runtimeconfig.json
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\bin\Debug\net6.0\ref\CI.Repository.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.pdb
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\bin\Debug\net6.0\CI.Models.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\bin\Debug\net6.0\CI.Models.pdb
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.AssemblyReference.cache
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.AssemblyInfoInputs.cache
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.AssemblyInfo.cs
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.CoreCompileInputs.cache
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.CopyComplete
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\ref\CI.Repository.dll
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.pdb
+C:\Users\pca107\Desktop\git\MVC_CI-Platform\CI-Platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.genruntimeconfig.cache
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.AssemblyReference.cache
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.AssemblyInfoInputs.cache
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.AssemblyInfo.cs
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.CoreCompileInputs.cache
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\ref\CI.Repository.dll
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.pdb
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.deps.json
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.runtimeconfig.json
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\ref\CI.Repository.dll
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.pdb
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Models.dll
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Models.pdb
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.CopyComplete
+C:\Users\pca107\Desktop\main exp\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.genruntimeconfig.cache
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.deps.json
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.runtimeconfig.json
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\ref\CI.Repository.dll
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.pdb
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Models.dll
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Models.pdb
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.AssemblyReference.cache
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.AssemblyInfoInputs.cache
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.AssemblyInfo.cs
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.CoreCompileInputs.cache
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.CopyComplete
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\ref\CI.Repository.dll
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.pdb
+C:\Users\pca107\Desktop\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.genruntimeconfig.cache
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.deps.json
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.runtimeconfig.json
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\ref\CI.Repository.dll
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Repository.pdb
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Models.dll
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\bin\Debug\net6.0\CI.Models.pdb
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.AssemblyReference.cache
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.AssemblyInfoInputs.cache
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.AssemblyInfo.cs
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.CoreCompileInputs.cache
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.csproj.CopyComplete
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.dll
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\ref\CI.Repository.dll
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.pdb
+C:\Users\pca107\Desktop\jet token\MVC_CI-Platform\CI-platform\CI.DataAcess\obj\Debug\net6.0\CI.Repository.genruntimeconfig.cache

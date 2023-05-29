@@ -1,0 +1,377 @@
+﻿@using CI_Platform.Entities.ViewModels
+@model PageList<MissionCard>
+
+     
+@if (Model.TotalCount == 0)
+{
+   @*PageNotFound when by defualt grid view is there*@
+   <div class="p-0 container" id="grid-view">
+        <div id="mission_count" data-count="@Model.TotalCount" class="col-9 h1 countMission">
+        Explore @Model.TotalCount missons
+        </div>
+        <div class="container d-flex justify-content-center">
+            <img class="col-8 col-md-5 col-sm-8" src="~/images/404-Page-image copy.png" alt="">
+        </div><br>
+        <div>
+            <p class="h3 d-flex justify-content-center">No Mission Found</p>
+        </div>
+        <div style="text-align: center;" class=" d-flex justify-content-center">
+            <p class="h1"><b >opps!</b>&nbsp; The page you were looking for doesn't exist.</p>
+        </div>
+        <div>
+            <p class=" d-flex justify-content-center">you may have misstyped the address or the page may have moved.</p>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <a asp-controller="Platform" asp-action="Platform">
+            <button type="submit" style="width: 20vh; background-position: 92% 10px;" class="applyButton my-2">Go to Homepage </button>
+            </a>
+        </div>
+   </div>
+
+
+   @*PageNotFound when by defualt list view is there*@
+   <div class="container" id="list-view" >
+        <div class="col-9 h1 countMission">
+        Explore @Model.TotalCount missons
+        </div>
+        <div class="container d-flex justify-content-center">
+            <img class="col-8 col-md-5 col-sm-8" src="~/images/404-Page-image copy.png" alt="">
+        </div><br>
+        <div>
+            <p class="h3 d-flex justify-content-center">No Mission Found</p>
+        </div>
+        <div style="text-align: center;" class=" d-flex justify-content-center">
+            <p class="h1"><b >opps!</b>&nbsp; The page you were looking for doesn't exist.</p>
+        </div>
+        <div>
+            <p class=" d-flex justify-content-center">you may have misstyped the address or the page may have moved.</p>
+        </div>
+        <br>
+        <div class="d-flex justify-content-center">
+            <a asp-controller="Platform" asp-action="Platform">
+            <button type="submit" style="width: 20vh; background-position: 92% 10px;" class="applyButton my-2">Go to Homepage </button>
+            </a>
+        </div>
+    </div>
+
+}
+else
+{
+   
+   @*Grid-View display when button clicked*@
+    <div class="p-0 container" id="grid-view">
+        <div id="mission_count" data-count="@Model.TotalCount" class="col-9 h1 countMission">
+        Explore @Model.TotalCount missons
+        </div>
+        <div id="missionReload" class="row row-cols-1 row-cols-md-3 g-4">
+
+            @foreach (var item in Model.Records)
+            {
+                <div class="col-lg-4 col-md-6 col-sm-12 SearchElement pagegridcard" id="@item.mission.MissionId">
+                    <div class="card">
+                        <div style="position: relative; ">
+                                @if(item.missionMediums == null)
+                                {
+                                    <img src="~/media/Grow-Trees-On-the-path-to-environment-sustainability.png" height="250" class="card-img-top" alt="...">
+                                }
+                                else
+                                {
+                                    <img src="~/media/@item.missionMediums.Where(m=>m.MediaType!="video").ToList()[0].MediaPath" height="250" class="card-img-top" alt="... ">
+                                }
+                            @if ( @item.favMission == true )
+                            {
+                               <button onclick="favmission(@item.mission.MissionId , 0)" type="button" class="grid-liked"></button> 
+                            }
+                            else
+                            {
+                                <button onclick="favmission(@item.mission.MissionId , 1)" type="button" class="grid-like"></button>
+                            }
+                            @if(item.applied == true)
+                            {
+                                @if( (item.mission.MissionType == 0 && item.mission.Deadline > DateTime.Now && item.mission.EndDate > DateTime.Now) || (item.mission.MissionType == 1 && item.totalGoal> item.achievedProgress) )
+                                {
+                                <button type="button" class="appliedstatus">Applied</button>
+                                }
+                                else
+                                {
+                                <button type="button" class="appliedstatus" style="background:red;">Closed</button>
+                                }
+                            }
+                            else{
+                                @if((@item.seatsleft == 0) || ((@item.mission.MissionType==0 && (@item.mission.Deadline < DateTime.Now || @item.mission.EndDate < DateTime.Now)) || ((@item.mission.MissionType == 1 && @item.totalGoal <= @item.achievedProgress))) )
+                                {
+                                <button type="button" class="appliedstatus" style="background:red;">Closed</button>
+                                }
+                            }
+                                
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="SendMail1(@item.mission.MissionId)" class="grid-stop"></button>
+                            <button type="button" class="grid-pin ">@item.city</button>
+                            <button type="button" class="btnn btn-light cat-overlap-button ">@item.Theme</button>
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title Elements ">@item.mission.Title</h5>
+
+                            @if(@item.mission.Description.Length < 70)
+                                {
+                                    <p class="card-text ">@Html.Raw(@item.mission.Description) </p>
+                                }
+                                else
+                                {
+                                    <p class="card-text ">@Html.Raw(@item.mission.Description.Substring(0,70)) </p>
+                                }
+                            
+
+                            <div class=" d-flex justify-content-between">
+                                @if(@item.mission.ShortDescription.Length < 15)
+                                {
+                                    <div class="countery my-auto">@Html.Raw(@item.mission.ShortDescription)</div>
+                                }
+                                else
+                                {
+                                    <div class="countery my-auto">@Html.Raw(@item.mission.ShortDescription.Substring(0,15))</div>
+                                }
+                                
+                                @if(@item.rating == null || @item.rating == 0)
+                                {
+                                    <div class="Stars" style="--rating:0;" aria-label="Rating of this product is out of 5."></div>
+                                }
+                                else
+                                {
+                                
+                                    <div>
+                                        <div class="Stars" style="--rating: @item.rating;" aria-label="Rating of this product is @item.rating out of 5."></div>
+                                    </div>
+                                }
+                            </div>
+                        </div><br>
+                        <hr class="m-0 ">
+
+                        <div class="horizontal-line mt-4 ">
+                                @if (item.mission.MissionType == 0)
+                                {
+                                    <button type="button " class="btnn btn-light overlap-button ">
+                                        From
+                                        @item.mission.StartDate.Value.ToString("dd/MM/yyyy")
+                                        until
+                                        @item.mission.EndDate.Value.ToString("dd/MM/yyyy")
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btnn btn-light overlap-button">
+                                        @item.goalObjective
+                                    </button>
+                                }
+                            </div>
+
+                        <div class="ms-3 me-4 ">
+                            <div class=" d-flex ">
+                                <div class="seat mt-1 ">
+                                </div>
+                                <div class="mt-1 " style="font-size:14px;width: 67px; ">@item.seatsleft <br>Seats left</div>
+                            
+                                @if (item.mission.MissionType == 0)
+                                {
+                                    <div class="deadline ms-auto mt-1 "></div>
+                                    <p class="mt-1 ">@item.mission.Deadline.Value.ToString("dd/MM/yyyy") <br>Deadline</p>
+                                }
+                                else{
+                                   <div class="achieved ms-auto mt-1 "></div>
+                                <div>
+                                    <div class="progress-bar mb-1">
+                                        <div class="progress" id="progress" style="width: @item.progressBar%"></div>
+                                    </div>
+                                    <p>@item.achievedProgress achieved</p>
+
+                                </div>
+                                }
+
+                            </div>
+                        </div>
+                        <hr class="m-0 ">
+                        <div class="card-body pt-0 pb-0 d-flex justify-content-center">
+                        @if ( (@item.applied == false && @item.seatsleft != 0) && ( (@item.mission.MissionType==0 && @item.mission.Deadline > DateTime.Now && @item.mission.EndDate > DateTime.Now) || (@item.mission.MissionType == 1 && @item.totalGoal > @item.achievedProgress)) )
+                        {
+                           <a asp-action="Volunteer" asp-controller="Platform" asp-route-id="@item.mission.MissionId">
+                               <button type="submit"  class="applyButton col-4 my-2">Apply </button>
+                           </a>
+                        }
+                        else
+                        {
+                           <a asp-action="Volunteer" asp-controller="Platform" asp-route-id="@item.mission.MissionId">
+                               <button type="submit"  class="viewdetails col-4 my-2">View Details </button>
+                           </a>
+
+                        }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    @*List-View display when button clicked*@
+    <div class="container" id="list-view" >
+        <div class="col-9 h1 countMission">
+        Explore @Model.TotalCount missons
+        </div>
+        <div id="listMissonReload">
+            @foreach (var item in Model.Records)
+            {
+            <div class="card mb-3 pagelistcard" id="@(item.mission.MissionId+"list")">
+                <div class="row g-0">
+                    <div class="col-md-5" style="position: relative;">
+                        @if (item.missionMediums == null)
+                        {
+                            <img src="~/media/Grow-Trees-On-the-path-to-environment-sustainability.png" height="250" class="list-img img-fluid " alt="... ">
+                        }
+                        else{
+                            <img src="~/media/@item.missionMediums.Where(m=>m.MediaType!="video").ToList()[0].MediaPath" height="250" class="list-img img-fluid " alt="... ">
+                        }
+                            @if ( @item.favMission == true )
+                            {
+                               <button onclick="favmission(@item.mission.MissionId , 0)" type="button" class="grid-liked"></button> 
+                            }
+                            else
+                            {
+                                <button onclick="favmission(@item.mission.MissionId , 1)" type="button" class="grid-like"></button>
+                            }
+                           
+
+                            @if(item.applied == true)
+                            {
+                                @if( (item.mission.MissionType == 0 && item.mission.Deadline > DateTime.Now && item.mission.EndDate > DateTime.Now) || (item.mission.MissionType == 1 && item.totalGoal> item.achievedProgress) )
+                                {
+                                <button type="button" class="appliedstatus">Applied</button>
+                                }
+                                else
+                                {
+                                <button type="button" class="appliedstatus" style="background:red;">Closed</button>
+                                }
+                            }
+                            else{
+                                @if((@item.seatsleft == 0) || ((@item.mission.MissionType==0 && (@item.mission.Deadline < DateTime.Now || @item.mission.EndDate < DateTime.Now)) || ((@item.mission.MissionType == 1 && @item.totalGoal <= @item.achievedProgress))) )
+                                {
+                                <button type="button" class="appliedstatus" style="background:red;">Closed</button>
+                                }
+                            }
+
+
+                        <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="SendMail1(@item.mission.MissionId)" class="stop"></button>
+                        <button type="button" class="pin ">@item.city</button>
+                        <button type="button" class="btnn btn-light cat-overlap-button">@item.Theme</button>
+                    </div>
+                    <div class="col-md-7 ">
+                        <div class="card-body ">
+                            <h3 class="card-title ">@item.mission.Title</h3>
+
+                                @if(@item.mission.Description.Length < 70)
+                                {
+                                    <p class="card-text ">@Html.Raw(@item.mission.Description) </p>
+                                }
+                                else
+                                {
+                                    <p class="card-text ">@Html.Raw(@item.mission.Description.Substring(0,70)) </p>
+                                }
+                            
+
+                            <div class=" d-flex justify-content-between ">
+                                
+
+                                @if(@item.mission.ShortDescription.Length < 15)
+                                {
+                                    <div class="countery my-auto">@Html.Raw(@item.mission.ShortDescription)</div>
+                                }
+                                else
+                                {
+                                    <div class="countery my-auto">@Html.Raw(@item.mission.ShortDescription.Substring(0,15))</div>
+                                }
+                                
+
+                                @if(@item.applied ==false)
+                                {
+                                    <div class="Stars" style="--rating:0;" aria-label="Rating of this product is out of 5."></div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <div class="Stars" style="--rating: @item.rating;" aria-label="Rating of this product is @item.rating out of 5."></div>
+                                    </div>
+                                }
+
+                            </div>
+                        </div>
+                        <br>
+                        <hr class="m-0">
+                        <div class="horizontal-line mt-4">
+                                @if(item.mission.MissionType == 0)
+                                {
+                                    <button type="button" class="btnn btn-light overlap-button">
+                                    From
+                                    @item.mission.StartDate.Value.ToString("dd/MM/yyyy")
+                                    until
+                                    @item.mission.EndDate.Value.ToString("dd/MM/yyyy")
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btnn btn-light overlap-button">
+                                        @item.goalObjective
+                                    </button>
+                                }
+                            </div>
+                        <div class="ms-3 me-4 ">
+                            <div class=" d-flex ">
+                                <div class="seat mt-1 ">
+                                </div>
+                                <div class="mt-1 " style="font-size:14px;width: 67px; ">@item.seatsleft <br>Seats left</div>
+
+
+
+                                @if (item.mission.MissionType == 0)
+                                {
+                                    <div class="deadline ms-auto mt-1 "></div>
+                                    <p class="mt-1 ">@item.mission.Deadline.Value.ToString("dd/MM/yyyy") <br>Deadline</p>
+                                }
+                                else{
+                                   <div class="achieved ms-auto mt-1 "></div>
+                                <div>
+                                    <div class="progress-bar mb-1">
+                                        <div class="progress" id="progress" style="width: @item.progressBar%"></div>
+                                    </div>
+                                    <p>@item.achievedProgress achieved</p>
+
+                                </div>
+                                }
+                            </div>
+                        </div>
+                        <hr class="m-0 ">
+                        <div class="card-body d-flex justify-content-center ">
+                            @if ( (@item.applied == false && @item.seatsleft != 0) && ( (@item.mission.MissionType==0 && @item.mission.Deadline > DateTime.Now && @item.mission.EndDate > DateTime.Now) || (@item.mission.MissionType == 1 && @item.totalGoal > @item.achievedProgress)) )
+                            {
+                               <a asp-action="Volunteer" asp-controller="Platform" asp-route-id="@item.mission.MissionId">
+                                 <button type="submit" class="applyButton my-2">Apply </button>
+                               </a>
+                             }
+                            else
+                            {
+                               <a asp-action="Volunteer" asp-controller="Platform" asp-route-id="@item.mission.MissionId">
+                                 <button type="submit" class="viewdetails my-2">View Details </button>
+                               </a>
+                            }
+                            </div>
+                    </div>
+                </div>
+            </div><br>
+            }
+        </div>
+    </div>
+
+
+
+    <br><br><br><br> 
+
+}
+
+   

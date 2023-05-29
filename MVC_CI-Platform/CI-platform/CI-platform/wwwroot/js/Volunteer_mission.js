@@ -229,6 +229,7 @@ const add_coworkers = (id) => {
 
 
 const recommend = (user_id, mission_id) => {
+    debugger
     if (co_workers.length > 0) {
         $.ajax({
             url: `/volunteering_mission/${mission_id}`,
@@ -237,6 +238,8 @@ const recommend = (user_id, mission_id) => {
             success: function (result) {
                 console.log(result)
                 toastr.success("send mail successly");
+                $(`coworker-${user_id}`).addClass('d-none')
+
 
             },
             error: function () {

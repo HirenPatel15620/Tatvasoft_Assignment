@@ -52,7 +52,7 @@ namespace CI_platform.Controllers
         [HttpPost]
         [Route("Home")]
         public JsonResult home(List<string> countries, List<string> cities, List<string> themes, List<string> skills, string key, string sort_by, int page_index,
-            long user_id, long mission_id)
+            long user_id, long mission_id,string explore)
 
         {
             if (key is not null)
@@ -72,13 +72,13 @@ namespace CI_platform.Controllers
 
             else if (page_index != 0)
             {
-                CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by, user_id);
+                CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by, user_id,explore);
                 var page_missions = this.RenderViewAsync("mission_partial", missions, true);
                 return Json(new { mission = page_missions, length = missions.Missions.Count });
             }
             else
             {
-                CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by, user_id);
+                CI.Models.ViewModels.Mission missions = allRepository.Mission.GetFilteredMissions(countries, cities, themes, skills, sort_by, user_id,explore);
                 var Cities = this.RenderViewAsync("City_partial", missions, true);
                 var filtered_missions = this.RenderViewAsync("mission_partial", missions, true);
                 return Json(new { mission = filtered_missions, city = Cities, success = true, length = missions.Missions.Count });
@@ -168,10 +168,17 @@ namespace CI_platform.Controllers
         [Route("profile")]
         public IActionResult Profile()
         {
-            long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
+            if (User.Identity.IsAuthenticated)
+            {
+                long user_id = long.Parse(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Sid).Value);
 
-            CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0, user_id);
-            return View(details);
+                CI.Models.ViewModels.ProfileViewModel details = allRepository.Profile.Get_Initial_Details(0, user_id);
+                return View(details);
+            }
+            else
+            {
+                return RedirectToAction("login", "userAuthentication");
+            }
         }
 
         [HttpPost]

@@ -1,0 +1,219 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+@{
+    ViewData["Title"] = "Admin_control";
+    ViewData["css"] = "Admin.css";
+}
+@model List<CI.Models.Story>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+<div class="c p-3">
+    <div class="my-3 ">
+        <div class="fs-3 d-flex">
+            <div class="border-bottom border-dark pe-3">
+                Story
+            </div>
+        </div>
+        <hr class="m-0 p-0">
+    </div>
+    <div class="py-3 d-flex justify-content-between align-items-center">
+        <form method="get" asp-area="Admin" asp-controller="Story" asp-action="Story">
+            <div class="input-group">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]" placeholder="&#61442; Search Here">
+                <div class="input-group-append">
+                </div>
+            </div>
+        </form>
+
+
+    </div>
+    <div class="w-100 h-100">
+        <table class="table border ">
+            <thead class=" ">
+                <tr class="rounded-3">
+                    <th>Story Title</th>
+                    <th>FullName</th>
+                    <th>Mission Title</th>
+                    <th>Status</th>
+                    <th>View</th>
+                    <th>Action</th>
+                    <th></th>
+
+
+                </tr>
+            </thead>
+
+
+            @{
+
+                foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.Title.ToString().Substring(0,50)...</td>
+                            <td>@item.User.FirstName @item.User.LastName</td>
+                            <td>@item.Mission.Title.ToString().Substring(0,30)...</td>
+                            <td>
+                                @if (@item.Status == "PENDING")
+                                {
+                                    <p class="text-warning">Pending</p>
+
+                                }
+                                else if (@item.Status == "DECLINED")
+                                {
+                                    <p class="text-danger">Decline</p>
+
+                                }
+                                else
+                                {
+                                    <p class="">Delete</p>
+
+                                }
+                            </td>
+                            <td class="">
+                                <button class="btn applyButton mb-1"><a class="text-decoration-none text-warning" href="/stories/detail/@item.StoryId" />View</button>
+                            </td>
+
+                            <td>
+
+
+                                <img class="height m-2" onclick="StoryRecord(@item.StoryId,1)" src="~/images/checked-green.png" />
+                                <img class="height m-2" onclick="StoryRecord(@item.StoryId,0)" src="~/images/cancled-red.png" />
+                                <img class="height m-2" onclick="DeleteRecord(@item.StoryId)" src="~/images/bin.png" />
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+                }
+            }
+        </table>
+        @*pagiantion*@
+
+        @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
+        {
+            <div class="position-absolute bottom-10 end-50 mt-3">
+                <nav>
+                    <ul class="pagination">
+                        @if ((int)ViewData["CurrentPage"] > 1)
+                        {
+                            <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Story", new { page = (int)ViewData["CurrentPage"] - 1, searchString = ViewData["SearchString"] })">Previous</a></li>
+                        }
+                        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                        {
+                            if (i == (int)ViewData["CurrentPage"])
+                            {
+                                <li class=" m-1 page-item active"><a class="page-link" href="#">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Story", new { page = i, searchString = ViewData["SearchString"] })">@i</a></li>
+                            }
+                        }
+                        @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+                        {
+                            <li class="m-1 page-item"><a class="page-link" href="@Url.Action("Story", new { page = (int)ViewData["CurrentPage"] + 1, searchString = ViewData["SearchString"] })">Next</a></li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        }
+
+    </div>
+</div>
+
+
+@*Modal of Delete*@
+@{
+    foreach (var item in Model)
+    {
+        <div class="modal fade" id="deleter-@item.StoryId" tabindex="-1" asp-action=aria-labelledby ="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form asp-action="DeleteStory" asp-area="Admin" asp-controller="story">
+                        <input name="id" id="id" type="hidden" value="@item.StoryId" />
+                        @*
+                            <input name="flag" id="flag" type="hidden" value="" />
+                        *@
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-danger rounded-pill" type="submit">Delete</button>
+                            <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@{
+    foreach (var item in Model)
+    {
+
+        <div class="modal fade" id="deleterec-@item.StoryId" tabindex="-2" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form asp-action="ApproveAndDecline" asp-area="Admin" asp-controller="Story">
+                        <input name="id" id="id" type="hidden" value="@item.StoryId" />
+                        @*
+                            <input name="flag" id="flag" type="hidden" />
+                        *@
+                        <div class="modal-header border-0">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to change?</h1>
+                        </div>
+                        <div class="modal-body ">
+                            <label> Story Title  </label>
+
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="inputGroup-sizing-default">Story Title</span>
+                                </div>
+                                <input name="title" id="title" value="@item.Title" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                            </div>
+                            @*
+                                <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                                </div>
+                                <input name="flag" id="flag" type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default" required>
+                                </div>
+                            *@
+                            <div class="w-100">
+                                <label class="form-label">Status</label><select value="@item.Status" id='flag' name="flag" class="status form-select city me-3" aria-label="Select Mission">
+                                    <option disabled selected>Select Role</option>
+                                    <option value="1">Active </option>
+                                    <option value="0">Deactive </option>
+
+                                </select>
+                            </div>
+
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-outline-warning rounded-pill" type="submit">Change</button>
+                            <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@*edit story*@
+
+
+
+
+
+<script src="https://cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+<script src="~/js/Admin.js" asp-append-version="true"></script>

@@ -1,4 +1,5 @@
 @using Microsoft.AspNetCore.Http
+@using System.Security.Claims
 @inject IHttpContextAccessor Accesor
 
 <!DOCTYPE html>
@@ -72,6 +73,7 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
+           
             <a class="nav-link text-muted" asp-area="" asp-controller="Story" asp-action="storylisting">Stories</a>
             <a class="nav-link text-muted mt-3" asp-area="" asp-controller="Home" asp-action="Privacy">Policy</a>
         </div>
@@ -83,7 +85,7 @@
             @* <img src="~/images/logo.png" class="logo" alt="not found" />*@
             <div class="container w-100 d-flex justify-content-between header">
                 <img src="~/images/sidebar.png" class="sidebar-button" data-bs-toggle="offcanvas" data-bs-target="#sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
-                <div class="d-flex pages">
+                <div class="d-flex pages ">
 
                     @{
                         if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
@@ -101,7 +103,13 @@
                     @*<a class="nav-link text-muted" asp-area="" asp-controller="Home" asp-action="Index">News</a>*@
                     <a class="nav-link text-muted" href="/Privacy">Policy </a>
 
-
+                    <select class=" nav-link text-muted form-select me-3" onchange="explore_by(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value)" aria-label="explore By" id="explore">
+                        <option disabled selected>Explore</option>
+                        <option value="Theme">Theme</option>
+                        <option value="Ranked">Ranked</option>
+                        <option value="Top Favourite">Top Favourite</option>
+                        <option value="Random">Random</option>
+                    </select>
 
 
 

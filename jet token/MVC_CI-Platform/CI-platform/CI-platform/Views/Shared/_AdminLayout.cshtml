@@ -1,0 +1,253 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - CI_platform</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/@ViewData["css"]" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+    <link href="https://netdna.bootstrapcdn.com/font-awesome/3.0/css/font-awesome.css" rel="stylesheet" />
+
+
+</head>
+<body>
+      @{
+            if (@ViewData["EditBanner"] == "SortOrder")
+        {
+            <script>
+                toastr.error("Select SortOrder")
+            </script>
+        }
+           if (@ViewData["EditBanner"] == "Text")
+        {
+            <script>
+                toastr.error("Enter Text value")
+            </script>
+        } 
+        if (@ViewData["GetEditUser"] == "userExit")
+        {
+            <script>
+                toastr.error("User Already Available")
+            </script>
+        }
+        }
+
+    <main role="main" class="pb-3">
+        <div class="container-fluid m-0 p-0 d-flex">
+            <div class="sidebar" id="side_nav">
+                <div class="d-flex justify-content-between align-items-center px-3 pt-3 pb-3 mb-lg-3 mb-2">
+                    <h4 class="fs-4 p-0 m-0"><span class="text-white fw-bold">CI - Platform</span></h4>
+                    <button class="btn close-btn d-lg-none d-block px-1 py-0 text-white">
+                        <i class="bi bi-text-left fs-4 fw-bold text-white"></i>
+                    </button>
+                </div>
+                @{
+                    if (Context.Request.Path.Equals("/Admin/User/Index"))
+                    {
+                        <a href="/Admin/User/Index" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
+
+                            <img class="ms-2" src="~/images/user-orange.png" />
+                            <span class="ms-3" style="color:orange">User</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Admin/User/Index" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none; height:40px">
+
+                            <img class="ms-2" src="~/images/user-white.png" />
+
+                            <span class="ms-3" style="color:white">User</span>
+                        </a>
+                    }
+
+                    if (Context.Request.Path.Equals("/Admin/User/Cmspage"))
+                    {
+                        <a href="/Admin/User/Cmspage" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
+
+                            <img class="ms-2" src="~/images/cms-orange.png" />
+                            <span class="ms-3" style="color:orange">Cms Page</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Admin/User/Cmspage" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
+
+                            <img class="ms-2" src="~/images/cms-white.png" />
+                            <span class="ms-3" style="color:white">Cms Page</span>
+                        </a>
+                    }
+                    if (Context.Request.Path.Equals("/Admin/Mission/Mission"))
+                    {
+                        <a href="/Admin/Mission/Mission" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
+
+                                                        <img class="ms-2" src="~/images/mission-orange.png" />
+
+                            <span class="ms-3" style="color:orange">Mission</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Admin/Mission/Mission" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
+
+                                                       <img class="ms-2" src="~/images/mission-white.png" />
+
+                            <span class="ms-3" style="color:white">Mission</span>
+                        </a>
+                    }
+                    if (Context.Request.Path.Equals("/Admin/Mission/MissionApplication"))
+                    {
+                        <a href="/Admin/Mission/MissionApplication" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
+
+                                                 <img class="ms-2" src="~/images/ma-orange.png" />
+
+                            <span class="ms-3" style="color:orange">Mission Application</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Admin/Mission/MissionApplication" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
+
+                                                      <img class="ms-2" src="~/images/ma-white.png" />
+
+                            <span class="ms-3" style="color:white">Mission Application</span>
+                        </a>
+                    }
+                    if (Context.Request.Path.Equals("/Admin/Mission/MissionSkill"))
+                    {
+                        <a href="/Admin/Mission/MissionSkill" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
+                            <img class="ms-2" src="~/images/skill-orange.png" />
+                            <span class="ms-3" style="color:orange">Mission Skill</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Admin/Mission/MissionSkill" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
+
+                            <img class="ms-2" src="~/images/skill-white.png" />
+
+                            <span class="ms-3" style="color:white">Mission Skill</span>
+                        </a>
+                    }
+                    if (Context.Request.Path.Equals("/Admin/Mission/MissionTheme"))
+                    {
+                        <a href="/Admin/Mission/MissionTheme" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
+
+                            <img class="ms-2" src="~/images/theme-orange.png" />
+
+                            <span class="ms-3" style="color:orange">Mission Theme</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Admin/Mission/MissionTheme" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
+
+                            <img class="ms-2" src="~/images/theme-white.png" />
+
+                            <span class="ms-3" style="color:white">Mission Theme</span>
+                        </a>
+                    }
+                    if (Context.Request.Path.Equals("/Admin/Story/Story"))
+                    {
+                        <a href="/Admin/Story/Story" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
+
+                            <img class="ms-2" src="~/images/story-orange.png" />
+
+                            <span class="ms-3" style="color:orange">Story</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Admin/Story/Story" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
+                            <img class="ms-2" src="~/images/story-white.png" />
+
+
+                            <span class="ms-3" style="color:white">Story</span>
+                        </a>
+                    }
+                    if (Context.Request.Path.Equals("/Admin/Story/Banner"))
+                    {
+                        <a href="/Admin/Story/Banner" class="d-flex align-items-center rounded shadow-lg ms-4 mt-3 w-75" style="background-color:white;text-decoration:none;height:40px">
+                            <img class="ms-2" src="~/images/banner-orange.png" />
+
+                            <span class="ms-3" style="color:orange">Banner</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="/Admin/Story/Banner" class="d-flex align-items-center ms-4 mt-3 w-75" style="text-decoration:none;height:40px">
+                            <img class="ms-2" src="~/images/banner-white.png" />
+
+                            <span class="ms-3" style="color:white">Banner</span>
+                        </a>
+                    }
+                }
+
+            </div>
+
+            <div class="content">
+                <nav class="navbar">
+                    <div class="d-flex justify-content-between align-items-center fs-7 w-100 px-3 py-2">
+                        <div class="fs-7 d-flex align-items-center">
+                            <button class="btn open-btn d-lg-none d-block px-1 py-0 text-white">
+                                <i class="bi bi-text-left fs-4 fw-bold text-dark"></i>
+                            </button>
+                            <div id="dateTime" class="me-2"></div>
+                        </div>
+
+
+                        <div class="d-flex">
+
+                            <div class="dropdown d-flex align-items-center" style="right: 36px;">
+                                <img src="@Accesor.HttpContext.Session.GetString("Avatar")" class="user dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                                <span class="nav-link username text-muted dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false">@base.User.Identity.Name</span>
+                                <img src="~/images/drop-down.png" class="down dropdown-toggle" data-bs-toggle="dropdown" id="navbarDropdown" role="button" aria-haspopup="true" aria-expanded="false" alt="Not load" />
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="width: 191px;">
+                                    <a class="dropdown-item" href="/profile">Profile</a>
+                                    <a class="dropdown-item" href="/Home">Home</a>
+                                    <a class="dropdown-item" href="/logout">LogOut</a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </nav>
+                @RenderBody()
+            </div>
+        </div>
+    </main>
+
+    <footer class="bg-dark text-center text-white">
+        <!-- Grid container -->
+        <div class="container p-4 pb-0">
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            &copy; 2023 - CI_platform -
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy policy</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap-datepicker.min.js"></script>
+
+
+    <script src="./lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/js/Admin.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

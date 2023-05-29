@@ -1,0 +1,175 @@
+﻿
+#side_nav {
+    background: #F88634;
+    min-width: 300px;
+    max-width: 300px;
+    transition: all 0.5s;
+}
+
+.content {
+    min-height: 100vh;
+    width: 100%;
+}
+
+.sidebar li a,
+.sidebar li a i {
+    color: #FFFFFF;
+}
+
+.sidebar li:hover a,
+.sidebar li:hover a i {
+    color: #F88634;
+}
+
+.sidebar li.active {
+    background: #FFFFFF;
+    box-shadow: 3px 5px 10px #10446B29;
+    border-radius: 5px;
+}
+
+.sidebar li:hover {
+    background: #FFFFFF;
+    box-shadow: 3px 5px 10px #10446B29;
+    border-radius: 5px;
+}
+
+.sidebar li.active a,
+.sidebar li.active a i {
+    color: #F88634;
+}
+
+.navbar {
+    box-shadow: 3px 5px 10px #00000014;
+}
+
+.c {
+    width: 100%;
+    height: calc(100% - 75px);
+}
+
+ @media screen and (max-width:991px) {
+    #side_nav {
+        margin-left: -300px;
+        position: fixed;
+        min-height: 100vh;
+        z-index: 1;
+    }
+
+ 
+
+    #side_nav.active {
+        margin-left: 0;
+    }
+}
+
+
+/*Mission*/
+
+.story-image {
+    cursor: pointer;
+}
+
+.story-image {
+    filter: brightness(45%);
+}
+
+.view-detail {
+    left: 30%;
+    bottom: 40%;
+}
+
+.main-image-div {
+    width: 90px;
+    margin: 10px;
+    position: relative;
+}
+
+.main-image {
+    width: 100%;
+    height: 90px;
+}
+
+.close {
+    width: 20px;
+    height: 20px;
+    opacity: 70%;
+    position: absolute;
+    top: 0%;
+    left: 77%;
+    cursor: pointer;
+}
+
+
+.applyButton {
+    border: 2px solid #F88634;
+    border-radius: 100px;
+    color: #F88634;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+    .applyButton:hover {
+        color: #F88634;
+    }
+
+
+
+.height{
+    height:25px;
+}
+
+
+
+/**/
+
+.page-item.active .page-link {
+    z-index: 3;
+    color: #fff;
+    background-color: #f88634;
+    border-color: #f88634;
+}
+
+
+
+/*search*/
+
+
+.mainLoginInput {
+    height: 40px;
+    padding: 0px;
+    font-size: 15px;
+    margin: 5px 0;
+}
+
+    .mainLoginInput::-webkit-input-placeholder {
+        font-family: FontAwesome;
+        font-weight: normal;
+        overflow: visible;
+        vertical-align: top;
+        display: inline-block !important;
+        padding-left: 5px;
+        padding-top: 2px;
+       
+    }
+
+    .mainLoginInput::-moz-placeholder {
+        font-family: FontAwesome;
+        font-weight: normal;
+        overflow: visible;
+        vertical-align: top;
+        display: inline-block !important;
+        padding-left: 5px;
+        padding-top: 2px;
+      
+    }
+
+    .mainLoginInput:-ms-input-placeholder {
+        font-family: FontAwesome;
+        font-weight: normal;
+        overflow: visible;
+        vertical-align: top;
+        display: inline-block !important;
+        padding-left: 5px;
+        padding-top: 2px;
+   
+    }

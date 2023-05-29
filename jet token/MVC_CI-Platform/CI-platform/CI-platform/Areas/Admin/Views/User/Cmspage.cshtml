@@ -1,0 +1,271 @@
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+@{
+    ViewData["Title"] = "Admin_control";
+    ViewData["css"] = "Admin.css";
+}
+@model List<CmsPage>
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="c p-3">
+    <div class="my-3 ">
+        <div class="fs-3 d-flex">
+            <div class="border-bottom border-dark pe-3">
+                Cms Page
+            </div>
+        </div>
+        <hr class="m-0 p-0">
+    </div>
+    <div class="py-3 d-flex justify-content-between align-items-center">
+        <form method="get" asp-area="Admin" asp-controller="User" asp-action="Cmspage">
+            <div class="input-group">
+                <input type="text" class="form-control mainLoginInput" name="searchString" value="@ViewData["SearchString"]"  placeholder="&#61442; Search Here">
+                <div class="input-group-append">
+                  
+                </div>
+            </div>
+        </form>
+        @*  <input type="button" class="btn-primary" value="+ Add">*@
+        <button type="button" class="btn applyButton" data-bs-toggle="modal" data-bs-target=".bd-example-modal-lg">+ Add</button>
+
+    </div>
+    <div class="w-100 h-100">
+        <table class="table border ">
+            <thead class=" ">
+                <tr class="rounded-3">
+                    <th>Title</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            @{
+                foreach (var item in Model)
+                {
+                    <tbody>
+                        <tr>
+                            <td>@item.Title</td>
+                            <td>
+                                @if (@item.Status == "1")
+                                {
+                                    <p class="text-success">Active</p>
+                                }
+                                else
+                                {
+                                    <p class="text-danger">Deactive</p>
+                                }
+                            </td>
+                            <td>
+                                @*
+                                <button type="button" id="editcms" onclick="editor(@item.CmsPageId)" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit-@item.CmsPageId">Edit</button>
+                                <button id="editcms" onclick="DeleteCms(@item.CmsPageId)" class="btn btn-danger">Deactive</button>
+                                *@
+                                    <img  id="editcms" onclick="editor(@item.CmsPageId)" class=" m-2 p-2" data-bs-toggle="modal" data-bs-target="#edit-@item.CmsPageId" src="~/images/edit.png">
+                                     <img  id="editcms" onclick="DeleteCms(@item.CmsPageId)" class=" m-1 p-1" src="~/images/bin.png">
+                            </td>
+
+
+                        </tr>
+                    </tbody>
+                }
+            }
+
+        </table>
+        @*pagiantion*@
+
+        @if (ViewData["TotalPages"] != null && (int)ViewData["TotalPages"] > 1)
+        {
+            <div class="position-absolute bottom-10 end-50 mt-3">
+                <nav>
+                    <ul class="pagination">
+                        @if ((int)ViewData["CurrentPage"] > 1)
+                        {
+                            <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Cmspage", new { page = (int)ViewData["CurrentPage"] - 1, searchString = ViewData["SearchString"] })">Previous</a></li>
+                        }
+                        @for (int i = 1; i <= (int)ViewData["TotalPages"]; i++)
+                        {
+                            if (i == (int)ViewData["CurrentPage"])
+                            {
+                                <li class=" m-1 page-item active"><a class="page-link" href="#">@i</a></li>
+                            }
+                            else
+                            {
+                                <li class=" m-1 page-item"><a class="page-link" href="@Url.Action("Cmspage", new { page = i, searchString = ViewData["SearchString"] })">@i</a></li>
+                            }
+                        }
+                        @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+                        {
+                            <li class="m-1 page-item"><a class="page-link" href="@Url.Action("Cmspage", new { page = (int)ViewData["CurrentPage"] + 1, searchString = ViewData["SearchString"] })">Next</a></li>
+                        }
+                    </ul>
+                </nav>
+            </div>
+        }
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+@*delete Modal*@
+<div class="modal fade" id="deleter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form asp-action="GetDeleteCms" asp-area="Admin" asp-controller="User">
+                <input name="cmsId" id="cmsid" type="hidden" value="" />
+                <div class="modal-header border-0">
+                    <h1 class="modal-title fs-5" id="exampleModalLabel">Are you sure want to delete?</h1>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-outline-danger rounded-pill" onclick="showthis()" type="submit">Delete</button>
+                    <button type="reset" class="btn rounded-pill btn-outline-secondary" data-bs-dismiss="modal">Cancle</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+@*modal of edit*@
+
+@{
+    foreach (var item in Model.ToList())
+    {
+        <div class="modal fade bd-example-modal-xl" id="edit-@item.CmsPageId" tabindex="-1" role="dialog" aria-bs-labelledby="myExtraLargeModalLabel" aria-bs-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <form asp-action="GetEditCms" asp-area="Admin" asp-controller="User">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Cms Page</h5>
+                        </div>
+                        <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                            <div class="w-100">
+                                <label class="form-label mt-2">Title</label>
+                                <input class="form-control title" value="@item.Title" required />
+                                                    <span class="d-none text-danger tit">Please enter title</span>
+
+
+                            </div>
+                            <div class="w-100">
+                                <label class="form-label mt-2">Description</label>
+                                <textarea rows="4" type="text" class="form-control discription"  required>@item.Description
+                                </textarea>
+                                                    <span class="d-none text-danger des">Please enter description</span>
+
+                            </div>
+                            <div class="w-100">
+                                <label class="form-label mt-2">Slug</label>
+                                <input class="form-control slug" value="@item.Slug" required />
+                                                    <span class="d-none text-danger slu">Please enter slug</span>
+
+                            </div>
+                            @*
+                                <div class="input-group mt-4 mb-3">
+                                <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                                </div>
+                                <input type="text" class="form-control status" aria-label="Default" aria-describedby="inputGroup-sizing-default" value="@item.Status">
+                                </div>
+                            *@
+                            <div class="w-100">
+                                <label class="form-label">Status</label><select asp-for=@item.Status value="@item.Status" id='status' name="status" class="status form-select city me-3" aria-label="Select Mission" required>
+                                    <option disabled selected>Select Role</option>
+                                    <option value="1">Active </option>
+                                    <option value="0">Deactive </option>
+
+                                </select>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div data-bs-dismiss="modal" onclick="removevalidation()" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                                <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+
+                            </div>
+                            <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" onclick="updatecms(@item.CmsPageId)">Save</button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@*for create  //////////////////////////////////////////////////////////////////////////////////////////*@
+<div class="modal fade bd-example-modal-lg" id="edit-0" tabindex="-1" role="dialog" aria-bs-labelledby="myLargeModalLabel" aria-bs-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <form asp-action="GetEditCms" asp-area="Admin" asp-controller="User">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticBackdropLabel">Cms Page</h5>
+                </div>
+                <div class="modal-body d-flex flex-column align-items-center justufy-content-center">
+                    <div class="w-100">
+                        <label class="form-label mt-2">Title</label>
+                        <input class="form-control title" value=""  required/>
+                    <span class="d-none text-danger tit">Please enter title</span>
+
+
+                    </div>
+                    <div class="w-100">
+                        <label class="form-label mt-2">Description</label>
+                        <textarea rows="4" type="text" id="message" class="form-control discription" value="" required >
+                        </textarea>
+                    <span class="d-none text-danger des">Please enter description</span>
+
+                    </div>
+                    <div class="w-100 mb-4">
+                        <label class="form-label mt-2">Slug</label>
+                        <input class="form-control slug" value="" required/>
+                    <span class="d-none text-danger slu">Please enter slug</span>
+
+                    </div>
+
+                  @*  <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Status (0 & 1)</span>
+                        </div>
+                        <input id="subject" type="text" class="form-control status" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    </div>*@
+                    <div class="w-100">
+                        <label class="form-label">Status</label><select id='subject' class="status form-select city me-3" aria-label="Select Mission">
+                            <option disabled selected>Select Role</option>
+                            <option value="1">Active </option>
+                            <option value="0">Deactive </option>
+
+                        </select>
+                    <span class="d-none text-danger sta">Please select status</span>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div data-bs-dismiss="modal" onclick="removevalidation()" style="cursor:pointer;" class="col-lg-2 col-md-3 col-sm-2 col-3 d-flex justify-content-center align-items-center border border-dark rounded-pill mt-2">
+                        <span class="p-1 text-muted" style="white-space:nowrap;">Cancle</span>
+
+                    </div>
+                    <button style="border: 2px solid #F88634;border-radius: 100px;color: #F88634;padding-left: 20px; padding-right: 20px;" type="button" class="btn applyButton" onclick="createcms(0)">Save</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+ <script src="~/js/Admin.js" asp-append-version="true"></script>

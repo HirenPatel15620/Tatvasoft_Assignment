@@ -1,0 +1,305 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model CI.Models.ViewModels.AdminMission
+
+@{
+
+
+    <div class="particalEditmission m-5" style="margin:50px;">
+
+        <form asp-area="Admin" asp-action="AddMission" id="form" asp-controller="Mission" method="post" enctype="multipart/form-data">
+            <input asp-for=MissionId id="id" name="id" type="hidden" class="form-group form-control mb-4 " aria-label="Default" aria-describedby="inputGroup-sizing-default">
+
+            <div style="margin:40px;">
+                @*mission title*@
+                <div class="mt-2 w-100">
+                    <lable>Title</lable>
+                    <input asp-for=Title type="text" class="form-group form-control mb-4 " aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                    <span asp-validation-for=Title class="d-block text-danger"></span>
+
+                </div>
+
+                @*mission Description*@
+                <lable>Description</lable>
+                <textarea asp-for=Description type="text" rows="4" class="form-control  mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                                    </textarea>
+                <span asp-validation-for=Description class="d-block text-danger"></span>
+
+                @*mission Organazion*@
+                <lable>Organazion Name</lable>
+                <input asp-for=OrganizationName type="text" class="form-control mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                <span asp-validation-for=OrganizationName class="d-block text-danger"></span>
+
+
+                @*mission Organazion Details*@
+                <lable>Organazion Details</lable>
+                <textarea asp-for=OrganizationDetail type="text" rows="4" class="form-control mb-4" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                                                                                                                        </textarea>
+                <span asp-validation-for=OrganizationDetail class="d-block text-danger"></span>
+
+
+                @*start and end date & deadline*@
+                <div class="row mb-5">
+                    <div class="col-sm-12 col-lg-4 col-md-6">
+                        <lable>Starting date</lable>
+                        <input asp-for=StartDate class=" form-control">
+                        <span asp-validation-for=StartDate class="d-block text-danger"></span>
+
+                    </div>
+
+                    <div class="col-sm-12 col-lg-4 col-md-6">
+                        <lable>End date</lable>
+                        <input asp-for=EndDate class=" form-control">
+                        <span asp-validation-for=EndDate class="d-block text-danger"></span>
+
+                    </div>
+
+
+                    <div class="col-sm-12 col-lg-4 col-md-12">
+                        <lable>Registration DeadLine</lable>
+                        <input asp-for=Deadline class=" form-control">
+                        <span asp-validation-for=Deadline class="d-block text-danger"></span>
+
+                    </div>
+                </div>
+
+                @*available seats*@
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroup-sizing-default">Total seats</span>
+                    </div>
+                    <input asp-for=TotalSeats type="text" class="form-control" aria-label="Default" aria-describedby="inputGroup-sizing-default">
+                </div><span asp-validation-for=TotalSeats class="d-block text-danger"></span>
+
+                @*mission Skill*@
+                <div class="row">
+                    @*
+                        <div class="col-lg-5 mt-2 col-md-5 col-sm-12 ">
+                        <label class="form-label">Skill</label>
+                        <select asp-for=SkillId class="form-select me-3" aria-label="Select Skill">
+                        <option value=0 disabled selected>Select Skill for Mission</option>
+                        @{
+                        foreach (var Model in Model.skills)
+                        {
+
+                        <option value=@Model.SkillId id=@Model.SkillId>@Model.SkillName</option>
+                        }
+                        }
+                        </select>
+                        </div>
+                    *@
+
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                        <label class="form-label">Skills</label>
+                        <select asp-for="SelectedSkills" id="@Model.SelectedSkills" class="form-select me-3" aria-label="Select Skills" multiple>
+                            <option value="0" disabled selected>Select Skills for Mission</option>
+                            @foreach (var skill in Model.skills.Where(x => x.Status == 1))
+                            {
+                                <option value="@skill.SkillId">@skill.SkillName</option>
+                            }
+                        </select>
+
+                        <span asp-validation-for=SelectedSkills class="d-block text-danger"></span>
+
+                    </div>
+                    @*
+                    *@
+
+
+                    @*mission Theme*@
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                        <label class="form-label">Theme</label>
+                        <select asp-for=MissionThemeId class="form-select me-3" aria-label="Select Theme">
+                            <option value=0 disabled selected>Select Theme for Mission</option>
+                            @{
+                                foreach (var Model in Model.themes.Where(x => x.Status == 1))
+                                {
+
+                                    <option value=@Model.MissionThemeId id=@Model.MissionThemeId>@Model.Title</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for=MissionThemeId class="d-block text-danger"></span>
+
+                    </div>
+                </div>
+                @*Country*@
+
+                <div class="row">
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                        <label class="form-label">Country</label>
+                        <select onchange="displaycities('Country')" asp-for=CountryId class="form-select me-3 Country" aria-label="Select Country">
+                            <option value=0 disabled selected>Select Country for Mission</option>
+                            @{
+                                foreach (var Model in Model.Country)
+                                {
+
+                                    <option value=@Model.CountryId id=@Model.CountryId>@Model.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for=CountryId class="d-block text-danger"></span>
+
+                    </div>
+
+
+                    @*Cities*@
+                    <div class="col-lg-5 mt-2 col-md-5 col-sm-12">
+                        <label class="form-label">City</label>
+                        <select asp-for=CityId class="form-select me-3" aria-label="Select City">
+                            <option value=0 disabled selected>Select Country for Mission</option>
+                            @{
+                                foreach (var Model in Model.Cities)
+                                {
+
+                                    <option value=@Model.CityId id=@Model.CityId class="country-@Model.CountryId modelcities">@Model.Name</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for=CityId class="d-block text-danger"></span>
+
+                    </div>
+                </div>
+                @*availabilities*@
+                <div class="col-lg-6 mt-2 col-md-6 mb-4 ">
+                    <label class="form-label">Availablity</label><select asp-for=Availability id='avilablity' class="form-select me-3" aria-label="Select Mission">
+                        <option value=0 disabled selected>Select Your Availablity</option>
+                        <option value='Weekly'>Weekly</option>
+                        <option value='Daily'>Daily</option>
+
+                    </select>
+                    <span asp-validation-for=Availability class="d-block text-danger"></span>
+
+                </div>
+                @*mission type*@
+                @*
+                    <div class="col-lg-6 mt-2 col-md-6 mb-4 ">
+                    <label class="form-label">Mission Type</label><select asp-for=MissionType id='avilablity' class="form-select me-3" aria-label="Select Mission">
+                    <option value=0 disabled selected>Select Your MissionType</option>
+                    <option value='GOAL'>GOAL</option>
+                    <option value='TIME'>TIME</option>
+
+                    </select>
+                    </div>
+                *@
+                <div class="form-group col-12 col-md-6 mb-3">
+                    <label asp-for="MissionType" class="form-label text-muted">Mission Type</label>
+                    <select asp-for="MissionType" class="form-control">
+                        <option value="">Select Mission Type</option>
+                        <option value="TIME">Time</option>
+                        <option value="GOAL">Goal</option>
+                    </select>
+                    <span asp-validation-for="MissionType" class="text-ci-danger fs-7"></span>
+                </div>
+                <div class="form-group col-12 col-md-6 mb-3 goal-item d-none">
+                    <label asp-for="GoalValue" class="form-label text-muted">Goal Action</label>
+                    <input asp-for="GoalValue" class="form-control" placeholder="Enter Goal Action" />
+                    <span asp-validation-for="GoalValue" class="text-ci-danger fs-7"></span>
+                </div>
+                <div class="form-group col-12 col-md-6 mb-3 goal-item d-none">
+                    <label asp-for="GoalObjectiveText" class="form-label text-muted">Goal Objective Text</label>
+                    <input asp-for="GoalObjectiveText" class="form-control" placeholder="Enter Goal Objective Text" />
+                    <span asp-validation-for="GoalObjectiveText" class="text-ci-danger fs-7"></span>
+                </div>
+                @*
+                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+                    @*experience*@
+                <h4>Images</h4>
+                @if (Model.Missionmedia == null || !Model.Missionmedia.Any())
+                {
+                    <div class="form-group">
+                        <label>Images</label>
+                        <input type="file" name="files" multiple required />
+                    </div>
+                }
+                else
+                {
+                    <div class="form-group">
+                        <label>Images</label>
+                        <input type="file" name="files" multiple />
+                    </div>
+                }
+                <div class="d-flex">
+                    @{
+                        foreach (var Model in Model.Missionmedia)
+                        {
+                            <div id="image-@Model.MissionMediaId">
+                                <img style="width:100px; height:100px" src="@Model.MediaPath" />
+                                <img class="height m-2" style="height: 20px;" onclick="Declinemedia(@Model.MissionMediaId)" src="~/images/cancled-red.png" />
+                            </div>
+                        }
+                    }
+                </div>
+                <hr />
+                <h4>Documents</h4>
+                <div class="form-group mb-3">
+                    <label for="fileInput">Document Upload:</label>
+                    <input type="file" class="form-control-file" id="fileInput" name="fileInput">
+                </div>
+                <div class="d-flex document flex-wrap">
+                    @{
+                        if (Model?.missionDocuments?.Count != 0)
+                        {
+                            foreach (var item in Model?.missionDocuments)
+                            {
+                                <div class="d-flex ms-2 mt-2 align-items-center border rounded-pill p-1" id="document-@item.MissionDocumentId">
+                                    <a href='~/documents/@item.DocumentPath' target='_blank' style='text-decoration:none; color:black;'>
+                                        <img class=" ms-2" src="~/images/doc.png" alt="" />
+                                        <span class="ms-1 me-2">@item.DocumentName</span>
+                                    </a>
+                                    <img class="height m-2" style="height: 20px;" onclick="Declinedocument(@item.MissionDocumentId)" src="~/images/cancled-red.png" />
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <h6>No Document Uploaded</h6>
+                        }
+                    }
+                </div>
+
+                @*
+                    <div class="col-lg-6 mt-2 col-md-6 mb-4 ">
+                    <label class="form-label">Status</label><select asp-for=Status id='Status' class="form-select me-3" aria-label="Select Mission" >
+                    <option value=0 disabled selected>Select Mission Status</option>
+                    <option value=1>Active</option>
+                    <option value=0>Deactive</option>
+
+                    </select>
+                    <span asp-validation-for=Status class="d-block text-danger"></span>
+
+                    </div>
+
+                *@
+                <div class="modal-footer">
+                    <button class="btn btn-outline-danger rounded-pill" type="submit">Save</button>
+                    <button type="reset" class="btn rounded-pill btn-outline-secondary" onclick="changelayout()">Cancle</button>
+                </div>
+            </div>
+        </form>
+    </div>
+}
+
+<script>
+      $("#MissionType").change((e)=>{
+        if(e.target.value === "GOAL")
+        $(".goal-item").removeClass("d-none");
+        else
+        $(".goal-item").addClass("d-none");
+    });
+
+</script>
+
+@section scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    }
+
+
+
+
+

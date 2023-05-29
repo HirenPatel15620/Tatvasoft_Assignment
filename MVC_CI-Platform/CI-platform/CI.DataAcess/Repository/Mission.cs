@@ -92,9 +92,9 @@ namespace CI.Repository.Repository
         }
 
         //get filter missions
-        public Models.ViewModels.Mission GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by, long user_id)
+        public Models.ViewModels.Mission GetFilteredMissions(List<string> Countries, List<string> Cities, List<string> Themes, List<string> Skills, string sort_by, long user_id,string explore)
         {
-            CI.Models.ViewModels.Mission Missions = new Models.ViewModels.Mission();
+           CI.Models.ViewModels.Mission Missions = new Models.ViewModels.Mission();
             List<City> city = new List<City>();
             List<User> all_volunteers = new List<User>();
             List<User> already_recommended = new List<User>();
@@ -119,7 +119,7 @@ namespace CI.Repository.Repository
 
 
 
-
+           
 
 
 
@@ -180,6 +180,7 @@ namespace CI.Repository.Repository
                     Cities = city
                 };
             }
+            
             else if (sort_by == "lowest available seats")
             {
                 Missions = new Models.ViewModels.Mission
@@ -224,6 +225,83 @@ namespace CI.Repository.Repository
                     Cities = city
                 };
             }
+
+
+            //good to have
+
+            else if (sort_by == "theme")
+            {
+                var topThemes = (from m in mission
+                                 group m by m.ThemeId into g
+                                 orderby g.Count() descending
+                                 select g.Key).Take(1).ToList(); // Get top 3 themes
+
+                var topThemeMissions = (from m in mission
+                                        where topThemes.Contains(m.ThemeId)
+                                        orderby m.ThemeId descending
+                                        select m).ToList(); // Get missions in top themes
+
+                var mostCommonMissions = (from m in topThemeMissions
+                                          group m by m.Title into g
+                                          orderby g.Count() descending
+                                          select g.Key).Take(10).ToList(); // Get top 10 most common missions
+
+                Missions = new Models.ViewModels.Mission
+                {
+                    Missions = (from m in topThemeMissions
+                                where mostCommonMissions.Contains(m.Title)
+                                select m).ToList(),
+                    Country = countries,
+                    Cities = city
+                };
+            }
+            else if (sort_by == "ranked")
+            {
+                var mostRankedMissions = (from m in mission
+                                          where m.MissionRatings.Any()
+                                          orderby m.MissionRatings.Select(r => r.Rating).Average() descending
+                                          select m).ToList(); // Get top 10 most highly ranked missions
+
+                Missions = new Models.ViewModels.Mission
+                {
+                    Missions = mostRankedMissions,
+                    Country = countries,
+                    Cities = city
+                };
+
+
+            }
+
+            else if (sort_by == "top favourite")
+            {
+                var mostFavouriteMissions = (from m in mission
+                                          where m.FavoriteMissions.Any()
+                                          orderby m.FavoriteMissions.Select(r=>r.MissionId).Count() descending
+                                          select m).ToList(); // Get top 10 most highly favourite  missions
+
+                Missions = new Models.ViewModels.Mission
+                {
+                    Missions = mostFavouriteMissions,
+                    Country = countries,
+                    Cities = city
+                };
+
+
+            }
+            else if (sort_by == "random")
+            {
+                Random random = new Random();
+                Missions = new Models.ViewModels.Mission
+                {
+                    Missions = mission.OrderBy(x => random.Next()).ToList(),
+                    Country = countries,
+                    Cities = city
+                };
+            }
+
+
+
+          
 
             //if no filter apply
             else
@@ -372,7 +450,7 @@ namespace CI.Repository.Repository
 
                 //now get all remaining users for recomendation
                 users = (from u in users
-                         where !myusers.Contains(u) && user_id != u.UserId 
+                         where myusers.Contains(u) && user_id != u.UserId 
                          select u).ToList();
                 if (users.Count > 0)
                 {

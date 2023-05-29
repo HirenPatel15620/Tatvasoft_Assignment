@@ -1,0 +1,285 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+@model CI.Models.ViewModels.Mission
+<div class="offcanvas offcanvas-start text-muted" data-bs-scroll="true" tabindex="-1" id="filters-sidebar" aria-labelledby="offcanvasWithBothOptionsLabel">
+    <div class="offcanvas-header">
+        <img src="~/images/left.png" data-bs-dismiss="offcanvas" aria-label="Close" alt="notload" />
+    </div>
+    <div class="offcanvas-body">
+        <div id="country" class=" d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#country" role="button" aria-expanded="false" aria-controls="country">
+            <span>Country</span>
+            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+        </div>
+        <div class="collapse mt-3" id="country">
+            @{
+                foreach (var item in Model.Country)
+                {
+                    <span class="dropdown-item">
+                        <input class="form-check-input @item.Name" type="checkbox" value="" onchange="addcountries('@item.Name','mobile')">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            @item.Name
+                        </label>
+                    </span>
+                }
+            }
+        </div>
+        @*--2*@
+        <div id="city" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#city" role="button" aria-expanded="false" aria-controls="city">
+            <span>City</span>
+            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+        </div>
+        <div class="collapse mt-3" id="city">
+            @{
+                foreach (var item in Model.Country)
+                {
+                    foreach (var city in item.Cities)
+                    {
+                        <span class="dropdown-item">
+                            <input class="form-check-input @city.Name" type="checkbox" value="" onchange="addcities('@city.Name','mobile')">
+                            <label class="form-check-label" for="flexCheckDefault">
+                                @city.Name
+                            </label>
+                        </span>
+                    }
+                }
+            }
+        </div>
+        @*--3*@
+        <div id="theme" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#theme" role="button" aria-expanded="false" aria-controls="theme">
+            <span>Themes</span>
+            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+        </div>
+        <div class="collapse mt-3" id="theme">
+            @{
+                foreach (var item in Model.themes)
+                {
+                    <span class="dropdown-item">
+                        <input class="form-check-input @item.Title" type="checkbox" onchange="addthemes('@item.Title','mobile')" value="">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            @item.Title
+                        </label>
+                    </span>
+                }
+            }
+        </div>
+        @*---4*@
+        <div id="skill" class="mt-4 d-flex justify-content-between w-100 text-muted" data-bs-toggle="collapse" href="#skill" role="button" aria-expanded="false" aria-controls="skill">
+            <span>Skills</span>
+            <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+        </div>
+        <div class="collapse mt-3" id="skill">
+            @{
+                foreach (var item in Model.skills)
+                {
+                    <span class="dropdown-item">
+                        <input class="form-check-input @item.SkillName" type="checkbox" onchange="addskills('@item.SkillName','mobile')" value="">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            @item.SkillName
+                        </label>
+                    </span>
+                }
+            }
+        </div>
+    </div>
+</div>
+@*header*@
+<div class="home w-100 border-3 border-bottom text-muted">
+    <div class="container d-flex justify-content-between align-items-center">
+        <div class="d-flex search-div align-items-center">
+            <img class="search" src="~/images/search.png" alt="not load" />
+            <div class="form-floating w-75 d-flex">
+                <input type="search" class="form-control search-input" id="floatingSearch" placeholder="Search Misssions...." />
+                <label for="floatingSearch" class="d-flex align-items-center">Search Missions....</label>
+            </div>
+        </div>
+        <img src="~/images/filter.png" class="filter-image" data-bs-toggle="offcanvas" data-bs-target="#filters-sidebar" aria-controls="offcanvasWithBothOptions" alt="not load" />
+        <div class="filters  row">
+            <div class="col-lg-3 col-md-3 col-sm-3 border-start border-end dropdown">
+                <div id="country" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span>Country</span>
+                    <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+                </div>
+                <span class="dropdown-menu" aria-labelledby="country">
+                    @{
+                        foreach (var item in Model.Country)
+                        {
+                           @* if (Context.Session.GetString("city") is not null)
+                            {
+                                if (item.CountryId == long.Parse(Context.Session.GetString("city")))
+                                {
+                                    
+                                }
+                            }*@
+                            <span class="dropdown-item">
+                         @if(item.CountryId == long.Parse(Context.Session.GetString("Country"))){
+                                        <input class="form-check-input" type="checkbox" value="" checked onchange="addcountries('@item.Name')" id="@item.Name">
+                                    }
+                                    else{
+                                        <input class="form-check-input" type="checkbox" value="" onchange="addcountries('@item.Name')" id="@item.Name">
+                                    }
+                         <label class="form-check-label" for="flexCheckDefault">
+                         @item.Name
+                            </label>
+                           </span>
+                        }
+                    }
+
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
+                <div id="city" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span>City</span>
+                    <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+                </div>
+                <span class="dropdown-menu city" aria-labelledby="city">
+                    <partial name="City_partial" />
+                </span>
+
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
+                <div id="theme" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span>Themes</span>
+                    <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+                </div>
+                <span class="dropdown-menu" aria-labelledby="theme">
+                    @{
+                        foreach (var item in Model.themes)
+                        {
+                            <span class="dropdown-item">
+                                <input class="form-check-input" type="checkbox" onchange="addthemes('@item.Title')" value="" id="@item.Title">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    @item.Title
+                                </label>
+                            </span>
+                        }
+                    }
+                </span>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 dropdown border-start border-end">
+                <div id="skill" class="dropdown-toggle d-flex justify-content-between w-100" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <span>Skills</span>
+                    <img src="~/images/drop-down.png" class="filter-dropdown" alt="not load" />
+                </div>
+                <span class="dropdown-menu" aria-labelledby="skill">
+                    @{
+                        foreach (var item in Model.skills)
+                        {
+                            <span class="dropdown-item">
+                                <input class="form-check-input" type="checkbox" onchange="addskills('@item.SkillName')" value="" id="@item.SkillName">
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    @item.SkillName
+                                </label>
+                            </span>
+                        }
+                    }
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+@*badges*@
+<div class='d-flex flex-wrap container' id="searchdiv">
+    <div class=" all-choices text-muted d-flex flex-wrap" id="allchoicediv">
+
+        @*@{
+            if (Context.Session.GetString("city") is not null)
+            {
+                foreach (var item in Model.Country)
+                {
+                    foreach (var city in item.Cities)
+                    {
+                        if (city.CityId == long.Parse(Context.Session.GetString("city")))
+                        {
+                            <div class="border rounded-pill mt-3 " id="badge-@city.Name">
+                                <span class="p-2">@city.Name</span>
+                                <img src="images/cancel.png" class="p-2" alt="not found" onclick="remove_badges(&quot;badge-@city.Name&quot;,&quot;city&quot;)">
+                            </div>
+                        }
+                    }
+                }
+            }
+        }*@
+
+         @{
+            foreach (var item in Model.Country)
+            {
+                if (item.CountryId == long.Parse(Context.Session.GetString("Country")))
+                    {
+                        <div class='border rounded-pill mt-3' id="badge-@item.Name">
+                            <span class='p-2 user-country'> @item.Name</span>
+                <img src='images/cancel.png' class='p-2' alt='not found' onclick="remove_badges('badge-@item.Name','country')"/>
+                </div>
+                    }
+                foreach (var city in item.Cities)
+                {
+                    if (city.CityId == long.Parse(Context.Session.GetString("City")))
+                    {
+                        <div class='border rounded-pill mt-3' id="badge-@city.Name">
+                            <span class='p-2 user-city'> @city.Name</span>
+                <img src='images/cancel.png' class='p-2' alt='not found' onclick="remove_badges('badge-@city.Name','city')"/>
+                </div>
+                    }
+                    }
+
+                }
+            }
+
+    </div>
+    <div id='clear-all' id="clearalldiv"  class="text-muted mt-3" style="cursor:pointer;">
+       
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@*
+
+    <div class='d-flex flex-wrap container'>
+    <div class="all-choices text-muted d-flex flex-wrap">
+
+    @{
+    if (Context.Session.GetString("city") is not null)
+    {
+    foreach (var item in Model.Country)
+    {
+    foreach (var city in item.Cities)
+    {
+    if (city.CityId == long.Parse(Context.Session.GetString("city")))
+    {
+
+
+    <div class="border rounded-pill mt-3" id="badge-@city.Name">
+    <span class="p-2">@city.Name</span>
+    <img src="images/cancel.png" class="p-2" alt="not found" onclick="remove_badges(&quot;badge-@city.Name&quot;,&quot;city&quot;)">
+    </div>
+    }
+    }
+    }
+    }
+    }
+    </div>
+    <div id='clear-all' value="Reload Page" onClick="window.location.reload(true)" class="text-muted mt-3" style="cursor:pointer;">
+    <button class=' btn-danger ms-1 clear-all' id='clearalldiv'>Remove Applied Filters</button>
+    </div>
+    </div>
+*@

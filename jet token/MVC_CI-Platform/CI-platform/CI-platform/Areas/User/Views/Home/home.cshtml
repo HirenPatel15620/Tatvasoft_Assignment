@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Home-Find More Missions";
+    ViewData["css"] = "index.css";
+}
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accesor
+@model CI.Models.ViewModels.Mission
+@using System.Security.Claims
+<partial name="SecondHeader_partial" />
+@*main body*@
+<div class="container body pt-5">
+    <div class="d-flex justify-content-between">
+        <span class="explore">Explore <b>@Model.Missions?.Count Missions</b></span>
+        <div class="d-flex sort">
+            <select class="form-select me-3" onchange="sort_by(@User?.Claims.FirstOrDefault(c=>c.Type==ClaimTypes.Sid)?.Value)" aria-label="Sort By" id="sort">
+                <option disabled>Sort By</option>
+                <option value="Oldest" selected>Oldest</option>
+                <option value="Newest">Newest</option>
+                <option value="Lowest available seats">Lowest available seats</option>
+                <option value="Highest available seats">Highest available seats</option>
+                <option value="My favourites">My favourites</option>
+                <option value="Registration deadline">Registration deadline</option>
+
+
+            </select>
+            <img src="~/images/grid.png" class="view rounded-circle" id="grid" onclick="gridview()" alt="not load" style="object-fit:scale-down;width:50px;" />
+            <img src="~/images/list.png" alt="not load" class="rounded-circle" id="list" onclick="listview()" style="object-fit:scale-down;width:50px;" />
+            
+        </div>
+    </div>
+    @*missions*@
+    <div class="row missions">
+        <partial name="mission_partial" />
+    </div>
+    <div class='container d-none justify-content-center align-items-center mt-5 mb-5 w-50 text-muted no-mission-found'>
+        <span>No Mission Found Based On Applied Filters</span>
+         @{
+            if (@Accesor?.HttpContext?.Session.GetString("role") is not null)
+            {
+                <a class="applyButton w-75 mt-3 btn" href="/Admin/Mission/Mission">
+                    Submit New Mission <img src="images/right-arrow.png" alt="">
+                </a>
+            }
+        }
+    </div>
+</div>
+@*pagination*@
+
+
+
+
+
+<div class="container mt-3 d-flex justify-content-center">
+    <div class="row">
+        <nav>
+            <ul class="pagination">
+                <li class="pagination_box" id="firstpage">&laquo;</li>
+                <li class="pagination_box" id="prevpage-btn" onclick="prevpage()">&#60;</li>
+                <ul class="pagination" id="pagination">
+                </ul>
+                <li class="pagination_box" id="nextpage-btn" onclick="nextpage()">&#62;</li>
+                <li class="pagination_box" id="lastpage">&raquo;</li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script src="~/js/index.js" asp-append-version="true"></script>
+
+
+
+

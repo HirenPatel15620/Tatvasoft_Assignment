@@ -1,0 +1,29 @@
+﻿@using CI_Platform.Entities.Models
+@model List<Banner>
+
+<div class="table-responsive mt-4">
+                <table id="bannerTable" class="table mb-5">
+                    <thead class="bkgclr border">
+                        <tr>
+                            <th scope="col" class="w-25">Image Title </th>
+                            <th scope="col" class="w-50">Text</th>
+                            <th scope="col">Sort Order</th>
+                            <th scope="col" class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border">
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Image</td>
+                                <td>@item.Text</td>
+                                <td>@item.SortOrder</td>
+                                <td class="text-center">
+                                    <a class="viewBanner" onclick="fetchBanner(@item.BannerId);"><img class="imghover me-2" src="~/images/editing.png" alt=""></a>
+                                    <a data-bs-toggle="modal" data-bs-target="#exampleModalToggle" onclick="Delete(@item.BannerId , 6);"><img class"imghover" src="~/images/bin.png" alt=""></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
