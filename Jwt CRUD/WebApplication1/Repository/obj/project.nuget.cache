@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "+TtvW974bgIT1mYLzp0hmdKO3vWg/NOOlESMfjlsdnyoKbZSAZ2OFPUWW6J4xAtTCTv+f60745PK0uTg1yIbCQ==",
+  "dgSpecHash": "0UqBK8mM12nyCKGqA/vdl3AieD6buNlgrJXuOHRMzMJzmiIxrYjeC1NiVUsbnLZBgH/G3exHApviSt030+OpcA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pca189\\Desktop\\jwt crud\\WebApplication1\\Repository\\Repository.csproj",
+  "projectFilePath": "C:\\Users\\pca189\\Desktop\\git clone\\Jwt CRUD\\WebApplication1\\Repository\\Repository.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pca189\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\pca189\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.16\\microsoft.aspnetcore.authentication.jwtbearer.6.0.16.nupkg.sha512",

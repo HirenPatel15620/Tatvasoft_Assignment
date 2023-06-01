@@ -11,11 +11,11 @@ namespace WebApplication1.Controllers
 {
     [Route("User")]
     [ApiController, Authorize]
-    public class UserController : Controller
+    public class UserAuthController : Controller
     {
         private readonly IUser repo;
         private readonly swaggerContext db;
-        public UserController(IUser _repo, swaggerContext _db)
+        public UserAuthController(IUser _repo, swaggerContext _db)
         {
             db = _db;
             repo = _repo;

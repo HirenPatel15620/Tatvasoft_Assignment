@@ -4,7 +4,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Model.Data;
 using Model.Models;
-using Model.ViewModel;
+
 using Repository.Interface;
 using System.Data;
 
