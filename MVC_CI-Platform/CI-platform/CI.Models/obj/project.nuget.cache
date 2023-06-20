@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "JdwUhEc4Oexbea3oDCx1PY8uJnS4kRCwETEMzAcRGoYB0DU8HCYB4C1qRQ1iIipgJK6x27bs3+KfsAyAtQyH7Q==",
+  "dgSpecHash": "f/rcYf8XNSvg1XNxyJCW95uvFCdN6dEa3ZyOu3vEsl8/vRxWxGhTpZoBZ/AArkChKZYW91wdBjg5QrBL31z84w==",
   "success": true,
-  "projectFilePath": "C:\\Users\\pca189\\Desktop\\git\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj",
+  "projectFilePath": "C:\\Users\\pca189\\Desktop\\git clone\\MVC_CI-Platform\\CI-platform\\CI.Models\\CI.Models.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\pca189\\.nuget\\packages\\microsoft.aspnet.mvc\\5.2.9\\microsoft.aspnet.mvc.5.2.9.nupkg.sha512",
     "C:\\Users\\pca189\\.nuget\\packages\\microsoft.aspnet.razor\\3.2.9\\microsoft.aspnet.razor.3.2.9.nupkg.sha512",

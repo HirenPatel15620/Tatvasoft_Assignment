@@ -1,9 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Model.Data;
 using Model.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace WebApplication1.Controllers
 {
@@ -12,11 +15,14 @@ namespace WebApplication1.Controllers
     public class AuthenticationController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly swaggerContext db;
 
-    public AuthenticationController(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+
+        public AuthenticationController(IConfiguration configuration, swaggerContext _db)
+        {
+            _configuration = configuration;
+            db = _db;
+        }
         [HttpPost("login")]
         public IActionResult Login([FromBody] User user)
         {
@@ -24,7 +30,9 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest("Invalid user request!!!");
             }
-            if (user.FirstName == "hiren" && user.LastName == "patel")
+            //if (user.FirstName == "hiren" && user.LastName == "patel")
+            if (user.FirstName == db.Users.FirstOrDefault(x => x.FirstName == user.FirstName)?.FirstName &&
+    user.LastName == db.Users.FirstOrDefault(x => x.LastName == user.LastName)?.LastName)
             {
                 var secretKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
                 var signinCredentials = new SigningCredentials(secretKey, SecurityAlgorithms.HmacSha256);
