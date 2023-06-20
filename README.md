@@ -22,10 +22,10 @@ There is a some mini Project & assignment which is done in my training period
 
 <h3>🛠 Tech Stack</h3>
 
-- 💻 &nbsp; Python | C# | C++  
+- 💻 &nbsp; Python | C# | C++ | React 
 - 🌐 &nbsp; Android | HTML | CSS | JavaScript | Bootstrap 
 - 🛢 &nbsp; MySQL | Firebase
-- 🔧 &nbsp; Visual Studio code | Sublime | Android Studio | Git
+- 🔧 &nbsp; Visual Studio code | Sublime | Android Studio | Git | Visual Studio
 - 🖥 &nbsp; Adobe Xd 
 
 <br>
